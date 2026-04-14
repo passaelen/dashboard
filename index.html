@@ -200,11 +200,50 @@ async function loadData() {
     try {
 	console.log("DATA OA:", rowsOA);
 
+
+// ===== DASHBOARD (VARIATION) =====
+const urlDash = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=115354515";
+
+const resDash = await fetch(urlDash);
+const textDash = await resDash.text();
+const rowsDash = parseCSV(textDash);
+
+// 👉 B6 = ligne 5 / colonne 1
+const variation = rowsDash?.[5]?.[1];
+
+if (variation) {
+    const el = document.getElementById("variation");
+
+    el.innerText = variation;
+
+    // couleur dynamique
+    if (variation.includes("-")) {
+        el.style.background = "#7f1d1d";
+        el.style.color = "#fca5a5";
+    } else {
+        el.style.background = "#14532d";
+        el.style.color = "#86efac";
+    }
+}
+
+
+
+
         // ===== OR / ARGENT =====
         const urlOA = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1574558752";
         const resOA = await fetch(urlOA);
         const textOA = await resOA.text();
         const rowsOA = parseCSV(textOA);
+
+	// ===== RATIO =====
+	// 👉 L2 = ligne 1 / colonne 11
+	const ratioValue = rowsOA?.[1]?.[11];
+	if (ratioValue) {
+	    document.getElementById("ratio").innerText =
+            ratioValue.replace('.', ',');
+	}
+
+
 
         const orSuisse = cleanNumber(rowsOA?.[1]?.[4] || "0");
 	const orBelgique = cleanNumber(rowsOA?.[2]?.[4] || "0");
