@@ -326,28 +326,62 @@ async function loadData() {
         const ctx = document.getElementById("chart-10j");
 
 if (ctx) {
+
+    const gradient = ctx.getContext("2d").createLinearGradient(0, 0, 0, 220);
+    gradient.addColorStop(0, "rgba(250,204,21,0.35)");
+    gradient.addColorStop(1, "rgba(250,204,21,0)");
+
     new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Total €',
                 data: values,
-                tension: 0.3,
+                tension: 0.35,
                 fill: true,
-                borderWidth: 2
+                borderWidth: 2,
+
+                borderColor: "#facc15",
+                backgroundColor: gradient,
+
+                pointBackgroundColor: "#facc15",
+                pointBorderWidth: 0,
+                pointRadius: 3,
+                pointHoverRadius: 5
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
             plugins: {
-                legend: { display: false }
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: "#020617",
+                    borderColor: "#facc15",
+                    borderWidth: 1,
+                    titleColor: "#e5e7eb",
+                    bodyColor: "#e5e7eb"
+                }
             },
+
             scales: {
                 x: {
-                    ticks: { color: '#9ca3af' }
+                    ticks: {
+                        color: '#9ca3af',
+                        maxRotation: 0
+                    },
+                    grid: {
+                        display: false
+                    }
                 },
                 y: {
-                    ticks: { color: '#9ca3af' }
+                    ticks: {
+                        color: '#9ca3af'
+                    },
+                    grid: {
+                        color: "rgba(255,255,255,0.05)"
+                    }
                 }
             }
         }
