@@ -39,10 +39,16 @@ body {
     animation: pulse 1.5s infinite;
 }
 
-@keyframes pulse {
-    0% { box-shadow: 0 0 0px rgba(239,68,68,0.7); }
-    50% { box-shadow: 0 0 12px rgba(239,68,68,0.9); }
-    100% { box-shadow: 0 0 0px rgba(239,68,68,0.7); }
+
+@keyframes pulse-soft {
+    0% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+    50% { box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+    100% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+
+.alert-hot {
+    animation: pulse-soft 2s infinite;
 }
 
 
