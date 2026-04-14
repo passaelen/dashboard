@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="style.css?v=20">
 
 
 </head>
@@ -259,7 +259,7 @@ if (!rowsOA || rowsOA.length < 2) {
 
 // OR SUISSE
 document.getElementById("q-or-suisse").innerText =
-    rowsOA?.[1]?.[2] + " g";
+    (rowsOA?.[1]?.[2] || 0) + " g";
 
 document.getElementById("p-or-suisse-g").innerText =
     cleanNumber(rowsOA?.[1]?.[3]).toFixed(2).replace('.', ',') + " €";
@@ -268,7 +268,8 @@ const perfOrSuisse = cleanNumber(rowsOA?.[1]?.[6]);
 
 const elPerf1 = document.getElementById("perf-or-suisse");
 elPerf1.innerText = perfOrSuisse.toLocaleString('fr-BE') + " €";
-elPerf1.className = perfOrSuisse >= 0 ? "green" : "red";
+elPerf1.classList.remove("green", "red");
+elPerf1.classList.add(perfOrSuisse >= 0 ? "green" : "red");
 
 
 // OR BELGIQUE
@@ -282,7 +283,8 @@ const perfOrBelgique = cleanNumber(rowsOA?.[2]?.[6]);
 
 const elPerf2 = document.getElementById("perf-or-belgique");
 elPerf2.innerText = perfOrBelgique.toLocaleString('fr-BE') + " €";
-elPerf2.className = perfOrBelgique >= 0 ? "green" : "red";
+elPerf2.classList.remove("green", "red");
+elPerf2.classList.add(perfOrSuisse >= 0 ? "green" : "red");
 
 
 // ARGENT
@@ -296,8 +298,8 @@ const perfArgent = cleanNumber(rowsOA?.[3]?.[6]);
 
 const elPerf3 = document.getElementById("perf-argent");
 elPerf3.innerText = perfArgent.toLocaleString('fr-BE') + " €";
-elPerf3.className = perfArgent >= 0 ? "green" : "red";
-
+elPerf3.classList.remove("green", "red");
+elPerf3.classList.add(perfOrSuisse >= 0 ? "green" : "red");
 
 
 
