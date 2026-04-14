@@ -166,7 +166,10 @@ small {
 
 @media (max-width: 600px) {
     .repartition-grid {
-        grid-template-columns: 1fr;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+    	gap: 20px;
+    	align-items: start; /* 🔥 important */
     }
 }
  
@@ -182,15 +185,18 @@ small {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    min-height: 260px; /* 🔥 clé */
 }
  
  .bloc h4 {
+    margin-bottom: 10px;
     width: 100%;
     text-align: center;
  }
  
  .donut {
- margin: 15px auto;
+     margin: 10px 0;
  }
  
  /* LEGENDES */
