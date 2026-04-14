@@ -186,12 +186,14 @@ function parseCSV(text) {
 }
 
 function cleanNumber(value) {
+    if (!value) return 0; // 🔥 protège
     return Number(
-        value?.replace(/"/g, '')
-              ?.replace(/\s/g, '')
-              ?.replace('€', '')
-              ?.replace(',', '.')
-    );
+        value
+            .replace(/"/g, '')
+            .replace(/\s/g, '')
+            .replace('€', '')
+            .replace(',', '.')
+    ) || 0;
 }
 
 async function loadData() {
