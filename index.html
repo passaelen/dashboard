@@ -353,8 +353,26 @@ if (totalGlobal >= 150000) {
 
 const progress = (totalGlobal / objectif) * 100;
 
+// ===== BARRE =====
 document.querySelector(".progress-bar").style.width =
     Math.min(progress, 100) + "%";
+
+
+const bar = document.querySelector(".progress-bar");
+
+// couleur dynamique
+if (progress < 50) {
+    bar.style.background = "#6b7280";
+} else if (progress < 80) {
+    bar.style.background = "#4ade80";
+} else {
+    bar.style.background = "#22c55e";
+}
+
+// animation (optionnel mais stylé)
+bar.style.transition = "all 0.5s ease";
+
+
 
 document.getElementById("progress-label").innerText =
     Math.round(progress) + "% de " +
