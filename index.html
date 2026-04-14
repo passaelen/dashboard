@@ -134,6 +134,13 @@ small {
     transition: width 0.6s ease;
     box-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
 }
+
+.progress-text {
+    text-align: right;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
  
  /* FLEX */
  .flex {
@@ -287,6 +294,10 @@ small {
  <div class="progress">
  <div class="progress-bar"></div>
  </div>
+
+<div class="progress-text">
+  <span id="progress-label"></span>
+</div>
  
  
  <!-- ✅ REPARTITIONS -->
@@ -573,6 +584,17 @@ const objectif = 100000;
 const progress = (totalGlobal / objectif) * 100;
 
 document.querySelector(".progress-bar").style.width = progress + "%";
+
+// ✅ TEXTE PROGRESS
+const progressRounded = Math.min(progress, 100);
+document.getElementById("progress-label").innerText =
+    Math.round(progressRounded) + "% de " + objectif.toLocaleString('fr-BE') + " €";
+
+
+// ✅ TEXTE DYNAMIQUE
+document.getElementById("progress-label").innerText =
+    Math.round(progress) + "% de " + objectif.toLocaleString('fr-BE') + " €";
+
  }
  
  
