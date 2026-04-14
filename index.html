@@ -314,13 +314,18 @@ const rowsChart = parseCSV(await resChart.text());
 const labels = [];
 const values = [];
 
-for (let i = rowsChart.length - 10; i < rowsChart.length; i++) {
+for (let i = rowsChart.length - 20; i < rowsChart.length; i++) {
     const row = rowsChart[i];
     if (!row) continue;
 
-    labels.push(row[0]); // date
-    values.push(cleanNumber(row[8])); // total
+    const value = cleanNumber(row[7]);
+
+    if (value > 0) { // 🔥 on ignore les lignes vides
+        labels.push(row[0]);
+        values.push(value);
+    }
 }
+
 
 const ctx = document.getElementById("chart-10j");
 
