@@ -107,39 +107,42 @@ RATIO
     <div class="card">
         <h3>Métaux Précieux</h3>
 
+
         <table class="table">
-            <tr>
-                <th>Type</th>
-                <th>Stockage</th>
-                <th>Quantité</th>
-                <th>€/g</th>
-                <th>Perf</th>
-            </tr>
+    <tr>
+        <th>Type</th>
+        <th>Stockage</th>
+        <th>Quantité</th>
+        <th>€/g</th>
+        <th>Perf</th>
+    </tr>
 
-            <tr>
-                <td>🥇 Or</td>
-                <td>Suisse</td>
-                <td>338,66g</td>
-                <td>130,23€</td>
-                <td class="green">+374€</td>
-            </tr>
+    <tr>
+        <td>🥇 Or</td>
+        <td>Suisse</td>
+        <td id="q-or-suisse"></td>
+        <td id="p-or-suisse-g"></td>
+        <td id="perf-or-suisse"></td>
+    </tr>
 
-            <tr>
-                <td>🥇 Or</td>
-                <td>Belgique</td>
-                <td>130,62g</td>
-                <td>130,23€</td>
-                <td class="green">+632€</td>
-            </tr>
+    <tr>
+        <td>🥇 Or</td>
+        <td>Belgique</td>
+        <td id="q-or-belgique"></td>
+        <td id="p-or-belgique-g"></td>
+        <td id="perf-or-belgique"></td>
+    </tr>
 
-            <tr>
-                <td>🥈 Argent</td>
-                <td>Suisse</td>
-                <td>6000g</td>
-                <td>2,06€</td>
-                <td class="green">+980€</td>
-            </tr>
-        </table>
+    <tr>
+        <td>🥈 Argent</td>
+        <td>Suisse</td>
+        <td id="q-argent"></td>
+        <td id="p-argent-g"></td>
+        <td id="perf-argent"></td>
+    </tr>
+</table>
+
+
     </div>
 
     <!-- ================= TABLE ETF ================= -->
@@ -249,6 +252,58 @@ if (!rowsOA || rowsOA.length < 2) {
     console.error("Erreur données OR/ARGENT");
     return;
 }
+
+
+
+// ===== METAUX TABLE =====
+
+// OR SUISSE
+document.getElementById("q-or-suisse").innerText =
+    rowsOA?.[1]?.[2] + " g";
+
+document.getElementById("p-or-suisse-g").innerText =
+    cleanNumber(rowsOA?.[1]?.[3]).toFixed(2).replace('.', ',') + " €";
+
+const perfOrSuisse = cleanNumber(rowsOA?.[1]?.[6]);
+
+const elPerf1 = document.getElementById("perf-or-suisse");
+elPerf1.innerText = perfOrSuisse.toLocaleString('fr-BE') + " €";
+elPerf1.className = perfOrSuisse >= 0 ? "green" : "red";
+
+
+// OR BELGIQUE
+document.getElementById("q-or-belgique").innerText =
+    rowsOA?.[2]?.[2] + " g";
+
+document.getElementById("p-or-belgique-g").innerText =
+    cleanNumber(rowsOA?.[2]?.[3]).toFixed(2).replace('.', ',') + " €";
+
+const perfOrBelgique = cleanNumber(rowsOA?.[2]?.[6]);
+
+const elPerf2 = document.getElementById("perf-or-belgique");
+elPerf2.innerText = perfOrBelgique.toLocaleString('fr-BE') + " €";
+elPerf2.className = perfOrBelgique >= 0 ? "green" : "red";
+
+
+// ARGENT
+document.getElementById("q-argent").innerText =
+    rowsOA?.[3]?.[2] + " g";
+
+document.getElementById("p-argent-g").innerText =
+    cleanNumber(rowsOA?.[3]?.[3]).toFixed(2).replace('.', ',') + " €";
+
+const perfArgent = cleanNumber(rowsOA?.[3]?.[6]);
+
+const elPerf3 = document.getElementById("perf-argent");
+elPerf3.innerText = perfArgent.toLocaleString('fr-BE') + " €";
+elPerf3.className = perfArgent >= 0 ? "green" : "red";
+
+
+
+
+
+
+
 
 console.log("rowsOA:", rowsOA);
 console.log("ratio raw:", rowsOA?.[1]?.[10]);
