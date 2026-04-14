@@ -9,7 +9,7 @@
  body {
  margin: 0;
  font-family: system-ui, sans-serif;
- background: #0b0f1a;
+ background: radial-gradient(circle at top, #0f172a, #020617);
  color: #e5e7eb;
  }
  
@@ -17,17 +17,21 @@
  max-width: 900px;
  /* 🔥 réduit */
  margin: auto;
- padding: 16px;
+ padding: 12px;
  }
  
  /* HEADER */
  .header {
+ margin-bottom: 16px;
  display: flex;
  justify-content: space-between;
  align-items: center;
- margin-bottom: 10px;
- }
+}
  
+.header small {
+    color: #9ca3af;
+}
+
  .badge {
  background: #7f1d1d;
  color: #fca5a5;
@@ -39,18 +43,28 @@
  
  /* CARDS */
  .card {
- background: #111827;
- border: 1px solid #1f2937;
- border-radius: 14px;
- padding: 14px;
- /* 🔥 réduit */
- margin-top: 14px;
+    background: linear-gradient(145deg, #0f172a, #0b0f1a);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
  }
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    transition: 0.2s;
+}
+
+.card:active {
+    transform: scale(0.98);
+}
  
  .highlight {
- border: 1px solid #facc15;
- margin-bottom: 14px;
- /* 🔥 ajoute ça */
+    border: 1px solid rgba(250, 204, 21, 0.4);
+    background: linear-gradient(145deg, #1a1f2e, #0b0f1a);
  }
  
  /* KPI */
@@ -60,23 +74,37 @@
     gap: 8px;
  }
  
- .kpi {
- background: #111827;
- border-radius: 10px;
- padding: 8px;
- /* 🔥 réduit */
- text-align: center;
- }
+.kpi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+
+    background: linear-gradient(145deg, #111827, #0b0f1a);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 14px;
+    padding: 12px;
+}
  
  .kpi h3 {
- margin: 5px 0 0;
- font-size: 16px;
+    font-size: 20px;
  }
 
 .kpi small {
     font-size: 11px;
-    opacity: 0.7;
+    color: #9ca3af;
  }
+
+
+h3 {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+small {
+    letter-spacing: 0.3px;
+}
+
  
  /* TEXTE */
  .gold {
@@ -93,19 +121,17 @@
  
  /* PROGRESS */
  .progress {
- height: 6px;
- /* 🔥 plus fin */
- background: #1f2937;
- border-radius: 10px;
- margin-top: 10px;
- }
- 
- .progress-bar {
- width: 75%;
- height: 100%;
- background: #facc15;
- border-radius: 10px;
- }
+  height: 6px;
+    border-radius: 10px;
+    background: #1f2937;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #facc15, #f59e0b);
+    transition: width 0.6s ease;
+}
  
  /* FLEX */
  .flex {
@@ -116,37 +142,51 @@
  
  /* DONUT */
  .donut {
- opacity: 0;
- transform: scale(0.9);
- transition: all 0.4s ease;
- width: 120px;
- /* 🔥 plus petit */
- height: 120px;
- border-radius: 50%;
- background: conic-gradient(#facc15 60%, #c084fc 23%, #6b7280 17%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    position: relative;
+    transition: transform 0.4s ease;
  }
+
+.donut::after {
+    content: "";
+    position: absolute;
+    inset: 20px; /* un peu plus large */
+    background: #0b0f1a;
+    border-radius: 50%;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+}
  
  .donut.loaded {
  opacity: 1;
  transform: scale(1);
  }
+
+@media (max-width: 600px) {
+    .repartition-grid {
+        grid-template-columns: 1fr;
+    }
+}
  
  /* 🔥 POSITION DES DONUTS */
  .repartition-grid {
- display: flex;
- flex-direction: row;
- justify-content: center;
- align-items: flex-start;
- gap: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
  }
+
+.bloc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
  
  .bloc h4 {
- width: 320px; /* 🔥 largeur fixe */
- display: flex;
- flex-direction: column;
- align-items: center; /* 🔥 centre tout */
- margin-bottom: 15px;
- text-align: center;
+    width: 100%;
+    text-align: center;
  }
  
  .donut {
@@ -155,18 +195,17 @@
  
  /* LEGENDES */
  .legend {
- line-height: 1.6;
- margin-top: 15px;
- font-size: 14px;
- text-align: left;
- }
- 
- .legend div {
- display: flex;
- align-items: center;
- gap: 8px;
- margin-bottom: 5px;
- }
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.legend div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+
  
  /* 🔥 DOT COULEURS */
  .dot {
@@ -193,11 +232,14 @@
  .table {
  width: 100%;
  border-collapse: collapse;
- font-size: 14px;
- /* 🔥 plus compact */
+ font-size: 13px;
  }
  
- .table th,
+ .table th {
+    color: #9ca3af;
+    font-weight: 500;
+}
+
  .table td {
  padding: 8px;
  /* 🔥 réduit */
@@ -205,10 +247,7 @@
  }
  
   
- .flex {
- flex-direction: column;
- }
- }
+
  </style>
  </head>
  
@@ -376,6 +415,11 @@
  async function loadData() {
  try {
  
+
+
+
+
+
  // =========================
  // 1️⃣ DASHBOARD
  // =========================
@@ -462,7 +506,8 @@ if (totalMetaux > 0) {
         )`;
 
         requestAnimationFrame(() => {
-            donut.classList.add("loaded");
+            donut.style.transform = "scale(1)";
+    	    donut.classList.add("loaded");
         });
     }
 }
@@ -501,9 +546,10 @@ if (totalMetaux > 0) {
     #22c55e ${pMonde}% 100%
 )`;
  
+
  requestAnimationFrame(() => {
- donutETF.classList.add("loaded");
- });
+   donutETF.style.transform = "scale(1)";
+    donutETF.classList.add("loaded"); });
  }
  
  // 🔥 TOTAL GLOBAL (BON ENDROIT)
@@ -511,6 +557,13 @@ if (totalMetaux > 0) {
  
  document.getElementById("total").innerText =
  totalGlobal.toLocaleString('fr-BE') + " €";
+
+
+// ✅ PROGRESS (ICI !)
+const objectif = 100000;
+const progress = (totalGlobal / objectif) * 100;
+
+document.querySelector(".progress-bar").style.width = progress + "%";
  }
  
  
@@ -520,6 +573,8 @@ if (totalMetaux > 0) {
  }
  }
  
+
+
  
  loadData();
  
