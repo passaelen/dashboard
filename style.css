@@ -47,16 +47,17 @@ body {
 
 
 .alert-box {
-    margin-top: 12px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-size: 13px;
+    margin-top: 10px;
+    padding: 8px 12px; /* ↓ moins épais */
+    border-radius: 8px;
+
+    font-size: 12px; /* ↓ plus fin */
     text-align: center;
 
-    background: rgba(59, 130, 246, 0.12); /* bleu très léger */
+    background: rgba(59, 130, 246, 0.10); /* ↓ plus léger */
     color: #93c5fd;
 
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    border: 1px solid rgba(59, 130, 246, 0.20);
 
     backdrop-filter: blur(4px);
 }
