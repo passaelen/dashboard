@@ -109,17 +109,17 @@ gap: 8px;
 margin-top: 5px;
 }
 
-.kpi {
-    min-height: 70px;
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2px;
-    background: linear-gradient(145deg, #111827, #0b0f1a);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 12px;
-    padding: 8px;
+.kpi
+{
+margin-bottom: 6px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+gap: 2px;
+background: linear-gradient(145deg, #111827, #0b0f1a);
+border: 1px solid rgba(255,255,255,0.05);
+border-radius: 12px;
+padding: 8px;
 }
 
 .kpi h3 {
