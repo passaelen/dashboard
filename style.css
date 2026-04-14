@@ -35,6 +35,16 @@ body {
     opacity: 0.8;
 }
 
+.ratio-alert {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0px rgba(239,68,68,0.7); }
+    50% { box-shadow: 0 0 12px rgba(239,68,68,0.9); }
+    100% { box-shadow: 0 0 0px rgba(239,68,68,0.7); }
+}
+
 
 
 
