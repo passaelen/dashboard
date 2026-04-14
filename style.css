@@ -45,15 +45,23 @@ body {
     100% { box-shadow: 0 0 0px rgba(239,68,68,0.7); }
 }
 
+
 .alert-box {
-    white-space: pre-line;
-    margin-top: 10px;
-    padding: 10px;
+    margin-top: 12px;
+    padding: 10px 14px;
     border-radius: 10px;
     font-size: 13px;
     text-align: center;
-    font-weight: 500;
+
+    background: rgba(59, 130, 246, 0.12); /* bleu très léger */
+    color: #93c5fd;
+
+    border: 1px solid rgba(59, 130, 246, 0.25);
+
+    backdrop-filter: blur(4px);
 }
+
+
 
 
 /* ===== GRAPH 10 JOURS ===== */
