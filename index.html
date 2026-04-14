@@ -179,7 +179,7 @@ small {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
     	gap: 20px;
-    	align-items: start; /* 🔥 important */
+    	align-items: stretch; /* 🔥 pas center */
     }
 }
  
@@ -193,12 +193,10 @@ small {
 
 .bloc {
     display: grid;
-    grid-template-rows: auto 160px 80px; /* 🔥 clé */
-    flex-direction: column;
+    grid-template-rows: auto 1fr auto; /* 🔥 clé */
     align-items: center;
-    justify-content: flex-start;
     justify-items: center;
-    min-height: 260px; /* 🔥 clé */
+    min-height: 260px;
 }
  
  .bloc h4 {
@@ -209,7 +207,7 @@ small {
  
  .donut {
      margin: 10px 0;
-     align-self: center;
+     align-self: center; /* 🔥 CENTRAGE RÉEL */
  }
  
  /* LEGENDES */
@@ -597,9 +595,6 @@ document.getElementById("progress-label").innerText =
     Math.round(progressRounded) + "% de " + objectif.toLocaleString('fr-BE') + " €";
 
 
-// ✅ TEXTE DYNAMIQUE
-document.getElementById("progress-label").innerText =
-    Math.round(progress) + "% de " + objectif.toLocaleString('fr-BE') + " €";
 
  }
  
