@@ -13,6 +13,12 @@ body {
     padding: 12px;
 }
 
+/* ===== pour evolution 10 jours ===== */
+canvas {
+    width: 100% !important;
+    max-height: 220px;
+}
+
 /* ===== HEADER ===== */
 .header {
     display: flex;
