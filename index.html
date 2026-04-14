@@ -257,6 +257,25 @@ const totalETF = monde + seniors;
 
 console.log("ETF:", monde, seniors, totalETF);
 
+
+// ===== KPI & TOTAL GLOBAL =====
+const totalOr = orSuisse + orBelgique;
+
+// OR
+document.getElementById("or").innerText =
+    totalOr.toLocaleString('fr-BE') + " €";
+
+// ARGENT
+document.getElementById("argent").innerText =
+    argent.toLocaleString('fr-BE') + " €";
+
+// TOTAL GLOBAL (métaux + ETF)
+const totalGlobal = totalOr + argent + totalETF;
+
+document.getElementById("total").innerText =
+    totalGlobal.toLocaleString('fr-BE') + " €";
+
+
 // ===== affichage =====
 if (totalETF > 0) {
     const pMonde = (monde / totalETF) * 100;
