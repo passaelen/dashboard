@@ -230,36 +230,55 @@ async function loadData() {
         }
 
         // ===== ETF =====
-        const urlETF = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0";
+const urlETF = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0";
 
-        const resETF = await fetch(urlETF);
-        const textETF = await resETF.text();
-        const rowsETF = parseCSV(textETF);
+const resETF = await fetch(urlETF);
+const textETF = await resETF.text();
+const rowsETF = parseCSV(textETF);
 
-        const monde = cleanNumber(rowsETF[1][7]);
-        const seniors = cleanNumber(rowsETF[2][7]);
+// 🔥 DEBUG (tu peux enlever après)
+console.log("ROWS ETF:", rowsETF);
 
-        const totalETF = monde + seniors;
+// 🔥 sécurisation + fallback colonne
+let monde = cleanNumber(rowsETF[1][7]);
+let seniors = cleanNumber(rowsETF[2][7]);
 
-        if (totalETF > 0) {
-            const pMonde = (monde / totalETF) * 100;
-            const pSeniors = (seniors / totalETF) * 100;
+// 👉 si NaN → on tente autre colonne
+if (!monde || !seniors) {
+    monde = cleanNumber(rowsETF[1][1]);
+    seniors = cleanNumber(rowsETF[2][1]);
+}
 
-            document.getElementById("p-monde").innerText = pMonde.toFixed(2) + "%";
-            document.getElementById("p-seniors").innerText = pSeniors.toFixed(2) + "%";
+// 👉 sécurité finale
+monde = monde || 0;
+seniors = seniors || 0;
 
-            const donutETF = document.querySelector(".donut.etf");
+const totalETF = monde + seniors;
 
-            donutETF.style.background = `conic-gradient(
-                #38bdf8 0% ${pMonde}%,
-                #22c55e ${pMonde}% 100%
-            )`;
-        }
+console.log("ETF:", monde, seniors, totalETF);
 
-    } catch (e) {
-        console.error(e);
+// ===== affichage =====
+if (totalETF > 0) {
+    const pMonde = (monde / totalETF) * 100;
+    const pSeniors = (seniors / totalETF) * 100;
+
+    document.getElementById("p-monde").innerText =
+        pMonde.toFixed(2).replace('.', ',') + "%";
+
+    document.getElementById("p-seniors").innerText =
+        pSeniors.toFixed(2).replace('.', ',') + "%";
+
+    const donutETF = document.querySelector(".donut.etf");
+
+    if (donutETF) {
+        donutETF.style.background = `conic-gradient(
+            #38bdf8 0% ${pMonde}%,
+            #22c55e ${pMonde}% 100%
+        )`;
     }
 }
+
+
 loadData();
 
     
