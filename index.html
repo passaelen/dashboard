@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=11">
 
 
 </head>
@@ -248,7 +248,7 @@ async function loadData() {
 
 
 // ===== RATIO =====
-const ratioValue = cleanNumber(rowsOA?.[1]?.[10]);
+const ratioValue = cleanNumber(rowsOA?.[1]?.[10] || 0);
 
 let label = "";
 let emoji = "";
