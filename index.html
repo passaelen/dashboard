@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=12">
 
 
 </head>
@@ -375,25 +375,6 @@ ratioCard.classList.add("ratio-alert");
 
 document.getElementById("ratio-label").innerHTML =
     "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
-
-
-
-
-const ratioEl = document.getElementById("ratio");
-
-// 🎨 Couleur dynamique
-if (ratioValue >= 70) {
-    ratioEl.style.color = "#93c5fd"; // bleu froid
-} else if (ratioValue >= 55) {
-    ratioEl.style.color = "#60a5fa"; // bleu normal
-} else if (ratioValue >= 50) {
-    ratioEl.style.color = "#facc15"; // neutre (frontière)
-} else if (ratioValue >= 45) {
-    ratioEl.style.color = "#fb923c"; // orange
-} else {
-    ratioEl.style.color = "#ef4444"; // rouge
-}
-
 
 
         
