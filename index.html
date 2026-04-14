@@ -193,14 +193,13 @@ function parseCSV(text) {
 }
 
 
-function cleanNumber(value) 
-{
+function cleanNumber(value) {
     if (!value) return 0;
 
     return Number(
         value
             .replace(/"/g, '')
-            .replace(/\u00A0/g, '') // 🔥 espace insécable
+            .replace(/\u00A0/g, '') // espace insécable
             .replace(/\s/g, '')
             .replace('€', '')
             .replace(',', '.')
