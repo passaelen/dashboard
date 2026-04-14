@@ -26,6 +26,15 @@ body {
     line-height: 1.2;
 }
 
+#ratio-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+
 
 
 /* ===== GRAPH 10 JOURS ===== */
