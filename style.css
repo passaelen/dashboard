@@ -13,6 +13,21 @@ body {
     padding: 12px;
 }
 
+
+/* ===== Ratio ===== */
+.ratio-sub {
+    display: block;
+    font-size: 11px;
+    margin-top: 6px;
+    color: #9ca3af;
+}
+
+#ratio {
+    line-height: 1.2;
+}
+
+
+
 /* ===== GRAPH 10 JOURS ===== */
 .chart-container {
     position: relative;
