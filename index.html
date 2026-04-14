@@ -192,10 +192,12 @@ small {
  }
 
 .bloc {
-    display: flex;
+    display: grid;
+    grid-template-rows: auto 160px 80px; /* 🔥 clé */
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    justify-items: center;
     min-height: 260px; /* 🔥 clé */
 }
  
@@ -207,12 +209,16 @@ small {
  
  .donut {
      margin: 10px 0;
+     align-self: center;
  }
  
  /* LEGENDES */
  .legend {
     font-size: 13px;
     margin-top: 10px;
+    width: 100%;
+    max-width: 180px;
+    height: 60px; /* 🔥 fixe */
 }
 
 .legend div {
