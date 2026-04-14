@@ -278,6 +278,35 @@ if (ratioValue >= 80) {
 document.getElementById("ratio").innerHTML =
     ratioValue.toFixed(2).replace('.', ',');
 
+
+const ratioEl = document.getElementById("ratio");
+const ratioCard = ratioEl.closest(".kpi");
+
+// RESET
+ratioCard.style.borderColor = "rgba(255,255,255,0.05)";
+
+// COULEURS SELON ZONE
+if (ratioValue >= 70) {
+    ratioEl.style.color = "#60a5fa"; // bleu froid
+    ratioCard.style.borderColor = "#1d4ed8";
+}
+else if (ratioValue >= 55) {
+    ratioEl.style.color = "#93c5fd"; // bleu clair
+}
+else if (ratioValue >= 50) {
+    ratioEl.style.color = "#facc15"; // jaune
+}
+else if (ratioValue >= 45) {
+    ratioEl.style.color = "#fb923c"; // orange
+}
+else {
+    ratioEl.style.color = "#ef4444"; // rouge
+    ratioCard.style.borderColor = "#7f1d1d";
+}
+
+
+
+
 document.getElementById("ratio-label").innerHTML =
     "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
 
