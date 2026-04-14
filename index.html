@@ -60,6 +60,11 @@ RATIO
         <span id="progress-label"></span>
     </div>
 
+<div class="card alert-box" id="alert-box">
+<span id="alert-text">Chargement...</span>
+</div>
+
+
     <!-- ================= REPARTITIONS ================= -->
     <div class="card">
         <h3>Répartitions</h3>
@@ -274,6 +279,55 @@ if (ratioValue >= 80) {
     emoji = "🚨";
 }
 
+
+
+const alertBox = document.getElementById("alert-box");
+const alertText = document.getElementById("alert-text");
+
+let message = "";
+let bg = "";
+let color = "";
+
+if (ratioValue >= 70) {
+    message = "❄️ Zone froide — Patience";
+    bg = "#1e3a8a";
+    color = "#bfdbfe";
+}
+else if (ratioValue >= 55) {
+    message = "🧊 Nord — Attente";
+    bg = "#1e40af";
+    color = "#93c5fd";
+}
+else if (ratioValue >= 50) {
+    message = "⚖️ Zone pivot — Surveillance";
+    bg = "#78350f";
+    color = "#fde68a";
+}
+else if (ratioValue >= 45) {
+    message = "🌤️ Début d’action";
+    bg = "#7c2d12";
+    color = "#fdba74";
+}
+else if (ratioValue >= 40) {
+    message = "🔥 Zone chaude — Action progressive";
+    bg = "#7f1d1d";
+    color = "#fca5a5";
+}
+else {
+    message = "🚨 Zone extrême — Action forte";
+    bg = "#450a0a";
+    color = "#fecaca";
+}
+
+alertText.innerText = message;
+alertBox.style.background = bg;
+alertBox.style.color = color;
+
+
+
+
+
+
 // 🔥 affichage compact
 document.getElementById("ratio").innerHTML =
     ratioValue.toFixed(2).replace('.', ',');
@@ -317,6 +371,23 @@ document.getElementById("ratio-label").innerHTML =
 
 
 
+const ratioEl = document.getElementById("ratio");
+
+// 🎨 Couleur dynamique
+if (ratioValue >= 70) {
+    ratioEl.style.color = "#93c5fd"; // bleu froid
+} else if (ratioValue >= 55) {
+    ratioEl.style.color = "#60a5fa"; // bleu normal
+} else if (ratioValue >= 50) {
+    ratioEl.style.color = "#facc15"; // neutre (frontière)
+} else if (ratioValue >= 45) {
+    ratioEl.style.color = "#fb923c"; // orange
+} else {
+    ratioEl.style.color = "#ef4444"; // rouge
+}
+
+
+
         
 
         const orSuisse = cleanNumber(rowsOA?.[1]?.[4]);
@@ -344,7 +415,8 @@ document.getElementById("ratio-label").innerHTML =
             }
         }
 
-        // ===== ETF =====
+     
+// ===== ETF =====
         const resETF = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0");
         const rowsETF = parseCSV(await resETF.text());
 
@@ -385,6 +457,7 @@ if (totalGlobal >= 150000) {
 }
 
 const progress = (totalGlobal / objectif) * 100;
+
 
 // ===== BARRE =====
 document.querySelector(".progress-bar").style.width =
