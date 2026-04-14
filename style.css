@@ -46,6 +46,7 @@ body {
 }
 
 .alert-box {
+    white-space: pre-line;
     margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
