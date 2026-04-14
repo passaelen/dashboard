@@ -300,11 +300,15 @@ else if (ratioValue >= 45) {
     ratioEl.style.color = "#fb923c"; // orange
 }
 else {
-    ratioEl.style.color = "#ef4444"; // rouge
-    ratioCard.style.borderColor = "#7f1d1d";
+ratioEl.style.color = "#ef4444"; // rouge
+ratioCard.style.borderColor = "#7f1d1d";
 }
 
-
+ratioCard.classList.remove("ratio-alert");
+if (ratioValue <= 45) 
+{
+ratioCard.classList.add("ratio-alert");
+}
 
 
 document.getElementById("ratio-label").innerHTML =
