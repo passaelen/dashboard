@@ -72,7 +72,7 @@
                 </div>
             </div>
 
-            <!-- ✅ GRAPH  -->
+            <!-- ✅ GRAPH EN DEHORS -->
             <div class="card">
                 <h3>Évolution 10 jours</h3>
                 <canvas id="chart-10j"></canvas>
@@ -327,33 +327,35 @@ async function loadData() {
         
         // Création graphique
         const ctx = document.getElementById("chart-10j");
-        
-        if (ctx) {
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Total €',
-                        data: values,
-                        tension: 0.3,
-                        fill: true,
-                        borderWidth: 2
-                    }]
+
+if (ctx) {
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total €',
+                data: values,
+                tension: 0.3,
+                fill: true,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#9ca3af' }
                 },
-                options: {
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        x: {
-                            ticks: { color: '#9ca3af' }
-                        },
-                        y: {
-                            ticks: { color: '#9ca3af' }
-                        }
-                    }
+                y: {
+                    ticks: { color: '#9ca3af' }
                 }
+            }
+        }
+    });
+}
 
 
         
