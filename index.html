@@ -211,10 +211,7 @@ function cleanNumber(value) {
 
     return Number(
         value
-            .replace(/"/g, '')
-            .replace(/\u00A0/g, '') // espace insécable
-            .replace(/\s/g, '')
-            .replace('€', '')
+            .replace(/[^0-9,-]/g, '') // 🔥 enlève TOUT sauf chiffres, - et ,
             .replace(',', '.')
     ) || 0;
 }
