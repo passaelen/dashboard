@@ -106,10 +106,11 @@ padding-bottom: 10px;
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 gap: 8px;
-margin-top: 3px;
+margin-top: 5px;
 }
 
 .kpi {
+    min-height: 70px;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -118,7 +119,7 @@ margin-top: 3px;
     background: linear-gradient(145deg, #111827, #0b0f1a);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 12px;
-    padding: 7px;
+    padding: 8px;
 }
 
 .kpi h3 {
