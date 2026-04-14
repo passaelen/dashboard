@@ -110,6 +110,7 @@ margin-top: 5px;
 }
 
 .kpi {
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
