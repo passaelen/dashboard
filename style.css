@@ -265,6 +265,14 @@ small {
     justify-content: space-between;
 }
 
+
+
+/* ===== bloc Métaux Précieux===== */
+.table td {
+    font-size: 13px;
+}
+
+
 /* ===== COLORS ===== */
 .dot {
     width: 10px;
