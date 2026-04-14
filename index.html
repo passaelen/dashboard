@@ -163,8 +163,8 @@
 
 </div>
 
+
 <script>
-/* ===== UTILS ===== */
 function parseCSV(text) {
     return text.trim().split("\n").map(row => {
         const result = [];
@@ -194,13 +194,11 @@ function cleanNumber(value) {
     );
 }
 
-/* ===== DATA ===== */
 async function loadData() {
     try {
 
         // ===== OR / ARGENT =====
         const urlOA = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1574558752";
-
         const resOA = await fetch(urlOA);
         const textOA = await resOA.text();
         const rowsOA = parseCSV(textOA);
@@ -222,89 +220,77 @@ async function loadData() {
 
             const donut = document.getElementById("donut-metaux");
 
-            donut.style.background = `conic-gradient(
-                #facc15 0% ${p1}%,
-                #f59e0b ${p1}% ${p1 + p2}%,
-                #9ca3af ${p1 + p2}% 100%
-            )`;
+            if (donut) {
+                donut.style.background = `conic-gradient(
+                    #facc15 0% ${p1}%,
+                    #f59e0b ${p1}% ${p1 + p2}%,
+                    #9ca3af ${p1 + p2}% 100%
+                )`;
+            }
         }
 
         // ===== ETF =====
-const urlETF = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0";
+        const urlETF = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0";
+        const resETF = await fetch(urlETF);
+        const textETF = await resETF.text();
+        const rowsETF = parseCSV(textETF);
 
-const resETF = await fetch(urlETF);
-const textETF = await resETF.text();
-const rowsETF = parseCSV(textETF);
+        let monde = cleanNumber(rowsETF[1][7]);
+        let seniors = cleanNumber(rowsETF[2][7]);
 
-// 🔥 DEBUG (tu peux enlever après)
-console.log("ROWS ETF:", rowsETF);
+        if (!monde || !seniors) {
+            monde = cleanNumber(rowsETF[1][1]);
+            seniors = cleanNumber(rowsETF[2][1]);
+        }
 
-// 🔥 sécurisation + fallback colonne
-let monde = cleanNumber(rowsETF[1][7]);
-let seniors = cleanNumber(rowsETF[2][7]);
+        monde = monde || 0;
+        seniors = seniors || 0;
 
-// 👉 si NaN → on tente autre colonne
-if (!monde || !seniors) {
-    monde = cleanNumber(rowsETF[1][1]);
-    seniors = cleanNumber(rowsETF[2][1]);
-}
+        const totalETF = monde + seniors;
 
-// 👉 sécurité finale
-monde = monde || 0;
-seniors = seniors || 0;
+        // ===== KPI =====
+        const totalOr = orSuisse + orBelgique;
 
-const totalETF = monde + seniors;
+        document.getElementById("or").innerText =
+            totalOr.toLocaleString('fr-BE') + " €";
 
-console.log("ETF:", monde, seniors, totalETF);
+        document.getElementById("argent").innerText =
+            argent.toLocaleString('fr-BE') + " €";
 
+        const totalGlobal = totalOr + argent + totalETF;
 
-// ===== KPI & TOTAL GLOBAL =====
-const totalOr = orSuisse + orBelgique;
+        document.getElementById("total").innerText =
+            totalGlobal.toLocaleString('fr-BE') + " €";
 
-// OR
-document.getElementById("or").innerText =
-    totalOr.toLocaleString('fr-BE') + " €";
+        // ===== DONUT ETF =====
+        if (totalETF > 0) {
+            const pMonde = (monde / totalETF) * 100;
+            const pSeniors = (seniors / totalETF) * 100;
 
-// ARGENT
-document.getElementById("argent").innerText =
-    argent.toLocaleString('fr-BE') + " €";
+            document.getElementById("p-monde").innerText =
+                pMonde.toFixed(2).replace('.', ',') + "%";
 
-// TOTAL GLOBAL (métaux + ETF)
-const totalGlobal = totalOr + argent + totalETF;
+            document.getElementById("p-seniors").innerText =
+                pSeniors.toFixed(2).replace('.', ',') + "%";
 
-document.getElementById("total").innerText =
-    totalGlobal.toLocaleString('fr-BE') + " €";
+            const donutETF = document.querySelector(".donut.etf");
 
+            if (donutETF) {
+                donutETF.style.background = `conic-gradient(
+                    #38bdf8 0% ${pMonde}%,
+                    #22c55e ${pMonde}% 100%
+                )`;
+            }
+        }
 
-// ===== affichage =====
-if (totalETF > 0) {
-    const pMonde = (monde / totalETF) * 100;
-    const pSeniors = (seniors / totalETF) * 100;
-
-    document.getElementById("p-monde").innerText =
-        pMonde.toFixed(2).replace('.', ',') + "%";
-
-    document.getElementById("p-seniors").innerText =
-        pSeniors.toFixed(2).replace('.', ',') + "%";
-
-    const donutETF = document.querySelector(".donut.etf");
-
-    if (donutETF) {
-        donutETF.style.background = `conic-gradient(
-            #38bdf8 0% ${pMonde}%,
-            #22c55e ${pMonde}% 100%
-        )`;
-
- } catch (e) {
-   console.error("Erreur :", e);
-
+    } catch (e) {
+        console.error("Erreur :", e);
     }
 }
 
-
 loadData();
-
-    
 </script>
+
+
 </body>
 </html>
