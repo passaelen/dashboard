@@ -198,7 +198,7 @@ function cleanNumber(value) {
 
 async function loadData() {
     try {
-	console.log("DATA OA:", rowsOA);
+	
 
 
 // ===== DASHBOARD (VARIATION) =====
@@ -207,6 +207,7 @@ const urlDash = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_
 const resDash = await fetch(urlDash);
 const textDash = await resDash.text();
 const rowsDash = parseCSV(textDash);
+console.log("DATA OA:", rowsOA);
 
 // 👉 B6 = ligne 5 / colonne 1
 const variation = rowsDash?.[5]?.[1];
