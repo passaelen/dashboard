@@ -143,10 +143,10 @@ small {
 .green { color: #22c55e; }
 .red { color: #ef4444; }
 
+
 /* ===== PROGRESS ===== */
 .progress {
-    margin-top: 15px;
-    margin-bottom: 8px;
+    margin: 15px 0 8px 0;
     height: 6px;
     border-radius: 10px;
     background: #1f2937;
@@ -158,16 +158,17 @@ small {
     height: 100%;
     background: linear-gradient(90deg, #facc15, #f59e0b);
     transition: width 0.6s ease;
-    box-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
 }
 
 .progress-text {
+    margin-top: 4px;
     margin-bottom: 15px;
     text-align: right;
     font-size: 12px;
     color: #9ca3af;
-    margin-top: 4px;
 }
+
 
 /* ===== DONUT ===== */
 .repartition-grid {
