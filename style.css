@@ -91,15 +91,20 @@ body {
     transform: scale(0.98);
 }
 
-.highlight {
-    border: 1px solid rgba(250, 204, 21, 0.4);
+.highlight 
+{
+border: 1px solid rgba(250, 204, 21, 0.4);
+margin-bottom: 12px;
 }
 
+
 /* ===== KPI ===== */
-.kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+.kpi-grid 
+{
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 8px;
+margin-top: 5px;
 }
 
 .kpi {
