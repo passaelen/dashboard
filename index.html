@@ -320,18 +320,26 @@ const rowsChart = parseCSV(await resChart.text());
 const labels = [];
 const values = [];
 
-for (let i = rowsChart.length - 20; i < rowsChart.length; i++) {
+// 🔥 lecture propre du sheet "Stat"
+for (let i = 1; i < rowsChart.length; i++) {
     const row = rowsChart[i];
     if (!row) continue;
 
-    const value = cleanNumber(row[7]);
+    const value = cleanNumber(row[7]); // colonne H = Total Global
 
-    if (value > 0) { // 🔥 on ignore les lignes vides
-        labels.push(row[0]);
-        values.push(value);
+    if (value > 1000) {
+        labels.push(row[0]); // Date
+        values.push(value);  // Total €
     }
 }
 
+// 🔥 garder uniquement les 10 dernières valeurs
+const lastLabels = labels.slice(-10);
+const lastValues = values.slice(-10);
+
+// 🔍 debug (tu peux supprimer après test)
+console.log("labels:", lastLabels);
+console.log("values:", lastValues);
 
 const ctx = document.getElementById("chart-10j");
 
@@ -339,22 +347,16 @@ if (ctx) {
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: labels,
-            
-datasets: [{
-    data: values,
-    tension: 0.4,
-    fill: true,
-    borderWidth: 3,
-
-    borderColor: "#facc15", // 🔥 ligne visible (jaune)
-    
-    backgroundColor: "rgba(250, 204, 21, 0.15)", // zone douce
-    
-    pointRadius: 3,
-    pointBackgroundColor: "#facc15"
-}]
-
+            labels: lastLabels,
+            datasets: [{
+                data: lastValues,
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3,
+                borderColor: "#facc15",
+                backgroundColor: "rgba(250, 204, 21, 0.15)",
+                pointRadius: 0
+            }]
         },
         options: {
             responsive: true,
@@ -362,20 +364,16 @@ datasets: [{
             plugins: {
                 legend: { display: false }
             },
-
-       
-scales: {
-    x: {
-        ticks: { color: '#9ca3af' },
-        grid: { color: 'rgba(255,255,255,0.05)' }
-    },
-    y: {
-        ticks: { color: '#9ca3af' },
-        grid: { color: 'rgba(255,255,255,0.05)' }
-    }
-}
-
-
+            scales: {
+                x: {
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                y: {
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
         }
     });
 }
