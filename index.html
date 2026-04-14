@@ -193,6 +193,46 @@ function cleanNumber(value) {
               ?.replace(',', '.')
     );
 }
+
+<script>
+async function loadData() {
+    try {
+
+        const urlOA = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1574558752";
+
+        const resOA = await fetch(urlOA);
+        const textOA = await resOA.text();
+        const rowsOA = parseCSV(textOA);
+
+        const orSuisse = cleanNumber(rowsOA[1][4]);
+        const orBelgique = cleanNumber(rowsOA[2][4]);
+        const argent = cleanNumber(rowsOA[3][4]);
+
+        const totalMetaux = orSuisse + orBelgique + argent;
+
+        if (totalMetaux > 0) {
+            const p1 = (orSuisse / totalMetaux) * 100;
+            const p2 = (orBelgique / totalMetaux) * 100;
+            const p3 = (argent / totalMetaux) * 100;
+
+            const donut = document.getElementById("donut-metaux");
+
+            donut.style.background = `conic-gradient(
+                #facc15 0% ${p1}%,
+                #f59e0b ${p1}% ${p1 + p2}%,
+                #9ca3af ${p1 + p2}% 100%
+            )`;
+        }
+
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+loadData();
+</script>
+
+    
 </script>
 
 </body>
