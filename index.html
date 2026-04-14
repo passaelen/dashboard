@@ -198,6 +198,7 @@ function cleanNumber(value) {
 async function loadData() {
     try {
 
+        // ===== OR / ARGENT =====
         const urlOA = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1574558752";
 
         const resOA = await fetch(urlOA);
@@ -215,6 +216,10 @@ async function loadData() {
             const p2 = (orBelgique / totalMetaux) * 100;
             const p3 = (argent / totalMetaux) * 100;
 
+            document.getElementById("p-or-suisse").innerText = p1.toFixed(2) + "%";
+            document.getElementById("p-or-belgique").innerText = p2.toFixed(2) + "%";
+            document.getElementById("p-argent").innerText = p3.toFixed(2) + "%";
+
             const donut = document.getElementById("donut-metaux");
 
             donut.style.background = `conic-gradient(
@@ -224,12 +229,40 @@ async function loadData() {
             )`;
         }
 
+        // ===== ETF =====
+        const urlETF = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0";
+
+        const resETF = await fetch(urlETF);
+        const textETF = await resETF.text();
+        const rowsETF = parseCSV(textETF);
+
+        const monde = cleanNumber(rowsETF[1][7]);
+        const seniors = cleanNumber(rowsETF[2][7]);
+
+        const totalETF = monde + seniors;
+
+        if (totalETF > 0) {
+            const pMonde = (monde / totalETF) * 100;
+            const pSeniors = (seniors / totalETF) * 100;
+
+            document.getElementById("p-monde").innerText = pMonde.toFixed(2) + "%";
+            document.getElementById("p-seniors").innerText = pSeniors.toFixed(2) + "%";
+
+            const donutETF = document.querySelector(".donut.etf");
+
+            donutETF.style.background = `conic-gradient(
+                #38bdf8 0% ${pMonde}%,
+                #22c55e ${pMonde}% 100%
+            )`;
+        }
+
     } catch (e) {
         console.error(e);
     }
 }
-
 loadData();
+
+    
 </script>
 </body>
 </html>
