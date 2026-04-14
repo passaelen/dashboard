@@ -217,8 +217,7 @@ small {
     justify-content: space-between;
     margin-bottom: 4px;
 }
-<head>
-<style>
+
  /* 🔥 DOT COULEURS */
  .dot {
  width: 10px;
@@ -257,7 +256,4 @@ small {
  /* 🔥 réduit */
  border-bottom: 1px solid #1f2937;
  }
-
-</style>
-</head>
  
