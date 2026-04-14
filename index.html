@@ -330,8 +330,9 @@ else {
 alertText.innerText = message;
 alertBox.style.background = bg;
 alertBox.style.color = color;
-
-
+alertBox.classList.remove("alert-hot");
+if (ratioValue < 45) 
+{alertBox.classList.add("alert-hot");}
 
 
 // 🔥 affichage compact
