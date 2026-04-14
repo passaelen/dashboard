@@ -51,7 +51,7 @@ body {
     background: linear-gradient(145deg, #0f172a, #0b0f1a);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 16px;
-    padding: 16px;
+    padding: 14px;
     margin-top: 16px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.4);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -84,12 +84,12 @@ body {
     gap: 2px;
     background: linear-gradient(145deg, #111827, #0b0f1a);
     border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 14px;
-    padding: 12px;
+    border-radius: 12px;
+    padding: 10px;
 }
 
 .kpi h3 {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .kpi small {
@@ -138,7 +138,7 @@ small {
 .repartition-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 16px;
     align-items: stretch;
 }
 
@@ -153,8 +153,8 @@ small {
 .donut {
     background-clip: padding-box;
     box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     position: relative;
     transition: transform 0.4s ease;
