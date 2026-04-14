@@ -160,13 +160,12 @@ small {
 
 /* ===== PROGRESS ===== */
 .progress {
-    position: relative; /* IMPORTANT */
-    margin: 15px 0;
+    position: relative;
+    margin: 16px 0 10px 0; /* 👈 plus d’air au-dessus */
     height: 6px;
     border-radius: 10px;
     background: #1f2937;
     overflow: hidden;
-    z-index: 0;
 }
 
 .progress-bar {
