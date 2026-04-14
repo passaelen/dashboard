@@ -325,21 +325,44 @@ document.getElementById("ratio-label").innerHTML =
 
         const totalETF = monde + seniors;
 
-        // KPI
-        const totalOr = orSuisse + orBelgique;
+        
+// KPI
+const totalOr = orSuisse + orBelgique;
 
         document.getElementById("or").innerText =
             totalOr.toLocaleString('fr-BE') + " €";
 
-        document.getElementById("argent").innerText =
-            argent.toLocaleString('fr-BE') + " €";
+        document.getElementById("argent").innerText=argent.toLocaleString('fr-BE') + " €";
 
-        const totalGlobal = totalOr + argent + totalETF;
+const totalGlobal = totalOr + argent + totalETF;
 
-        document.getElementById("total").innerText =
-            totalGlobal.toLocaleString('fr-BE') + " €";
+// ✅ 1. afficher le total
+document.getElementById("total").innerText =
+    totalGlobal.toLocaleString('fr-BE') + " €";
 
-        // DONUT ETF
+// ✅ 2. ENSUITE la logique progression
+let objectif = 100000;
+
+if (totalGlobal >= 150000) {
+    objectif = 200000;
+} else if (totalGlobal >= 125000) {
+    objectif = 150000;
+} else if (totalGlobal >= 100000) {
+    objectif = 125000;
+}
+
+const progress = (totalGlobal / objectif) * 100;
+
+document.querySelector(".progress-bar").style.width =
+    Math.min(progress, 100) + "%";
+
+document.getElementById("progress-label").innerText =
+    Math.round(progress) + "% de " +
+    objectif.toLocaleString('fr-BE') + " €";
+
+       
+
+// DONUT ETF
         if (totalETF > 0) {
             const pMonde = (monde / totalETF) * 100;
             const pSeniors = (seniors / totalETF) * 100;
