@@ -1,356 +1,199 @@
 <!DOCTYPE html>
- <html lang="fr">
- 
- <head>
+<html lang="fr">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
-   
-   <link rel="stylesheet" href="style.css">
- </head>
- 
- <body>
- <div class="container"> <!-- HEADER -->
- <div class="header">
- <div>
- <h2 style="margin:0;">💼 Portefeuille</h2> <small>Or · Argent · ETF</small>
- </div>
- <div class="badge" id="variation">-274,32 €</div>
- </div> <!-- TOTAL -->
- <div class="card highlight"> <small>Total global</small>
- <h2 id="total" class="gold" style="margin:5px 0;">75 441 €</h2>
- </div> <!-- KPI -->
- <div class="kpi-grid">
- <div class="kpi"> <small>OR</small>
- <h3 id="or" class="gold">61 114 €</h3>
- </div>
- <div class="kpi"> <small>ARGENT</small>
- <h3 id="argent">12 360 €</h3>
- </div>
- <div class="kpi"> <small>RATIO</small>
- <h3 id="ratio" class="gold">63,35x</h3>
- </div>
- </div> 
- 
- <!-- PROGRESS -->
- <div class="progress">
- <div class="progress-bar"></div>
- </div>
 
-<div class="progress-text">
-  <span id="progress-label"></span>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= HEADER ================= -->
+    <div class="header">
+        <div>
+            <h2 style="margin:0;">💼 Portefeuille</h2>
+            <small>Or · Argent · ETF</small>
+        </div>
+        <div class="badge" id="variation">-274,32 €</div>
+    </div>
+
+    <!-- ================= TOTAL ================= -->
+    <div class="card highlight">
+        <small>Total global</small>
+        <h2 id="total" class="gold" style="margin:5px 0;">75 441 €</h2>
+    </div>
+
+    <!-- ================= KPI ================= -->
+    <div class="kpi-grid">
+        <div class="kpi">
+            <small>OR</small>
+            <h3 id="or" class="gold">61 114 €</h3>
+        </div>
+
+        <div class="kpi">
+            <small>ARGENT</small>
+            <h3 id="argent">12 360 €</h3>
+        </div>
+
+        <div class="kpi">
+            <small>RATIO</small>
+            <h3 id="ratio" class="gold">63,35x</h3>
+        </div>
+    </div>
+
+    <!-- ================= PROGRESS ================= -->
+    <div class="progress">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="progress-text">
+        <span id="progress-label"></span>
+    </div>
+
+    <!-- ================= REPARTITIONS ================= -->
+    <div class="card">
+        <h3>Répartitions</h3>
+
+        <div class="repartition-grid">
+
+            <!-- METAUX -->
+            <div class="bloc">
+                <h4>Métaux</h4>
+                <div class="donut" id="donut-metaux"></div>
+
+                <div class="legend">
+                    <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
+                    <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
+                    <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
+                </div>
+            </div>
+
+            <!-- ETF -->
+            <div class="bloc">
+                <h4>ETF</h4>
+                <div class="donut etf"></div>
+
+                <div class="legend">
+                    <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
+                    <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= TABLE METAUX ================= -->
+    <div class="card">
+        <h3>Métaux Précieux</h3>
+
+        <table class="table">
+            <tr>
+                <th>Type</th>
+                <th>Stockage</th>
+                <th>Quantité</th>
+                <th>€/g</th>
+                <th>Perf</th>
+            </tr>
+
+            <tr>
+                <td>🥇 Or</td>
+                <td>Suisse</td>
+                <td>338,66g</td>
+                <td>130,23€</td>
+                <td class="green">+374€</td>
+            </tr>
+
+            <tr>
+                <td>🥇 Or</td>
+                <td>Belgique</td>
+                <td>130,62g</td>
+                <td>130,23€</td>
+                <td class="green">+632€</td>
+            </tr>
+
+            <tr>
+                <td>🥈 Argent</td>
+                <td>Suisse</td>
+                <td>6000g</td>
+                <td>2,06€</td>
+                <td class="green">+980€</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ================= TABLE ETF ================= -->
+    <div class="card">
+        <h3>ETF</h3>
+
+        <table class="table">
+            <tr>
+                <th>Nom</th>
+                <th>Parts</th>
+                <th>Prix</th>
+                <th>Perf</th>
+            </tr>
+
+            <tr>
+                <td>Monde</td>
+                <td>5</td>
+                <td>147,70€</td>
+                <td class="red">-22€</td>
+            </tr>
+
+            <tr>
+                <td>Séniors</td>
+                <td>13</td>
+                <td>94,44€</td>
+                <td class="green">+179€</td>
+            </tr>
+
+            <tr>
+                <td>Juniors</td>
+                <td>0</td>
+                <td>99,65€</td>
+                <td>0€</td>
+            </tr>
+        </table>
+    </div>
+
 </div>
- 
- 
- <!-- ✅ REPARTITIONS -->
- <div class="card">
- <h3 style="margin-bottom:20px;">Répartitions</h3>
- 
- <div class="repartition-grid">
- 
- <!-- METAUX -->
- <div class="bloc">
- <h4>Métaux</h4>
- <div class="donut" id="donut-metaux"></div>
- 
- <div class="legend">
- <div><span class="dot or1"></span> Or Suisse : <span id="p-or-suisse"></span></div>
- <div><span class="dot or2"></span> Or Belgique : <span id="p-or-belgique"></span></div>
- <div><span class="dot argent"></span> Argent : <span id="p-argent"></span></div>
- </div>
- </div>
- 
- <!-- ETF -->
- <div class="bloc">
- <h4>ETF</h4>
- <div class="donut etf"></div>
- 
- <div class="legend">
- <div><span class="dot monde"></span> Monde : <span id="p-monde"></span></div>
- <div><span class="dot seniors"></span> Séniors : <span id="p-seniors"></span></div>
- </div>
- </div>
- 
- </div>
- </div>
- 
- 
- 
- </div> <!-- METAUX -->
- <div class="card">
- <h3>Métaux Précieux</h3>
- <table class="table">
- <tr>
- <th>Type</th>
- <th>Stockage</th>
- <th>Quantité</th>
- <th>€/g</th>
- <th>Perf</th>
- </tr>
- <tr>
- <td>🥇 Or</td>
- <td>Suisse</td>
- <td>338,66g</td>
- <td>130,23€</td>
- <td class="green">+374€</td>
- </tr>
- <tr>
- <td>🥇 Or</td>
- <td>Belgique</td>
- <td>130,62g</td>
- <td>130,23€</td>
- <td class="green">+632€</td>
- </tr>
- <tr>
- <td>🥈 Argent</td>
- <td>Suisse</td>
- <td>6000g</td>
- <td>2,06€</td>
- <td class="green">+980€</td>
- </tr>
- </table>
- </div> <!-- ETF -->
- <div class="card">
- <h3>ETF</h3>
- <table class="table">
- <tr>
- <th>Nom</th>
- <th>Parts</th>
- <th>Prix</th>
- <th>Perf</th>
- </tr>
- <tr>
- <td>Monde</td>
- <td>5</td>
- <td>147,70€</td>
- <td class="red">-22€</td>
- </tr>
- <tr>
- <td>Séniors</td>
- <td>13</td>
- <td>94,44€</td>
- <td class="green">+179€</td>
- </tr>
- <tr>
- <td>Juniors</td>
- <td>0</td>
- <td>99,65€</td>
- <td>0€</td>
- </tr>
- </table>
- </div>
- </div>
- 
- <script>
- 
- function parseCSV(text) {
- return text.trim().split("\n").map(row => {
- const result = [];
- let current = '';
- let inQuotes = false;
- 
- for (let char of row) {
- if (char === '"') {
- inQuotes = !inQuotes;
- } else if (char === ',' && !inQuotes) {
- result.push(current);
- current = '';
- } else {
- current += char;
- }
- }
- result.push(current);
- return result;
- });
- }
- 
- function cleanNumber(value) {
- return Number(
- value
- ?.replace(/"/g, '')
- ?.replace(/\s/g, '') // 🔥 enlève TOUS les espaces (dont insécables)
- ?.replace('€', '')
- ?.replace(',', '.')
- );
- }
- 
- async function loadData() {
- try {
- 
 
+<script>
+/* ===== UTILS ===== */
+function parseCSV(text) {
+    return text.trim().split("\n").map(row => {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
 
-
-
-
- // =========================
- // 1️⃣ DASHBOARD
- // =========================
- const urlDashboard = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=115354515";
- 
- const resDash = await fetch(urlDashboard);
- const textDash = await resDash.text();
- const rowsDash = parseCSV(textDash);
- 
- const total = rowsDash[4][1]?.replace(/"/g, '').trim();
- if (total) document.getElementById("total").innerText = total;
- 
- const variation = rowsDash[5][1]?.replace(/"/g, '').trim();
- if (variation) {
- const el = document.getElementById("variation");
- el.innerText = variation;
- 
- if (variation.includes("-")) {
- el.style.background = "#7f1d1d";
- el.style.color = "#fca5a5";
- } else {
- el.style.background = "#14532d";
- el.style.color = "#86efac";
- }
- }
- 
- // =========================
- // 2️⃣ OR / ARGENT
- // =========================
- const urlOA = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1574558752";
- 
- const resOA = await fetch(urlOA);
- const textOA = await resOA.text();
- const rowsOA = parseCSV(textOA);
- 
- const orSuisse = cleanNumber(rowsOA[1][4]);
- const orBelgique = cleanNumber(rowsOA[2][4]);
- const argent = cleanNumber(rowsOA[3][4]);
- const totalMetaux = orSuisse + orBelgique + argent;
- 
- // =========================
- // 🔥 KPI CALCULÉS (FIABLE)
- // =========================
- 
- const totalOr = orSuisse + orBelgique;
- 
- // OR
- document.getElementById("or").innerText =
- totalOr.toLocaleString('fr-BE') + " €";
- 
- // ARGENT
- document.getElementById("argent").innerText =
- argent.toLocaleString('fr-BE') + " €";
- 
- // RATIO (depuis Google Sheet)
-const ratioValue = rowsOA[1][11];
-
-if (ratioValue) {
-    document.getElementById("ratio").innerText =
-        ratioValue.replace('.', ',');
+        for (let char of row) {
+            if (char === '"') inQuotes = !inQuotes;
+            else if (char === ',' && !inQuotes) {
+                result.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current);
+        return result;
+    });
 }
 
-// 👉 IMPORTANT : rien imbriquer ici
-
-// =========================
-// DONUT METAUX
-// =========================
-if (totalMetaux > 0) {
-    const p1 = (orSuisse / totalMetaux) * 100;
-    const p2 = (orBelgique / totalMetaux) * 100;
-    const p3 = (argent / totalMetaux) * 100;
-
-    document.getElementById("p-or-suisse").innerText = p1.toFixed(2).replace('.', ',') + "%";
-    document.getElementById("p-or-belgique").innerText = p2.toFixed(2).replace('.', ',') + "%";
-    document.getElementById("p-argent").innerText = p3.toFixed(2).replace('.', ',') + "%";
-
-    const donut = document.getElementById("donut-metaux");
-
-    if (donut) {
-        donut.style.background = `conic-gradient(
-            #facc15 0% ${p1}%,
-            #f59e0b ${p1}% ${p1 + p2}%,
-            #9ca3af ${p1 + p2}% 100%
-        )`;
-
-        requestAnimationFrame(() => {
-            donut.style.transform = "scale(1)";
-    	    donut.classList.add("loaded");
-        });
-    }
+function cleanNumber(value) {
+    return Number(
+        value?.replace(/"/g, '')
+              ?.replace(/\s/g, '')
+              ?.replace('€', '')
+              ?.replace(',', '.')
+    );
 }
- 
- // =========================
- // 📊 ETF
- // =========================
- const urlETF = "https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0";
- 
- const resETF = await fetch(urlETF);
- const textETF = await resETF.text();
- const rowsETF = parseCSV(textETF);
- 
- const monde = cleanNumber(rowsETF[1][7]);
- const seniors = cleanNumber(rowsETF[2][7]);
- 
- 
-  
- const totalETF = monde + seniors;
- 
- if (totalETF > 0) {
- const pMonde = (monde / totalETF) * 100;
- const pSeniors = (seniors / totalETF) * 100;
- 
- document.getElementById("p-monde").innerText =
- pMonde.toFixed(2).replace('.', ',') + "%";
- 
- document.getElementById("p-seniors").innerText =
- pSeniors.toFixed(2).replace('.', ',') + "%";
- 
- const donutETF = document.querySelector(".donut.etf");
- 
- if (donutETF) {
-   donutETF.style.background = `conic-gradient(
-    #38bdf8 0% ${pMonde}%,
-    #22c55e ${pMonde}% 100%
-)`;
- 
+</script>
 
- requestAnimationFrame(() => {
-   donutETF.style.transform = "scale(1)";
-    donutETF.classList.add("loaded"); });
- }
- 
- // 🔥 TOTAL GLOBAL (BON ENDROIT)
- const totalGlobal = totalOr + argent + totalETF;
- 
- document.getElementById("total").innerText =
- totalGlobal.toLocaleString('fr-BE') + " €";
-
-
-// ✅ PROGRESS (ICI !)
-const objectif = 100000;
-const progress = (totalGlobal / objectif) * 100;
-
-document.querySelector(".progress-bar").style.width = progress + "%";
-
-// ✅ TEXTE PROGRESS
-const progressRounded = Math.min(progress, 100);
-document.getElementById("progress-label").innerText =
-    Math.round(progressRounded) + "% de " + objectif.toLocaleString('fr-BE') + " €";
-
-
-
- }
- 
- 
- 
- } catch (error) {
- console.error("Erreur :", error);
- }
- }
- 
-
-
- 
- loadData();
- 
- </script>
- 
- 
- </body>
- 
- </html>
+</body>
+</html>
