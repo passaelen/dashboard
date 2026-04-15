@@ -682,10 +682,7 @@ elJuniorsPerf.classList.add(juniorsPerf >= 0 ? "green" : "red");
 const totalETFPerf =
     mondePerf + seniorsPerf + juniorsPerf;
 
-const totalETFValue =
-    cleanNumber(rowsETF?.[1]?.[6]) +
-    cleanNumber(rowsETF?.[2]?.[6]) +
-    cleanNumber(rowsETF?.[3]?.[6]);
+const totalETFValue = cleanNumber(rowsETF?.[9]?.[7]);
 
 const totalETFInvested =
     cleanNumber(rowsETF?.[1]?.[5]) +
