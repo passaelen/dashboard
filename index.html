@@ -276,12 +276,11 @@ return; // 🔥 STOP TOUT LE RESTE
 
 
 
-// ===== OR / ARGENT (VERSION PROPRE) =====
+// ===== OR / ARGENT (VERSION CLEAN) =====
 const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
 
 const data = csvToObject(await res.text());
 
-// DEBUG
 console.log("DATA:", data);
 
 // ===== VALEURS =====
@@ -301,50 +300,36 @@ document.getElementById("argent").innerText =
 document.getElementById("ratio").innerText =
     ratioValue.toFixed(2).replace('.', ',');
 
-// ===== LABEL RATIO =====
+// ===== LABEL =====
 let label = "";
 let emoji = "";
 
-if (ratioValue >= 80) {
-    label = "Nord très profond"; emoji = "🐻‍❄️🐻‍❄️";
-} else if (ratioValue >= 70) {
-    label = "Nord profond"; emoji = "❄️";
-} else if (ratioValue >= 55) {
-    label = "Nord"; emoji = "🧊";
-} else if (ratioValue >= 50) {
-    label = "Frontière"; emoji = "⚖️";
-} else if (ratioValue >= 45) {
-    label = "Sud tempéré"; emoji = "🌤️";
-} else if (ratioValue >= 40) {
-    label = "Sud chaud"; emoji = "🔥";
-} else {
-    label = "Canicule"; emoji = "🚨";
-}
+if (ratioValue >= 80) { label = "Nord très profond"; emoji = "🐻‍❄️🐻‍❄️"; }
+else if (ratioValue >= 70) { label = "Nord profond"; emoji = "❄️"; }
+else if (ratioValue >= 55) { label = "Nord"; emoji = "🧊"; }
+else if (ratioValue >= 50) { label = "Frontière"; emoji = "⚖️"; }
+else if (ratioValue >= 45) { label = "Sud tempéré"; emoji = "🌤️"; }
+else if (ratioValue >= 40) { label = "Sud chaud"; emoji = "🔥"; }
+else { label = "Canicule"; emoji = "🚨"; }
 
 document.getElementById("ratio-label").innerHTML =
     "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
 
 // ===== ALERT =====
-const alertBox = document.getElementById("alert-box");
 const alertText = document.getElementById("alert-text");
 
-let message = "";
+if (ratioValue >= 70) alertText.innerText = "❄️ Zone froide";
+else if (ratioValue >= 55) alertText.innerText = "🧊 Nord";
+else if (ratioValue >= 50) alertText.innerText = "⚖️ Pivot";
+else if (ratioValue >= 45) alertText.innerText = "🌤️ Arbitrage";
+else if (ratioValue >= 40) alertText.innerText = "🔥 Chaud";
+else alertText.innerText = "🚨 Extrême";
 
-if (ratioValue >= 70) message = "❄️ Zone froide";
-else if (ratioValue >= 55) message = "🧊 Nord";
-else if (ratioValue >= 50) message = "⚖️ Pivot";
-else if (ratioValue >= 45) message = "🌤️ Arbitrage";
-else if (ratioValue >= 40) message = "🔥 Chaud";
-else message = "🚨 Extrême";
-
-alertText.innerText = message;
-
-// ===== TOTAL GLOBAL =====
+// ===== TOTAL =====
 const totalGlobal = orSuisse + orBelgique + argent;
 
 document.getElementById("total").innerText =
     totalGlobal.toLocaleString('fr-BE') + " €";
-
 
 
        // OR BELGIQUE
