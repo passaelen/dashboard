@@ -262,51 +262,89 @@ if (!variationRaw || variationRaw.includes("#N/A")) {
 
 
 
-    
-
-        
-// ===== OR / ARGENT (NOUVEAU SYSTEME) =====
-const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
 
 const data = csvToObject(await res.text());
 
 console.log("DATA:", data);
-console.log("RATIO RAW:", data["ratio"]);
+
+const orSuisse = cleanNumber(data["or_suisse"]);
+...
+document.getElementById("total").innerText =
+    totalGlobal.toLocaleString('fr-BE') + " €";
+
+return; // 🔥 STOP TOUT LE RESTE
 
 
-// ===== METAUX TABLE =====
+    
 
-// OR SUISSE
-document.getElementById("q-or-suisse").innerText =
-    (rowsOA?.[1]?.[2] || 0) + " g";
+// ===== OR / ARGENT (VERSION PROPRE) =====
+const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
 
-document.getElementById("p-or-suisse-g").innerText =
-    cleanNumber(rowsOA?.[1]?.[3]).toFixed(2).replace('.', ',') + " €";
+const data = csvToObject(await res.text());
 
-const perfOrSuisse = cleanNumber(rowsOA?.[1]?.[6]);
+// DEBUG
+console.log("DATA:", data);
 
-const elPerf1 = document.getElementById("perf-or-suisse");
+// ===== VALEURS =====
+const orSuisse = cleanNumber(data["or_suisse"]);
+const orBelgique = cleanNumber(data["or_belgique"]);
+const argent = cleanNumber(data["argent"]);
+const ratioValue = cleanNumber(data["ratio"]);
 
-// ✅ Perf %
-const perfPercent1 = cleanNumber(rowsOA?.[1]?.[7]);
+// ===== KPI =====
+document.getElementById("or").innerText =
+    (orSuisse + orBelgique).toLocaleString('fr-BE') + " €";
 
-const percentDisplay1 = (isNaN(perfPercent1) || perfPercent1 === 0)
-  ? "—"
-  : perfPercent1.toFixed(2).replace('.', ',') + " %";
+document.getElementById("argent").innerText =
+    argent.toLocaleString('fr-BE') + " €";
 
-// ✅ HTML
-elPerf1.innerHTML = `
-  <div class="perf-value">
-    ${perfOrSuisse.toLocaleString('fr-BE')} €
-  </div>
-  <div class="perf-percent">
-    ${percentDisplay1}
-  </div>
-`;
+// ===== RATIO =====
+document.getElementById("ratio").innerText =
+    ratioValue.toFixed(2).replace('.', ',');
 
-// ✅ Couleur (APRÈS le HTML ⚠️)
-elPerf1.classList.remove("green", "red");
-elPerf1.classList.add(perfOrSuisse >= 0 ? "green" : "red");
+// ===== LABEL RATIO =====
+let label = "";
+let emoji = "";
+
+if (ratioValue >= 80) {
+    label = "Nord très profond"; emoji = "🐻‍❄️🐻‍❄️";
+} else if (ratioValue >= 70) {
+    label = "Nord profond"; emoji = "❄️";
+} else if (ratioValue >= 55) {
+    label = "Nord"; emoji = "🧊";
+} else if (ratioValue >= 50) {
+    label = "Frontière"; emoji = "⚖️";
+} else if (ratioValue >= 45) {
+    label = "Sud tempéré"; emoji = "🌤️";
+} else if (ratioValue >= 40) {
+    label = "Sud chaud"; emoji = "🔥";
+} else {
+    label = "Canicule"; emoji = "🚨";
+}
+
+document.getElementById("ratio-label").innerHTML =
+    "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
+
+// ===== ALERT =====
+const alertBox = document.getElementById("alert-box");
+const alertText = document.getElementById("alert-text");
+
+let message = "";
+
+if (ratioValue >= 70) message = "❄️ Zone froide";
+else if (ratioValue >= 55) message = "🧊 Nord";
+else if (ratioValue >= 50) message = "⚖️ Pivot";
+else if (ratioValue >= 45) message = "🌤️ Arbitrage";
+else if (ratioValue >= 40) message = "🔥 Chaud";
+else message = "🚨 Extrême";
+
+alertText.innerText = message;
+
+// ===== TOTAL GLOBAL =====
+const totalGlobal = orSuisse + orBelgique + argent;
+
+document.getElementById("total").innerText =
+    totalGlobal.toLocaleString('fr-BE') + " €";
 
 
 
