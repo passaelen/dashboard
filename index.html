@@ -69,7 +69,7 @@ RATIO
     <div class="card">
         <h3>Répartitions</h3>
         <div class="repartition-grid">
-         
+
             <!-- METAUX -->
             <div class="bloc"><h4>Métaux</h4>
                 <div class="donut" id="donut-metaux"></div>
@@ -80,7 +80,7 @@ RATIO
                 </div>
             </div>
 
-            
+
             <!-- ETF -->
             <div class="bloc"><h4>ETF</h4>
                 <div class="donut etf"></div>
@@ -90,7 +90,7 @@ RATIO
                 </div>
             </div>
 
-                       
+
         </div>
 
         <!-- ✅ GRAPH EN DEHORS -->
@@ -174,14 +174,14 @@ RATIO
                 <td id="etf-monde-prix"></td>
                 <td id="etf-monde-perf"></td>
             </tr>
-            
+
             <tr>
                 <td>Séniors</td>
                 <td id="etf-seniors-parts"></td>
                 <td id="etf-seniors-prix"></td>
                 <td id="etf-seniors-perf"></td>
             </tr>
-            
+
             <tr>
                 <td>Juniors</td>
                 <td id="etf-juniors-parts"></td>
@@ -194,11 +194,10 @@ RATIO
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
 <script>
 
-let rowsOA = [];
-function parseCSV() { return []; }
+
 
 function csvToObject(text) {
     const rows = text.trim().split("\n");
@@ -231,12 +230,12 @@ function cleanNumber(value) {
 async function loadData() {
     try {
 
-       
+
  // ===== DASHBOARD =====
         const resDash = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=115354515");
-        const rowsDash = parseCSV(await resDash.text());
+        
 
-    
+
 const variationRaw = rowsDash?.[5]?.[1];
 const variation = cleanNumber(variationRaw);
 
@@ -275,7 +274,7 @@ document.getElementById("total").innerText =
 return; // 🔥 STOP TOUT LE RESTE
 
 
-    
+
 
 // ===== OR / ARGENT (VERSION PROPRE) =====
 const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
@@ -350,17 +349,17 @@ document.getElementById("total").innerText =
 
        // OR BELGIQUE
 document.getElementById("q-or-belgique").innerText =
-    (rowsOA?.[2]?.[2] || 0) + " g";
+    (?.[2]?.[2] || 0) + " g";
 
 document.getElementById("p-or-belgique-g").innerText =
-    cleanNumber(rowsOA?.[2]?.[3]).toFixed(2).replace('.', ',') + " €";
+    cleanNumber(?.[2]?.[3]).toFixed(2).replace('.', ',') + " €";
 
-const perfOrBelgique = cleanNumber(rowsOA?.[2]?.[6]);
+const perfOrBelgique = cleanNumber(?.[2]?.[6]);
 
 const elPerf2 = document.getElementById("perf-or-belgique"); // ⚠️ manquait
 
 // ✅ Perf %
-const perfPercent2 = cleanNumber(rowsOA?.[2]?.[7]);
+const perfPercent2 = cleanNumber(?.[2]?.[7]);
 
 const percentDisplay2 = (isNaN(perfPercent2) || perfPercent2 === 0)
   ? "—"
@@ -382,22 +381,22 @@ elPerf2.classList.add(perfOrBelgique >= 0 ? "green" : "red");
 
 
 
-        
+
 
 
 // ARGENT
 document.getElementById("q-argent").innerText =
-    (rowsOA?.[3]?.[2] || 0) + " g";
+    (?.[3]?.[2] || 0) + " g";
 
 document.getElementById("p-argent-g").innerText =
-    cleanNumber(rowsOA?.[3]?.[3]).toFixed(2).replace('.', ',') + " €";
+    cleanNumber(?.[3]?.[3]).toFixed(2).replace('.', ',') + " €";
 
-const perfArgent = cleanNumber(rowsOA?.[3]?.[6]);
+const perfArgent = cleanNumber(?.[3]?.[6]);
 
 const elPerf3 = document.getElementById("perf-argent"); // ⚠️ manquait
 
 // ✅ Perf %
-const perfPercent3 = cleanNumber(rowsOA?.[3]?.[7]);
+const perfPercent3 = cleanNumber(?.[3]?.[7]);
 
 const percentDisplay3 = (isNaN(perfPercent3) || perfPercent3 === 0)
   ? "—"
@@ -420,9 +419,9 @@ elPerf3.classList.add(perfArgent >= 0 ? "green" : "red");
 // ===== TOTAL METAUX =====
 
 const totalMetauxValue =
-    cleanNumber(rowsOA?.[1]?.[4]) +
-    cleanNumber(rowsOA?.[2]?.[4]) +
-    cleanNumber(rowsOA?.[3]?.[4]);
+    cleanNumber(?.[1]?.[4]) +
+    cleanNumber(?.[2]?.[4]) +
+    cleanNumber(?.[3]?.[4]);
 
 const totalMetauxPerf =
     perfOrSuisse + perfOrBelgique + perfArgent;
@@ -453,8 +452,7 @@ metauxPerfEl.classList.add(totalMetauxPerf >= 0 ? "green" : "red");
 
 
 
-console.log("rowsOA:", rowsOA);
-console.log("ratio raw:", rowsOA?.[1]?.[10]);
+console.log("ratio raw:", ?.[1]?.[10]);
 
 
 
@@ -579,11 +577,11 @@ document.getElementById("ratio-label").innerHTML =
     "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
 
 
-        
 
-        const orSuisse = cleanNumber(rowsOA?.[1]?.[4]);
-        const orBelgique = cleanNumber(rowsOA?.[2]?.[4]);
-        const argent = cleanNumber(rowsOA?.[3]?.[4]);
+
+        const orSuisse = cleanNumber(?.[1]?.[4]);
+        const orBelgique = cleanNumber(?.[2]?.[4]);
+        const argent = cleanNumber(?.[3]?.[4]);
 
         const totalMetaux = orSuisse + orBelgique + argent;
 
@@ -606,10 +604,10 @@ document.getElementById("ratio-label").innerHTML =
             }
         }
 
-     
+
 // ===== ETF =====
         const resETF = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0");
-        const rowsETF = parseCSV(await resETF.text());
+        
 
         let monde = cleanNumber(rowsETF?.[1]?.[7]);
         let seniors = cleanNumber(rowsETF?.[2]?.[7]);
@@ -740,9 +738,9 @@ etfPerfEl.innerHTML = `
 etfPerfEl.classList.remove("green", "red");
 etfPerfEl.classList.add(totalETFPerf >= 0 ? "green" : "red");
 
-        
 
-        
+
+
 // KPI
 const totalOr = orSuisse + orBelgique;
 
@@ -796,7 +794,7 @@ document.getElementById("progress-label").innerText =
     Math.round(progress) + "% de " +
     objectif.toLocaleString('fr-BE') + " €";
 
-       
+
 
 // DONUT ETF
         if (totalETF > 0) {
@@ -822,7 +820,7 @@ document.getElementById("progress-label").innerText =
 
         // ===== GRAPH 10 JOURS =====
 const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1311770820");
-const rowsChart = parseCSV(await resChart.text());
+
 
 const labels = [];
 const values = [];
@@ -886,7 +884,7 @@ if (ctx) {
 }
 
 
-        
+
     } catch (e) {
         console.error("Erreur :", e);
     }
