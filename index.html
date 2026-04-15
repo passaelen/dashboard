@@ -314,12 +314,7 @@ async function loadData() {
             )`;
         }
 
-    } catch (e) {
-        console.error("Erreur :", e);
-    
-
-
-// ===== ETF REPARTITION =====
+    // ===== ETF REPARTITION =====
 const etfMonde = cleanNumber(data["etf_monde_valeur"]);
 const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
 
@@ -344,7 +339,11 @@ if (totalETF > 0) {
         )`;
     }
 }
+
+} catch (e) {
+    console.error("Erreur :", e);
 }
+
 
 
 }
