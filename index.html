@@ -687,9 +687,14 @@ const totalETFValue =
     cleanNumber(rowsETF?.[2]?.[6]) +
     cleanNumber(rowsETF?.[3]?.[6]);
 
+const totalETFInvested =
+    cleanNumber(rowsETF?.[1]?.[5]) +
+    cleanNumber(rowsETF?.[2]?.[5]) +
+    cleanNumber(rowsETF?.[3]?.[5]);
+
 const totalETFPercent =
-    totalETFValue > 0
-        ? (totalETFPerf / (totalETFValue - totalETFPerf)) * 100
+    totalETFInvested > 0
+        ? (totalETFPerf / totalETFInvested) * 100
         : 0;
 
 // affichage
