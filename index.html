@@ -300,27 +300,48 @@ async function loadData() {
         }
 
         
+
 // ================= METAUX DETAIL =================
 
-// Quantités
+// OR SUISSE
 document.getElementById("q-or-suisse").innerText =
-    cleanNumber(data["q_or_suisse"]).toLocaleString('fr-BE') + " g";
+    cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE') + " g";
 
-document.getElementById("q-or-belgique").innerText =
-    cleanNumber(data["q_or_belgique"]).toLocaleString('fr-BE') + " g";
-
-document.getElementById("q-argent").innerText =
-    cleanNumber(data["q_argent"]).toLocaleString('fr-BE') + " g";
-
-// Prix €/g
 document.getElementById("p-or-suisse-g").innerText =
-    cleanNumber(data["p_or_suisse_g"]).toFixed(2).replace('.', ',') + " €";
+    cleanNumber(data["or_suisse_prix_g"]).toFixed(2).replace('.', ',') + " €";
+
+document.getElementById("perf-or-suisse").innerText =
+    formatPercent(cleanNumber(data["or_suisse_percent"]));
+
+// OR BELGIQUE
+document.getElementById("q-or-belgique").innerText =
+    cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE') + " g";
 
 document.getElementById("p-or-belgique-g").innerText =
-    cleanNumber(data["p_or_belgique_g"]).toFixed(2).replace('.', ',') + " €";
+    cleanNumber(data["or_belgique_prix_g"]).toFixed(2).replace('.', ',') + " €";
+
+document.getElementById("perf-or-belgique").innerText =
+    formatPercent(cleanNumber(data["or_belgique_percent"]));
+
+// ARGENT
+document.getElementById("q-argent").innerText =
+    cleanNumber(data["argent_qte"]).toLocaleString('fr-BE') + " g";
 
 document.getElementById("p-argent-g").innerText =
-    cleanNumber(data["p_argent_g"]).toFixed(2).replace('.', ',') + " €";
+    cleanNumber(data["argent_prix_g"]).toFixed(2).replace('.', ',') + " €";
+
+document.getElementById("perf-argent").innerText =
+    formatPercent(cleanNumber(data["argent_percent"]));
+
+// TOTAL METAUX
+document.getElementById("metaux-total-value").innerText =
+    cleanNumber(data["metaux_total_valeur"]).toLocaleString('fr-BE') + " €";
+
+document.getElementById("metaux-total-perf").innerText =
+    formatPercent(cleanNumber(data["metaux_total_percent"]));
+
+
+
 
 // Performance
 document.getElementById("perf-or-suisse").innerText =
