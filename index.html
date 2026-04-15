@@ -65,43 +65,45 @@ RATIO
 </div>
 
 
-<div class="repartition-grid">
 
-<!-- METAUX -->
-    <div class="bloc">
-        <h4>Métaux</h4>
-        <div class="donut" id="donut-metaux"></div>
-        <div class="legend">
-            <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
-            <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
-            <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
+<div class="card">
+    <h3>Répartitions</h3>
+
+    <div class="repartition-grid">
+
+        <!-- METAUX -->
+        <div class="bloc">
+            <h4>Métaux</h4>
+            <div class="donut" id="donut-metaux"></div>
+            <div class="legend">
+                <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
+                <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
+                <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
+            </div>
         </div>
-    </div>
 
-<!-- ETF -->
-    <div class="bloc">
-        <h4>ETF</h4>
-        <div class="donut etf"></div>
-        <div class="legend">
-            <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
-            <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
+        <!-- ETF -->
+        <div class="bloc">
+            <h4>ETF</h4>
+            <div class="donut etf"></div>
+            <div class="legend">
+                <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
+                <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
+            </div>
         </div>
-    </div>
 
+    </div>
+</div>
+
+<!-- GRAPH -->
+<div class="card">
+    <h3>Évolution 10 jours</h3>
+    <div class="chart-container">
+        <canvas id="chart-10j"></canvas>
+    </div>
 </div>
 
 
-            
-
-        <!-- ✅ GRAPH EN DEHORS -->
-    <div class="card">
-        <h3>Évolution 10 jours</h3>
-        <div class="chart-container">
-        <canvas id="chart-10j"></canvas>
-        </div>
-    </div>
-
-    </div>
 
     
     <!-- ================= TABLE ETF ================= -->
