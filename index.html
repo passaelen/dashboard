@@ -196,24 +196,20 @@ RATIO
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
 <script>
-function parseCSV(text) {
-    return text.trim().split("\n").map(row => {
-        const result = [];
-        let current = '';
-        let inQuotes = false;
+function csvToObject(text) {
+    const rows = text.trim().split("\n");
+    const data = {};
 
-        for (let char of row) {
-            if (char === '"') inQuotes = !inQuotes;
-            else if (char === ',' && !inQuotes) {
-                result.push(current);
-                current = '';
-            } else {
-                current += char;
-            }
-        }
-        result.push(current);
-        return result;
-    });
+    for (let row of rows) {
+        const cols = row.split(/[,;]+/); // 🔥 gère , ET ;
+
+        const key = cols[0]?.trim();
+        const value = cols[1]?.trim();
+
+        if (key) data[key] = value;
+    }
+
+    return data;
 }
 
 
