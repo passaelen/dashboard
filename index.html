@@ -1,377 +1,254 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portefeuille</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portefeuille</title>
 
 <link rel="stylesheet" href="style.css?v=27">
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <div class="container">
 
-    <!-- ================= HEADER ================= -->
-    <div class="header">
-        <div>
-            <h2 style="margin:0;">💼 Portefeuille</h2>
-            <small>Or · Argent · ETF</small>
-        </div>
-        <div class="badge" id="variation">-274,32 €</div>
+<!-- HEADER -->
+<div class="header">
+    <div>
+        <h2>💼 Portefeuille</h2>
+        <small>Or · Argent · ETF</small>
     </div>
+    <div class="badge" id="variation"></div>
+</div>
 
-    <!-- ================= TOTAL ================= -->
-    <div class="card highlight">
-        <small>Total global</small>
-        <h2 id="total" class="gold" style="margin:5px 0;">75 441 €</h2>
-    </div>
+<!-- TOTAL -->
+<div class="card highlight">
+    <small>Total global</small>
+    <h2 id="total" class="gold"></h2>
+</div>
 
-    <!-- ================= KPI ================= -->
+<!-- KPI -->
 <div class="kpi-grid">
-  <div class="kpi">
-    <small>OR</small>
-    <h3 id="or" class="gold">61 114 €</h3>
-   </div>
-
-        <div class="kpi">
-            <small>ARGENT</small>
-            <h3 id="argent">12 360 €</h3>
-        </div>
-
-<div class="kpi">
-<small id="ratio-label">
-RATIO
-</small>
-<h3 id="ratio" class="gold"></h3>
+    <div class="kpi"><small>OR</small><h3 id="or"></h3></div>
+    <div class="kpi"><small>ARGENT</small><h3 id="argent"></h3></div>
+    <div class="kpi"><small>RATIO</small><h3 id="ratio"></h3></div>
 </div>
 
+<!-- ALERT -->
+<div class="card alert-box">
+    <span id="alert-text"></span>
 </div>
 
-    <!-- ================= PROGRESS ================= -->
-    <div class="progress">
-        <div class="progress-bar"></div>
-    </div>
-
-    <div class="progress-text">
-        <span id="progress-label"></span>
-    </div>
-
-<div class="card alert-box" id="alert-box">
-<span id="alert-text">Chargement...</span>
-</div>
-
-
-
+<!-- REPARTITION -->
 <div class="card">
-    <h3>Répartitions</h3>
+<h3>Répartitions</h3>
 
-    <div class="repartition-grid">
+<div class="repartition-grid">
 
-        <!-- METAUX -->
-        <div class="bloc">
-            <h4>Métaux</h4>
-            <div class="donut" id="donut-metaux"></div>
-            <div class="legend">
-                <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
-                <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
-                <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
-            </div>
-        </div>
+<div class="bloc">
+<h4>Métaux</h4>
+<div class="donut" id="donut-metaux"></div>
+<div class="legend">
+<div>Or Suisse <span id="p-or-suisse"></span></div>
+<div>Or Belgique <span id="p-or-belgique"></span></div>
+<div>Argent <span id="p-argent"></span></div>
+</div>
+</div>
 
-        <!-- ETF -->
-        <div class="bloc">
-            <h4>ETF</h4>
-            <div class="donut etf"></div>
-            <div class="legend">
-                <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
-                <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
-            </div>
-        </div>
+<div class="bloc">
+<h4>ETF</h4>
+<div class="donut etf"></div>
+<div class="legend">
+<div>Monde <span id="p-monde"></span></div>
+<div>Séniors <span id="p-seniors"></span></div>
+</div>
+</div>
 
-    </div>
+</div>
 </div>
 
 <!-- GRAPH -->
 <div class="card">
-    <h3>Évolution 10 jours</h3>
-    <div class="chart-container">
-        <canvas id="chart-10j"></canvas>
-    </div>
+<h3>Évolution 10 jours</h3>
+<canvas id="chart-10j"></canvas>
 </div>
 
-
-<!-- ================= TABLE METAUX ================= -->
+<!-- METAUX -->
 <div class="card">
-    <div class="section-header">
-        <h3>Métaux Précieux</h3>
-        <div class="section-total">
-            <div id="metaux-total-value"></div>
-            <div id="metaux-total-perf"></div>
-        </div>
-    </div>
+<h3>Métaux Précieux</h3>
 
-    <table class="table">
-        <tr>
-            <th>Type</th>
-            <th>Stockage</th>
-            <th>Quantité</th>
-            <th>€/g</th>
-            <th>Perf</th>
-        </tr>
+<div id="metaux-total-value"></div>
+<div id="metaux-total-perf"></div>
 
-        <tr>
-            <td>🥇 Or</td>
-            <td>Suisse</td>
-            <td id="q-or-suisse"></td>
-            <td id="p-or-suisse-g"></td>
-            <td id="perf-or-suisse"></td>
-        </tr>
+<table>
+<tr><th>Type</th><th>Stockage</th><th>Qté</th><th>€/g</th><th>Perf</th></tr>
 
-        <tr>
-            <td>🥇 Or</td>
-            <td>Belgique</td>
-            <td id="q-or-belgique"></td>
-            <td id="p-or-belgique-g"></td>
-            <td id="perf-or-belgique"></td>
-        </tr>
+<tr>
+<td>Or</td><td>Suisse</td>
+<td id="q-or-suisse"></td>
+<td id="p-or-suisse-g"></td>
+<td id="perf-or-suisse"></td>
+</tr>
 
-        <tr>
-            <td>🥈 Argent</td>
-            <td>Suisse</td>
-            <td id="q-argent"></td>
-            <td id="p-argent-g"></td>
-            <td id="perf-argent"></td>
-        </tr>
-    </table>
+<tr>
+<td>Or</td><td>Belgique</td>
+<td id="q-or-belgique"></td>
+<td id="p-or-belgique-g"></td>
+<td id="perf-or-belgique"></td>
+</tr>
+
+<tr>
+<td>Argent</td><td>Suisse</td>
+<td id="q-argent"></td>
+<td id="p-argent-g"></td>
+<td id="perf-argent"></td>
+</tr>
+
+</table>
 </div>
 
+<!-- ETF -->
+<div class="card">
+<h3>ETF</h3>
+<div id="etf-total-value"></div>
 
+<table>
+<tr><th>Nom</th><th>Parts</th><th>Spot</th><th>Perf</th></tr>
 
-    
-    <!-- ================= TABLE ETF ================= -->
-    <div class="card">
-       <div class="section-header">
-          <h3>ETF</h3>
-          <div class="section-total">
-            <div id="etf-total-value"></div>
-            <div id="etf-total-perf"></div>
-          </div>
-        </div>
+<tr>
+<td>Monde</td>
+<td id="etf-monde-parts"></td>
+<td id="etf-monde-prix"></td>
+<td id="etf-monde-perf"></td>
+</tr>
 
-        <table class="table">
-            <tr>
-                <th>ETF</th>
-                <th>Parts</th>
-                <th>Spot</th>
-                <th>Perf</th>
-            </tr>
-            <tr>
-                <td>Monde</td>
-                <td id="etf-monde-parts"></td>
-                <td id="etf-monde-prix"></td>
-                <td id="etf-monde-perf"></td>
-            </tr>
+<tr>
+<td>Séniors</td>
+<td id="etf-seniors-parts"></td>
+<td id="etf-seniors-prix"></td>
+<td id="etf-seniors-perf"></td>
+</tr>
 
-            <tr>
-                <td>Séniors</td>
-                <td id="etf-seniors-parts"></td>
-                <td id="etf-seniors-prix"></td>
-                <td id="etf-seniors-perf"></td>
-            </tr>
+<tr>
+<td>Juniors</td>
+<td id="etf-juniors-parts"></td>
+<td id="etf-juniors-prix"></td>
+<td id="etf-juniors-perf"></td>
+</tr>
 
-            <tr>
-                <td>Juniors</td>
-                <td id="etf-juniors-parts"></td>
-                <td id="etf-juniors-prix"></td>
-                <td id="etf-juniors-perf"></td>
-            </tr>
-        </table>
-    </div>
-
+</table>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+</div>
 
 <script>
 
-function csvToObject(text) {
-    const rows = text.trim().split("\n");
-    const data = {};
-
-    for (let row of rows) {
-        const cols = row.split(/[,;]+/);
-        const key = cols[0]?.trim();
-        const value = cols[1]?.trim();
-        if (key) data[key] = value;
-    }
-
-    return data;
+// ===== UTILS =====
+function cleanNumber(v){
+    if(!v) return 0;
+    return Number(v.replace(/[^0-9,-]/g,'').replace(',','.')) || 0;
 }
 
-function cleanNumber(value) {
-    if (!value) return 0;
-
-    return Number(
-        value
-            .replace(/[^0-9,-]/g, '')
-            .replace(',', '.')
-    ) || 0;
+function formatPercent(v){
+    return v.toFixed(2).replace('.',',')+"%";
 }
 
-function formatPercent(value) {
-    return value.toFixed(2).replace('.', ',') + "%";
+function formatPerfDual(euro, percent){
+    const color = euro >= 0 ? "#22c55e" : "#ef4444";
+    return `
+        <div style="color:${color}">${euro>=0?"+":""}${euro.toLocaleString('fr-BE')} €</div>
+        <div style="color:${color};font-size:12px">${percent>=0?"+":""}${percent.toFixed(2).replace('.',',')} %</div>
+    `;
 }
 
-async function loadData() {
-    try {
+// ===== LOAD =====
+async function loadData(){
 
-        // ===== DATA =====
-        const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
-        const data = csvToObject(await res.text());
+const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
+const text = await res.text();
+const rows = text.split("\n");
+const data = {};
+rows.forEach(r=>{
+    const c=r.split(/[,;]+/);
+    data[c[0]?.trim()] = c[1]?.trim();
+});
 
-        const orSuisse = cleanNumber(data["or_suisse_valeur"]);
-        const orBelgique = cleanNumber(data["or_belgique_valeur"]);
-        const argent = cleanNumber(data["argent_valeur"]);
-        const totalGlobal = cleanNumber(data["total_global"]);
-        const variation = cleanNumber(data["variation"]);
-        const ratioValue = cleanNumber(data["ratio"]);
-        const etfTotal = cleanNumber(data["etf_total_valeur"]);
+// KPI
+const orS = cleanNumber(data["or_suisse_valeur"]);
+const orB = cleanNumber(data["or_belgique_valeur"]);
+const ag = cleanNumber(data["argent_valeur"]);
 
-        // ===== KPI =====
-        document.getElementById("or").innerText =
-            (orSuisse + orBelgique).toLocaleString('fr-BE') + " €";
+document.getElementById("or").innerText = (orS+orB).toLocaleString('fr-BE')+" €";
+document.getElementById("argent").innerText = ag.toLocaleString('fr-BE')+" €";
+document.getElementById("total").innerText = cleanNumber(data["total_global"]).toLocaleString('fr-BE')+" €";
+document.getElementById("ratio").innerText = cleanNumber(data["ratio"]).toFixed(2).replace('.',',');
 
-        document.getElementById("argent").innerText =
-            argent.toLocaleString('fr-BE') + " €";
+// VAR
+const v = cleanNumber(data["variation"]);
+const el = document.getElementById("variation");
+el.innerText = (v>=0?"+":"")+v.toLocaleString('fr-BE')+" €";
+el.style.color = v>=0?"#22c55e":"#ef4444";
 
-        document.getElementById("total").innerText =
-            totalGlobal.toLocaleString('fr-BE') + " €";
+// METAUX DETAIL
+document.getElementById("q-or-suisse").innerText = data["or_suisse_qte"]+" g";
+document.getElementById("p-or-suisse-g").innerText = data["or_suisse_prix_g"]+" €";
+document.getElementById("perf-or-suisse").innerHTML = formatPerfDual(
+    cleanNumber(data["or_suisse_perf"]),
+    cleanNumber(data["or_suisse_percent"])
+);
 
-        document.getElementById("etf-total-value").innerText =
-            etfTotal.toLocaleString('fr-BE') + " €";
+document.getElementById("q-or-belgique").innerText = data["or_belgique_qte"]+" g";
+document.getElementById("p-or-belgique-g").innerText = data["or_belgique_prix_g"]+" €";
+document.getElementById("perf-or-belgique").innerHTML = formatPerfDual(
+    cleanNumber(data["or_belgique_perf"]),
+    cleanNumber(data["or_belgique_percent"])
+);
 
-        // ===== RATIO =====
-        document.getElementById("ratio").innerText =
-            ratioValue.toFixed(2).replace('.', ',');
+document.getElementById("q-argent").innerText = data["argent_qte"]+" g";
+document.getElementById("p-argent-g").innerText = data["argent_prix_g"]+" €";
+document.getElementById("perf-argent").innerHTML = formatPerfDual(
+    cleanNumber(data["argent_perf"]),
+    cleanNumber(data["argent_percent"])
+);
 
-        // ===== ALERT =====
-        let message = "";
+// TOTAL METAUX
+document.getElementById("metaux-total-value").innerText =
+    cleanNumber(data["metaux_total_valeur"]).toLocaleString('fr-BE')+" €";
 
-        if (ratioValue >= 70) message = "❄️ Zone froide";
-        else if (ratioValue >= 55) message = "🧊 Nord";
-        else if (ratioValue >= 50) message = "⚖️ Zone pivot";
-        else if (ratioValue >= 45) message = "🌤️ Arbitrage";
-        else if (ratioValue >= 40) message = "🔥 Zone chaude";
-        else message = "🚨 Zone extrême";
+document.getElementById("metaux-total-perf").innerText =
+    formatPercent(cleanNumber(data["metaux_total_percent"]));
 
-        document.getElementById("alert-text").innerText = message;
+// ETF
+document.getElementById("etf-total-value").innerText =
+    cleanNumber(data["etf_total_valeur"]).toLocaleString('fr-BE')+" €";
 
-        // ===== VARIATION =====
-        const el = document.getElementById("variation");
+document.getElementById("etf-monde-parts").innerText = data["etf_monde_parts"];
+document.getElementById("etf-monde-prix").innerText = data["etf_monde_prix"]+" €";
+document.getElementById("etf-monde-perf").innerHTML = formatPerfDual(
+    cleanNumber(data["etf_monde_perf"]),
+    cleanNumber(data["etf_monde_percent"])
+);
 
-        el.innerText =
-            (variation >= 0 ? "+" : "") +
-            variation.toLocaleString('fr-BE') + " €";
+document.getElementById("etf-seniors-parts").innerText = data["etf_seniors_parts"];
+document.getElementById("etf-seniors-prix").innerText = data["etf_seniors_prix"]+" €";
+document.getElementById("etf-seniors-perf").innerHTML = formatPerfDual(
+    cleanNumber(data["etf_seniors_perf"]),
+    cleanNumber(data["etf_seniors_percent"])
+);
 
-        el.style.color = variation >= 0 ? "#22c55e" : "#ef4444";
+document.getElementById("etf-juniors-parts").innerText = data["etf_juniors_parts"];
+document.getElementById("etf-juniors-prix").innerText = data["etf_juniors_prix"]+" €";
+document.getElementById("etf-juniors-perf").innerHTML = formatPerfDual(
+    cleanNumber(data["etf_juniors_perf"]),
+    cleanNumber(data["etf_juniors_percent"])
+);
 
-        // ===== METAUX (DONUT + %) =====
-        const totalMetaux = orSuisse + orBelgique + argent;
-
-        if (totalMetaux > 0) {
-
-            const p1 = (orSuisse / totalMetaux) * 100;
-            const p2 = (orBelgique / totalMetaux) * 100;
-            const p3 = (argent / totalMetaux) * 100;
-
-            document.getElementById("p-or-suisse").innerText = formatPercent(p1);
-            document.getElementById("p-or-belgique").innerText = formatPercent(p2);
-            document.getElementById("p-argent").innerText = formatPercent(p3);
-
-            const donut = document.getElementById("donut-metaux");
-
-            if (donut) {
-                donut.style.background = `conic-gradient(
-                    #facc15 0% ${p1}%,
-                    #f59e0b ${p1}% ${p1 + p2}%,
-                    #9ca3af ${p1 + p2}% 100%
-                )`;
-            }
-        }
-
-        // ===== METAUX DETAIL =====
-
-        document.getElementById("q-or-suisse").innerText =
-            cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE') + " g";
-
-        document.getElementById("p-or-suisse-g").innerText =
-            cleanNumber(data["or_suisse_prix_g"]).toFixed(2).replace('.', ',') + " €";
-
-        document.getElementById("perf-or-suisse").innerText =
-            formatPercent(cleanNumber(data["or_suisse_percent"]));
-
-        document.getElementById("q-or-belgique").innerText =
-            cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE') + " g";
-
-        document.getElementById("p-or-belgique-g").innerText =
-            cleanNumber(data["or_belgique_prix_g"]).toFixed(2).replace('.', ',') + " €";
-
-        document.getElementById("perf-or-belgique").innerText =
-            formatPercent(cleanNumber(data["or_belgique_percent"]));
-
-        document.getElementById("q-argent").innerText =
-            cleanNumber(data["argent_qte"]).toLocaleString('fr-BE') + " g";
-
-        document.getElementById("p-argent-g").innerText =
-            cleanNumber(data["argent_prix_g"]).toFixed(2).replace('.', ',') + " €";
-
-        document.getElementById("perf-argent").innerText =
-            formatPercent(cleanNumber(data["argent_percent"]));
-
-        document.getElementById("metaux-total-value").innerText =
-            cleanNumber(data["metaux_total_valeur"]).toLocaleString('fr-BE') + " €";
-
-        document.getElementById("metaux-total-perf").innerText =
-            formatPercent(cleanNumber(data["metaux_total_percent"]));
-
-        // ===== ETF =====
-        const etfMonde = cleanNumber(data["etf_monde_valeur"]);
-        const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
-
-        const totalETF = etfMonde + etfSeniors;
-
-        if (totalETF > 0) {
-
-            const pMonde = (etfMonde / totalETF) * 100;
-            const pSeniors = (etfSeniors / totalETF) * 100;
-
-            document.getElementById("p-monde").innerText = formatPercent(pMonde);
-            document.getElementById("p-seniors").innerText = formatPercent(pSeniors);
-
-            const donutETF = document.querySelector(".donut.etf");
-
-            if (donutETF) {
-                donutETF.style.background = `conic-gradient(
-                    #38bdf8 0% ${pMonde}%,
-                    #22c55e ${pMonde}% 100%
-                )`;
-            }
-        }
-
-    } catch (e) {
-        console.error("Erreur :", e);
-    }
 }
 
 loadData();
 
 </script>
-
 
 </body>
 </html>
