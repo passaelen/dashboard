@@ -197,7 +197,6 @@ RATIO
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-
 <script>
 
 function csvToObject(text) {
@@ -231,19 +230,19 @@ function formatPercent(value) {
 async function loadData() {
     try {
 
-        // ================= DATA PRINCIPALE =================
+        // ===== DATA =====
         const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
         const data = csvToObject(await res.text());
 
         const orSuisse = cleanNumber(data["or_suisse_valeur"]);
         const orBelgique = cleanNumber(data["or_belgique_valeur"]);
         const argent = cleanNumber(data["argent_valeur"]);
-        const ratioValue = cleanNumber(data["ratio"]);
         const totalGlobal = cleanNumber(data["total_global"]);
         const variation = cleanNumber(data["variation"]);
+        const ratioValue = cleanNumber(data["ratio"]);
         const etfTotal = cleanNumber(data["etf_total_valeur"]);
 
-        // ================= KPI =================
+        // ===== KPI =====
         document.getElementById("or").innerText =
             (orSuisse + orBelgique).toLocaleString('fr-BE') + " €";
 
@@ -256,10 +255,11 @@ async function loadData() {
         document.getElementById("etf-total-value").innerText =
             etfTotal.toLocaleString('fr-BE') + " €";
 
-        // ================= RATIO =================
+        // ===== RATIO =====
         document.getElementById("ratio").innerText =
             ratioValue.toFixed(2).replace('.', ',');
 
+        // ===== ALERT =====
         let message = "";
 
         if (ratioValue >= 70) message = "❄️ Zone froide";
@@ -271,7 +271,7 @@ async function loadData() {
 
         document.getElementById("alert-text").innerText = message;
 
-        // ================= VARIATION =================
+        // ===== VARIATION =====
         const el = document.getElementById("variation");
 
         el.innerText =
@@ -280,98 +280,73 @@ async function loadData() {
 
         el.style.color = variation >= 0 ? "#22c55e" : "#ef4444";
 
-        // ================= METAUX =================
-        const pOrSuisse = cleanNumber(data["p_or_suisse"]);
-        const pOrBelgique = cleanNumber(data["p_or_belgique"]);
-        const pArgent = cleanNumber(data["p_argent"]);
+        // ===== METAUX (DONUT + %) =====
+        const totalMetaux = orSuisse + orBelgique + argent;
 
-        document.getElementById("p-or-suisse").innerText = formatPercent(pOrSuisse);
-        document.getElementById("p-or-belgique").innerText = formatPercent(pOrBelgique);
-        document.getElementById("p-argent").innerText = formatPercent(pArgent);
+        if (totalMetaux > 0) {
 
-        const donut = document.getElementById("donut-metaux");
+            const p1 = (orSuisse / totalMetaux) * 100;
+            const p2 = (orBelgique / totalMetaux) * 100;
+            const p3 = (argent / totalMetaux) * 100;
 
-        if (donut) {
-            donut.style.background = `conic-gradient(
-                #facc15 0% ${pOrSuisse}%,
-                #f59e0b ${pOrSuisse}% ${pOrSuisse + pOrBelgique}%,
-                #9ca3af ${pOrSuisse + pOrBelgique}% 100%
-            )`;
+            document.getElementById("p-or-suisse").innerText = formatPercent(p1);
+            document.getElementById("p-or-belgique").innerText = formatPercent(p2);
+            document.getElementById("p-argent").innerText = formatPercent(p3);
+
+            const donut = document.getElementById("donut-metaux");
+
+            if (donut) {
+                donut.style.background = `conic-gradient(
+                    #facc15 0% ${p1}%,
+                    #f59e0b ${p1}% ${p1 + p2}%,
+                    #9ca3af ${p1 + p2}% 100%
+                )`;
+            }
         }
 
-        
+        // ===== METAUX DETAIL =====
 
-// ================= METAUX DETAIL =================
+        document.getElementById("q-or-suisse").innerText =
+            cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE') + " g";
 
-// OR SUISSE
-document.getElementById("q-or-suisse").innerText =
-    cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE') + " g";
+        document.getElementById("p-or-suisse-g").innerText =
+            cleanNumber(data["or_suisse_prix_g"]).toFixed(2).replace('.', ',') + " €";
 
-document.getElementById("p-or-suisse-g").innerText =
-    cleanNumber(data["or_suisse_prix_g"]).toFixed(2).replace('.', ',') + " €";
+        document.getElementById("perf-or-suisse").innerText =
+            formatPercent(cleanNumber(data["or_suisse_percent"]));
 
-document.getElementById("perf-or-suisse").innerText =
-    formatPercent(cleanNumber(data["or_suisse_percent"]));
+        document.getElementById("q-or-belgique").innerText =
+            cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE') + " g";
 
-// OR BELGIQUE
-document.getElementById("q-or-belgique").innerText =
-    cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE') + " g";
+        document.getElementById("p-or-belgique-g").innerText =
+            cleanNumber(data["or_belgique_prix_g"]).toFixed(2).replace('.', ',') + " €";
 
-document.getElementById("p-or-belgique-g").innerText =
-    cleanNumber(data["or_belgique_prix_g"]).toFixed(2).replace('.', ',') + " €";
+        document.getElementById("perf-or-belgique").innerText =
+            formatPercent(cleanNumber(data["or_belgique_percent"]));
 
-document.getElementById("perf-or-belgique").innerText =
-    formatPercent(cleanNumber(data["or_belgique_percent"]));
+        document.getElementById("q-argent").innerText =
+            cleanNumber(data["argent_qte"]).toLocaleString('fr-BE') + " g";
 
-// ARGENT
-document.getElementById("q-argent").innerText =
-    cleanNumber(data["argent_qte"]).toLocaleString('fr-BE') + " g";
+        document.getElementById("p-argent-g").innerText =
+            cleanNumber(data["argent_prix_g"]).toFixed(2).replace('.', ',') + " €";
 
-document.getElementById("p-argent-g").innerText =
-    cleanNumber(data["argent_prix_g"]).toFixed(2).replace('.', ',') + " €";
+        document.getElementById("perf-argent").innerText =
+            formatPercent(cleanNumber(data["argent_percent"]));
 
-document.getElementById("perf-argent").innerText =
-    formatPercent(cleanNumber(data["argent_percent"]));
+        document.getElementById("metaux-total-value").innerText =
+            cleanNumber(data["metaux_total_valeur"]).toLocaleString('fr-BE') + " €";
 
-// TOTAL METAUX
-document.getElementById("metaux-total-value").innerText =
-    cleanNumber(data["metaux_total_valeur"]).toLocaleString('fr-BE') + " €";
+        document.getElementById("metaux-total-perf").innerText =
+            formatPercent(cleanNumber(data["metaux_total_percent"]));
 
-document.getElementById("metaux-total-perf").innerText =
-    formatPercent(cleanNumber(data["metaux_total_percent"]));
-
-
-
-
-// Performance
-document.getElementById("perf-or-suisse").innerText =
-    formatPercent(cleanNumber(data["perf_or_suisse"]));
-
-document.getElementById("perf-or-belgique").innerText =
-    formatPercent(cleanNumber(data["perf_or_belgique"]));
-
-document.getElementById("perf-argent").innerText =
-    formatPercent(cleanNumber(data["perf_argent"]));
-
-// Total métaux
-const totalMetaux = orSuisse + orBelgique + argent;
-
-document.getElementById("metaux-total-value").innerText =
-    totalMetaux.toLocaleString('fr-BE') + " €";
-
-
-
-
-
-
-
-// ================= ETF =================
+        // ===== ETF =====
         const etfMonde = cleanNumber(data["etf_monde_valeur"]);
         const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
 
         const totalETF = etfMonde + etfSeniors;
 
         if (totalETF > 0) {
+
             const pMonde = (etfMonde / totalETF) * 100;
             const pSeniors = (etfSeniors / totalETF) * 100;
 
@@ -386,59 +361,6 @@ document.getElementById("metaux-total-value").innerText =
                     #22c55e ${pMonde}% 100%
                 )`;
             }
-        }
-
-        // ================= GRAPH 10 JOURS =================
-        const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1311770820");
-        const rowsChart = (await resChart.text()).trim().split("\n");
-
-        const labels = [];
-        const values = [];
-
-        for (let i = 1; i < rowsChart.length; i++) {
-            const cols = rowsChart[i].split(/[,;]+/);
-            const value = cleanNumber(cols[7]);
-
-            if (value > 1000) {
-                labels.push(cols[0]);
-                values.push(value);
-            }
-        }
-
-        const lastLabels = labels.slice(-10);
-        const lastValues = values.slice(-10);
-
-        const ctx = document.getElementById("chart-10j");
-
-        if (ctx) {
-
-            if (window.chart10j) {
-                window.chart10j.destroy();
-            }
-
-            window.chart10j = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: lastLabels,
-                    datasets: [{
-                        data: lastValues,
-                        tension: 0.4,
-                        fill: true,
-                        borderWidth: 2,
-                        borderColor: "#facc15",
-                        backgroundColor: "rgba(250, 204, 21, 0.1)",
-                        pointRadius: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { ticks: { color: '#9ca3af' } },
-                        y: { ticks: { color: '#9ca3af' } }
-                    }
-                }
-            });
         }
 
     } catch (e) {
