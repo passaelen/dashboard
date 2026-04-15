@@ -683,7 +683,9 @@ const totalETFPerf =
     mondePerf + seniorsPerf + juniorsPerf;
 
 const totalETFValue =
-    totalETF; // déjà calculé
+    cleanNumber(rowsETF?.[1]?.[6]) +
+    cleanNumber(rowsETF?.[2]?.[6]) +
+    cleanNumber(rowsETF?.[3]?.[6]);
 
 const totalETFPercent =
     totalETFValue > 0
