@@ -334,3 +334,24 @@ small {
 .table td:last-child {
     text-align: right;
 }
+
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-total {
+  text-align: right;
+}
+
+.section-total div:first-child {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.section-total div:last-child {
+  font-size: 12px;
+  opacity: 0.8;
+}
