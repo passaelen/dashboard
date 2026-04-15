@@ -151,31 +151,24 @@ RATIO
 
         <table class="table">
             <tr>
-                <th>Nom</th>
-                <th>Parts</th>
-                <th>Prix</th>
-                <th>Perf</th>
-            </tr>
-
-            <tr>
                 <td>Monde</td>
-                <td>5</td>
-                <td>147,70€</td>
-                <td class="red">-22€</td>
+                <td id="etf-monde-parts"></td>
+                <td id="etf-monde-prix"></td>
+                <td id="etf-monde-perf"></td>
             </tr>
-
+            
             <tr>
                 <td>Séniors</td>
-                <td>13</td>
-                <td>94,44€</td>
-                <td class="green">+179€</td>
+                <td id="etf-seniors-parts"></td>
+                <td id="etf-seniors-prix"></td>
+                <td id="etf-seniors-perf"></td>
             </tr>
-
+            
             <tr>
                 <td>Juniors</td>
-                <td>0</td>
-                <td>99,65€</td>
-                <td>0€</td>
+                <td id="etf-juniors-parts"></td>
+                <td id="etf-juniors-prix"></td>
+                <td id="etf-juniors-perf"></td>
             </tr>
         </table>
     </div>
@@ -549,6 +542,93 @@ document.getElementById("ratio-label").innerHTML =
         }
 
         const totalETF = monde + seniors;
+
+// ===== ETF TABLE =====
+
+// MONDE
+const mondeParts = cleanNumber(rowsETF?.[1]?.[2]);
+const mondePrix = cleanNumber(rowsETF?.[1]?.[3]);
+const mondePerf = cleanNumber(rowsETF?.[1]?.[4]);
+const mondePercent = cleanNumber(rowsETF?.[1]?.[7]);
+
+document.getElementById("etf-monde-parts").innerText = mondeParts;
+document.getElementById("etf-monde-prix").innerText =
+    mondePrix.toFixed(2).replace('.', ',') + " €";
+
+const elMondePerf = document.getElementById("etf-monde-perf");
+
+const mondePercentDisplay = (isNaN(mondePercent) || mondePercent === 0)
+  ? "—"
+  : mondePercent.toFixed(2).replace('.', ',') + " %";
+
+elMondePerf.innerHTML = `
+  <div class="perf-value">
+    ${mondePerf.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${mondePercentDisplay}
+  </div>
+`;
+elMondePerf.classList.remove("green", "red");
+elMondePerf.classList.add(mondePerf >= 0 ? "green" : "red");
+
+
+// SENIORS
+const seniorsParts = cleanNumber(rowsETF?.[2]?.[2]);
+const seniorsPrix = cleanNumber(rowsETF?.[2]?.[3]);
+const seniorsPerf = cleanNumber(rowsETF?.[2]?.[4]);
+const seniorsPercent = cleanNumber(rowsETF?.[2]?.[7]);
+
+document.getElementById("etf-seniors-parts").innerText = seniorsParts;
+document.getElementById("etf-seniors-prix").innerText =
+    seniorsPrix.toFixed(2).replace('.', ',') + " €";
+
+const elSeniorsPerf = document.getElementById("etf-seniors-perf");
+
+const seniorsPercentDisplay = (isNaN(seniorsPercent) || seniorsPercent === 0)
+  ? "—"
+  : seniorsPercent.toFixed(2).replace('.', ',') + " %";
+
+elSeniorsPerf.innerHTML = `
+  <div class="perf-value">
+    ${seniorsPerf.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${seniorsPercentDisplay}
+  </div>
+`;
+elSeniorsPerf.classList.remove("green", "red");
+elSeniorsPerf.classList.add(seniorsPerf >= 0 ? "green" : "red");
+
+
+// JUNIORS
+const juniorsParts = cleanNumber(rowsETF?.[3]?.[2]);
+const juniorsPrix = cleanNumber(rowsETF?.[3]?.[3]);
+const juniorsPerf = cleanNumber(rowsETF?.[3]?.[4]);
+const juniorsPercent = cleanNumber(rowsETF?.[3]?.[7]);
+
+document.getElementById("etf-juniors-parts").innerText = juniorsParts;
+document.getElementById("etf-juniors-prix").innerText =
+    juniorsPrix.toFixed(2).replace('.', ',') + " €";
+
+const elJuniorsPerf = document.getElementById("etf-juniors-perf");
+
+const juniorsPercentDisplay = (isNaN(juniorsPercent) || juniorsPercent === 0)
+  ? "—"
+  : juniorsPercent.toFixed(2).replace('.', ',') + " %";
+
+elJuniorsPerf.innerHTML = `
+  <div class="perf-value">
+    ${juniorsPerf.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${juniorsPercentDisplay}
+  </div>
+`;
+elJuniorsPerf.classList.remove("green", "red");
+elJuniorsPerf.classList.add(juniorsPerf >= 0 ? "green" : "red");
+
+        
 
         
 // KPI
