@@ -9,6 +9,22 @@
 
 <body>
 
+<div class="card">
+    <small>ETF</small>
+    <h3 id="etf-total-value">0 €</h3>
+</div>
+
+<div class="card">
+    <small>Répartition Métaux</small>
+    <div id="donut-metaux" style="height:100px; border-radius:50%; margin:10px 0;"></div>
+    <div>
+        Or Suisse : <span id="p-or-suisse"></span><br>
+        Or Belgique : <span id="p-or-belgique"></span><br>
+        Argent : <span id="p-argent"></span>
+    </div>
+</div>
+
+
 <div class="container">
 
     <div class="header">
@@ -42,7 +58,17 @@
 
 </div>
 
+
+
+
+
+
+
+
+
 <script>
+
+
 
 function csvToObject(text) {
     const rows = text.trim().split("\n");
@@ -71,11 +97,41 @@ function cleanNumber(value) {
 async function loadData() {
     try {
 
-        // ===== FETCH DATA =====
-        const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
-        const data = csvToObject(await res.text());
+// ===== FETCH DATA =====
+        
+const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
 
-        console.log("DATA:", data);
+const data = csvToObject(await res.text());
+const pOrSuisse = cleanNumber(data["p_or_suisse"]);
+const pOrBelgique = cleanNumber(data["p_or_belgique"]);
+const pArgent = cleanNumber(data["p_argent"]);
+
+
+
+console.log("DATA:", data);
+
+
+document.getElementById("p-or-suisse").innerText = pOrSuisse + "%";
+document.getElementById("p-or-belgique").innerText = pOrBelgique + "%";
+document.getElementById("p-argent").innerText = pArgent + "%";
+
+
+
+
+
+
+const donut = document.getElementById("donut-metaux");
+
+if (donut) {
+    donut.style.background = `conic-gradient(
+        #facc15 0% ${pOrSuisse}%,
+        #f59e0b ${pOrSuisse}% ${pOrSuisse + pOrBelgique}%,
+        #9ca3af ${pOrSuisse + pOrBelgique}% 100%
+    )`;
+}
+
+
+
 
         // ===== VALEURS =====
         const orSuisse = cleanNumber(data["or_suisse_valeur"]);
@@ -85,7 +141,8 @@ async function loadData() {
         const variation = cleanNumber(data["variation"]);
         const totalGlobal = cleanNumber(data["total_global"]);
 
-        // ===== KPI =====
+
+// ===== KPI =====
         document.getElementById("or").innerText =
             (orSuisse + orBelgique).toLocaleString('fr-BE') + " €";
 
@@ -95,7 +152,16 @@ async function loadData() {
         document.getElementById("total").innerText =
             totalGlobal.toLocaleString('fr-BE') + " €";
 
-        // ===== RATIO =====
+       
+const etfMonde = cleanNumber(data["etf_monde_valeur"]);
+const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
+const etfTotal = cleanNumber(data["etf_total_valeur"]);
+
+document.getElementById("etf-total-value").innerText =
+    etfTotal.toLocaleString('fr-BE') + " €";
+
+
+ // ===== RATIO =====
         document.getElementById("ratio").innerText =
             ratioValue.toFixed(2).replace('.', ',');
 
@@ -113,7 +179,8 @@ async function loadData() {
         document.getElementById("ratio-label").innerHTML =
             "RATIO - " + emoji + " " + label;
 
-        // ===== ALERT =====
+
+// ===== ALERT =====
         let message = "";
 
         if (ratioValue >= 70) message = "❄️ Zone froide";
@@ -125,7 +192,9 @@ async function loadData() {
 
         document.getElementById("alert-text").innerText = message;
 
-        // ===== VARIATION =====
+
+
+// ===== VARIATION =====
         const el = document.getElementById("variation");
 
         if (!variation) {
@@ -138,9 +207,13 @@ async function loadData() {
             el.style.color = variation >= 0 ? "#22c55e" : "#ef4444";
         }
 
-    } catch (e) {
-        console.error("Erreur:", e);
-    }
+
+
+
+
+
+} catch (e) 
+{console.error("Erreur:", e);}
 }
 
 loadData();
