@@ -287,14 +287,14 @@ document.getElementById("etf-total-value").innerText =
  totalETF.toLocaleString('fr-BE')+" €";
 
 document.getElementById("etf-monde-parts").innerText = data["etf_monde_parts"];
-document.getElementById("etf-monde-prix").innerText = cleanNumber(data["etf_monde_prix"]).toLocaleString('fr-BE')+" €";
+document.getElementById("etf-monde-prix").innerText = cleanNumber(cleanNumber(data["etf_monde_prix"]).toLocaleString('fr-BE')+" €"
 document.getElementById("etf-monde-perf").innerHTML = formatPerfDual(
     cleanNumber(data["etf_monde_perf"]),
     cleanNumber(data["etf_monde_percent"])
 );
 
 document.getElementById("etf-seniors-parts").innerText = data["etf_seniors_parts"];
-document.getElementById("etf-seniors-prix").innerText = cleanNumber(data["etf_seniors_prix"]).toLocaleString('fr-BE')+" €";
+document.getElementById("etf-seniors-prix").innerText = cleanNumber(cleanNumber(data["etf_seniors_prix"]).toLocaleString('fr-BE')+" €"
 document.getElementById("etf-seniors-perf").innerHTML = formatPerfDual(
     cleanNumber(data["etf_seniors_perf"]),
     cleanNumber(data["etf_seniors_percent"])
@@ -358,25 +358,19 @@ scales:{
 x:{ticks:{color:"#9ca3af"}},
 y:{ticks:{color:"#9ca3af"}}
 
-catch(e) {
-        console.error("Erreur JS :", e);
-
-
-
 // ===== GRAPH =====
 const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1311770820");
-
 const rowsChart = (await resChart.text()).split("\n");
 
 const labels = [];
 const values = [];
 
 for(let i=1;i<rowsChart.length;i++){
-    const cols = rowsChart[i].split(/[,;]+/);
-    const val = cleanNumber(cols[7]);
+    const c = rowsChart[i].split(",");
+    const val = cleanNumber(c[7]);
 
-    if(val>0){
-        labels.push(cols[0]);
+    if(val > 0){
+        labels.push(c[0]);
         values.push(val);
     }
 }
@@ -403,14 +397,21 @@ if(ctx){
             }]
         },
         options:{
-            plugins:{legend:{display:false}},
+            responsive:true,
+            plugins:{ legend:{ display:false } },
             scales:{
-                x:{ticks:{color:"#9ca3af"}},
-                y:{ticks:{color:"#9ca3af"}}
+                x:{ ticks:{ color:"#9ca3af" } },
+                y:{ ticks:{ color:"#9ca3af" } }
             }
         }
     });
 }
+
+} catch(e){
+    console.error("Erreur JS :", e);
+}
+
+
 
 
 }
