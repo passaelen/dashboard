@@ -283,9 +283,18 @@ document.getElementById("p-or-suisse-g").innerText =
 const perfOrSuisse = cleanNumber(rowsOA?.[1]?.[6]);
 
 const elPerf1 = document.getElementById("perf-or-suisse");
-elPerf1.innerText = perfOrSuisse.toLocaleString('fr-BE') + " €";
 elPerf1.classList.remove("green", "red");
 elPerf1.classList.add(perfOrSuisse >= 0 ? "green" : "red");
+// Perf. % OR      
+const perfPercent1 = cleanNumber(rowsOA?.[1]?.[7]);
+elPerf1.innerHTML = `
+  <div class="perf-value">
+    ${perfOrSuisse.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${perfPercent1.toFixed(2).replace('.', ',')} %
+  </div>
+`;
 
 
 // OR BELGIQUE
@@ -296,11 +305,17 @@ document.getElementById("p-or-belgique-g").innerText =
     cleanNumber(rowsOA?.[2]?.[3]).toFixed(2).replace('.', ',') + " €";
 
 const perfOrBelgique = cleanNumber(rowsOA?.[2]?.[6]);
-
-const elPerf2 = document.getElementById("perf-or-belgique");
-elPerf2.innerText = perfOrBelgique.toLocaleString('fr-BE') + " €";
+const perfPercent2 = cleanNumber(rowsOA?.[2]?.[7]);
+elPerf2.innerHTML = `
+  <div class="perf-value">
+    ${perfOrBelgique.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${perfPercent2.toFixed(2).replace('.', ',')} %
+  </div>
+`;
 elPerf2.classList.remove("green", "red");
-elPerf2.classList.add(perfOrSuisse >= 0 ? "green" : "red");
+elPerf2.classList.add(perfOrBelgique >= 0 ? "green" : "red");
 
 
 // ARGENT
@@ -311,11 +326,17 @@ document.getElementById("p-argent-g").innerText =
     cleanNumber(rowsOA?.[3]?.[3]).toFixed(2).replace('.', ',') + " €";
 
 const perfArgent = cleanNumber(rowsOA?.[3]?.[6]);
-
-const elPerf3 = document.getElementById("perf-argent");
-elPerf3.innerText = perfArgent.toLocaleString('fr-BE') + " €";
+const perfPercent3 = cleanNumber(rowsOA?.[3]?.[7]);
+elPerf3.innerHTML = `
+  <div class="perf-value">
+    ${perfArgent.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${perfPercent3.toFixed(2).replace('.', ',')} %
+  </div>
+`;
 elPerf3.classList.remove("green", "red");
-elPerf3.classList.add(perfOrSuisse >= 0 ? "green" : "red");
+elPerf3.classList.add(perfArgent >= 0 ? "green" : "red");
 
 
 
