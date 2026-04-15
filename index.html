@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=21">
+<link rel="stylesheet" href="style.css?v=22">
 
 
 </head>
@@ -546,10 +546,10 @@ document.getElementById("ratio-label").innerHTML =
 // ===== ETF TABLE =====
 
 // MONDE
-const mondeParts = cleanNumber(rowsETF?.[1]?.[2]);
-const mondePrix = cleanNumber(rowsETF?.[1]?.[3]);
-const mondePerf = cleanNumber(rowsETF?.[1]?.[4]);
-const mondePercent = cleanNumber(rowsETF?.[1]?.[7]);
+const mondeParts = cleanNumber(rowsETF?.[1]?.[3]);
+const mondePrix = cleanNumber(rowsETF?.[1]?.[4]);
+const mondePerf = cleanNumber(rowsETF?.[1]?.[5]);
+const mondePercent = cleanNumber(rowsETF?.[1]?.[8]);
 
 document.getElementById("etf-monde-parts").innerText = mondeParts;
 document.getElementById("etf-monde-prix").innerText =
@@ -574,10 +574,10 @@ elMondePerf.classList.add(mondePerf >= 0 ? "green" : "red");
 
 
 // SENIORS
-const seniorsParts = cleanNumber(rowsETF?.[2]?.[2]);
-const seniorsPrix = cleanNumber(rowsETF?.[2]?.[3]);
-const seniorsPerf = cleanNumber(rowsETF?.[2]?.[4]);
-const seniorsPercent = cleanNumber(rowsETF?.[2]?.[7]);
+const seniorsParts = cleanNumber(rowsETF?.[2]?.[3]);
+const seniorsPrix = cleanNumber(rowsETF?.[2]?.[4]);
+const seniorsPerf = cleanNumber(rowsETF?.[2]?.[5]);
+const seniorsPercent = cleanNumber(rowsETF?.[2]?.[8]);
 
 document.getElementById("etf-seniors-parts").innerText = seniorsParts;
 document.getElementById("etf-seniors-prix").innerText =
@@ -602,10 +602,10 @@ elSeniorsPerf.classList.add(seniorsPerf >= 0 ? "green" : "red");
 
 
 // JUNIORS
-const juniorsParts = cleanNumber(rowsETF?.[3]?.[2]);
-const juniorsPrix = cleanNumber(rowsETF?.[3]?.[3]);
-const juniorsPerf = cleanNumber(rowsETF?.[3]?.[4]);
-const juniorsPercent = cleanNumber(rowsETF?.[3]?.[7]);
+const juniorsParts = cleanNumber(rowsETF?.[3]?.[3]);
+const juniorsPrix = cleanNumber(rowsETF?.[3]?.[4]);
+const juniorsPerf = cleanNumber(rowsETF?.[3]?.[5]);
+const juniorsPercent = cleanNumber(rowsETF?.[3]?.[8]);
 
 document.getElementById("etf-juniors-parts").innerText = juniorsParts;
 document.getElementById("etf-juniors-prix").innerText =
