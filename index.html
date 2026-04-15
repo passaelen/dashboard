@@ -1,74 +1,200 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portefeuille</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portefeuille</title>
+
+<link rel="stylesheet" href="style.css?v=25">
+
+
 </head>
 
 <body>
 
-<div class="card">
-    <small>ETF</small>
-    <h3 id="etf-total-value">0 €</h3>
-</div>
-
-<div class="card">
-    <small>Répartition Métaux</small>
-    <div id="donut-metaux" style="height:100px; border-radius:50%; margin:10px 0;"></div>
-    <div>
-        Or Suisse : <span id="p-or-suisse"></span><br>
-        Or Belgique : <span id="p-or-belgique"></span><br>
-        Argent : <span id="p-argent"></span>
-    </div>
-</div>
-
-
 <div class="container">
 
+    <!-- ================= HEADER ================= -->
     <div class="header">
-        <h2>💼 Portefeuille</h2>
-        <div class="badge" id="variation">...</div>
+        <div>
+            <h2 style="margin:0;">💼 Portefeuille</h2>
+            <small>Or · Argent · ETF</small>
+        </div>
+        <div class="badge" id="variation">-274,32 €</div>
     </div>
 
-    <div class="card">
-        <small>Total</small>
-        <h2 id="total">0 €</h2>
+    <!-- ================= TOTAL ================= -->
+    <div class="card highlight">
+        <small>Total global</small>
+        <h2 id="total" class="gold" style="margin:5px 0;">75 441 €</h2>
     </div>
 
-    <div class="card">
-        <small>OR</small>
-        <h3 id="or">0 €</h3>
-    </div>
+    <!-- ================= KPI ================= -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <small>OR</small>
+    <h3 id="or" class="gold">61 114 €</h3>
+   </div>
 
-    <div class="card">
-        <small>ARGENT</small>
-        <h3 id="argent">0 €</h3>
-    </div>
+        <div class="kpi">
+            <small>ARGENT</small>
+            <h3 id="argent">12 360 €</h3>
+        </div>
 
-    <div class="card">
-        <small id="ratio-label">RATIO</small>
-        <h3 id="ratio">--</h3>
-    </div>
-
-    <div class="card alert-box" id="alert-box">
-        <span id="alert-text">...</span>
-    </div>
+<div class="kpi">
+<small id="ratio-label">
+RATIO
+</small>
+<h3 id="ratio" class="gold"></h3>
+</div>
 
 </div>
 
+    <!-- ================= PROGRESS ================= -->
+    <div class="progress">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="progress-text">
+        <span id="progress-label"></span>
+    </div>
+
+<div class="card alert-box" id="alert-box">
+<span id="alert-text">Chargement...</span>
+</div>
 
 
+    <!-- ================= REPARTITIONS ================= -->
+    <div class="card">
+        <h3>Répartitions</h3>
+        <div class="repartition-grid">
+
+            <!-- METAUX -->
+            <div class="bloc"><h4>Métaux</h4>
+                <div class="donut" id="donut-metaux"></div>
+                <div class="legend">
+                    <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
+                    <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
+                    <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
+                </div>
+            </div>
 
 
+            <!-- ETF -->
+            <div class="bloc"><h4>ETF</h4>
+                <div class="donut etf"></div>
+                <div class="legend">
+                    <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
+                    <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
+                </div>
+            </div>
 
 
+        </div>
+
+        <!-- ✅ GRAPH EN DEHORS -->
+    <div class="card">
+        <h3>Évolution 10 jours</h3>
+        <div class="chart-container">
+        <canvas id="chart-10j"></canvas>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- ================= TABLE METAUX ================= -->
+    <div class="card">
+        <div class="section-header">
+          <h3>Métaux Précieux</h3>
+          <div class="section-total">
+            <div id="metaux-total-value"></div>
+            <div id="metaux-total-perf"></div>
+          </div>
+        </div>
+
+
+        <table class="table">
+    <tr>
+        <th>Type</th>
+        <th>Stockage</th>
+        <th>Quantité</th>
+        <th>€/g</th>
+        <th>Perf</th>
+    </tr>
+
+    <tr>
+        <td>🥇 Or</td>
+        <td>Suisse</td>
+        <td id="q-or-suisse"></td>
+        <td id="p-or-suisse-g"></td>
+        <td id="perf-or-suisse"></td>
+    </tr>
+
+    <tr>
+        <td>🥇 Or</td>
+        <td>Belgique</td>
+        <td id="q-or-belgique"></td>
+        <td id="p-or-belgique-g"></td>
+        <td id="perf-or-belgique"></td>
+    </tr>
+
+    <tr>
+        <td>🥈 Argent</td>
+        <td>Suisse</td>
+        <td id="q-argent"></td>
+        <td id="p-argent-g"></td>
+        <td id="perf-argent"></td>
+    </tr>
+</table>
+
+
+    </div>
+
+    <!-- ================= TABLE ETF ================= -->
+    <div class="card">
+       <div class="section-header">
+          <h3>ETF</h3>
+          <div class="section-total">
+            <div id="etf-total-value"></div>
+            <div id="etf-total-perf"></div>
+          </div>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>ETF</th>
+                <th>Parts</th>
+                <th>Spot</th>
+                <th>Perf</th>
+            </tr>
+            <tr>
+                <td>Monde</td>
+                <td id="etf-monde-parts"></td>
+                <td id="etf-monde-prix"></td>
+                <td id="etf-monde-perf"></td>
+            </tr>
+
+            <tr>
+                <td>Séniors</td>
+                <td id="etf-seniors-parts"></td>
+                <td id="etf-seniors-prix"></td>
+                <td id="etf-seniors-perf"></td>
+            </tr>
+
+            <tr>
+                <td>Juniors</td>
+                <td id="etf-juniors-parts"></td>
+                <td id="etf-juniors-prix"></td>
+                <td id="etf-juniors-perf"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
 
 
 <script>
-
-
 
 function csvToObject(text) {
     const rows = text.trim().split("\n");
@@ -97,52 +223,22 @@ function cleanNumber(value) {
 async function loadData() {
     try {
 
-// ===== FETCH DATA =====
-        
-const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
+        const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
+        const data = csvToObject(await res.text());
 
-const data = csvToObject(await res.text());
-const pOrSuisse = cleanNumber(data["p_or_suisse"]);
-const pOrBelgique = cleanNumber(data["p_or_belgique"]);
-const pArgent = cleanNumber(data["p_argent"]);
-
-
-
-console.log("DATA:", data);
-
-
-document.getElementById("p-or-suisse").innerText = pOrSuisse + "%";
-document.getElementById("p-or-belgique").innerText = pOrBelgique + "%";
-document.getElementById("p-argent").innerText = pArgent + "%";
-
-
-
-
-
-
-const donut = document.getElementById("donut-metaux");
-
-if (donut) {
-    donut.style.background = `conic-gradient(
-        #facc15 0% ${pOrSuisse}%,
-        #f59e0b ${pOrSuisse}% ${pOrSuisse + pOrBelgique}%,
-        #9ca3af ${pOrSuisse + pOrBelgique}% 100%
-    )`;
-}
-
-
-
+        console.log("DATA:", data);
 
         // ===== VALEURS =====
         const orSuisse = cleanNumber(data["or_suisse_valeur"]);
         const orBelgique = cleanNumber(data["or_belgique_valeur"]);
         const argent = cleanNumber(data["argent_valeur"]);
         const ratioValue = cleanNumber(data["ratio"]);
-        const variation = cleanNumber(data["variation"]);
         const totalGlobal = cleanNumber(data["total_global"]);
+        const variation = cleanNumber(data["variation"]);
 
+        const etfTotal = cleanNumber(data["etf_total_valeur"]);
 
-// ===== KPI =====
+        // ===== KPI =====
         document.getElementById("or").innerText =
             (orSuisse + orBelgique).toLocaleString('fr-BE') + " €";
 
@@ -152,16 +248,11 @@ if (donut) {
         document.getElementById("total").innerText =
             totalGlobal.toLocaleString('fr-BE') + " €";
 
-       
-const etfMonde = cleanNumber(data["etf_monde_valeur"]);
-const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
-const etfTotal = cleanNumber(data["etf_total_valeur"]);
+        // ===== ETF =====
+        document.getElementById("etf-total-value").innerText =
+            etfTotal.toLocaleString('fr-BE') + " €";
 
-document.getElementById("etf-total-value").innerText =
-    etfTotal.toLocaleString('fr-BE') + " €";
-
-
- // ===== RATIO =====
+        // ===== RATIO =====
         document.getElementById("ratio").innerText =
             ratioValue.toFixed(2).replace('.', ',');
 
@@ -171,16 +262,15 @@ document.getElementById("etf-total-value").innerText =
         if (ratioValue >= 80) { label = "Nord très profond"; emoji = "🐻‍❄️🐻‍❄️"; }
         else if (ratioValue >= 70) { label = "Nord profond"; emoji = "❄️"; }
         else if (ratioValue >= 55) { label = "Nord"; emoji = "🧊"; }
-        else if (ratioValue >= 50) { label = "Pivot"; emoji = "⚖️"; }
+        else if (ratioValue >= 50) { label = "Frontière"; emoji = "⚖️"; }
         else if (ratioValue >= 45) { label = "Sud tempéré"; emoji = "🌤️"; }
-        else if (ratioValue >= 40) { label = "Chaud"; emoji = "🔥"; }
+        else if (ratioValue >= 40) { label = "Sud chaud"; emoji = "🔥"; }
         else { label = "Canicule"; emoji = "🚨"; }
 
         document.getElementById("ratio-label").innerHTML =
-            "RATIO - " + emoji + " " + label;
+            "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
 
-
-// ===== ALERT =====
+        // ===== ALERT =====
         let message = "";
 
         if (ratioValue >= 70) message = "❄️ Zone froide";
@@ -192,33 +282,43 @@ document.getElementById("etf-total-value").innerText =
 
         document.getElementById("alert-text").innerText = message;
 
-
-
-// ===== VARIATION =====
+        // ===== VARIATION =====
         const el = document.getElementById("variation");
 
-        if (!variation) {
-            el.innerText = "—";
-        } else {
-            el.innerText =
-                (variation >= 0 ? "+" : "") +
-                variation.toLocaleString('fr-BE') + " €";
+        el.innerText =
+            (variation >= 0 ? "+" : "") +
+            variation.toLocaleString('fr-BE') + " €";
 
-            el.style.color = variation >= 0 ? "#22c55e" : "#ef4444";
+        el.style.color = variation >= 0 ? "#22c55e" : "#ef4444";
+
+        // ===== REPARTITION METAUX =====
+        const pOrSuisse = cleanNumber(data["p_or_suisse"]);
+        const pOrBelgique = cleanNumber(data["p_or_belgique"]);
+        const pArgent = cleanNumber(data["p_argent"]);
+
+        document.getElementById("p-or-suisse").innerText = pOrSuisse + "%";
+        document.getElementById("p-or-belgique").innerText = pOrBelgique + "%";
+        document.getElementById("p-argent").innerText = pArgent + "%";
+
+        const donut = document.getElementById("donut-metaux");
+
+        if (donut) {
+            donut.style.background = `conic-gradient(
+                #facc15 0% ${pOrSuisse}%,
+                #f59e0b ${pOrSuisse}% ${pOrSuisse + pOrBelgique}%,
+                #9ca3af ${pOrSuisse + pOrBelgique}% 100%
+            )`;
         }
 
-
-
-
-
-
-} catch (e) 
-{console.error("Erreur:", e);}
+    } catch (e) {
+        console.error("Erreur :", e);
+    }
 }
 
 loadData();
 
 </script>
+
 
 </body>
 </html>
