@@ -4,53 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portefeuille</title>
-
-<style>
-body {
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
-    padding: 20px;
-}
-.card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-.gold { color: #facc15; }
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="card">
-    <h2>💼 Portefeuille</h2>
-</div>
+<div class="container">
 
-<div class="card">
-    <h3>Total</h3>
-    <h2 id="total" class="gold">...</h2>
-</div>
+    <div class="header">
+        <h2>💼 Portefeuille</h2>
+        <div class="badge" id="variation">...</div>
+    </div>
 
-<div class="card">
-    <h3>OR</h3>
-    <div id="or"></div>
-</div>
+    <div class="card">
+        <small>Total</small>
+        <h2 id="total">0 €</h2>
+    </div>
 
-<div class="card">
-    <h3>ARGENT</h3>
-    <div id="argent"></div>
-</div>
+    <div class="card">
+        <small>OR</small>
+        <h3 id="or">0 €</h3>
+    </div>
 
-<div class="card">
-    <h3 id="ratio-label">RATIO</h3>
-    <h2 id="ratio"></h2>
-</div>
+    <div class="card">
+        <small>ARGENT</small>
+        <h3 id="argent">0 €</h3>
+    </div>
 
-<div class="card">
-    <div id="alert-text">...</div>
+    <div class="card">
+        <small id="ratio-label">RATIO</small>
+        <h3 id="ratio">--</h3>
+    </div>
+
+    <div class="card alert-box" id="alert-box">
+        <span id="alert-text">...</span>
+    </div>
+
 </div>
 
 <script>
@@ -82,46 +71,75 @@ function cleanNumber(value) {
 async function loadData() {
     try {
 
+        // ===== FETCH DATA =====
         const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
-
         const data = csvToObject(await res.text());
 
-        console.log(data);
+        console.log("DATA:", data);
 
-        const orSuisse = cleanNumber(data["or_suisse"]);
-        const orBelgique = cleanNumber(data["or_belgique"]);
-        const argent = cleanNumber(data["argent"]);
-        const ratio = cleanNumber(data["ratio"]);
+        // ===== VALEURS =====
+        const orSuisse = cleanNumber(data["or_suisse_valeur"]);
+        const orBelgique = cleanNumber(data["or_belgique_valeur"]);
+        const argent = cleanNumber(data["argent_valeur"]);
+        const ratioValue = cleanNumber(data["ratio"]);
+        const variation = cleanNumber(data["variation"]);
+        const totalGlobal = cleanNumber(data["total_global"]);
 
-        // affichage
+        // ===== KPI =====
         document.getElementById("or").innerText =
             (orSuisse + orBelgique).toLocaleString('fr-BE') + " €";
 
         document.getElementById("argent").innerText =
             argent.toLocaleString('fr-BE') + " €";
 
-        document.getElementById("ratio").innerText =
-            ratio.toFixed(2).replace('.', ',');
-
-        const total = orSuisse + orBelgique + argent;
-
         document.getElementById("total").innerText =
-            total.toLocaleString('fr-BE') + " €";
+            totalGlobal.toLocaleString('fr-BE') + " €";
 
-        // label
+        // ===== RATIO =====
+        document.getElementById("ratio").innerText =
+            ratioValue.toFixed(2).replace('.', ',');
+
         let label = "";
-        if (ratio >= 70) label = "❄️ Nord";
-        else if (ratio >= 50) label = "⚖️ Pivot";
-        else if (ratio >= 40) label = "🔥 Chaud";
-        else label = "🚨 Extrême";
+        let emoji = "";
 
-        document.getElementById("ratio-label").innerText =
-            "RATIO - " + label;
+        if (ratioValue >= 80) { label = "Nord très profond"; emoji = "🐻‍❄️🐻‍❄️"; }
+        else if (ratioValue >= 70) { label = "Nord profond"; emoji = "❄️"; }
+        else if (ratioValue >= 55) { label = "Nord"; emoji = "🧊"; }
+        else if (ratioValue >= 50) { label = "Pivot"; emoji = "⚖️"; }
+        else if (ratioValue >= 45) { label = "Sud tempéré"; emoji = "🌤️"; }
+        else if (ratioValue >= 40) { label = "Chaud"; emoji = "🔥"; }
+        else { label = "Canicule"; emoji = "🚨"; }
 
-        document.getElementById("alert-text").innerText = label;
+        document.getElementById("ratio-label").innerHTML =
+            "RATIO - " + emoji + " " + label;
+
+        // ===== ALERT =====
+        let message = "";
+
+        if (ratioValue >= 70) message = "❄️ Zone froide";
+        else if (ratioValue >= 55) message = "🧊 Nord";
+        else if (ratioValue >= 50) message = "⚖️ Pivot";
+        else if (ratioValue >= 45) message = "🌤️ Arbitrage";
+        else if (ratioValue >= 40) message = "🔥 Chaud";
+        else message = "🚨 Extrême";
+
+        document.getElementById("alert-text").innerText = message;
+
+        // ===== VARIATION =====
+        const el = document.getElementById("variation");
+
+        if (!variation) {
+            el.innerText = "—";
+        } else {
+            el.innerText =
+                (variation >= 0 ? "+" : "") +
+                variation.toLocaleString('fr-BE') + " €";
+
+            el.style.color = variation >= 0 ? "#22c55e" : "#ef4444";
+        }
 
     } catch (e) {
-        console.error(e);
+        console.error("Erreur:", e);
     }
 }
 
