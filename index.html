@@ -65,20 +65,18 @@ RATIO
 </div>
 
 
-    <!-- ================= REPARTITIONS ================= -->
-    <div class="card">
-        <h3>Répartitions</h3>
-        <div class="repartition-grid">
+    function formatPercent(value) {
+    return value.toFixed(2).replace('.', ',') + "%";
+}
 
-            <!-- METAUX -->
-            <div class="bloc"><h4>Métaux</h4>
-                <div class="donut" id="donut-metaux"></div>
-                <div class="legend">
-                    <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
-                    <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
-                    <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
-                </div>
-            </div>
+// ===== REPARTITION METAUX =====
+const pOrSuisse = cleanNumber(data["p_or_suisse"]);
+const pOrBelgique = cleanNumber(data["p_or_belgique"]);
+const pArgent = cleanNumber(data["p_argent"]);
+
+document.getElementById("p-or-suisse").innerText = formatPercent(pOrSuisse);
+document.getElementById("p-or-belgique").innerText = formatPercent(pOrBelgique);
+document.getElementById("p-argent").innerText = formatPercent(pArgent);
 
 
             <!-- ETF -->
@@ -271,7 +269,9 @@ async function loadData() {
         document.getElementById("ratio-label").innerHTML =
             "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
 
-        // ===== ALERT =====
+  
+
+// ===== ALERT =====
         let message = "";
 
         if (ratioValue >= 70) message = "❄️ Zone froide";
