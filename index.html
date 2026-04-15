@@ -142,6 +142,7 @@
 
 </div>
 
+
 <script>
 
 // ===== UTILS =====
@@ -149,7 +150,7 @@ function cleanNumber(v){
     if(!v) return 0;
 
     return Number(
-        v.replace(/"/g,'') // ← enlève les guillemets
+        v.replace(/"/g,'')
          .replace(/[^0-9,-]/g,'')
          .replace(',','.')
     ) || 0;
@@ -179,7 +180,7 @@ rows.forEach(r=>{
     data[c[0]?.trim()] = c[1]?.trim();
 });
 
-// KPI
+// ===== KPI =====
 const orS = cleanNumber(data["or_suisse_valeur"]);
 const orB = cleanNumber(data["or_belgique_valeur"]);
 const ag = cleanNumber(data["argent_valeur"]);
@@ -187,48 +188,93 @@ const ag = cleanNumber(data["argent_valeur"]);
 document.getElementById("or").innerText = (orS+orB).toLocaleString('fr-BE')+" €";
 document.getElementById("argent").innerText = ag.toLocaleString('fr-BE')+" €";
 document.getElementById("total").innerText = cleanNumber(data["total_global"]).toLocaleString('fr-BE')+" €";
-document.getElementById("ratio").innerText = cleanNumber(data["ratio"]).toFixed(2).replace('.',',');
 
-// VAR
+const ratio = cleanNumber(data["ratio"]);
+document.getElementById("ratio").innerText = ratio.toFixed(2).replace('.',',');
+
+// ===== ALERT =====
+let msg="";
+if(ratio>=70) msg="❄️ Zone froide";
+else if(ratio>=55) msg="🧊 Nord";
+else if(ratio>=50) msg="⚖️ Pivot";
+else if(ratio>=45) msg="🌤️ Arbitrage";
+else if(ratio>=40) msg="🔥 Chaud";
+else msg="🚨 Extrême";
+
+document.getElementById("alert-text").innerText = msg;
+
+// ===== VAR =====
 const v = cleanNumber(data["variation"]);
 const el = document.getElementById("variation");
 el.innerText = (v>=0?"+":"")+v.toLocaleString('fr-BE')+" €";
 el.style.color = v>=0?"#22c55e":"#ef4444";
 
-// METAUX DETAIL
+// ===== METAUX DETAIL =====
 document.getElementById("q-or-suisse").innerText =
  cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE')+" g";
 
-document.getElementById("p-or-suisse-g").innerText = data["or_suisse_prix_g"]+" €";
+document.getElementById("p-or-suisse-g").innerText =
+ cleanNumber(data["or_suisse_prix_g"]).toFixed(2).replace('.',',')+" €";
+
 document.getElementById("perf-or-suisse").innerHTML = formatPerfDual(
     cleanNumber(data["or_suisse_perf"]),
     cleanNumber(data["or_suisse_percent"])
 );
 
-document.getElementById("q-or-belgique").innerText = data["or_belgique_qte"]+" g";
-document.getElementById("p-or-belgique-g").innerText = data["or_belgique_prix_g"]+" €";
+document.getElementById("q-or-belgique").innerText =
+ cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE')+" g";
+
+document.getElementById("p-or-belgique-g").innerText =
+ cleanNumber(data["or_belgique_prix_g"]).toFixed(2).replace('.',',')+" €";
+
 document.getElementById("perf-or-belgique").innerHTML = formatPerfDual(
     cleanNumber(data["or_belgique_perf"]),
     cleanNumber(data["or_belgique_percent"])
 );
 
-document.getElementById("q-argent").innerText = data["argent_qte"]+" g";
-document.getElementById("p-argent-g").innerText = data["argent_prix_g"]+" €";
+document.getElementById("q-argent").innerText =
+ cleanNumber(data["argent_qte"]).toLocaleString('fr-BE')+" g";
+
+document.getElementById("p-argent-g").innerText =
+ cleanNumber(data["argent_prix_g"]).toFixed(2).replace('.',',')+" €";
+
 document.getElementById("perf-argent").innerHTML = formatPerfDual(
     cleanNumber(data["argent_perf"]),
     cleanNumber(data["argent_percent"])
 );
 
-// TOTAL METAUX
+// ===== TOTAL METAUX =====
 document.getElementById("metaux-total-value").innerText =
     cleanNumber(data["metaux_total_valeur"]).toLocaleString('fr-BE')+" €";
 
 document.getElementById("metaux-total-perf").innerText =
     formatPercent(cleanNumber(data["metaux_total_percent"]));
 
-// ETF
+// ===== DONUT METAUX =====
+const totalMetaux = orS + orB + ag;
+
+const pOrS = (orS/totalMetaux)*100;
+const pOrB = (orB/totalMetaux)*100;
+const pAg = (ag/totalMetaux)*100;
+
+document.getElementById("p-or-suisse").innerText = formatPercent(pOrS);
+document.getElementById("p-or-belgique").innerText = formatPercent(pOrB);
+document.getElementById("p-argent").innerText = formatPercent(pAg);
+
+document.getElementById("donut-metaux").style.background = `
+conic-gradient(
+#facc15 0% ${pOrS}%,
+#f59e0b ${pOrS}% ${pOrS+pOrB}%,
+#9ca3af ${pOrS+pOrB}% 100%
+)`;
+
+// ===== ETF =====
+const etfMonde = cleanNumber(data["etf_monde_valeur"]);
+const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
+const totalETF = etfMonde + etfSeniors;
+
 document.getElementById("etf-total-value").innerText =
-    cleanNumber(data["etf_total_valeur"]).toLocaleString('fr-BE')+" €";
+ totalETF.toLocaleString('fr-BE')+" €";
 
 document.getElementById("etf-monde-parts").innerText = data["etf_monde_parts"];
 document.getElementById("etf-monde-prix").innerText = data["etf_monde_prix"]+" €";
@@ -244,12 +290,57 @@ document.getElementById("etf-seniors-perf").innerHTML = formatPerfDual(
     cleanNumber(data["etf_seniors_percent"])
 );
 
-document.getElementById("etf-juniors-parts").innerText = data["etf_juniors_parts"];
-document.getElementById("etf-juniors-prix").innerText = data["etf_juniors_prix"]+" €";
-document.getElementById("etf-juniors-perf").innerHTML = formatPerfDual(
-    cleanNumber(data["etf_juniors_perf"]),
-    cleanNumber(data["etf_juniors_percent"])
-);
+// ===== DONUT ETF =====
+const pMonde = (etfMonde/totalETF)*100;
+const pSeniors = (etfSeniors/totalETF)*100;
+
+document.getElementById("p-monde").innerText = formatPercent(pMonde);
+document.getElementById("p-seniors").innerText = formatPercent(pSeniors);
+
+document.querySelector(".donut.etf").style.background = `
+conic-gradient(
+#38bdf8 0% ${pMonde}%,
+#22c55e ${pMonde}% 100%
+)`;
+
+// ===== GRAPH =====
+const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1311770820");
+const rowsChart = (await resChart.text()).split("\n");
+
+const labels=[], values=[];
+
+for(let i=1;i<rowsChart.length;i++){
+    const c = rowsChart[i].split(",");
+    const val = cleanNumber(c[7]);
+    if(val>1000){
+        labels.push(c[0]);
+        values.push(val);
+    }
+}
+
+const ctx=document.getElementById("chart-10j");
+
+new Chart(ctx,{
+type:'line',
+data:{
+labels:labels.slice(-10),
+datasets:[{
+data:values.slice(-10),
+borderColor:"#facc15",
+backgroundColor:"rgba(250,204,21,0.1)",
+fill:true,
+tension:0.4,
+pointRadius:0
+}]
+},
+options:{
+plugins:{legend:{display:false}},
+scales:{
+x:{ticks:{color:"#9ca3af"}},
+y:{ticks:{color:"#9ca3af"}}
+}
+}
+});
 
 }
 
