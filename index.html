@@ -65,20 +65,33 @@ RATIO
 </div>
 
 
-    
+<div class="repartition-grid">
 
-
-            <!-- ETF -->
-            <div class="bloc"><h4>ETF</h4>
-                <div class="donut etf"></div>
-                <div class="legend">
-                    <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
-                    <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
-                </div>
-            </div>
-
-
+<!-- METAUX -->
+    <div class="bloc">
+        <h4>Métaux</h4>
+        <div class="donut" id="donut-metaux"></div>
+        <div class="legend">
+            <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
+            <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
+            <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
         </div>
+    </div>
+
+<!-- ETF -->
+    <div class="bloc">
+        <h4>ETF</h4>
+        <div class="donut etf"></div>
+        <div class="legend">
+            <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
+            <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
+        </div>
+    </div>
+
+</div>
+
+
+            
 
         <!-- ✅ GRAPH EN DEHORS -->
     <div class="card">
@@ -90,54 +103,7 @@ RATIO
 
     </div>
 
-    <!-- ================= TABLE METAUX ================= -->
-    <div class="card">
-        <div class="section-header">
-          <h3>Métaux Précieux</h3>
-          <div class="section-total">
-            <div id="metaux-total-value"></div>
-            <div id="metaux-total-perf"></div>
-          </div>
-        </div>
-
-
-        <table class="table">
-    <tr>
-        <th>Type</th>
-        <th>Stockage</th>
-        <th>Quantité</th>
-        <th>€/g</th>
-        <th>Perf</th>
-    </tr>
-
-    <tr>
-        <td>🥇 Or</td>
-        <td>Suisse</td>
-        <td id="q-or-suisse"></td>
-        <td id="p-or-suisse-g"></td>
-        <td id="perf-or-suisse"></td>
-    </tr>
-
-    <tr>
-        <td>🥇 Or</td>
-        <td>Belgique</td>
-        <td id="q-or-belgique"></td>
-        <td id="p-or-belgique-g"></td>
-        <td id="perf-or-belgique"></td>
-    </tr>
-
-    <tr>
-        <td>🥈 Argent</td>
-        <td>Suisse</td>
-        <td id="q-argent"></td>
-        <td id="p-argent-g"></td>
-        <td id="perf-argent"></td>
-    </tr>
-</table>
-
-
-    </div>
-
+    
     <!-- ================= TABLE ETF ================= -->
     <div class="card">
        <div class="section-header">
