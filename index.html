@@ -65,18 +65,7 @@ RATIO
 </div>
 
 
-    function formatPercent(value) {
-    return value.toFixed(2).replace('.', ',') + "%";
-}
-
-// ===== REPARTITION METAUX =====
-const pOrSuisse = cleanNumber(data["p_or_suisse"]);
-const pOrBelgique = cleanNumber(data["p_or_belgique"]);
-const pArgent = cleanNumber(data["p_argent"]);
-
-document.getElementById("p-or-suisse").innerText = formatPercent(pOrSuisse);
-document.getElementById("p-or-belgique").innerText = formatPercent(pOrBelgique);
-document.getElementById("p-argent").innerText = formatPercent(pArgent);
+    
 
 
             <!-- ETF -->
@@ -218,6 +207,26 @@ function cleanNumber(value) {
             .replace(',', '.')
     ) || 0;
 }
+
+
+
+
+function formatPercent(value) {
+    return value.toFixed(2).replace('.', ',') + "%";
+}
+
+// ===== REPARTITION METAUX =====
+const pOrSuisse = cleanNumber(data["p_or_suisse"]);
+const pOrBelgique = cleanNumber(data["p_or_belgique"]);
+const pArgent = cleanNumber(data["p_argent"]);
+
+document.getElementById("p-or-suisse").innerText = formatPercent(pOrSuisse);
+document.getElementById("p-or-belgique").innerText = formatPercent(pOrBelgique);
+document.getElementById("p-argent").innerText = formatPercent(pArgent);
+
+
+
+
 
 async function loadData() {
     try {
