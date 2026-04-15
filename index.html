@@ -133,7 +133,21 @@ RATIO
 
         <tr>
             <td>🥇 Or</td>
-            <td>Belgique</td
+            <td>Belgique</td>
+            <td id="q-or-belgique"></td>
+            <td id="p-or-belgique-g"></td>
+            <td id="perf-or-belgique"></td>
+        </tr>
+
+        <tr>
+            <td>🥈 Argent</td>
+            <td>Suisse</td>
+            <td id="q-argent"></td>
+            <td id="p-argent-g"></td>
+            <td id="perf-argent"></td>
+        </tr>
+    </table>
+</div>
 
 
 
@@ -285,7 +299,52 @@ async function loadData() {
             )`;
         }
 
-        // ================= ETF =================
+        
+// ================= METAUX DETAIL =================
+
+// Quantités
+document.getElementById("q-or-suisse").innerText =
+    cleanNumber(data["q_or_suisse"]).toLocaleString('fr-BE') + " g";
+
+document.getElementById("q-or-belgique").innerText =
+    cleanNumber(data["q_or_belgique"]).toLocaleString('fr-BE') + " g";
+
+document.getElementById("q-argent").innerText =
+    cleanNumber(data["q_argent"]).toLocaleString('fr-BE') + " g";
+
+// Prix €/g
+document.getElementById("p-or-suisse-g").innerText =
+    cleanNumber(data["p_or_suisse_g"]).toFixed(2).replace('.', ',') + " €";
+
+document.getElementById("p-or-belgique-g").innerText =
+    cleanNumber(data["p_or_belgique_g"]).toFixed(2).replace('.', ',') + " €";
+
+document.getElementById("p-argent-g").innerText =
+    cleanNumber(data["p_argent_g"]).toFixed(2).replace('.', ',') + " €";
+
+// Performance
+document.getElementById("perf-or-suisse").innerText =
+    formatPercent(cleanNumber(data["perf_or_suisse"]));
+
+document.getElementById("perf-or-belgique").innerText =
+    formatPercent(cleanNumber(data["perf_or_belgique"]));
+
+document.getElementById("perf-argent").innerText =
+    formatPercent(cleanNumber(data["perf_argent"]));
+
+// Total métaux
+const totalMetaux = orSuisse + orBelgique + argent;
+
+document.getElementById("metaux-total-value").innerText =
+    totalMetaux.toLocaleString('fr-BE') + " €";
+
+
+
+
+
+
+
+// ================= ETF =================
         const etfMonde = cleanNumber(data["etf_monde_valeur"]);
         const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
 
