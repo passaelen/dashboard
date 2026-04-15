@@ -317,6 +317,36 @@ async function loadData() {
     } catch (e) {
         console.error("Erreur :", e);
     }
+
+
+// ===== ETF REPARTITION =====
+const etfMonde = cleanNumber(data["etf_monde_valeur"]);
+const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
+
+const totalETF = etfMonde + etfSeniors;
+
+if (totalETF > 0) {
+    const pMonde = (etfMonde / totalETF) * 100;
+    const pSeniors = (etfSeniors / totalETF) * 100;
+
+    document.getElementById("p-monde").innerText =
+        pMonde.toFixed(2).replace('.', ',') + "%";
+
+    document.getElementById("p-seniors").innerText =
+        pSeniors.toFixed(2).replace('.', ',') + "%";
+
+    const donutETF = document.querySelector(".donut.etf");
+
+    if (donutETF) {
+        donutETF.style.background = `conic-gradient(
+            #38bdf8 0% ${pMonde}%,
+            #22c55e ${pMonde}% 100%
+        )`;
+    }
+}
+
+
+
 }
 
 loadData();
