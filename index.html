@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=23">
 
 
 </head>
@@ -387,7 +387,37 @@ elPerf3.innerHTML = `
 elPerf3.classList.remove("green", "red");
 elPerf3.classList.add(perfArgent >= 0 ? "green" : "red");
 
+// ===== TOTAL METAUX =====
 
+const totalMetauxValue =
+    cleanNumber(rowsOA?.[1]?.[4]) +
+    cleanNumber(rowsOA?.[2]?.[4]) +
+    cleanNumber(rowsOA?.[3]?.[4]);
+
+const totalMetauxPerf =
+    perfOrSuisse + perfOrBelgique + perfArgent;
+
+const totalMetauxPercent =
+    totalMetauxValue > 0
+        ? (totalMetauxPerf / (totalMetauxValue - totalMetauxPerf)) * 100
+        : 0;
+
+// affichage
+document.getElementById("metaux-total-value").innerText =
+    totalMetauxValue.toLocaleString('fr-BE') + " €";
+
+const metauxPerfEl = document.getElementById("metaux-total-perf");
+
+const percentDisplayMetaux = (isNaN(totalMetauxPercent) || totalMetauxPercent === 0)
+  ? "—"
+  : totalMetauxPercent.toFixed(2).replace('.', ',') + " %";
+
+metauxPerfEl.innerHTML = `
+  ${totalMetauxPerf.toLocaleString('fr-BE')} € (${percentDisplayMetaux})
+`;
+
+metauxPerfEl.classList.remove("green", "red");
+metauxPerfEl.classList.add(totalMetauxPerf >= 0 ? "green" : "red");
 
 
 
@@ -645,6 +675,37 @@ elJuniorsPerf.innerHTML = `
 `;
 elJuniorsPerf.classList.remove("green", "red");
 elJuniorsPerf.classList.add(juniorsPerf >= 0 ? "green" : "red");
+
+
+// ===== TOTAL ETF =====
+
+const totalETFPerf =
+    mondePerf + seniorsPerf + juniorsPerf;
+
+const totalETFValue =
+    totalETF; // déjà calculé
+
+const totalETFPercent =
+    totalETFValue > 0
+        ? (totalETFPerf / (totalETFValue - totalETFPerf)) * 100
+        : 0;
+
+// affichage
+document.getElementById("etf-total-value").innerText =
+    totalETFValue.toLocaleString('fr-BE') + " €";
+
+const etfPerfEl = document.getElementById("etf-total-perf");
+
+const percentDisplayETF = (isNaN(totalETFPercent) || totalETFPercent === 0)
+  ? "—"
+  : totalETFPercent.toFixed(2).replace('.', ',') + " %";
+
+etfPerfEl.innerHTML = `
+  ${totalETFPerf.toLocaleString('fr-BE')} € (${percentDisplayETF})
+`;
+
+etfPerfEl.classList.remove("green", "red");
+etfPerfEl.classList.add(totalETFPerf >= 0 ? "green" : "red");
 
         
 
