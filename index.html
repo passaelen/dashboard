@@ -210,8 +210,24 @@ async function loadData() {
             etfTotal.toLocaleString('fr-BE') + " €";
 
         // ===== RATIO =====
-        document.getElementById("ratio").innerText =
-            ratioValue.toFixed(2).replace('.', ',');
+        document.getElementById("ratio").innerText=ratioValue.toFixed(2).replace('.', ',');
+
+
+// ===== ALERT =====
+let message = "";
+
+if (ratioValue >= 70) message = "❄️ Zone froide";
+else if (ratioValue >= 55) message = "🧊 Nord";
+else if (ratioValue >= 50) message = "⚖️ Zone pivot";
+else if (ratioValue >= 45) message = "🌤️ Arbitrage";
+else if (ratioValue >= 40) message = "🔥 Zone chaude";
+else message = "🚨 Zone extrême";
+
+document.getElementById("alert-text").innerText = message;
+
+
+
+
 
         // ===== VARIATION =====
         const el = document.getElementById("variation");
