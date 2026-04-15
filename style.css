@@ -267,7 +267,7 @@ small {
 
 
 
-/* ===== bloc Métaux Précieux===== */
+/* ===== bloc Métaux Précieux ===== */
 .table td {
     font-size: 13px;
 }
@@ -291,9 +291,6 @@ small {
   flex-direction: column;
   align-items: flex-end;
 }
-
-
-
 
 
 
@@ -324,4 +321,16 @@ small {
 .table td {
     padding: 8px;
     border-bottom: 1px solid #1f2937;
+}
+
+
+/* ===== ALIGNEMENT TABLE (fix ETF) ===== */
+.table th,
+.table td {
+    text-align: left;
+}
+
+.table th:last-child,
+.table td:last-child {
+    text-align: right;
 }
