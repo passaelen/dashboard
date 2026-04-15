@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 
 
 </head>
@@ -283,58 +283,96 @@ document.getElementById("p-or-suisse-g").innerText =
 const perfOrSuisse = cleanNumber(rowsOA?.[1]?.[6]);
 
 const elPerf1 = document.getElementById("perf-or-suisse");
-elPerf1.classList.remove("green", "red");
-elPerf1.classList.add(perfOrSuisse >= 0 ? "green" : "red");
-// Perf. % OR      
+
+// ✅ Perf %
 const perfPercent1 = cleanNumber(rowsOA?.[1]?.[7]);
+
+const percentDisplay1 = (isNaN(perfPercent1) || perfPercent1 === 0)
+  ? "—"
+  : perfPercent1.toFixed(2).replace('.', ',') + " %";
+
+// ✅ HTML
 elPerf1.innerHTML = `
   <div class="perf-value">
     ${perfOrSuisse.toLocaleString('fr-BE')} €
   </div>
   <div class="perf-percent">
-    ${perfPercent1.toFixed(2).replace('.', ',')} %
+    ${percentDisplay1}
   </div>
 `;
 
+// ✅ Couleur (APRÈS le HTML ⚠️)
+elPerf1.classList.remove("green", "red");
+elPerf1.classList.add(perfOrSuisse >= 0 ? "green" : "red");
 
-// OR BELGIQUE
+
+
+       // OR BELGIQUE
 document.getElementById("q-or-belgique").innerText =
-    rowsOA?.[2]?.[2] + " g";
+    (rowsOA?.[2]?.[2] || 0) + " g";
 
 document.getElementById("p-or-belgique-g").innerText =
     cleanNumber(rowsOA?.[2]?.[3]).toFixed(2).replace('.', ',') + " €";
 
 const perfOrBelgique = cleanNumber(rowsOA?.[2]?.[6]);
+
+const elPerf2 = document.getElementById("perf-or-belgique"); // ⚠️ manquait
+
+// ✅ Perf %
 const perfPercent2 = cleanNumber(rowsOA?.[2]?.[7]);
+
+const percentDisplay2 = (isNaN(perfPercent2) || perfPercent2 === 0)
+  ? "—"
+  : perfPercent2.toFixed(2).replace('.', ',') + " %";
+
+// ✅ HTML
 elPerf2.innerHTML = `
   <div class="perf-value">
     ${perfOrBelgique.toLocaleString('fr-BE')} €
   </div>
   <div class="perf-percent">
-    ${perfPercent2.toFixed(2).replace('.', ',')} %
+    ${percentDisplay2}
   </div>
 `;
+
+// ✅ Couleur (après HTML)
 elPerf2.classList.remove("green", "red");
 elPerf2.classList.add(perfOrBelgique >= 0 ? "green" : "red");
 
 
+
+        
+
+
 // ARGENT
 document.getElementById("q-argent").innerText =
-    rowsOA?.[3]?.[2] + " g";
+    (rowsOA?.[3]?.[2] || 0) + " g";
 
 document.getElementById("p-argent-g").innerText =
     cleanNumber(rowsOA?.[3]?.[3]).toFixed(2).replace('.', ',') + " €";
 
 const perfArgent = cleanNumber(rowsOA?.[3]?.[6]);
+
+const elPerf3 = document.getElementById("perf-argent"); // ⚠️ manquait
+
+// ✅ Perf %
 const perfPercent3 = cleanNumber(rowsOA?.[3]?.[7]);
+
+const percentDisplay3 = (isNaN(perfPercent3) || perfPercent3 === 0)
+  ? "—"
+  : perfPercent3.toFixed(2).replace('.', ',') + " %";
+
+// ✅ HTML
 elPerf3.innerHTML = `
   <div class="perf-value">
     ${perfArgent.toLocaleString('fr-BE')} €
   </div>
   <div class="perf-percent">
-    ${perfPercent3.toFixed(2).replace('.', ',')} %
+    ${percentDisplay3}
   </div>
 `;
+
+// ✅ Couleur (après HTML)
 elPerf3.classList.remove("green", "red");
 elPerf3.classList.add(perfArgent >= 0 ? "green" : "red");
 
