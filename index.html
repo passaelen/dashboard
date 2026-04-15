@@ -193,122 +193,669 @@ RATIO
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+function parseCSV(text) {
+    return text.trim().split("\n").map(row => {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
 
-function csvToObject(text) {
-    const rows = text.trim().split("\n");
-    const data = {};
-
-    for (let row of rows) {
-        const cols = row.split(/[,;]+/);
-        const key = cols[0]?.trim();
-        const value = cols[1]?.trim();
-        if (key) data[key] = value;
-    }
-
-    return data;
+        for (let char of row) {
+            if (char === '"') inQuotes = !inQuotes;
+            else if (char === ',' && !inQuotes) {
+                result.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current);
+        return result;
+    });
 }
+
 
 function cleanNumber(value) {
     if (!value) return 0;
 
     return Number(
         value
-            .replace(/[^0-9,-]/g, '')
+            .replace(/[^0-9,-]/g, '') // 🔥 enlève TOUT sauf chiffres, - et ,
             .replace(',', '.')
     ) || 0;
 }
 
+
 async function loadData() {
     try {
 
-        const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
-        const data = csvToObject(await res.text());
 
-        console.log("DATA:", data);
+ // ===== DASHBOARD =====
+        const resDash = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=115354515");
+        const rowsDash = parseCSV(await resDash.text());
 
-        // ===== VALEURS =====
-        const orSuisse = cleanNumber(data["or_suisse_valeur"]);
-        const orBelgique = cleanNumber(data["or_belgique_valeur"]);
-        const argent = cleanNumber(data["argent_valeur"]);
-        const ratioValue = cleanNumber(data["ratio"]);
-        const totalGlobal = cleanNumber(data["total_global"]);
-        const variation = cleanNumber(data["variation"]);
 
-        const etfTotal = cleanNumber(data["etf_total_valeur"]);
+const variationRaw = rowsDash?.[5]?.[1];
+const variation = cleanNumber(variationRaw);
 
-        // ===== KPI =====
-        document.getElementById("or").innerText =
-            (orSuisse + orBelgique).toLocaleString('fr-BE') + " €";
+const el = document.getElementById("variation");
 
-        document.getElementById("argent").innerText =
-            argent.toLocaleString('fr-BE') + " €";
+if (!variationRaw || variationRaw.includes("#N/A")) {
+    el.innerText = "—";
+    el.style.background = "#1f2937";
+    el.style.color = "#9ca3af";
+} else {
+    el.innerText =
+        (variation >= 0 ? "+" : "") +
+        variation.toLocaleString('fr-BE') + " €";
 
-        document.getElementById("total").innerText =
-            totalGlobal.toLocaleString('fr-BE') + " €";
+    if (variation < 0) {
+        el.style.background = "#7f1d1d";
+        el.style.color = "#fca5a5";
+    } else {
+        el.style.background = "#14532d";
+        el.style.color = "#86efac";
+    }
+}
 
-        // ===== ETF =====
-        document.getElementById("etf-total-value").innerText =
-            etfTotal.toLocaleString('fr-BE') + " €";
 
-        // ===== RATIO =====
-        document.getElementById("ratio").innerText =
-            ratioValue.toFixed(2).replace('.', ',');
 
-        let label = "";
-        let emoji = "";
 
-        if (ratioValue >= 80) { label = "Nord très profond"; emoji = "🐻‍❄️🐻‍❄️"; }
-        else if (ratioValue >= 70) { label = "Nord profond"; emoji = "❄️"; }
-        else if (ratioValue >= 55) { label = "Nord"; emoji = "🧊"; }
-        else if (ratioValue >= 50) { label = "Frontière"; emoji = "⚖️"; }
-        else if (ratioValue >= 45) { label = "Sud tempéré"; emoji = "🌤️"; }
-        else if (ratioValue >= 40) { label = "Sud chaud"; emoji = "🔥"; }
-        else { label = "Canicule"; emoji = "🚨"; }
 
-        document.getElementById("ratio-label").innerHTML =
-            "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
 
-        // ===== ALERT =====
-        let message = "";
+// ===== OR / ARGENT =====
+        const resOA = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1574558752");
 
-        if (ratioValue >= 70) message = "❄️ Zone froide";
-        else if (ratioValue >= 55) message = "🧊 Nord";
-        else if (ratioValue >= 50) message = "⚖️ Pivot";
-        else if (ratioValue >= 45) message = "🌤️ Arbitrage";
-        else if (ratioValue >= 40) message = "🔥 Chaud";
-        else message = "🚨 Extrême";
+        const rowsOA = parseCSV(await resOA.text());
 
-        document.getElementById("alert-text").innerText = message;
+if (!rowsOA || rowsOA.length < 2) {
+    console.error("Erreur données OR/ARGENT");
+    return;
+}
 
-        // ===== VARIATION =====
-        const el = document.getElementById("variation");
 
-        el.innerText =
-            (variation >= 0 ? "+" : "") +
-            variation.toLocaleString('fr-BE') + " €";
+console.log("row1:", rowsOA[1]);
+console.log("G Or Suisse:", rowsOA?.[1]?.[6]);
+console.log("G Or Belgique:", rowsOA?.[2]?.[6]);
+console.log("G Argent:", rowsOA?.[3]?.[6]);
 
-        el.style.color = variation >= 0 ? "#22c55e" : "#ef4444";
 
-        // ===== REPARTITION METAUX =====
-        const pOrSuisse = cleanNumber(data["p_or_suisse"]);
-        const pOrBelgique = cleanNumber(data["p_or_belgique"]);
-        const pArgent = cleanNumber(data["p_argent"]);
+// ===== METAUX TABLE =====
 
-        document.getElementById("p-or-suisse").innerText = pOrSuisse + "%";
-        document.getElementById("p-or-belgique").innerText = pOrBelgique + "%";
-        document.getElementById("p-argent").innerText = pArgent + "%";
+// OR SUISSE
+document.getElementById("q-or-suisse").innerText =
+    (rowsOA?.[1]?.[2] || 0) + " g";
 
-        const donut = document.getElementById("donut-metaux");
+document.getElementById("p-or-suisse-g").innerText =
+    cleanNumber(rowsOA?.[1]?.[3]).toFixed(2).replace('.', ',') + " €";
 
-        if (donut) {
-            donut.style.background = `conic-gradient(
-                #facc15 0% ${pOrSuisse}%,
-                #f59e0b ${pOrSuisse}% ${pOrSuisse + pOrBelgique}%,
-                #9ca3af ${pOrSuisse + pOrBelgique}% 100%
-            )`;
+const perfOrSuisse = cleanNumber(rowsOA?.[1]?.[6]);
+
+const elPerf1 = document.getElementById("perf-or-suisse");
+
+// ✅ Perf %
+const perfPercent1 = cleanNumber(rowsOA?.[1]?.[7]);
+
+const percentDisplay1 = (isNaN(perfPercent1) || perfPercent1 === 0)
+  ? "—"
+  : perfPercent1.toFixed(2).replace('.', ',') + " %";
+
+// ✅ HTML
+elPerf1.innerHTML = `
+  <div class="perf-value">
+    ${perfOrSuisse.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${percentDisplay1}
+  </div>
+`;
+
+// ✅ Couleur (APRÈS le HTML ⚠️)
+elPerf1.classList.remove("green", "red");
+elPerf1.classList.add(perfOrSuisse >= 0 ? "green" : "red");
+
+
+
+       // OR BELGIQUE
+document.getElementById("q-or-belgique").innerText =
+    (rowsOA?.[2]?.[2] || 0) + " g";
+
+document.getElementById("p-or-belgique-g").innerText =
+    cleanNumber(rowsOA?.[2]?.[3]).toFixed(2).replace('.', ',') + " €";
+
+const perfOrBelgique = cleanNumber(rowsOA?.[2]?.[6]);
+
+const elPerf2 = document.getElementById("perf-or-belgique"); // ⚠️ manquait
+
+// ✅ Perf %
+const perfPercent2 = cleanNumber(rowsOA?.[2]?.[7]);
+
+const percentDisplay2 = (isNaN(perfPercent2) || perfPercent2 === 0)
+  ? "—"
+  : perfPercent2.toFixed(2).replace('.', ',') + " %";
+
+// ✅ HTML
+elPerf2.innerHTML = `
+  <div class="perf-value">
+    ${perfOrBelgique.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${percentDisplay2}
+  </div>
+`;
+
+// ✅ Couleur (après HTML)
+elPerf2.classList.remove("green", "red");
+elPerf2.classList.add(perfOrBelgique >= 0 ? "green" : "red");
+
+
+
+
+
+
+// ARGENT
+document.getElementById("q-argent").innerText =
+    (rowsOA?.[3]?.[2] || 0) + " g";
+
+document.getElementById("p-argent-g").innerText =
+    cleanNumber(rowsOA?.[3]?.[3]).toFixed(2).replace('.', ',') + " €";
+
+const perfArgent = cleanNumber(rowsOA?.[3]?.[6]);
+
+const elPerf3 = document.getElementById("perf-argent"); // ⚠️ manquait
+
+// ✅ Perf %
+const perfPercent3 = cleanNumber(rowsOA?.[3]?.[7]);
+
+const percentDisplay3 = (isNaN(perfPercent3) || perfPercent3 === 0)
+  ? "—"
+  : perfPercent3.toFixed(2).replace('.', ',') + " %";
+
+// ✅ HTML
+elPerf3.innerHTML = `
+  <div class="perf-value">
+    ${perfArgent.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${percentDisplay3}
+  </div>
+`;
+
+// ✅ Couleur (après HTML)
+elPerf3.classList.remove("green", "red");
+elPerf3.classList.add(perfArgent >= 0 ? "green" : "red");
+
+// ===== TOTAL METAUX =====
+
+const totalMetauxValue =
+    cleanNumber(rowsOA?.[1]?.[4]) +
+    cleanNumber(rowsOA?.[2]?.[4]) +
+    cleanNumber(rowsOA?.[3]?.[4]);
+
+const totalMetauxPerf =
+    perfOrSuisse + perfOrBelgique + perfArgent;
+
+const totalMetauxPercent =
+    totalMetauxValue > 0
+        ? (totalMetauxPerf / (totalMetauxValue - totalMetauxPerf)) * 100
+        : 0;
+
+// affichage
+document.getElementById("metaux-total-value").innerText =
+    totalMetauxValue.toLocaleString('fr-BE') + " €";
+
+const metauxPerfEl = document.getElementById("metaux-total-perf");
+
+const percentDisplayMetaux = (isNaN(totalMetauxPercent) || totalMetauxPercent === 0)
+  ? "—"
+  : totalMetauxPercent.toFixed(2).replace('.', ',') + " %";
+
+metauxPerfEl.innerHTML = `
+  ${totalMetauxPerf.toLocaleString('fr-BE')} € (${percentDisplayMetaux})
+`;
+
+metauxPerfEl.classList.remove("green", "red");
+metauxPerfEl.classList.add(totalMetauxPerf >= 0 ? "green" : "red");
+
+
+
+
+
+console.log("rowsOA:", rowsOA);
+console.log("ratio raw:", rowsOA?.[1]?.[10]);
+
+
+
+// ===== RATIO =====
+const ratioValue = cleanNumber(rowsOA?.[1]?.[10] || 0);
+
+let label = "";
+let emoji = "";
+
+if (ratioValue >= 80) {
+    label = "Nord très profond";
+    emoji = "🐻‍❄️🐻‍❄️";
+} else if (ratioValue >= 70) {
+    label = "Nord profond";
+    emoji = "❄️";
+} else if (ratioValue >= 55) {
+    label = "Nord";
+    emoji = "🧊";
+} else if (ratioValue >= 50) {
+    label = "Frontière";
+    emoji = "⚖️";
+} else if (ratioValue >= 45) {
+    label = "Sud tempéré";
+    emoji = "🌤️";
+} else if (ratioValue >= 40) {
+    label = "Sud chaud";
+    emoji = "🔥";
+} else if (ratioValue >= 36) {
+    label = "Très chaud";
+    emoji = "🔥🔥";
+} else {
+    label = "Canicule";
+    emoji = "🚨";
+}
+
+
+
+const alertBox = document.getElementById("alert-box");
+const alertText = document.getElementById("alert-text");
+
+let message = "";
+let bg = "";
+let color = "";
+
+if (ratioValue >= 70) {
+    message = "❄️ Zone froide (Patience pour achats Argent)";
+    bg = "#1e3a8a";
+    color = "#bfdbfe";
+}
+else if (ratioValue >= 55) {
+    message = "🧊 Nord (Attente)";
+    bg = "#1e40af";
+    color = "#93c5fd";
+}
+else if (ratioValue >= 50) {
+    message = "⚖️ Zone pivot (Surveillance)";
+    bg = "#78350f";
+    color = "#fde68a";
+}
+else if (ratioValue >= 45) {
+    message = "🌤️ Début arbitrage (Argent -> Or)";
+    bg = "#7c2d12";
+    color = "#fdba74";
+}
+else if (ratioValue >= 40) {
+    message = "🔥 Zone chaude (Arbitrage progressif)";
+    bg = "#7f1d1d";
+    color = "#fca5a5";
+}
+else {
+    message = "🚨 Zone extrême -> Action forte (fin arbitrage)";
+    bg = "#450a0a";
+    color = "#fecaca";
+}
+
+alertText.innerText = message;
+alertBox.style.background = bg;
+alertBox.style.color = color;
+alertBox.classList.remove("alert-hot");
+if (ratioValue < 45) 
+{alertBox.classList.add("alert-hot");}
+
+
+// 🔥 affichage compact
+document.getElementById("ratio").innerHTML =
+    ratioValue.toFixed(2).replace('.', ',');
+
+
+const ratioEl = document.getElementById("ratio");
+const ratioCard = ratioEl.closest(".kpi");
+
+// RESET
+ratioCard.style.borderColor = "rgba(255,255,255,0.05)";
+
+// COULEURS SELON ZONE
+if (ratioValue >= 70) {
+    ratioEl.style.color = "#60a5fa"; // bleu froid
+    ratioCard.style.borderColor = "#1d4ed8";
+}
+else if (ratioValue >= 55) {
+    ratioEl.style.color = "#93c5fd"; // bleu clair
+}
+else if (ratioValue >= 50) {
+    ratioEl.style.color = "#facc15"; // jaune
+}
+else if (ratioValue >= 45) {
+    ratioEl.style.color = "#fb923c"; // orange
+}
+else {
+ratioEl.style.color = "#ef4444"; // rouge
+ratioCard.style.borderColor = "#7f1d1d";
+}
+
+ratioCard.classList.remove("ratio-alert");
+if (ratioValue <= 45) 
+{
+ratioCard.classList.add("ratio-alert");
+}
+
+
+document.getElementById("ratio-label").innerHTML =
+    "<span>RATIO</span><span>" + emoji + " " + label + "</span>";
+
+
+
+
+        const orSuisse = cleanNumber(rowsOA?.[1]?.[4]);
+        const orBelgique = cleanNumber(rowsOA?.[2]?.[4]);
+        const argent = cleanNumber(rowsOA?.[3]?.[4]);
+
+        const totalMetaux = orSuisse + orBelgique + argent;
+
+        if (totalMetaux > 0) {
+            const p1 = (orSuisse / totalMetaux) * 100;
+            const p2 = (orBelgique / totalMetaux) * 100;
+            const p3 = (argent / totalMetaux) * 100;
+
+            document.getElementById("p-or-suisse").innerText = p1.toFixed(2).replace('.', ',') + "%";
+            document.getElementById("p-or-belgique").innerText = p2.toFixed(2).replace('.', ',') + "%";
+            document.getElementById("p-argent").innerText = p3.toFixed(2).replace('.', ',') + "%";
+
+            const donut = document.getElementById("donut-metaux");
+            if (donut) {
+                donut.style.background = `conic-gradient(
+                    #facc15 0% ${p1}%,
+                    #f59e0b ${p1}% ${p1 + p2}%,
+                    #9ca3af ${p1 + p2}% 100%
+                )`;
+            }
         }
+
+
+// ===== ETF =====
+        const resETF = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=0");
+        const rowsETF = parseCSV(await resETF.text());
+
+        let monde = cleanNumber(rowsETF?.[1]?.[7]);
+        let seniors = cleanNumber(rowsETF?.[2]?.[7]);
+
+        if (!monde || !seniors) {
+            monde = cleanNumber(rowsETF?.[1]?.[1]);
+            seniors = cleanNumber(rowsETF?.[2]?.[1]);
+        }
+
+        const totalETF = monde + seniors;
+
+// ===== ETF TABLE =====
+
+// MONDE
+const mondeParts = cleanNumber(rowsETF?.[1]?.[3]);
+const mondePrix = cleanNumber(rowsETF?.[1]?.[4]);
+const mondePerf = cleanNumber(rowsETF?.[1]?.[5]);
+const mondePercent = cleanNumber(rowsETF?.[1]?.[8]);
+
+document.getElementById("etf-monde-parts").innerText = mondeParts;
+document.getElementById("etf-monde-prix").innerText =
+    mondePrix.toFixed(2).replace('.', ',') + " €";
+
+const elMondePerf = document.getElementById("etf-monde-perf");
+
+const mondePercentDisplay = (isNaN(mondePercent) || mondePercent === 0)
+  ? "—"
+  : mondePercent.toFixed(2).replace('.', ',') + " %";
+
+elMondePerf.innerHTML = `
+  <div class="perf-value">
+    ${mondePerf.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${mondePercentDisplay}
+  </div>
+`;
+elMondePerf.classList.remove("green", "red");
+elMondePerf.classList.add(mondePerf >= 0 ? "green" : "red");
+
+
+// SENIORS
+const seniorsParts = cleanNumber(rowsETF?.[2]?.[3]);
+const seniorsPrix = cleanNumber(rowsETF?.[2]?.[4]);
+const seniorsPerf = cleanNumber(rowsETF?.[2]?.[5]);
+const seniorsPercent = cleanNumber(rowsETF?.[2]?.[8]);
+
+document.getElementById("etf-seniors-parts").innerText = seniorsParts;
+document.getElementById("etf-seniors-prix").innerText =
+    seniorsPrix.toFixed(2).replace('.', ',') + " €";
+
+const elSeniorsPerf = document.getElementById("etf-seniors-perf");
+
+const seniorsPercentDisplay = (isNaN(seniorsPercent) || seniorsPercent === 0)
+  ? "—"
+  : seniorsPercent.toFixed(2).replace('.', ',') + " %";
+
+elSeniorsPerf.innerHTML = `
+  <div class="perf-value">
+    ${seniorsPerf.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${seniorsPercentDisplay}
+  </div>
+`;
+elSeniorsPerf.classList.remove("green", "red");
+elSeniorsPerf.classList.add(seniorsPerf >= 0 ? "green" : "red");
+
+
+// JUNIORS
+const juniorsParts = cleanNumber(rowsETF?.[3]?.[3]);
+const juniorsPrix = cleanNumber(rowsETF?.[3]?.[4]);
+const juniorsPerf = cleanNumber(rowsETF?.[3]?.[5]);
+const juniorsPercent = cleanNumber(rowsETF?.[3]?.[8]);
+
+document.getElementById("etf-juniors-parts").innerText = juniorsParts;
+document.getElementById("etf-juniors-prix").innerText =
+    juniorsPrix.toFixed(2).replace('.', ',') + " €";
+
+const elJuniorsPerf = document.getElementById("etf-juniors-perf");
+
+const juniorsPercentDisplay = (isNaN(juniorsPercent) || juniorsPercent === 0)
+  ? "—"
+  : juniorsPercent.toFixed(2).replace('.', ',') + " %";
+
+elJuniorsPerf.innerHTML = `
+  <div class="perf-value">
+    ${juniorsPerf.toLocaleString('fr-BE')} €
+  </div>
+  <div class="perf-percent">
+    ${juniorsPercentDisplay}
+  </div>
+`;
+elJuniorsPerf.classList.remove("green", "red");
+elJuniorsPerf.classList.add(juniorsPerf >= 0 ? "green" : "red");
+
+
+// ===== TOTAL ETF =====
+
+const totalETFValue = cleanNumber(rowsETF?.[9]?.[7]);
+
+const totalETFInvested =
+    cleanNumber(rowsETF?.[1]?.[6]) +
+    cleanNumber(rowsETF?.[2]?.[6]) +
+    cleanNumber(rowsETF?.[3]?.[6]);
+
+const totalETFPerf = totalETFValue - totalETFInvested;
+
+const totalETFPercent =
+    totalETFInvested > 0
+        ? (totalETFPerf / totalETFInvested) * 100
+        : 0;
+
+// affichage
+document.getElementById("etf-total-value").innerText =
+    totalETFValue.toLocaleString('fr-BE') + " €";
+
+const etfPerfEl = document.getElementById("etf-total-perf");
+
+const percentDisplayETF = (isNaN(totalETFPercent) || totalETFPercent === 0)
+  ? "—"
+  : totalETFPercent.toFixed(2).replace('.', ',') + " %";
+
+etfPerfEl.innerHTML = `
+  ${totalETFPerf.toLocaleString('fr-BE')} € (${percentDisplayETF})
+`;
+
+etfPerfEl.classList.remove("green", "red");
+etfPerfEl.classList.add(totalETFPerf >= 0 ? "green" : "red");
+
+
+
+
+// KPI
+const totalOr = orSuisse + orBelgique;
+
+        document.getElementById("or").innerText =
+            totalOr.toLocaleString('fr-BE') + " €";
+
+        document.getElementById("argent").innerText=argent.toLocaleString('fr-BE') + " €";
+
+const totalGlobal = totalOr + argent + totalETF;
+
+// ✅ 1. afficher le total
+document.getElementById("total").innerText =
+    totalGlobal.toLocaleString('fr-BE') + " €";
+
+// ✅ 2. ENSUITE la logique progression
+let objectif = 100000;
+
+if (totalGlobal >= 150000) {
+    objectif = 200000;
+} else if (totalGlobal >= 125000) {
+    objectif = 150000;
+} else if (totalGlobal >= 100000) {
+    objectif = 125000;
+}
+
+const progress = (totalGlobal / objectif) * 100;
+
+
+// ===== BARRE =====
+document.querySelector(".progress-bar").style.width =
+    Math.min(progress, 100) + "%";
+
+
+const bar = document.querySelector(".progress-bar");
+
+// couleur dynamique
+if (progress < 50) {
+    bar.style.background = "#6b7280";
+} else if (progress < 80) {
+    bar.style.background = "#4ade80";
+} else {
+    bar.style.background = "#22c55e";
+}
+
+// animation (optionnel mais stylé)
+bar.style.transition = "all 0.5s ease";
+
+
+
+document.getElementById("progress-label").innerText =
+    Math.round(progress) + "% de " +
+    objectif.toLocaleString('fr-BE') + " €";
+
+
+
+// DONUT ETF
+        if (totalETF > 0) {
+            const pMonde = (monde / totalETF) * 100;
+            const pSeniors = (seniors / totalETF) * 100;
+
+            document.getElementById("p-monde").innerText =
+                pMonde.toFixed(2).replace('.', ',') + "%";
+
+            document.getElementById("p-seniors").innerText =
+                pSeniors.toFixed(2).replace('.', ',') + "%";
+
+            const donutETF = document.querySelector(".donut.etf");
+
+            if (donutETF) {
+                donutETF.style.background = `conic-gradient(
+                    #38bdf8 0% ${pMonde}%,
+                    #22c55e ${pMonde}% 100%
+                )`;
+            }
+        }
+
+
+        // ===== GRAPH 10 JOURS =====
+const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1311770820");
+const rowsChart = parseCSV(await resChart.text());
+
+const labels = [];
+const values = [];
+
+// 🔥 lecture propre du sheet "Stat"
+for (let i = 1; i < rowsChart.length; i++) {
+    const row = rowsChart[i];
+    if (!row) continue;
+
+    const value = cleanNumber(row[7]); // colonne H = Total Global
+
+    if (value > 1000) {
+        labels.push(row[0]); // Date
+        values.push(value);  // Total €
+    }
+}
+
+// 🔥 garder uniquement les 10 dernières valeurs
+const lastLabels = labels.slice(-10);
+const lastValues = values.slice(-10);
+
+// 🔍 debug (tu peux supprimer après test)
+console.log("labels:", lastLabels);
+console.log("values:", lastValues);
+
+const ctx = document.getElementById("chart-10j");
+
+if (ctx) {
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: lastLabels,
+            datasets: [{
+                data: lastValues,
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3,
+                borderColor: "#facc15",
+                backgroundColor: "rgba(250, 204, 21, 0.15)",
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                y: {
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+}
+
+
 
     } catch (e) {
         console.error("Erreur :", e);
@@ -316,7 +863,6 @@ async function loadData() {
 }
 
 loadData();
-
 </script>
 
 
