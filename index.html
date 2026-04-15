@@ -268,6 +268,11 @@ if (!variationRaw || variationRaw.includes("#N/A")) {
 // ===== OR / ARGENT =====
         const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
 
+//
+console.log("DATA:", data);
+console.log("RATIO RAW:", data["ratio"]);
+
+
 const data = csvToObject(await res.text());
 
 console.log(data);
