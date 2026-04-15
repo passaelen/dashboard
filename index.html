@@ -147,7 +147,12 @@
 // ===== UTILS =====
 function cleanNumber(v){
     if(!v) return 0;
-    return Number(v.replace(/[^0-9,-]/g,'').replace(',','.')) || 0;
+
+    return Number(
+        v.replace(/"/g,'') // ← enlève les guillemets
+         .replace(/[^0-9,-]/g,'')
+         .replace(',','.')
+    ) || 0;
 }
 
 function formatPercent(v){
@@ -191,7 +196,9 @@ el.innerText = (v>=0?"+":"")+v.toLocaleString('fr-BE')+" €";
 el.style.color = v>=0?"#22c55e":"#ef4444";
 
 // METAUX DETAIL
-document.getElementById("q-or-suisse").innerText = data["or_suisse_qte"]+" g";
+document.getElementById("q-or-suisse").innerText =
+ cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE')+" g";
+
 document.getElementById("p-or-suisse-g").innerText = data["or_suisse_prix_g"]+" €";
 document.getElementById("perf-or-suisse").innerHTML = formatPerfDual(
     cleanNumber(data["or_suisse_perf"]),
