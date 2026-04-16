@@ -331,6 +331,8 @@ function parseCSV(text){
     const lines = text.split("\n");
     const data = {};
 
+    let start = false;
+
     for (let line of lines){
 
         if (!line.trim()) continue;
@@ -341,10 +343,14 @@ function parseCSV(text){
         const key = cols[0].replace(/"/g, "").trim();
         const value = cols[1].replace(/"/g, "").trim();
 
-        // 👉 IGNORE les lignes du graph (dates)
+        // 🔥 on démarre UNIQUEMENT à "variation"
+        if (key === "variation") start = true;
+
+        if (!start) continue;
+
+        // ignore les dates (graph)
         if(/\d{2}\/\d{2}\/\d{4}/.test(key)) continue;
 
-        // 👉 IGNORE doublons
         if (key && !(key in data)) {
             data[key] = value || "0";
         }
