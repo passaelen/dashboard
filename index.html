@@ -547,19 +547,19 @@ dataPoints.sort((a, b) => {
 const labels = dataPoints.map(p => p.date);
 const values = dataPoints.map(p => p.value);
 
+
+
 // ===== VARIATION STABLE =====
 let variation = 0;
 
-const lastGraphValue = values[values.length - 1];
+if(values.length > 0){
 
-if(lastGraphValue){
-    variation = total - lastGraphValue;
+    const lastGraphValue = values[values.length - 1];
+
+    if(!isNaN(lastGraphValue)){
+        variation = total - lastGraphValue;
+    }
 }
-
-const varEl = document.getElementById("variation");
-
-varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
-applyPerfClass(varEl, variation);
 
 
 
