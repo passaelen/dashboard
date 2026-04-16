@@ -107,8 +107,8 @@ h3 {
     background: linear-gradient(145deg, #0f172a, #0b0f1a);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 16px;
-    padding: 14px;
-    margin-top: 16px;
+    padding: 12px;
+    margin-top: 12px;
     transition: 0.2s;
     box-shadow: 
         0 8px 30px rgba(0,0,0,0.4),
@@ -127,23 +127,26 @@ h3 {
 /* ===== Total Global ===== */
 
 .highlight {
-    box-shadow: 0 0 20px rgba(250, 204, 21, 0.08);
+    box-shadow: 
+        0 0 20px rgba(250, 204, 21, 0.08),
+        0 0 60px rgba(250, 204, 21, 0.03);
     border: 1px solid rgba(250, 204, 21, 0.4);
-    padding: 12px 16px;
-    border-radius: 18px;
+    padding: 8px 14px;   /* 🔥 AVANT: 12px 16px */
+    border-radius: 16px;
     background: linear-gradient(145deg, #0b1220, #020617);
 }
 
 
 .highlight small {
-   font-size: 12px;
+   font-size: 11px;
+    margin-bottom: 2px;
     letter-spacing: 1px;
     color: #9ca3af;
 }
 
 .highlight h2 {
-    margin: 6px 0 0;
-    font-size: 30px;
+    margin: 2px 0 0;   /* 🔥 réduit espace */
+    font-size: 26px;   /* 🔥 AVANT: 30px */
     font-weight: 700;
     letter-spacing: 1px;
 }
@@ -157,22 +160,22 @@ h3 {
 }
 
 .kpi {
-    height: 80px;
-    padding: 10px;
-    border-radius: 16px;
+    height: 65px;
+    padding: 8px;
+    border-radius: 14px;
     background: linear-gradient(145deg, #0b1220, #020617);
     border: 1px solid rgba(255,255,255,0.08);
     transition: 0.2s ease;
 }
 
 .kpi small {
-   font-size: 11px;
+   font-size: 10px;
     color: #9ca3af;
 }
 
 .kpi h3 {
-     margin-top: 4px;
-    font-size: 20px;
+    margin-top: 2px;
+    font-size: 18px;   /* AVANT: 20px */
     font-weight: 600;
 }
 
