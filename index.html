@@ -218,15 +218,22 @@ function parseCSV(text){
 
     for (let line of lines){
 
-        if (!line || !line.includes(",")) continue;
+        if (!line.trim()) continue;
 
-        const i = line.indexOf(",");
-        const key = line.slice(0, i).replace(/"/g, '').trim();
-        const value = line.slice(i + 1).replace(/"/g, '').trim();
+        // coupe uniquement à la PREMIÈRE virgule
+        const firstComma = line.indexOf(",");
 
-        if (key.length > 0) {
-            data[key] = value;
+        if (firstComma === -1) continue;
+
+        const key = line.substring(0, firstComma).replace(/"/g, "").trim();
+        let value = line.substring(firstComma + 1).replace(/"/g, "").trim();
+
+        // 🔥 sécurisation importante
+        if (value === "" || value === null || value === undefined){
+            value = "0";
         }
+
+        data[key] = value;
     }
 
     return data;
