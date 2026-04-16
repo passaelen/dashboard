@@ -85,10 +85,10 @@
 
 <!-- METAUX -->
 
-    
-<div class="card">
-<h3>Métaux Précieux</h3>
-
+<!--   
+    <div class="card">
+    <h3>Métaux Précieux</h3>
+ -->  
 
 <div id="metaux-total-value"></div>
 <div id="metaux-total-perf"></div>
@@ -129,9 +129,10 @@
 
 <!-- ETF -->
 
-<div class="card">
-<h3>ETF</h3>
-  
+<!--   
+    <div class="card">
+    <h3>ETF</h3>
+-->  
 
 <div id="etf-total-value"></div>
 
@@ -196,11 +197,13 @@ function formatPercent(v){
 
 // ===== DOM HELPERS =====
 function setText(id, value){
-    document.getElementById(id).innerText = value;
+    const el = document.getElementById(id);
+    if(el) el.innerText = value;
 }
 
 function setHTML(id, value){
-    document.getElementById(id).innerHTML = value;
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = value;
 }
 
 function applyPerfClass(el, value){
