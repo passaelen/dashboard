@@ -341,13 +341,19 @@ function parseCSV(text){
         const key = cols[0].replace(/"/g, "").trim();
         const value = cols[1].replace(/"/g, "").trim();
 
-if (key && !(key in data)) {data[key] = value || "0";}
+        // 👉 IGNORE les lignes du graph (dates)
+        if(/\d{2}\/\d{2}\/\d{4}/.test(key)) continue;
 
-
+        // 👉 IGNORE doublons
+        if (key && !(key in data)) {
+            data[key] = value || "0";
+        }
     }
 
     return data;
 }
+
+
 
 // ===== MAIN =====
 async function loadData(){
