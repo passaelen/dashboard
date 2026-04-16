@@ -512,8 +512,9 @@ console.log(labels, values);
 // ===== VARIATION CALCULÉE =====
 let variation = 0;
 
-if(values.length > 1){
-    variation = total - values[0]; // 🔥 depuis début du graph
+if(values.length > 0){
+    const lastValue = values[values.length - 1]; // ✅ dernière valeur
+    variation = total - lastValue;
 }
 
 const varEl = document.getElementById("variation");
