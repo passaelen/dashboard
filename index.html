@@ -372,9 +372,9 @@ const labels=[], values=[];
 
 for(let i=1;i<rows.length;i++){
     const c = rows[i].split(/[,;]+/);
-    const val = cleanNumber(c[7]);
-    if(val>0){
-        labels.push(c[0]);
+    const val = cleanNumber(c[1]); // ✅ colonne B
+    if(val > 0){
+        labels.push(c[0]); // colonne A = date
         values.push(val);
     }
 }
