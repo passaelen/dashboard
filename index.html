@@ -543,23 +543,15 @@ const values = dataPoints.map(p => p.value);
 console.log(labels, values);
 
 
-// ===== VARIATION FIABLE =====
+
+// ===== VARIATION PAR RAPPORT AU GRAPH AFFICHÉ =====
 let variation = 0;
 
-if(dataPoints.length > 0){
+const displayedValues = values.slice(-10); // mêmes données que le chart
 
-    // 🔥 on prend la VRAIE dernière date
-    const latestPoint = dataPoints.reduce((latest, current) => {
-        const [d1,m1,y1] = latest.date.split("/");
-        const [d2,m2,y2] = current.date.split("/");
-
-        const date1 = new Date(y1, m1-1, d1);
-        const date2 = new Date(y2, m2-1, d2);
-
-        return date2 > date1 ? current : latest;
-    });
-
-    variation = total - latestPoint.value;
+if(displayedValues.length > 0){
+    const lastVisible = displayedValues[displayedValues.length - 1];
+    variation = total - lastVisible;
 }
 
 const varEl = document.getElementById("variation");
@@ -567,7 +559,7 @@ const varEl = document.getElementById("variation");
 varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
 applyPerfClass(varEl, variation);
 
-// ===== FIN VARIATION FIABLE =====
+// ===== FIN VARIATION PAR RAPPORT AU GRAPH AFFICHÉ =====
 
 
 
