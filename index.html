@@ -238,28 +238,22 @@ function getAlertMessage(ratio){
 
 // ===== DATA PARSING =====
 function parseCSV(text){
-    const data = {};
-
     const lines = text.split("\n");
+    const data = {};
 
     for (let line of lines){
 
         if (!line.trim()) continue;
 
-        // coupe uniquement à la PREMIÈRE virgule
-        const firstComma = line.indexOf(",");
+        const cols = line.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+        if (!cols || cols.length < 2) continue;
 
-        if (firstComma === -1) continue;
+        const key = cols[0].replace(/"/g, "").trim();
+        const value = cols[1].replace(/"/g, "").trim();
 
-        const key = line.substring(0, firstComma).replace(/"/g, "").trim();
-        let value = line.substring(firstComma + 1).replace(/"/g, "").trim();
-
-        // 🔥 sécurisation importante
-        if (value === "" || value === null || value === undefined){
-            value = "0";
+        if (key) {
+            data[key] = value || "0";
         }
-
-        data[key] = value;
     }
 
     return data;
