@@ -105,10 +105,14 @@ body {
     transform: translateY(-2px);
 }
 
+
+/* ===== Total Global ===== */
+
 .highlight {
     border: 1px solid rgba(250, 204, 21, 0.4);
-    padding: 10px 14px;   /* ↓ réduit */
-    margin-bottom: 10px;
+    padding: 12px 16px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #0b1220, #020617);
 }
 
 .highlight h2 {
@@ -117,16 +121,15 @@ body {
 }
 
 .highlight small {
-    font-size: 12px;
+   font-size: 12px;
+    letter-spacing: 1px;
     color: #9ca3af;
-    display: block;
-    margin-bottom: 2px;
 }
 
 .highlight h2 {
-    font-size: 28px;
-    margin: 0;          /* 🔥 enlève espace inutile */
-    line-height: 1.1;   /* 🔥 compresse vertical */
+   margin: 6px 0 0;
+    font-size: 30px;
+    font-weight: 700;
 }
 
 
@@ -138,18 +141,22 @@ body {
 }
 
 .kpi {
-    background: #111827;
-    border-radius: 12px;
+    height: 80px;
     padding: 10px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #0b1220, #020617);
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 .kpi small {
-    font-size: 11px;
+   font-size: 11px;
     color: #9ca3af;
 }
 
 .kpi h3 {
-    margin: 4px 0 0;
+     margin-top: 4px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 /* ===== ALERT ===== */
