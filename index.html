@@ -380,8 +380,10 @@ const ratio = cleanNumber(data["ratio"]);
 
 setText("or", formatEuro(orS + orB));
 setText("argent", formatEuro(ag));
-setText("total", formatEuro(total));
 setText("ratio", ratio.toFixed(2).replace('.',','));
+
+
+
 
 // ===== ALERT =====
 setHTML("alert-text", getZoneText(ratio));
@@ -430,17 +432,22 @@ setText("p-argent", formatPercent(pAg));
 document.getElementById("donut-metaux").style.background =
 `conic-gradient(#facc15 0% ${pOrS}%, #f59e0b ${pOrS}% ${pOrS+pOrB}%, #9ca3af ${pOrS+pOrB}% 100%)`;
 
+
+
 // ===== ETF =====
 const etfMonde = cleanNumber(data["etf_monde_valeur"]) || 0;
 const etfSeniors = cleanNumber(data["etf_seniors_valeur"]) || 0;
 const totalETF = etfMonde + etfSeniors;
 
-const total = orS + orB + ag + etfMonde + etfSeniors;
+// ✅ TOTAL calculé AU BON MOMENT
+const total = orS + orB + ag + totalETF;
 
-
+// ✅ affichage du total ICI (et pas avant)
+setText("total", formatEuro(total));
 
 setText("etf-total-value", formatEuro(totalETF));
 setText("etf-total-bottom", formatEuro(totalETF));
+
 setText("etf-monde-parts", data["etf_monde_parts"]);
 setText("etf-monde-prix", formatEuro(cleanNumber(data["etf_monde_prix"])));
 setHTML("etf-monde-perf", formatPerfDual(
