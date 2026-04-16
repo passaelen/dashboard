@@ -376,7 +376,6 @@ const data = parseCSV(rawText);
 const orS = cleanNumber(data["or_suisse_valeur"]);
 const orB = cleanNumber(data["or_belgique_valeur"]);
 const ag = cleanNumber(data["argent_valeur"]);
-const total = orS + orB + ag + etfMonde + etfSeniors;
 const ratio = cleanNumber(data["ratio"]);
 
 setText("or", formatEuro(orS + orB));
@@ -436,6 +435,10 @@ const etfMonde = cleanNumber(data["etf_monde_valeur"]) || 0;
 const etfSeniors = cleanNumber(data["etf_seniors_valeur"]) || 0;
 const totalETF = etfMonde + etfSeniors;
 
+const total = orS + orB + ag + etfMonde + etfSeniors;
+
+
+
 setText("etf-total-value", formatEuro(totalETF));
 setText("etf-total-bottom", formatEuro(totalETF));
 setText("etf-monde-parts", data["etf_monde_parts"]);
@@ -451,6 +454,9 @@ setHTML("etf-seniors-perf", formatPerfDual(
     cleanNumber(data["etf_seniors_perf"]),
     cleanNumber(data["etf_seniors_percent"])
 ));
+
+
+
 
 // ===== DONUT ETF =====
 let pMonde = 0;
