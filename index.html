@@ -264,8 +264,9 @@ async function loadData(){
 
 try {
 
-const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383"+ Date.now());
+const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/edit?gid=1154137383#gid=1154137383"+ Date.now());
 const rawText = await res.text();
+    console.log("RAW CSV:", rawText);
 const data = parseCSV(rawText);
 
     
