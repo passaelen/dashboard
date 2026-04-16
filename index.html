@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=52">
+<link rel="stylesheet" href="style.css?v=60">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -16,7 +16,11 @@
 
 <!-- HEADER -->
 <div class="header">
-    <h2>💼 Portefeuille</h2>
+    <div>
+        <h2>💼 Portefeuille</h2>
+        <small>Or · Argent · ETF</small>
+    </div>
+
     <div>
         <span id="variation" class="badge-perf"></span>
         <button id="refresh-btn">⟳</button>
@@ -42,6 +46,18 @@
     <canvas id="chart-10j"></canvas>
 </div>
 
+<!-- METAUX -->
+<div class="card">
+    <h3>💎 Métaux</h3>
+    <div id="metaux-total-bottom"></div>
+</div>
+
+<!-- ETF -->
+<div class="card">
+    <h3>📊 ETF</h3>
+    <div id="etf-total-bottom"></div>
+</div>
+
 </div>
 
 <script>
@@ -53,7 +69,7 @@ function cleanNumber(v){
     if(!v) return 0;
     return Number(
         v.replace(/\s/g,'')
-         .replace('€','')
+         .replace(/€/g,'')
          .replace(',', '.')
     ) || 0;
 }
@@ -67,7 +83,7 @@ function applyPerfClass(el, value){
     el.classList.add(value >= 0 ? "positive" : "negative");
 }
 
-// ===== PARSE =====
+// ===== PARSE CSV (ROBUSTE) =====
 function parseCSV(text){
 
     const lines = text.split("\n");
@@ -75,18 +91,17 @@ function parseCSV(text){
     const data = {};
     const graph = [];
 
-    for(let line of lines){
+    for (let line of lines){
 
-        if(!line.trim()) continue;
+        if (!line.trim()) continue;
 
-        const cols = line.split(",");
-
-        if(cols.length < 2) continue;
+        const cols = line.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+        if (!cols || cols.length < 2) continue;
 
         const key = cols[0].replace(/"/g,'').trim();
         const value = cols[1].replace(/"/g,'').trim();
 
-        // ===== DATES (GRAPH)
+        // ===== GRAPH (dates)
         if(/\d{2}\/\d{2}\/\d{4}/.test(key)){
             const val = cleanNumber(value);
             if(val > 0){
@@ -95,7 +110,7 @@ function parseCSV(text){
             continue;
         }
 
-        // ===== DATA NORMAL
+        // ===== IGNORE TITRES
         if(
             key.includes("GLOBAL") ||
             key.includes("METAUX") ||
@@ -124,9 +139,16 @@ const raw = await res.text();
 const {data, graph} = parseCSV(raw);
 
 // ===== KPI
-const or = cleanNumber(data["or_suisse_valeur"]) + cleanNumber(data["or_belgique_valeur"]);
+const orS = cleanNumber(data["or_suisse_valeur"]);
+const orB = cleanNumber(data["or_belgique_valeur"]);
 const argent = cleanNumber(data["argent_valeur"]);
-const total = or + argent + cleanNumber(data["etf_monde_valeur"]) + cleanNumber(data["etf_seniors_valeur"]);
+
+const etfMonde = cleanNumber(data["etf_monde_valeur"]);
+const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
+
+const or = orS + orB;
+const totalETF = etfMonde + etfSeniors;
+const total = or + argent + totalETF;
 const ratio = cleanNumber(data["ratio"]);
 
 document.getElementById("or").innerText = formatEuro(or);
@@ -134,21 +156,27 @@ document.getElementById("argent").innerText = formatEuro(argent);
 document.getElementById("total").innerText = formatEuro(total);
 document.getElementById("ratio").innerText = ratio.toFixed(2).replace('.',',');
 
-// ===== GRAPH
+// ===== BLOCS BAS
+document.getElementById("metaux-total-bottom").innerText = formatEuro(or + argent);
+document.getElementById("etf-total-bottom").innerText = formatEuro(totalETF);
+
+// ===== GRAPH TRI
 graph.sort((a,b)=>{
     const [d1,m1,y1]=a.date.split("/");
     const [d2,m2,y2]=b.date.split("/");
     return new Date(y1,m1-1,d1) - new Date(y2,m2-1,d2);
 });
 
-const labels = graph.map(x=>x.date).slice(-10);
-const values = graph.map(x=>x.value).slice(-10);
+const labels = graph.map(x=>x.date);
+const values = graph.map(x=>x.value);
 
-// ===== VARIATION
+// ===== VARIATION (CORRECTE)
 let variation = 0;
 
-if(values.length){
-    variation = total - values[values.length-1];
+if(values.length >= 2){
+    const last = values[values.length - 1];
+    const prev = values[values.length - 2];
+    variation = last - prev;
 }
 
 const varEl = document.getElementById("variation");
@@ -161,18 +189,22 @@ if(window.chart10j) window.chart10j.destroy();
 window.chart10j = new Chart(document.getElementById("chart-10j"), {
     type:"line",
     data:{
-        labels:labels,
+        labels: labels.slice(-10),
         datasets:[{
-            data:values,
+            data: values.slice(-10),
             borderColor:"#facc15",
             borderWidth:3,
             fill:true,
-            tension:0.4
+            tension:0.4,
+            pointRadius:4
         }]
     },
     options:{
         plugins:{legend:{display:false}},
-        scales:{x:{display:true},y:{display:true}}
+        scales:{
+            x:{ticks:{color:"#888"}},
+            y:{ticks:{color:"#888"}}
+        }
     }
 });
 
@@ -183,11 +215,11 @@ window.chart10j = new Chart(document.getElementById("chart-10j"), {
 isLoading = false;
 }
 
-// INIT
+// ===== INIT
 loadData();
 setInterval(loadData,300000);
 
-// REFRESH BTN
+// ===== BTN
 document.getElementById("refresh-btn").onclick = loadData;
 
 </script>
