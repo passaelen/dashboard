@@ -560,12 +560,15 @@ const values = dataPoints.map(p => p.value);
 
 
 
+
 // ===== VARIATION STABLE =====
+const graphValues = values.slice(-10);
+
 let variation = 0;
 
-if(values.length > 0){
+if(graphValues.length > 0){
 
-    const lastGraphValue = values[values.length - 1];
+    const lastGraphValue = graphValues[graphValues.length - 1];
 
     if(!isNaN(lastGraphValue)){
         variation = total - lastGraphValue;
