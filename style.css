@@ -339,3 +339,12 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
     list-style: none;
     padding-left: 0;
 }
+
+.legend div {
+    display: block !important;
+}
+
+.legend-item::before {
+    display: none !important;
+    content: none !important;
+}
