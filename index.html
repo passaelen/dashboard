@@ -2,200 +2,183 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portefeuille</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portefeuille</title>
 
-<link rel="stylesheet" href="style.css?v=25">
-
-
+<link rel="stylesheet" href="style.css?v=60">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <div class="container">
 
-    <!-- ================= HEADER ================= -->
-    <div class="header">
-        <div>
-            <h2 style="margin:0;">💼 Portefeuille</h2>
-            <small>Or · Argent · ETF</small>
-        </div>
-        <div class="badge" id="variation">-274,32 €</div>
+<!-- HEADER -->
+<div class="header">
+    <div>
+        <h2>💼 Portefeuille</h2>
+        <small>Or · Argent · ETF</small>
     </div>
 
-    <!-- ================= TOTAL ================= -->
-    <div class="card highlight">
-        <small>Total global</small>
-        <h2 id="total" class="gold" style="margin:5px 0;">75 441 €</h2>
+    <div class="header-actions">
+        <div id="refresh-btn" class="refresh">⟳</div>
+        <div id="variation" class="badge-perf">--</div>
     </div>
+</div>
 
-    <!-- ================= KPI ================= -->
+<!-- TOTAL -->
+<div class="card highlight">
+    <small>Total global</small>
+    <h2 id="total" class="gold"></h2>
+</div>
+
+<!-- KPI -->
 <div class="kpi-grid">
-  <div class="kpi">
-    <small>OR</small>
-    <h3 id="or" class="gold">61 114 €</h3>
-   </div>
-
-        <div class="kpi">
-            <small>ARGENT</small>
-            <h3 id="argent">12 360 €</h3>
-        </div>
-
-<div class="kpi">
-<small id="ratio-label">
-RATIO
-</small>
-<h3 id="ratio" class="gold"></h3>
-</div>
-
-</div>
-
-    <!-- ================= PROGRESS ================= -->
-    <div class="progress">
-        <div class="progress-bar"></div>
+    <div class="kpi">
+        <small>OR</small>
+        <h3 id="or" class="gold"></h3>
     </div>
 
-    <div class="progress-text">
-        <span id="progress-label"></span>
+    <div class="kpi">
+        <small>ARGENT</small>
+        <h3 id="argent"></h3>
     </div>
 
+    <div class="kpi">
+        <small id="ratio-label">RATIO</small>
+        <h3 id="ratio"></h3>
+    </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress">
+    <div class="progress-bar"></div>
+</div>
+<div class="progress-text">
+    <span id="progress-label"></span>
+</div>
+
+<!-- ALERT -->
 <div class="card alert-box" id="alert-box">
-<span id="alert-text">Chargement...</span>
+    <span id="alert-text"></span>
 </div>
 
+<!-- REPARTITION -->
+<div class="card">
+<h3>Répartitions</h3>
 
-    <!-- ================= REPARTITIONS ================= -->
-    <div class="card">
-        <h3>Répartitions</h3>
-        <div class="repartition-grid">
+<div class="repartition-grid">
 
-            <!-- METAUX -->
-            <div class="bloc"><h4>Métaux</h4>
-                <div class="donut" id="donut-metaux"></div>
-                <div class="legend">
-                    <div><span class="dot or1"></span> Or Suisse <span id="p-or-suisse"></span></div>
-                    <div><span class="dot or2"></span> Or Belgique <span id="p-or-belgique"></span></div>
-                    <div><span class="dot argent"></span> Argent <span id="p-argent"></span></div>
-                </div>
-            </div>
+<div class="bloc">
+<h4>Métaux</h4>
+<div class="donut" id="donut-metaux"></div>
 
+<div class="legend">
+<div>Or Suisse <span id="p-or-suisse"></span></div>
+<div>Or Belgique <span id="p-or-belgique"></span></div>
+<div>Argent <span id="p-argent"></span></div>
+</div>
+</div>
 
-            <!-- ETF -->
-            <div class="bloc"><h4>ETF</h4>
-                <div class="donut etf"></div>
-                <div class="legend">
-                    <div><span class="dot monde"></span> Monde <span id="p-monde"></span></div>
-                    <div><span class="dot seniors"></span> Séniors <span id="p-seniors"></span></div>
-                </div>
-            </div>
+<div class="bloc">
+<h4>ETF</h4>
+<div class="donut etf"></div>
 
+<div class="legend">
+<div>Monde <span id="p-monde"></span></div>
+<div>Séniors <span id="p-seniors"></span></div>
+</div>
+</div>
 
-        </div>
+</div>
+</div>
 
-        <!-- ✅ GRAPH EN DEHORS -->
-    <div class="card">
-        <h3>Évolution 10 jours</h3>
-        <div class="chart-container">
-        <canvas id="chart-10j"></canvas>
-        </div>
-    </div>
+<!-- GRAPH -->
+<div class="card">
+<h3>Évolution 10 jours</h3>
+<div class="chart-container">
+<canvas id="chart-10j"></canvas>
+</div>
+</div>
 
-    </div>
+<!-- METAUX -->
+<div class="card">
+<div class="section-header">
+<h3>Métaux Précieux</h3>
+<div>
+<div id="metaux-total-value"></div>
+<div id="metaux-total-perf"></div>
+</div>
+</div>
 
-    <!-- ================= TABLE METAUX ================= -->
-    <div class="card">
-        <div class="section-header">
-          <h3>Métaux Précieux</h3>
-          <div class="section-total">
-            <div id="metaux-total-value"></div>
-            <div id="metaux-total-perf"></div>
-          </div>
-        </div>
+<table class="table">
+<tr><th>Type</th><th>Stockage</th><th>Qté</th><th>€/g</th><th>Perf</th></tr>
 
+<tr>
+<td>🥇 Or</td><td>Suisse</td>
+<td id="q-or-suisse"></td>
+<td id="p-or-suisse-g"></td>
+<td id="perf-or-suisse"></td>
+</tr>
 
-        <table class="table">
-    <tr>
-        <th>Type</th>
-        <th>Stockage</th>
-        <th>Quantité</th>
-        <th>€/g</th>
-        <th>Perf</th>
-    </tr>
+<tr>
+<td>🥇 Or</td><td>Belgique</td>
+<td id="q-or-belgique"></td>
+<td id="p-or-belgique-g"></td>
+<td id="perf-or-belgique"></td>
+</tr>
 
-    <tr>
-        <td>🥇 Or</td>
-        <td>Suisse</td>
-        <td id="q-or-suisse"></td>
-        <td id="p-or-suisse-g"></td>
-        <td id="perf-or-suisse"></td>
-    </tr>
-
-    <tr>
-        <td>🥇 Or</td>
-        <td>Belgique</td>
-        <td id="q-or-belgique"></td>
-        <td id="p-or-belgique-g"></td>
-        <td id="perf-or-belgique"></td>
-    </tr>
-
-    <tr>
-        <td>🥈 Argent</td>
-        <td>Suisse</td>
-        <td id="q-argent"></td>
-        <td id="p-argent-g"></td>
-        <td id="perf-argent"></td>
-    </tr>
+<tr>
+<td>🥈 Argent</td><td>Suisse</td>
+<td id="q-argent"></td>
+<td id="p-argent-g"></td>
+<td id="perf-argent"></td>
+</tr>
 </table>
+</div>
 
+<!-- ETF -->
+<div class="card">
+<div class="section-header">
+<h3>ETF</h3>
+<div>
+<div id="etf-total-value"></div>
+<div id="etf-total-perf"></div>
+</div>
+</div>
 
-    </div>
+<table class="table">
+<tr><th>ETF</th><th>Parts</th><th>Spot</th><th>Perf</th></tr>
 
-    <!-- ================= TABLE ETF ================= -->
-    <div class="card">
-       <div class="section-header">
-          <h3>ETF</h3>
-          <div class="section-total">
-            <div id="etf-total-value"></div>
-            <div id="etf-total-perf"></div>
-          </div>
-        </div>
+<tr>
+<td>Monde</td>
+<td id="etf-monde-parts"></td>
+<td id="etf-monde-prix"></td>
+<td id="etf-monde-perf"></td>
+</tr>
 
-        <table class="table">
-            <tr>
-                <th>ETF</th>
-                <th>Parts</th>
-                <th>Spot</th>
-                <th>Perf</th>
-            </tr>
-            <tr>
-                <td>Monde</td>
-                <td id="etf-monde-parts"></td>
-                <td id="etf-monde-prix"></td>
-                <td id="etf-monde-perf"></td>
-            </tr>
+<tr>
+<td>Séniors</td>
+<td id="etf-seniors-parts"></td>
+<td id="etf-seniors-prix"></td>
+<td id="etf-seniors-perf"></td>
+</tr>
 
-            <tr>
-                <td>Séniors</td>
-                <td id="etf-seniors-parts"></td>
-                <td id="etf-seniors-prix"></td>
-                <td id="etf-seniors-perf"></td>
-            </tr>
-
-            <tr>
-                <td>Juniors</td>
-                <td id="etf-juniors-parts"></td>
-                <td id="etf-juniors-prix"></td>
-                <td id="etf-juniors-perf"></td>
-            </tr>
-        </table>
-    </div>
+<tr>
+<td>Juniors</td>
+<td id="etf-juniors-parts"></td>
+<td id="etf-juniors-prix"></td>
+<td id="etf-juniors-perf"></td>
+</tr>
+</table>
+</div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<!-- ================= JS ORIGINAL (INTOUCHABLE) ================= -->
 <script>
+
 function parseCSV(text) {
     return text.trim().split("\n").map(row => {
         const result = [];
@@ -863,8 +846,16 @@ if (ctx) {
 }
 
 loadData();
+
+// 🔄 bouton refresh (safe)
+document.getElementById("refresh-btn").addEventListener("click", () => {
+    loadData();
+});
+
+
 </script>
 
 
 </body>
 </html>
+
