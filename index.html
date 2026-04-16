@@ -159,10 +159,14 @@ function formatPercent(v){
 }
 
 function formatPerfDual(euro, percent){
-    const color = euro >= 0 ? "#22c55e" : "#ef4444";
+    const cls = euro >= 0 ? "positive" : "negative";
     return `
-        <div style="color:${color}">${euro>=0?"+":""}${euro.toLocaleString('fr-BE')} €</div>
-        <div style="color:${color};font-size:12px">${percent>=0?"+":""}${percent.toFixed(2).replace('.',',')} %</div>
+        <div class="${cls}">
+            ${euro>=0?"+":""}${euro.toLocaleString('fr-BE')} €
+        </div>
+        <div class="${cls} small">
+            ${percent>=0?"+":""}${percent.toFixed(2).replace('.',',')} %
+        </div>
     `;
 }
 
@@ -226,7 +230,7 @@ document.getElementById("metaux-total-value").innerText = cleanNumber(data["meta
 document.getElementById("metaux-total-perf").innerText = formatPercent(cleanNumber(data["metaux_total_percent"]));
 
 // DONUT METAUX
-const totalMetaux = orS + orB + ag;
+const totalMetaux = orS + orB + ag || 1;
 const pOrS = (orS/totalMetaux)*100;
 const pOrB = (orB/totalMetaux)*100;
 
