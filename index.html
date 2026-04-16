@@ -217,15 +217,12 @@ function parseCSV(text){
 
         if (!r.trim()) return;
 
-        const parts = r.split(/[,;]/);
+        const parts = r.split(",");
 
         if (parts.length < 2) return;
 
         const key = parts[0].replace(/"/g, '').trim();
-        const value = parts.slice(1).join(",")
-                          .replace(/"/g, '')
-                          .replace(/\r/g, '')   // 🔥 IMPORTANT
-                          .trim();
+        const value = parts[1].replace(/"/g, '').trim();
 
         data[key] = value;
     });
