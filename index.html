@@ -264,7 +264,7 @@ async function loadData(){
 
 try {
 
-const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
+const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383"+ Date.now());
 const rawText = await res.text();
 const data = parseCSV(rawText);
 
@@ -497,6 +497,25 @@ window.chart10j = new Chart(document.getElementById("chart-10j"), {
 // ===== INIT =====
 loadData();
 setInterval(loadData, 300000); // refresh 5 min
+
+document.getElementById("refresh-btn").addEventListener("click", (e) => {
+    const btn = e.currentTarget;
+
+    console.log("REFRESH CLICK"); // 🔥 test réel
+
+    // animation
+    btn.style.transform = "rotate(360deg)";
+    btn.style.transition = "0.5s";
+
+    setTimeout(() => {
+        btn.style.transform = "rotate(0deg)";
+    }, 500);
+
+    // refresh data
+    loadData();
+});
+
+    
 
 
 
