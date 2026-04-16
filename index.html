@@ -525,21 +525,7 @@ for(let i = 1; i < rows.length; i++){
 
 
 
-// ===== VARIATION FIABLE (APRÈS GRAPH) =====
 
-const graphData = values.slice(-10);
-
-let variation = 0;
-
-if(graphData.length > 0){
-    const lastGraphValue = graphData[graphData.length - 1];
-    variation = total - lastGraphValue;
-}
-
-const varEl = document.getElementById("variation");
-
-varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
-applyPerfClass(varEl, variation);
 
 
 
@@ -561,13 +547,24 @@ dataPoints.sort((a, b) => {
 const labels = dataPoints.map(p => p.date);
 const values = dataPoints.map(p => p.value);
 
+// ===== VARIATION STABLE =====
+let variation = 0;
+
+const lastGraphValue = values[values.length - 1];
+
+if(lastGraphValue){
+    variation = total - lastGraphValue;
+}
+
+const varEl = document.getElementById("variation");
+
+varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
+applyPerfClass(varEl, variation);
+
 
 
 
 console.log(labels, values);
-
-
-
 
 
 
