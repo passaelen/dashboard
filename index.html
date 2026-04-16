@@ -272,7 +272,7 @@ try {
 
 const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
 const rawText = await res.text();
-
+const data = parseCSV(rawText);
 
     
 
@@ -385,7 +385,7 @@ if (donutETF) {
 
 
 // ===== GRAPH =====
-const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
+
 const rows = rawText.split("\n");
 
 const labels = [];
