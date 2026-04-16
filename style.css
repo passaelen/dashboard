@@ -24,11 +24,12 @@ body {
 .header {
     backdrop-filter: blur(10px);
     background: rgba(2, 6, 23, 0.6);
-    padding: 8px;
+    padding: 6px 10px;        /* 🔥 réduit fortement */
+    margin-bottom: 10px;
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center;   
 }
 
 .header-left {
