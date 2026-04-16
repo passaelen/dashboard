@@ -109,6 +109,7 @@ h3 {
 .card {
     touch-action: manipulation;
     background: linear-gradient(145deg, #0f172a, #0b0f1a);
+    backdrop-filter: blur(6px);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 16px;
     padding: 12px;
@@ -259,7 +260,7 @@ th {
 }
 
 td {
-    padding: 8px;
+    padding: 6px;
     border-bottom: 1px solid #1f2937;
 }
 
@@ -285,7 +286,8 @@ td:last-child div {
     align-items: center;
 
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
+    letter-spacing: 0.3px;
 
     color: #facc15;
 }
