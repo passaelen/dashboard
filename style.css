@@ -280,3 +280,8 @@ td:last-child div {
 
     color: #facc15;
 }
+
+.total-line span:last-child {
+    color: #fff;
+    font-weight: 700;
+}
