@@ -154,22 +154,19 @@
 <script>
 
 // ===== UTILS =====
+
 function cleanNumber(v){
     if(!v || v.trim() === "") return 0;
 
-    // enlève tout sauf chiffres et virgules
-    v = v.replace(/[^0-9,]/g, '');
-
-    // garde uniquement la PREMIÈRE virgule
-    const parts = v.split(',');
-
-    if (parts.length > 2) {
-        v = parts[0] + ',' + parts[1];
-    }
-
-    // conversion finale
-    return Number(v.replace(',', '.')) || 0;
+    return Number(
+        v
+        .replace(/\s/g, '')   // enlève espaces
+        .replace(/€/g, '')    // enlève €
+        .replace(',', '.')    // virgule → point
+    ) || 0;
 }
+
+    
 
 function formatEuro(v){
     return v.toLocaleString('fr-BE') + " €";
