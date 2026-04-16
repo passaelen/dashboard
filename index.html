@@ -397,12 +397,6 @@ setHTML("alert-text", getZoneText(ratio));
 applyZoneStyle(ratio);
 
 
-// ===== VARIATION =====
-const variation = cleanNumber(data["variation"]);
-const varEl = document.getElementById("variation");
-
-varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
-applyPerfClass(varEl, variation);
 
 // ===== METAUX =====
 setText("q-or-suisse", cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE') + " g");
@@ -521,6 +515,23 @@ for(let i = 1; i < rows.length; i++){
 }
 
 console.log(labels, values);
+
+
+// ===== VARIATION CALCULÉE =====
+let variation = 0;
+
+if(values.length > 1){
+    variation = total - values[0]; // 🔥 depuis début du graph
+}
+
+const varEl = document.getElementById("variation");
+
+varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
+applyPerfClass(varEl, variation);
+
+
+
+
 
 if(window.chart10j){ window.chart10j.destroy(); }
 
