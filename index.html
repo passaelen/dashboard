@@ -265,6 +265,20 @@ function getAlertMessage(ratio){
     return "🚨 Extrême";
 }
 
+
+function getZoneText(ratio){
+    if(ratio >= 120) return "❄️ Extrême Nord — Marché figé<br>Accumuler de l’argent.";
+    if(ratio >= 100) return "🧊 Nord profond — Attente<br>Renforcer progressivement l’argent.";
+    if(ratio >= 80) return "🧊 Nord — Observation<br>Accumulation légère.";
+    if(ratio >= 60) return "🧊 Nord tempéré — Vigilance<br>Conserver.";
+    if(ratio >= 50) return "⚖️ Pivot — Équilibre<br>Surveiller.";
+    if(ratio >= 45) return "🌤️ Arbitrage — Début<br>Premiers arbitrages vers l’or.";
+    if(ratio >= 40) return "🔥 Chaud — Action<br>Arbitrage progressif.";
+    if(ratio >= 35) return "🔥 Très chaud — Accélération<br>Renforcer les arbitrages.";
+    return "🚨 Extrême — Opportunité<br>Arbitrage fort vers l’or.";
+}
+
+
 // ===== DATA PARSING =====
 function parseCSV(text){
     const lines = text.split("\n");
@@ -313,7 +327,8 @@ setText("total", formatEuro(total));
 setText("ratio", ratio.toFixed(2).replace('.',','));
 
 // ===== ALERT =====
-setText("alert-text", getAlertMessage(ratio));
+setHTML("alert-text", getZoneText(ratio));
+
 
 // ===== VARIATION =====
 const variation = cleanNumber(data["variation"]);
