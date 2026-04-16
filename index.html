@@ -205,7 +205,7 @@
 <script>
 
 // ===== UTILS =====
-
+let isLoading = false;
 function cleanNumber(v){
     if(!v || v.trim() === "") return 0;
 
@@ -362,6 +362,9 @@ function parseCSV(text){
 
 // ===== MAIN =====
 async function loadData(){
+
+if(isLoading) return; // 🔥 bloque double appel
+isLoading = true;
 
 try {
 
@@ -647,18 +650,22 @@ window.chart10j = new Chart(document.getElementById("chart-10j"), {
     console.error("Erreur JS :", e);
 }
 
+isLoading = false; // 🔥 libère le lock
+
 }
 
 // ===== INIT =====
 loadData();
 setInterval(loadData, 300000); // refresh 5 min
 
+
+// ===== EVENT LISTENER =====
 document.getElementById("refresh-btn").addEventListener("click", (e) => {
+
+    if(isLoading) return; // 🔥 évite spam click
+
     const btn = e.currentTarget;
 
-    console.log("REFRESH CLICK"); // 🔥 test réel
-
-    // animation
     btn.style.transform = "rotate(360deg)";
     btn.style.transition = "0.5s";
 
@@ -666,7 +673,6 @@ document.getElementById("refresh-btn").addEventListener("click", (e) => {
         btn.style.transform = "rotate(0deg)";
     }, 500);
 
-    // refresh data
     loadData();
 });
 
