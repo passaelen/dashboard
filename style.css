@@ -248,9 +248,12 @@ table tr:last-child td {border-bottom: none; /* enlève ligne + espace visuel */
 th {color: #9ca3af;text-align: left;}
 td {padding: 6px;border-bottom: 1px solid #1f2937;}
 td:last-child div {font-weight: 600;}
-td:nth-child(3),td:nth-child(4),td:nth-child(5) {text-align: right;}
+td:last-child {    font-variant-numeric: tabular-nums;}
 tr:hover {background: rgba(255,255,255,0.03);}
 th, td {white-space: nowrap;}
+th:nth-child(1),td:nth-child(1) {    text-align: left;}
+th:nth-child(2),td:nth-child(2) {    text-align: center;}
+th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),td:nth-child(5) {    text-align: right;}
 
 
 /* ===== GRAPH ===== */
