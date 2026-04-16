@@ -341,9 +341,9 @@ function parseCSV(text){
         const key = cols[0].replace(/"/g, "").trim();
         const value = cols[1].replace(/"/g, "").trim();
 
-        if (key) {
-            data[key] = value || "0";
-        }
+if (key && !(key in data)) {data[key] = value || "0";}
+
+
     }
 
     return data;
