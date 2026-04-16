@@ -363,6 +363,15 @@ window.chart10j = new Chart(document.getElementById("chart-10j"),{
 loadData();
 setInterval(loadData, 300000); // refresh 5 min
 
+
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js")
+        .then(() => console.log("SW OK"))
+        .catch(err => console.log("SW erreur", err));
+}
+
+    
 </script>
 </body>
 </html>
