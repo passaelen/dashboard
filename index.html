@@ -213,14 +213,17 @@ function getAlertMessage(ratio){
 function parseCSV(text){
     const data = {};
     text.split("\n").forEach(r=>{
-        const i = r.indexOf(",");
-        if(i === -1) return;
+        if(!r.trim()) return;
 
-        const key = r.slice(0, i).trim();
-        const value = r.slice(i + 1).trim();
+        const parts = r.split(",");
+        if(parts.length < 2) return;
+
+        const key = parts[0].trim();
+        const value = parts.slice(1).join(",").trim();
 
         data[key] = value;
     });
+
     return data;
 }
 
