@@ -25,7 +25,7 @@
     </div>
 
     <div class="header-actions">
-        <div class="refresh">⟳</div>
+        <div id="refresh-btn" class="refresh">⟳</div>
         <div id="variation" class="badge-perf"></div>
     </div>
 </div>
@@ -506,6 +506,20 @@ if ("serviceWorker" in navigator) {
         .catch(err => console.log("SW erreur", err));
 }
 
+console.log("CLICK");
+    
+document.getElementById("refresh-btn").addEventListener("click", (e) => {
+    const btn = e.currentTarget;
+
+    btn.style.transform = "rotate(360deg)";
+    btn.style.transition = "0.5s";
+
+    setTimeout(() => {
+        btn.style.transform = "rotate(0deg)";
+    }, 500);
+
+    loadData();
+});
     
 </script>
 </body>
