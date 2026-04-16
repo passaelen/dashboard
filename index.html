@@ -214,19 +214,20 @@ function getAlertMessage(ratio){
 function parseCSV(text){
     const data = {};
 
-    text.split("\n").forEach(r => {
+    const lines = text.split("\n");
 
-        if (!r.trim()) return;
+    for (let line of lines){
 
-        // coupe seulement à la PREMIÈRE virgule
-        const i = r.indexOf(",");
-        if (i === -1) return;
+        if (!line || !line.includes(",")) continue;
 
-        let key = r.slice(0, i).replace(/"/g, '').trim();
-        let value = r.slice(i + 1).replace(/"/g, '').trim();
+        const i = line.indexOf(",");
+        const key = line.slice(0, i).replace(/"/g, '').trim();
+        const value = line.slice(i + 1).replace(/"/g, '').trim();
 
-        data[key] = value;
-    });
+        if (key.length > 0) {
+            data[key] = value;
+        }
+    }
 
     return data;
 }
@@ -322,10 +323,7 @@ setHTML("etf-seniors-perf", formatPerfDual(
     cleanNumber(data["etf_seniors_percent"])
 ));
 
-console.log("ETF DEBUG:", etfMonde, etfSeniors, totalETF);
-
 // ===== DONUT ETF =====
-
 let pMonde = 0;
 let pSeniors = 0;
 
@@ -333,9 +331,6 @@ if (totalETF > 0) {
     pMonde = (etfMonde / totalETF) * 100;
     pSeniors = (etfSeniors / totalETF) * 100;
 }
-
-if (isNaN(pMonde)) pMonde = 0;
-if (isNaN(pSeniors)) pSeniors = 0;
 
 setText("p-monde", formatPercent(pMonde));
 setText("p-seniors", formatPercent(pSeniors));
@@ -350,6 +345,8 @@ if (donutETF) {
         `conic-gradient(#38bdf8 0% ${pMonde}%, #22c55e ${pMonde}% 100%)`;
     }
 }
+
+    
 
 // ===== GRAPH =====
 const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1311770820");
