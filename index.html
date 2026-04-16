@@ -381,27 +381,81 @@ for(let i=1;i<rows.length;i++){
 
 if(window.chart10j){ window.chart10j.destroy(); }
 
-window.chart10j = new Chart(document.getElementById("chart-10j"),{
-    type:'line',
-    data:{
+window.chart10j = new Chart(document.getElementById("chart-10j"), {
+    type: 'line',
+    data: {
         labels: labels.slice(-10),
-        datasets:[{
+        datasets: [{
             data: values.slice(-10),
-            borderColor:"#facc15",
-            backgroundColor:"rgba(250,204,21,0.1)",
-            fill:true,
-            tension:0.4,
-            pointRadius:0
+
+            borderColor: "#facc15",
+            borderWidth: 3,
+
+            backgroundColor: (ctx) => {
+                const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 220);
+                gradient.addColorStop(0, "rgba(250,204,21,0.35)");
+                gradient.addColorStop(1, "rgba(250,204,21,0)");
+                return gradient;
+            },
+
+            fill: true,
+            tension: 0.45,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "#facc15"
         }]
     },
-    options:{
-        plugins:{legend:{display:false}},
-        scales:{
-            x:{ticks:{color:"#9ca3af"}},
-            y:{ticks:{color:"#9ca3af"}}
+
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        plugins: {
+            legend: { display: false },
+
+            tooltip: {
+                backgroundColor: "#020617",
+                borderColor: "#facc15",
+                borderWidth: 1,
+                titleColor: "#fff",
+                bodyColor: "#facc15",
+                padding: 10,
+                displayColors: false,
+                callbacks: {
+                    label: (ctx) => ctx.raw.toLocaleString('fr-BE') + " €"
+                }
+            }
+        },
+
+        scales: {
+            x: {
+                ticks: {
+                    color: "#64748b",
+                    maxRotation: 0
+                },
+                grid: { display: false }
+            },
+
+            y: {
+                ticks: {
+                    color: "#64748b",
+                    callback: (value) => value + "€"
+                },
+                grid: {
+                    color: "rgba(255,255,255,0.05)"
+                }
+            }
+        },
+
+        interaction: {
+            intersect: false,
+            mode: 'index'
         }
     }
 });
+
+
+    
 
 } catch(e){
     console.error("Erreur JS :", e);
