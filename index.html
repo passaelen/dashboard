@@ -318,6 +318,9 @@ setHTML("etf-seniors-perf", formatPerfDual(
     console.log("ETF DEBUG:", etfMonde, etfSeniors, totalETF);
 
 // ===== DONUT ETF =====
+
+const totalETF = etfMonde + etfSeniors;
+
 let pMonde = 0;
 let pSeniors = 0;
 
@@ -326,14 +329,18 @@ if (totalETF > 0) {
     pSeniors = (etfSeniors / totalETF) * 100;
 }
 
+// sécurise NaN
+if (isNaN(pMonde)) pMonde = 0;
+if (isNaN(pSeniors)) pSeniors = 0;
+
 // texte
 setText("p-monde", formatPercent(pMonde));
 setText("p-seniors", formatPercent(pSeniors));
 
-// donut visuel
+// donut visuel sécurisé
 const donutETF = document.querySelector(".donut.etf");
-if (donutETF) {
 
+if (donutETF) {
     if (totalETF === 0) {
         donutETF.style.background = "#1f2937";
     } else {
