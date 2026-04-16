@@ -157,11 +157,18 @@
 function cleanNumber(v){
     if(!v || v.trim() === "") return 0;
 
-    return Number(
-        v.replace(/"/g,'')
-         .replace(/\s/g,'')     // 🔥 enlève espaces invisibles
-         .replace(',', '.')
-    ) || 0;
+    // enlève tout sauf chiffres et virgules
+    v = v.replace(/[^0-9,]/g, '');
+
+    // garde uniquement la PREMIÈRE virgule
+    const parts = v.split(',');
+
+    if (parts.length > 2) {
+        v = parts[0] + ',' + parts[1];
+    }
+
+    // conversion finale
+    return Number(v.replace(',', '.')) || 0;
 }
 
 function formatEuro(v){
@@ -246,11 +253,6 @@ try {
 
 const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
 const data = parseCSV(await res.text());
-
-console.log("DATA FULL:", data);
-console.log("TOTAL:", data["total_global"]);
-console.log("ETF:", data["etf_monde_valeur"], data["etf_seniors_valeur"]);
-
 
     
 
