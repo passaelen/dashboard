@@ -365,8 +365,10 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
 }
 
 .alert-nord-tempere {
-    background: linear-gradient(135deg, #1e293b, #334155);
-    color: #e2e8f0;
-    border: 1px solid rgba(148,163,184,0.3);
-    box-shadow: 0 0 15px rgba(148,163,184,0.2);
+    background: linear-gradient(
+        135deg,
+        rgba(30, 58, 95, 0.6),
+        rgba(14, 165, 233, 0.5)
+    );
+    color: #e0f2fe;
 }
