@@ -547,22 +547,24 @@ console.log(labels, values);
 
 
 
-// ===== VARIATION PAR RAPPORT AU GRAPH AFFICHÉ =====
+// ===== VARIATION STABLE (SOURCE = GRAPH) =====
+
 let variation = 0;
 
-const displayedValues = values.slice(-10); // mêmes données que le chart
+if(window.chart10j && window.chart10j.data.datasets[0].data.length > 0){
 
-if(displayedValues.length > 0){
-    const lastVisible = displayedValues[displayedValues.length - 1];
-    variation = total - lastVisible;
+    const graphData = window.chart10j.data.datasets[0].data;
+
+    // ✅ dernière valeur réellement affichée dans le graph
+    const lastGraphValue = graphData[graphData.length - 1];
+
+    variation = total - lastGraphValue;
 }
 
 const varEl = document.getElementById("variation");
 
 varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
 applyPerfClass(varEl, variation);
-
-// ===== FIN VARIATION PAR RAPPORT AU GRAPH AFFICHÉ =====
 
 
 
