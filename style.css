@@ -263,3 +263,20 @@ td:last-child div {
     width: 100% !important;
     height: 220px !important;
 }
+
+
+/* ===== Total des 2 derniers blocs Metaux et ETF ===== */
+.total-line {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-weight: 600;
+    font-size: 14px;
+
+    color: #facc15;
+}
