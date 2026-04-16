@@ -217,14 +217,18 @@ function parseCSV(text){
 
         if (!r.trim()) return;
 
-        // coupe seulement à la PREMIÈRE virgule OU point-virgule
+        // trouve la première séparation
         let i = r.indexOf(",");
         if (i === -1) i = r.indexOf(";");
 
         if (i === -1) return;
 
-        const key = r.slice(0, i).trim();
-        const value = r.slice(i + 1).trim();
+        let key = r.slice(0, i).trim();
+        let value = r.slice(i + 1).trim();
+
+        // 🔥 nettoyage des guillemets
+        key = key.replace(/"/g, '');
+        value = value.replace(/"/g, '');
 
         data[key] = value;
     });
