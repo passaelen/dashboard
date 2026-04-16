@@ -243,13 +243,15 @@ h3 {
 }
 
 /* ===== TABLE ===== */
-table {margin: 0;width: 100%;border-collapse: collapse;font-size: 13px;}
+table {margin: 0;width: 100%;border-collapse: collapse;font-size: 13px;table-layout: fixed;}
 table tr:last-child td {border-bottom: none; /* enlève ligne + espace visuel */}
 th {color: #9ca3af;text-align: left;}
 td {padding: 6px;border-bottom: 1px solid #1f2937;}
 td:last-child div {font-weight: 600;}
 td:nth-child(3),td:nth-child(4),td:nth-child(5) {text-align: right;}
 tr:hover {background: rgba(255,255,255,0.03);}
+th, td {white-space: nowrap;}
+
 
 /* ===== GRAPH ===== */
 #chart-10j {
