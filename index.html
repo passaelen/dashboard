@@ -527,18 +527,7 @@ if ("serviceWorker" in navigator) {
 
 console.log("CLICK");
     
-document.getElementById("refresh-btn").addEventListener("click", (e) => {
-    const btn = e.currentTarget;
 
-    btn.style.transform = "rotate(360deg)";
-    btn.style.transition = "0.5s";
-
-    setTimeout(() => {
-        btn.style.transform = "rotate(0deg)";
-    }, 500);
-
-    loadData();
-});
     
 </script>
 </body>
