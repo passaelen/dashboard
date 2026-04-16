@@ -16,8 +16,14 @@ body {
 /* ===== TEXT UTILS ===== */
 .text-muted { color: #9ca3af; }
 .text-small { font-size: 12px; }
-.positive { color: #22c55e; }
-.negative { color: #ef4444; }
+.positive {
+    color: #22c55e;
+    background: rgba(34,197,94,0.1);
+}
+.negative {
+    color: #ef4444;
+    background: rgba(239,68,68,0.1);
+}
 .gold { color: #facc15; }
 
 /* ===== HEADER ===== */
