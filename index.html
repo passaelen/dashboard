@@ -44,10 +44,12 @@
     <div class="kpi"><small>RATIO</small><h3 id="ratio"></h3></div>
 </div>
 
+
 <!-- ALERT -->
-<div class="card alert-box">
+<div class="card alert-box" id="alert-box">
     <span id="alert-text"></span>
 </div>
+
 
 <!-- REPARTITION -->
 <div class="card">
@@ -280,6 +282,50 @@ function getZoneText(ratio){
 }
 
 
+function applyZoneStyle(ratio){
+
+    const box = document.getElementById("alert-box");
+
+    if(!box) return;
+
+    // reset
+    box.style.background = "";
+    box.style.boxShadow = "";
+    box.style.color = "#93c5fd";
+
+    if(ratio >= 120){
+        box.style.background = "linear-gradient(135deg, #e0f2fe, #bae6fd)";
+        box.style.color = "#0c4a6e";
+    }
+    else if(ratio >= 100){
+        box.style.background = "linear-gradient(135deg, #dbeafe, #93c5fd)";
+    }
+    else if(ratio >= 80){
+        box.style.background = "linear-gradient(135deg, #bfdbfe, #60a5fa)";
+    }
+    else if(ratio >= 60){
+        // ❄️ TON CAS ACTUEL
+        box.style.background = "linear-gradient(135deg, #0ea5e9, #38bdf8)";
+        box.style.boxShadow = "0 0 20px rgba(56,189,248,0.25)";
+    }
+    else if(ratio >= 50){
+        box.style.background = "linear-gradient(135deg, #64748b, #94a3b8)";
+    }
+    else if(ratio >= 45){
+        box.style.background = "linear-gradient(135deg, #fde68a, #facc15)";
+        box.style.color = "#000";
+    }
+    else if(ratio >= 40){
+        box.style.background = "linear-gradient(135deg, #fb923c, #f97316)";
+    }
+    else{
+        box.style.background = "linear-gradient(135deg, #ef4444, #b91c1c)";
+    }
+}
+
+
+
+
 // ===== DATA PARSING =====
 function parseCSV(text){
     const lines = text.split("\n");
@@ -329,6 +375,7 @@ setText("ratio", ratio.toFixed(2).replace('.',','));
 
 // ===== ALERT =====
 setHTML("alert-text", getZoneText(ratio));
+applyZoneStyle(ratio);
 
 
 // ===== VARIATION =====
