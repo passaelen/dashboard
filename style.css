@@ -22,10 +22,10 @@ body {
 
 /* ===== HEADER ===== */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
+    backdrop-filter: blur(10px);
+    background: rgba(2, 6, 23, 0.6);
+    padding: 8px;
+    border-radius: 12px;
 }
 
 .badge {
@@ -55,6 +55,12 @@ body {
     border: 1px solid rgba(250, 204, 21, 0.4);
 }
 
+.highlight h2 {
+    font-size: 32px;
+    letter-spacing: 1px;
+}
+
+
 /* ===== KPI ===== */
 .kpi-grid {
     display: grid;
@@ -65,7 +71,7 @@ body {
 .kpi {
     background: #111827;
     border-radius: 12px;
-    padding: 8px;
+    padding: 10px;
 }
 
 .kpi small {
@@ -100,8 +106,8 @@ body {
 }
 
 .donut {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     margin: 10px auto;
     position: relative;
@@ -132,8 +138,8 @@ td {
     border-bottom: 1px solid #1f2937;
 }
 
-td:last-child {
-    text-align: right;
+td:last-child div {
+    font-weight: 600;
 }
 
 /* ===== GRAPH ===== */
