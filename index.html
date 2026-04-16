@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
     
-    <link rel="stylesheet" href="style.css?v=45">
+    <link rel="stylesheet" href="style.css?v=47">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -328,6 +328,7 @@ function applyZoneStyle(ratio){
 
 // ===== DATA PARSING =====
 function parseCSV(text){
+
     const lines = text.split("\n");
     const data = {};
 
@@ -341,7 +342,10 @@ function parseCSV(text){
         const key = cols[0].replace(/"/g, "").trim();
         const value = cols[1].replace(/"/g, "").trim();
 
-        // ✅ ignore juste les titres
+        // ❌ IGNORE LES DATES
+        if(/\d{2}\/\d{2}\/\d{4}/.test(key)) continue;
+
+        // ❌ IGNORE LES TITRES
         if (
             key.includes("GLOBAL") ||
             key.includes("METAUX") ||
@@ -349,7 +353,8 @@ function parseCSV(text){
             key.includes("Onglet")
         ) continue;
 
-        if (key && !(key in data)) {
+        // ✅ ON PREND LA DERNIÈRE VALEUR (PAS LA PREMIÈRE)
+        if (key) {
             data[key] = value || "0";
         }
     }
