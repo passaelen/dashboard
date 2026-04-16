@@ -376,7 +376,7 @@ const data = parseCSV(rawText);
 const orS = cleanNumber(data["or_suisse_valeur"]);
 const orB = cleanNumber(data["or_belgique_valeur"]);
 const ag = cleanNumber(data["argent_valeur"]);
-const total = cleanNumber(data["total_global"]);
+const total = orS + orB + ag + etfMonde + etfSeniors;
 const ratio = cleanNumber(data["ratio"]);
 
 setText("or", formatEuro(orS + orB));
