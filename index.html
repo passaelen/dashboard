@@ -368,17 +368,32 @@ const rows = (await resChart.text()).split("\n");
 const labels=[], values=[];
 
 for(let i=1;i<rows.length;i++){
-    const c = rows[i].split(/[,;]+/);
 
-console.log("ROW:", c); // 👈 ici
-    console.log("VAL:", c[1], cleanNumber(c[1])); // 👈 ici
-    
-    const val = cleanNumber(c[1]); // ✅ colonne B
+    const line = rows[i];
+
+    // split intelligent : 1 seule séparation
+    const iSep = line.indexOf(",");
+
+    if(iSep === -1) continue;
+
+    const date = line.slice(0, iSep).replace(/"/g, '').trim();
+    const rawVal = line.slice(iSep + 1).replace(/"/g, '').trim();
+
+    const val = cleanNumber(rawVal);
+
+    console.log("DATE:", date);
+    console.log("RAW:", rawVal);
+    console.log("VAL:", val);
+
     if(val > 0){
-        labels.push(c[0]); // colonne A = date
+        labels.push(date);
         values.push(val);
     }
 }
+
+
+    
+
 
 if(window.chart10j){ window.chart10j.destroy(); }
 
