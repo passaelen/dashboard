@@ -154,144 +154,211 @@ function cleanNumber(v){
     ) || 0;
 }
 
-function formatPercent(v){
-    return v.toFixed(2).replace('.',',')+"%";
+function formatEuro(v){
+    return v.toLocaleString('fr-BE') + " €";
 }
 
+function formatPercent(v){
+    return v.toFixed(2).replace('.',',') + "%";
+}
+
+// ===== DOM HELPERS =====
+function setText(id, value){
+    document.getElementById(id).innerText = value;
+}
+
+function setHTML(id, value){
+    document.getElementById(id).innerHTML = value;
+}
+
+function applyPerfClass(el, value){
+    el.classList.remove("positive", "negative");
+    el.classList.add(value >= 0 ? "positive" : "negative");
+}
+
+// ===== PERF DISPLAY =====
 function formatPerfDual(euro, percent){
     const cls = euro >= 0 ? "positive" : "negative";
+
     return `
         <div class="${cls}">
-            ${euro>=0?"+":""}${euro.toLocaleString('fr-BE')} €
+            ${euro>=0?"+":""}${formatEuro(euro)}
         </div>
-        <div class="${cls} small">
-            ${percent>=0?"+":""}${percent.toFixed(2).replace('.',',')} %
+        <div class="${cls} text-small">
+            ${percent>=0?"+":""}${formatPercent(percent)}
         </div>
     `;
 }
 
-// ===== LOAD =====
+// ===== ALERT LOGIC =====
+function getAlertMessage(ratio){
+    if(ratio>=70) return "❄️ Zone froide";
+    if(ratio>=55) return "🧊 Nord";
+    if(ratio>=50) return "⚖️ Pivot";
+    if(ratio>=45) return "🌤️ Arbitrage";
+    if(ratio>=40) return "🔥 Chaud";
+    return "🚨 Extrême";
+}
+
+// ===== DATA PARSING =====
+function parseCSV(text){
+    const data = {};
+    text.split("\n").forEach(r=>{
+        const c = r.split(/[,;]+/);
+        data[c[0]?.trim()] = c[1]?.trim();
+    });
+    return data;
+}
+
+// ===== MAIN =====
 async function loadData(){
 
 try {
 
 const res = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1154137383");
-const text = await res.text();
+const data = parseCSV(await res.text());
 
-const data = {};
-text.split("\n").forEach(r=>{
-    const c = r.split(/[,;]+/);
-    data[c[0]?.trim()] = c[1]?.trim();
-});
-
-// KPI
+// ===== KPI =====
 const orS = cleanNumber(data["or_suisse_valeur"]);
 const orB = cleanNumber(data["or_belgique_valeur"]);
 const ag = cleanNumber(data["argent_valeur"]);
-
-document.getElementById("or").innerText = (orS+orB).toLocaleString('fr-BE')+" €";
-document.getElementById("argent").innerText = ag.toLocaleString('fr-BE')+" €";
-document.getElementById("total").innerText = cleanNumber(data["total_global"]).toLocaleString('fr-BE')+" €";
-
+const total = cleanNumber(data["total_global"]);
 const ratio = cleanNumber(data["ratio"]);
-document.getElementById("ratio").innerText = ratio.toFixed(2).replace('.',',');
 
-// ALERT
-let msg="";
-if(ratio>=70) msg="❄️ Zone froide";
-else if(ratio>=55) msg="🧊 Nord";
-else if(ratio>=50) msg="⚖️ Pivot";
-else if(ratio>=45) msg="🌤️ Arbitrage";
-else if(ratio>=40) msg="🔥 Chaud";
-else msg="🚨 Extrême";
-document.getElementById("alert-text").innerText = msg;
+setText("or", formatEuro(orS + orB));
+setText("argent", formatEuro(ag));
+setText("total", formatEuro(total));
+setText("ratio", ratio.toFixed(2).replace('.',','));
 
-// VAR
-const v = cleanNumber(data["variation"]);
-const el = document.getElementById("variation");
-el.innerText = (v>=0?"+":"")+v.toLocaleString('fr-BE')+" €";
-el.style.color = v>=0?"#22c55e":"#ef4444";
+// ===== ALERT =====
+setText("alert-text", getAlertMessage(ratio));
 
-// METAUX
-document.getElementById("q-or-suisse").innerText = cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE')+" g";
-document.getElementById("p-or-suisse-g").innerText = cleanNumber(data["or_suisse_prix_g"]).toLocaleString('fr-BE')+" €";
-document.getElementById("perf-or-suisse").innerHTML = formatPerfDual(cleanNumber(data["or_suisse_perf"]), cleanNumber(data["or_suisse_percent"]));
+// ===== VARIATION =====
+const variation = cleanNumber(data["variation"]);
+const varEl = document.getElementById("variation");
 
-document.getElementById("q-or-belgique").innerText = cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE')+" g";
-document.getElementById("p-or-belgique-g").innerText = cleanNumber(data["or_belgique_prix_g"]).toLocaleString('fr-BE')+" €";
-document.getElementById("perf-or-belgique").innerHTML = formatPerfDual(cleanNumber(data["or_belgique_perf"]), cleanNumber(data["or_belgique_percent"]));
+varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
+applyPerfClass(varEl, variation);
 
-document.getElementById("q-argent").innerText = cleanNumber(data["argent_qte"]).toLocaleString('fr-BE')+" g";
-document.getElementById("p-argent-g").innerText = cleanNumber(data["argent_prix_g"]).toLocaleString('fr-BE')+" €";
-document.getElementById("perf-argent").innerHTML = formatPerfDual(cleanNumber(data["argent_perf"]), cleanNumber(data["argent_percent"]));
+// ===== METAUX =====
+setText("q-or-suisse", cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE') + " g");
+setText("p-or-suisse-g", formatEuro(cleanNumber(data["or_suisse_prix_g"])));
+setHTML("perf-or-suisse", formatPerfDual(
+    cleanNumber(data["or_suisse_perf"]),
+    cleanNumber(data["or_suisse_percent"])
+));
 
-// TOTAL METAUX
-document.getElementById("metaux-total-value").innerText = cleanNumber(data["metaux_total_valeur"]).toLocaleString('fr-BE')+" €";
-document.getElementById("metaux-total-perf").innerText = formatPercent(cleanNumber(data["metaux_total_percent"]));
+setText("q-or-belgique", cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE') + " g");
+setText("p-or-belgique-g", formatEuro(cleanNumber(data["or_belgique_prix_g"])));
+setHTML("perf-or-belgique", formatPerfDual(
+    cleanNumber(data["or_belgique_perf"]),
+    cleanNumber(data["or_belgique_percent"])
+));
 
-// DONUT METAUX
+setText("q-argent", cleanNumber(data["argent_qte"]).toLocaleString('fr-BE') + " g");
+setText("p-argent-g", formatEuro(cleanNumber(data["argent_prix_g"])));
+setHTML("perf-argent", formatPerfDual(
+    cleanNumber(data["argent_perf"]),
+    cleanNumber(data["argent_percent"])
+));
+
+// ===== TOTAL METAUX =====
+setText("metaux-total-value", formatEuro(cleanNumber(data["metaux_total_valeur"])));
+setText("metaux-total-perf", formatPercent(cleanNumber(data["metaux_total_percent"])));
+
+// ===== DONUT METAUX =====
 const totalMetaux = orS + orB + ag || 1;
+
 const pOrS = (orS/totalMetaux)*100;
 const pOrB = (orB/totalMetaux)*100;
+const pAg = (ag/totalMetaux)*100;
 
-document.getElementById("p-or-suisse").innerText = formatPercent(pOrS);
-document.getElementById("p-or-belgique").innerText = formatPercent(pOrB);
-document.getElementById("p-argent").innerText = formatPercent((ag/totalMetaux)*100);
+setText("p-or-suisse", formatPercent(pOrS));
+setText("p-or-belgique", formatPercent(pOrB));
+setText("p-argent", formatPercent(pAg));
 
 document.getElementById("donut-metaux").style.background =
 `conic-gradient(#facc15 0% ${pOrS}%, #f59e0b ${pOrS}% ${pOrS+pOrB}%, #9ca3af ${pOrS+pOrB}% 100%)`;
 
-// ETF
+// ===== ETF =====
 const etfMonde = cleanNumber(data["etf_monde_valeur"]);
 const etfSeniors = cleanNumber(data["etf_seniors_valeur"]);
-const totalETF = etfMonde + etfSeniors;
+const totalETF = etfMonde + etfSeniors || 1;
 
-document.getElementById("etf-total-value").innerText = totalETF.toLocaleString('fr-BE')+" €";
+setText("etf-total-value", formatEuro(totalETF));
 
-document.getElementById("etf-monde-parts").innerText = data["etf_monde_parts"];
-document.getElementById("etf-monde-prix").innerText = cleanNumber(data["etf_monde_prix"]).toLocaleString('fr-BE')+" €";
-document.getElementById("etf-monde-perf").innerHTML = formatPerfDual(cleanNumber(data["etf_monde_perf"]), cleanNumber(data["etf_monde_percent"]));
+setText("etf-monde-parts", data["etf_monde_parts"]);
+setText("etf-monde-prix", formatEuro(cleanNumber(data["etf_monde_prix"])));
+setHTML("etf-monde-perf", formatPerfDual(
+    cleanNumber(data["etf_monde_perf"]),
+    cleanNumber(data["etf_monde_percent"])
+));
 
-document.getElementById("etf-seniors-parts").innerText = data["etf_seniors_parts"];
-document.getElementById("etf-seniors-prix").innerText = cleanNumber(data["etf_seniors_prix"]).toLocaleString('fr-BE')+" €";
-document.getElementById("etf-seniors-perf").innerHTML = formatPerfDual(cleanNumber(data["etf_seniors_perf"]), cleanNumber(data["etf_seniors_percent"]));
+setText("etf-seniors-parts", data["etf_seniors_parts"]);
+setText("etf-seniors-prix", formatEuro(cleanNumber(data["etf_seniors_prix"])));
+setHTML("etf-seniors-perf", formatPerfDual(
+    cleanNumber(data["etf_seniors_perf"]),
+    cleanNumber(data["etf_seniors_percent"])
+));
 
-// DONUT ETF
+// ===== DONUT ETF =====
 const pMonde = (etfMonde/totalETF)*100;
-document.getElementById("p-monde").innerText = formatPercent(pMonde);
-document.getElementById("p-seniors").innerText = formatPercent(100-pMonde);
+
+setText("p-monde", formatPercent(pMonde));
+setText("p-seniors", formatPercent(100 - pMonde));
 
 document.querySelector(".donut.etf").style.background =
 `conic-gradient(#38bdf8 0% ${pMonde}%, #22c55e ${pMonde}% 100%)`;
 
-// GRAPH
+// ===== GRAPH =====
 const resChart = await fetch("https://docs.google.com/spreadsheets/d/1-99frehfDPqn9YNLXivivS_axMXi82AGFNO6uIq9Nbw/export?format=csv&gid=1311770820");
-const rowsChart = (await resChart.text()).split("\n");
+const rows = (await resChart.text()).split("\n");
 
 const labels=[], values=[];
-for(let i=1;i<rowsChart.length;i++){
-    const c = rowsChart[i].split(/[,;]+/);
+
+for(let i=1;i<rows.length;i++){
+    const c = rows[i].split(/[,;]+/);
     const val = cleanNumber(c[7]);
-    if(val>0){ labels.push(c[0]); values.push(val); }
+    if(val>0){
+        labels.push(c[0]);
+        values.push(val);
+    }
 }
 
 if(window.chart10j){ window.chart10j.destroy(); }
 
 window.chart10j = new Chart(document.getElementById("chart-10j"),{
-type:'line',
-data:{labels:labels.slice(-10),datasets:[{data:values.slice(-10),borderColor:"#facc15",backgroundColor:"rgba(250,204,21,0.1)",fill:true,tension:0.4,pointRadius:0}]},
-options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:"#9ca3af"}},y:{ticks:{color:"#9ca3af"}}}}
+    type:'line',
+    data:{
+        labels: labels.slice(-10),
+        datasets:[{
+            data: values.slice(-10),
+            borderColor:"#facc15",
+            backgroundColor:"rgba(250,204,21,0.1)",
+            fill:true,
+            tension:0.4,
+            pointRadius:0
+        }]
+    },
+    options:{
+        plugins:{legend:{display:false}},
+        scales:{
+            x:{ticks:{color:"#9ca3af"}},
+            y:{ticks:{color:"#9ca3af"}}
+        }
+    }
 });
 
 } catch(e){
-console.error("Erreur JS :", e);
+    console.error("Erreur JS :", e);
 }
 
 }
 
+// ===== INIT =====
 loadData();
+setInterval(loadData, 300000); // refresh 5 min
 
 </script>
-
 </body>
 </html>
