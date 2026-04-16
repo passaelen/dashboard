@@ -549,6 +549,7 @@ const values = dataPoints.map(p => p.value);
 
 
 
+
 // ===== VARIATION STABLE =====
 let variation = 0;
 
@@ -560,6 +561,11 @@ if(values.length > 0){
         variation = total - lastGraphValue;
     }
 }
+
+const varEl = document.getElementById("variation");
+
+varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
+applyPerfClass(varEl, variation);
 
 
 
