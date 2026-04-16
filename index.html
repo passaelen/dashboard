@@ -523,6 +523,27 @@ for(let i = 1; i < rows.length; i++){
 }
 
 
+
+
+// ===== VARIATION FIABLE (APRÈS GRAPH) =====
+
+const graphData = values.slice(-10);
+
+let variation = 0;
+
+if(graphData.length > 0){
+    const lastGraphValue = graphData[graphData.length - 1];
+    variation = total - lastGraphValue;
+}
+
+const varEl = document.getElementById("variation");
+
+varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
+applyPerfClass(varEl, variation);
+
+
+
+
 // ===== TRI PAR DATE =====
 dataPoints.sort((a, b) => {
     const [d1, m1, y1] = a.date.split("/");
@@ -547,24 +568,7 @@ console.log(labels, values);
 
 
 
-// ===== VARIATION STABLE (SOURCE = GRAPH) =====
 
-let variation = 0;
-
-if(window.chart10j && window.chart10j.data.datasets[0].data.length > 0){
-
-    const graphData = window.chart10j.data.datasets[0].data;
-
-    // ✅ dernière valeur réellement affichée dans le graph
-    const lastGraphValue = graphData[graphData.length - 1];
-
-    variation = total - lastGraphValue;
-}
-
-const varEl = document.getElementById("variation");
-
-varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
-applyPerfClass(varEl, variation);
 
 
 
