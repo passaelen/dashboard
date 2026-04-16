@@ -4,7 +4,6 @@ body {
     font-family: system-ui, sans-serif;
     background: radial-gradient(circle at top, #0f172a, #020617);
     color: #e5e7eb;
-
 }
 
 .container {
@@ -13,75 +12,12 @@ body {
     padding: 12px;
 }
 
-
-/* ===== Ratio ===== */
-.ratio-sub {
-    display: block;
-    font-size: 11px;
-    margin-top: 6px;
-    color: #9ca3af;
-}
-
-#ratio {
-    line-height: 1.2;
-}
-
-#ratio-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11px;
-    color: #9ca3af;
-    opacity: 0.8;
-}
-
-.ratio-alert {
-    animation: pulse 1.5s infinite;
-}
-
-
-@keyframes pulse-soft {
-    0% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
-    50% { box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
-    100% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
-}
-
-
-.alert-hot {
-    animation: pulse-soft 2s infinite;
-}
-
-
-.alert-box {
-    margin-top: 10px;
-    padding: 8px 12px; /* ↓ moins épais */
-    border-radius: 8px;
-
-    font-size: 12px; /* ↓ plus fin */
-    text-align: center;
-
-    background: rgba(59, 130, 246, 0.10); /* ↓ plus léger */
-    color: #93c5fd;
-
-    border: 1px solid rgba(59, 130, 246, 0.20);
-
-    backdrop-filter: blur(4px);
-}
-
-
-
-
-/* ===== GRAPH 10 JOURS ===== */
-.chart-container {
-    position: relative;
-    width: 100%;
-    height: 220px;
-}
-
-#chart-10j {
-    width: 100% !important;
-    height: 100% !important;
-}
+/* ===== TEXT UTILS ===== */
+.text-muted { color: #9ca3af; }
+.text-small { font-size: 12px; }
+.positive { color: #22c55e; }
+.negative { color: #ef4444; }
+.gold { color: #facc15; }
 
 /* ===== HEADER ===== */
 .header {
@@ -91,17 +27,11 @@ body {
     margin-bottom: 16px;
 }
 
-.header small {
-    color: #9ca3af;
-}
-
 .badge {
-    transition: all 0.3s ease;
-    background: #7f1d1d;
-    color: #fca5a5;
     padding: 6px 10px;
     border-radius: 20px;
     font-size: 14px;
+    background: #111827;
 }
 
 /* ===== CARDS ===== */
@@ -112,54 +42,28 @@ body {
     padding: 14px;
     margin-top: 16px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: 0.2s;
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
 }
 
-.card:active {
-    transform: scale(0.98);
+.highlight {
+    border: 1px solid rgba(250, 204, 21, 0.4);
 }
-
-.highlight 
-{
-border: 1px solid rgba(250, 204, 21, 0.4);
-margin-bottom: 15px;
-border-bottom: 1px solid rgba(255,255,255,0.05);
-padding-bottom: 10px;
-}
-
 
 /* ===== KPI ===== */
-.kpi-grid 
-{
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 8px;
-margin-top: 5px;
-margin-bottom: 6px;
-position: relative;
-z-index: 2;
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
 }
 
-.kpi 
-{
-    height: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 2px;
-    background: linear-gradient(145deg, #111827, #0b0f1a);
-    border: 1px solid rgba(255,255,255,0.05);
+.kpi {
+    background: #111827;
     border-radius: 12px;
-    padding: 6px;
-}
-
-.kpi h3 {
-    font-size: 18px;
+    padding: 8px;
 }
 
 .kpi small {
@@ -167,74 +71,38 @@ z-index: 2;
     color: #9ca3af;
 }
 
-/* ===== TEXT ===== */
-h3 {
-    font-weight: 600;
-    letter-spacing: 0.3px;
+.kpi h3 {
+    margin: 4px 0 0;
 }
 
-small {
-    letter-spacing: 0.3px;
-}
-
-.gold { color: #facc15; }
-.green { color: #22c55e; }
-.red { color: #ef4444; }
-
-
-/* ===== PROGRESS ===== */
-.progress {
-    position: relative;
-    margin: 16px 0 10px 0; /* 👈 plus d’air au-dessus */
-    height: 6px;
-    border-radius: 10px;
-    background: #1f2937;
-    overflow: hidden;
-}
-
-.progress-bar {
-    border-radius: 10px;
-    height: 100%;
-    background: linear-gradient(90deg, #facc15, #f59e0b);
-    transition: width 0.6s ease;
-    box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
-}
-
-.progress-text {
-    margin-top: 4px;
-    margin-bottom: 15px;
-    text-align: right;
+/* ===== ALERT ===== */
+.alert-box {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 8px;
     font-size: 12px;
-    color: #9ca3af;
+    text-align: center;
+    background: rgba(59, 130, 246, 0.1);
+    color: #93c5fd;
 }
-
 
 /* ===== DONUT ===== */
 .repartition-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    align-items: stretch;
 }
 
 .bloc {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    align-items: center;
-    justify-items: center;
-    min-height: 260px;
+    text-align: center;
 }
 
 .donut {
-    background-clip: padding-box;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
     width: 120px;
     height: 120px;
     border-radius: 50%;
+    margin: 10px auto;
     position: relative;
-    transition: transform 0.4s ease;
-    margin: 10px 0;
-    align-self: center;
 }
 
 .donut::after {
@@ -243,115 +111,31 @@ small {
     inset: 20px;
     background: #0b0f1a;
     border-radius: 50%;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
 }
-
-
-.donut:hover {
-    transform: scale(1.05);
-}
-
-
-.legend {
-    font-size: 13px;
-    width: 100%;
-    max-width: 180px;
-    height: 60px;
-}
-
-.legend div {
-    gap: 6px;
-    display: flex;
-    justify-content: space-between;
-}
-
-
-
-/* ===== bloc Métaux Précieux ===== */
-.table td {
-    font-size: 13px;
-}
-
-.perf-value {
-  font-weight: 600;
-}
-
-.perf-percent {
-  font-size: 0.75em;
-  opacity: 0.8;
-  margin-top: 2px;
-}
-
-.table td:last-child {
-  text-align: right;
-}
-
-.table td:last-child div {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-
-
-/* ===== COLORS ===== */
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.or1 { background: #facc15; }
-.or2 { background: #f59e0b; }
-.argent { background: #9ca3af; }
-.monde { background: #38bdf8; }
-.seniors { background: #22c55e; }
 
 /* ===== TABLE ===== */
-.table {
+table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
 }
 
-.table th {
+th {
     color: #9ca3af;
+    text-align: left;
 }
 
-.table td {
+td {
     padding: 8px;
     border-bottom: 1px solid #1f2937;
 }
 
-
-/* ===== ALIGNEMENT TABLE (fix ETF) ===== */
-.table th,
-.table td {
-    text-align: left;
-}
-
-.table th:last-child,
-.table td:last-child {
+td:last-child {
     text-align: right;
 }
 
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.section-total {
-  text-align: right;
-}
-
-.section-total div:first-child {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.section-total div:last-child {
-  font-size: 12px;
-  opacity: 0.8;
+/* ===== GRAPH ===== */
+#chart-10j {
+    width: 100% !important;
+    height: 220px !important;
 }
