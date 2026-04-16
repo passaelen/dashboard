@@ -284,3 +284,26 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
     color: #fff;
     font-weight: 700;
 }
+
+.legend-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* couleurs EXACTEMENT comme tes donuts */
+.dot-or-suisse { background: #facc15; }
+.dot-or-belgique { background: #f59e0b; }
+.dot-argent { background: #9ca3af; }
+
+.dot-monde { background: #38bdf8; }
+.dot-seniors { background: #22c55e; }
