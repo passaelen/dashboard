@@ -355,3 +355,11 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
 .legend-item span:nth-child(2){
     opacity: 0.85;
 }
+
+.legend-item span:last-child {
+    font-variant-numeric: tabular-nums;
+}
+
+.legend-item {
+    letter-spacing: 0.2px;
+}
