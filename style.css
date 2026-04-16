@@ -127,6 +127,10 @@ h3 {
     transform: scale(0.98);
 }
 
+.card table {
+    margin-bottom: -6px;
+}
+
 
 /* ===== Total Global ===== */
 
@@ -239,9 +243,14 @@ h3 {
 
 /* ===== TABLE ===== */
 table {
+    margin: 0;
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
+}
+
+table tr:last-child td {
+    border-bottom: none; /* enlève ligne + espace visuel */
 }
 
 th {
