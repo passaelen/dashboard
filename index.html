@@ -331,8 +331,6 @@ function parseCSV(text){
     const lines = text.split("\n");
     const data = {};
 
-    let inGlobal = false;
-
     for (let line of lines){
 
         if (!line.trim()) continue;
@@ -343,19 +341,13 @@ function parseCSV(text){
         const key = cols[0].replace(/"/g, "").trim();
         const value = cols[1].replace(/"/g, "").trim();
 
-        // 🔥 on détecte le bloc GLOBAL
-        if (key.includes("GLOBAL")) {
-            inGlobal = true;
-            continue;
-        }
-
-        // 🔥 on sort du bloc GLOBAL quand on arrive à METAUX
-        if (key.includes("METAUX")) {
-            inGlobal = false;
-        }
-
-        // 🔥 on ne prend QUE les données dans GLOBAL
-        if (!inGlobal) continue;
+        // ✅ ignore juste les titres
+        if (
+            key.includes("GLOBAL") ||
+            key.includes("METAUX") ||
+            key.includes("ETF") ||
+            key.includes("Onglet")
+        ) continue;
 
         if (key && !(key in data)) {
             data[key] = value || "0";
