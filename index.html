@@ -4,12 +4,12 @@
 <head>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
-        
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
-    
-    <link rel="stylesheet" href="style.css?v=49">
+
+    <link rel="stylesheet" href="style.css?v=51">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -30,7 +30,6 @@
     </div>
 </div>
 
-    
 <!-- TOTAL -->
 <div class="card highlight">
     <small>Total global</small>
@@ -44,68 +43,9 @@
     <div class="kpi"><small>RATIO</small><h3 id="ratio"></h3></div>
 </div>
 
-
 <!-- ALERT -->
 <div class="card alert-box" id="alert-box">
     <span id="alert-text"></span>
-</div>
-
-
-<!-- REPARTITION -->
-<div class="card">
-<h3>Répartitions</h3>
-
-<div class="repartition-grid">
-
-<div class="bloc">
-<h4>Métaux</h4>
-<div class="donut" id="donut-metaux"></div>
-    
-<div class="legend">
-<div class="legend-item">
-    <span class="dot dot-or-suisse"></span>
-    <span>Or Suisse :</span>
-    <span id="p-or-suisse"></span>
-</div>
-
-<div class="legend-item">
-    <span class="dot dot-or-belgique"></span>
-    <span>Or Belgique :</span>
-    <span id="p-or-belgique"></span>
-</div>
-
-<div class="legend-item">
-    <span class="dot dot-argent"></span>
-    <span>Argent :</span>
-    <span id="p-argent"></span>
-</div>
-</div>
-
-    
-</div>
-
-<div class="bloc">
-<h4>ETF</h4>
-<div class="donut etf"></div>
-    
-<div class="legend">
-<div class="legend-item">
-    <span class="dot dot-monde"></span>
-    <span>Monde :</span>
-    <span id="p-monde"></span>
-</div>
-
-<div class="legend-item">
-    <span class="dot dot-seniors"></span>
-    <span>Séniors :</span>
-    <span id="p-seniors"></span>
-</div>
-</div>
-
-    
-</div>
-
-</div>
 </div>
 
 <!-- GRAPH -->
@@ -114,110 +54,24 @@
 <canvas id="chart-10j"></canvas>
 </div>
 
-<!-- METAUX -->
-
-
-    <div class="card">
-    <h3>Métaux Précieux</h3>
-
-
-<!-- 
-<div id="metaux-total-value"></div>
-<div id="metaux-total-perf"></div>
--->
-    
-<table>
-        <tr><th>Type</th><th>Stockage</th><th>Qté</th><th>€/g</th><th>Perf</th></tr>
-        
-        <tr>
-        <td>Or</td><td>Suisse</td>
-        <td id="q-or-suisse"></td>
-        <td id="p-or-suisse-g"></td>
-        <td id="perf-or-suisse"></td>
-        </tr>
-        
-        <tr>
-        <td>Or</td><td>Belgique</td>
-        <td id="q-or-belgique"></td>
-        <td id="p-or-belgique-g"></td>
-        <td id="perf-or-belgique"></td>
-        </tr>
-        
-        <tr>
-        <td>Argent</td><td>Suisse</td>
-        <td id="q-argent"></td>
-        <td id="p-argent-g"></td>
-        <td id="perf-argent"></td>
-        </tr>
-
-</table>
-    
-    <div class="total-line">
-        <span>💎 Total Métaux</span>
-        <span id="metaux-total-bottom"></span>
-    </div>
-    
 </div>
-
-<!-- ETF -->
-
-
-    <div class="card">
-    <h3>ETF</h3>
-
-<!-- 
-<div id="etf-total-value"></div>
--->
-    
-    <table>
-            <tr><th>Nom</th><th>Parts</th><th>Spot</th><th>Perf</th></tr>
-            
-            <tr>
-            <td>Monde</td>
-            <td id="etf-monde-parts"></td>
-            <td id="etf-monde-prix"></td>
-            <td id="etf-monde-perf"></td>
-            </tr>
-            
-            <tr>
-            <td>Séniors</td>
-            <td id="etf-seniors-parts"></td>
-            <td id="etf-seniors-prix"></td>
-            <td id="etf-seniors-perf"></td>
-            </tr>
-            
-            <tr>
-            <td>Juniors</td>
-            <td id="etf-juniors-parts"></td>
-            <td id="etf-juniors-prix"></td>
-            <td id="etf-juniors-perf"></td>
-            </tr>
-    </table>
-
-<div class="total-line">
-    <span>🧾 Total ETF</span>
-    <span id="etf-total-bottom"></span>
-</div>   
-    
-</div>
-
 
 <script>
 
-// ===== UTILS =====
+// ===== GLOBAL LOCK =====
 let isLoading = false;
+let lastGoodData = null;
+
+// ===== UTILS =====
 function cleanNumber(v){
     if(!v || v.trim() === "") return 0;
 
     return Number(
-        v
-        .replace(/\s/g, '')   // enlève espaces
-        .replace(/€/g, '')    // enlève €
-        .replace(',', '.')    // virgule → point
+        v.replace(/\s/g, '')
+         .replace(/€/g, '')
+         .replace(',', '.')
     ) || 0;
 }
-
-    
 
 function formatEuro(v){
     return v.toLocaleString('fr-BE') + " €";
@@ -227,111 +81,24 @@ function formatPercent(v){
     return v.toFixed(2).replace('.',',') + "%";
 }
 
-// ===== DOM HELPERS =====
+// ===== DOM =====
 function setText(id, value){
     const el = document.getElementById(id);
     if(el) el.innerText = value;
 }
 
-function setHTML(id, value){
-    const el = document.getElementById(id);
-    if(el) el.innerHTML = value;
-}
-
 function applyPerfClass(el, value){
+    if(!el) return;
     el.classList.remove("positive", "negative");
     el.classList.add(value >= 0 ? "positive" : "negative");
 }
 
-// ===== PERF DISPLAY =====
-function formatPerfDual(euro, percent){
-    const cls = euro >= 0 ? "positive" : "negative";
-
-    return `
-        <div class="${cls}">
-            ${euro>=0?"+":""}${formatEuro(euro)}
-        </div>
-        <div class="${cls} text-small">
-            ${percent>=0?"+":""}${formatPercent(percent)}
-        </div>
-    `;
-}
-
-/*
-// ===== ALERT LOGIC =====
-function getAlertMessage(ratio){
-    if(ratio>=70) return "❄️ Zone froide";
-    if(ratio>=55) return "🧊 Nord";
-    if(ratio>=50) return "⚖️ Pivot";
-    if(ratio>=45) return "🌤️ Arbitrage";
-    if(ratio>=40) return "🔥 Chaud";
-    return "🚨 Extrême";
-}
-*/
-
-function getZoneText(ratio){
-    if(ratio >= 120) return "🐻‍❄️ Extrême Nord — Marché figé<br>Accumuler de l’argent.";
-    if(ratio >= 100) return "❄️ Nord profond — Attente<br>Renforcer progressivement l’argent.";
-    if(ratio >= 80) return "🧊 Nord — Observation<br>Accumulation légère.";
-    if(ratio >= 60) return "🌨️ Nord tempéré — Vigilance<br>Conserver.";
-    if(ratio >= 50) return "⚖️ Pivot — Équilibre<br>Surveiller.";
-    if(ratio >= 45) return "🌤️ Arbitrage — Début<br>Premiers arbitrages vers l’or.";
-    if(ratio >= 40) return "🔥 Chaud — Action<br>Arbitrage progressif.";
-    if(ratio >= 35) return "🔥 Très chaud — Accélération<br>Renforcer les arbitrages.";
-    return "🚨 Extrême — Opportunité<br>Arbitrage fort vers l’or.";
-}
-
-
-function applyZoneStyle(ratio){
-
-    const box = document.getElementById("alert-box");
-
-    if(!box) return;
-
-    // reset
-    box.style.background = "";
-    box.style.boxShadow = "";
-    box.style.color = "#93c5fd";
-
-    if(ratio >= 120){
-        box.style.background = "linear-gradient(135deg, #e0f2fe, #bae6fd)";
-        box.style.color = "#0c4a6e";
-    }
-    else if(ratio >= 100){
-        box.style.background = "linear-gradient(135deg, #dbeafe, #93c5fd)";
-    }
-    else if(ratio >= 80){
-        box.style.background = "linear-gradient(135deg, #bfdbfe, #60a5fa)";
-    }
-    else if(ratio >= 60){
-        // ❄️ TON CAS ACTUEL
-        box.style.background = "linear-gradient(135deg, #0ea5e9, #38bdf8)";
-        box.style.boxShadow = "0 0 20px rgba(56,189,248,0.25)";
-    }
-    else if(ratio >= 50){
-        box.style.background = "linear-gradient(135deg, #64748b, #94a3b8)";
-    }
-    else if(ratio >= 45){
-        box.style.background = "linear-gradient(135deg, #fde68a, #facc15)";
-        box.style.color = "#000";
-    }
-    else if(ratio >= 40){
-        box.style.background = "linear-gradient(135deg, #fb923c, #f97316)";
-    }
-    else{
-        box.style.background = "linear-gradient(135deg, #ef4444, #b91c1c)";
-    }
-}
-
-
-
-
+// ===== PARSE CSV (STABLE) =====
 function parseCSV(text){
 
     const lines = text.split("\n");
-
-    const temp = {}; // stocke TOUTES les valeurs
-    const data = {}; // résultat final
+    const temp = {};
+    const data = {};
 
     for (let line of lines){
 
@@ -343,23 +110,12 @@ function parseCSV(text){
         const key = cols[0].replace(/"/g, "").trim();
         const value = cols[1].replace(/"/g, "").trim();
 
-        // ignore dates
         if(/\d{2}\/\d{2}\/\d{4}/.test(key)) continue;
 
-        // ignore titres
-        if (
-            key.includes("GLOBAL") ||
-            key.includes("METAUX") ||
-            key.includes("ETF") ||
-            key.includes("Onglet")
-        ) continue;
-
-        // 🔥 stocke toutes les valeurs
         if (!temp[key]) temp[key] = [];
         temp[key].push(value);
     }
 
-    // 🔥 prend TOUJOURS la dernière valeur stable
     for (let key in temp){
         data[key] = temp[key][temp[key].length - 1];
     }
@@ -367,28 +123,31 @@ function parseCSV(text){
     return data;
 }
 
-
-
-
 // ===== MAIN =====
 async function loadData(){
 
-if(isLoading) return; // 🔥 bloque double appel
+if(isLoading) return;
 isLoading = true;
 
 try {
-
 
 const res = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQQqy9DRNPqKY59Ka56rNkWGwYfd7XqKiGh6YJxudczufOx7ZOW6SzlTObz4DLG4t6AK9qmBfn6Tl78/pub?gid=1154137383&single=true&output=csv&_=" + Date.now(), {
     cache: "no-store"
 });
 
-
 const rawText = await res.text();
-    console.log("RAW CSV:", rawText);
-const data = parseCSV(rawText);
 
-    
+// ===== PARSE + LOCK =====
+const newData = parseCSV(rawText);
+
+if (
+    cleanNumber(newData["or_suisse_valeur"]) > 0 &&
+    cleanNumber(newData["argent_valeur"]) > 0
+){
+    lastGoodData = newData;
+}
+
+const data = lastGoodData || newData;
 
 // ===== KPI =====
 const orS = cleanNumber(data["or_suisse_valeur"]);
@@ -396,327 +155,88 @@ const orB = cleanNumber(data["or_belgique_valeur"]);
 const ag = cleanNumber(data["argent_valeur"]);
 const ratio = cleanNumber(data["ratio"]);
 
+const total = orS + orB + ag;
+
 setText("or", formatEuro(orS + orB));
 setText("argent", formatEuro(ag));
 setText("ratio", ratio.toFixed(2).replace('.',','));
-
-
-
-
-// ===== ALERT =====
-setHTML("alert-text", getZoneText(ratio));
-applyZoneStyle(ratio);
-
-
-
-// ===== METAUX =====
-setText("q-or-suisse", cleanNumber(data["or_suisse_qte"]).toLocaleString('fr-BE') + " g");
-setText("p-or-suisse-g", formatEuro(cleanNumber(data["or_suisse_prix_g"])));
-setHTML("perf-or-suisse", formatPerfDual(
-    cleanNumber(data["or_suisse_perf"]),
-    cleanNumber(data["or_suisse_percent"])
-));
-
-setText("q-or-belgique", cleanNumber(data["or_belgique_qte"]).toLocaleString('fr-BE') + " g");
-setText("p-or-belgique-g", formatEuro(cleanNumber(data["or_belgique_prix_g"])));
-setHTML("perf-or-belgique", formatPerfDual(
-    cleanNumber(data["or_belgique_perf"]),
-    cleanNumber(data["or_belgique_percent"])
-));
-
-setText("q-argent", cleanNumber(data["argent_qte"]).toLocaleString('fr-BE') + " g");
-setText("p-argent-g", formatEuro(cleanNumber(data["argent_prix_g"])));
-setHTML("perf-argent", formatPerfDual(
-    cleanNumber(data["argent_perf"]),
-    cleanNumber(data["argent_percent"])
-));
-
-// ===== TOTAL METAUX =====
-setText("metaux-total-value", formatEuro(cleanNumber(data["metaux_total_valeur"])));
-setText("metaux-total-perf", formatPercent(cleanNumber(data["metaux_total_percent"])));
-setText("metaux-total-bottom", formatEuro(cleanNumber(data["metaux_total_valeur"])));
-
-// ===== DONUT METAUX =====
-const totalMetaux = orS + orB + ag || 1;
-
-const pOrS = (orS/totalMetaux)*100;
-const pOrB = (orB/totalMetaux)*100;
-const pAg = (ag/totalMetaux)*100;
-
-setText("p-or-suisse", formatPercent(pOrS));
-setText("p-or-belgique", formatPercent(pOrB));
-setText("p-argent", formatPercent(pAg));
-
-document.getElementById("donut-metaux").style.background =
-`conic-gradient(#facc15 0% ${pOrS}%, #f59e0b ${pOrS}% ${pOrS+pOrB}%, #9ca3af ${pOrS+pOrB}% 100%)`;
-
-
-
-// ===== ETF =====
-const etfMonde = cleanNumber(data["etf_monde_valeur"]) || 0;
-const etfSeniors = cleanNumber(data["etf_seniors_valeur"]) || 0;
-const totalETF = etfMonde + etfSeniors;
-
-// ✅ TOTAL calculé AU BON MOMENT
-const total = orS + orB + ag + totalETF;
-
-// ✅ affichage du total ICI (et pas avant)
 setText("total", formatEuro(total));
-
-setText("etf-total-value", formatEuro(totalETF));
-setText("etf-total-bottom", formatEuro(totalETF));
-
-setText("etf-monde-parts", data["etf_monde_parts"]);
-setText("etf-monde-prix", formatEuro(cleanNumber(data["etf_monde_prix"])));
-setHTML("etf-monde-perf", formatPerfDual(
-    cleanNumber(data["etf_monde_perf"]),
-    cleanNumber(data["etf_monde_percent"])
-));
-
-setText("etf-seniors-parts", data["etf_seniors_parts"]);
-setText("etf-seniors-prix", formatEuro(cleanNumber(data["etf_seniors_prix"])));
-setHTML("etf-seniors-perf", formatPerfDual(
-    cleanNumber(data["etf_seniors_perf"]),
-    cleanNumber(data["etf_seniors_percent"])
-));
-
-
-
-
-// ===== DONUT ETF =====
-let pMonde = 0;
-let pSeniors = 0;
-
-if (totalETF > 0) {
-    pMonde = (etfMonde / totalETF) * 100;
-    pSeniors = (etfSeniors / totalETF) * 100;
-}
-
-setText("p-monde", formatPercent(pMonde));
-setText("p-seniors", formatPercent(pSeniors));
-
-const donutETF = document.querySelector(".donut.etf");
-
-if (donutETF) {
-    if (totalETF === 0) {
-        donutETF.style.background = "#1f2937";
-    } else {
-        donutETF.style.background =
-        `conic-gradient(#38bdf8 0% ${pMonde}%, #22c55e ${pMonde}% 100%)`;
-    }
-}
-
 
 // ===== GRAPH =====
 const rows = rawText.split("\n");
-
 let dataPoints = [];
 
-for(let i = 1; i < rows.length; i++){
-
-    const row = rows[i];
-    if(!row) continue;
+for(let row of rows){
 
     const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
     if(!cols || cols.length < 2) continue;
 
     const key = cols[0].replace(/"/g, '').trim();
-    const valueRaw = cols[1].replace(/"/g, '').trim();
+    const val = cleanNumber(cols[1]);
 
-    if(/\d{2}\/\d{2}\/\d{4}/.test(key)){
-
-        const val = cleanNumber(valueRaw);
-
-        if(val > 0){
-            // 🔥 on stocke date + valeur
-            dataPoints.push({
-                date: key,
-                value: val
-            });
-        }
+    if(/\d{2}\/\d{2}\/\d{4}/.test(key) && val > 0){
+        dataPoints.push({date: key, value: val});
     }
 }
 
-
-
-
-
-
-
-
-
-// ===== TRI PAR DATE =====
 dataPoints.sort((a, b) => {
-    const [d1, m1, y1] = a.date.split("/");
-    const [d2, m2, y2] = b.date.split("/");
-
-    const dateA = new Date(y1, m1-1, d1);
-    const dateB = new Date(y2, m2-1, d2);
-
-    return dateA - dateB;
+    const [d1,m1,y1]=a.date.split("/");
+    const [d2,m2,y2]=b.date.split("/");
+    return new Date(y1,m1-1,d1)-new Date(y2,m2-1,d2);
 });
 
+const labels = dataPoints.map(p=>p.date).slice(-10);
+const values = dataPoints.map(p=>p.value).slice(-10);
 
-
-// ===== RECRÉER labels + values =====
-const labels = dataPoints.map(p => p.date);
-const values = dataPoints.map(p => p.value);
-
-
-
-
-
-// ===== VARIATION STABLE =====
-const graphValues = values.slice(-10);
-
+// ===== VARIATION =====
 let variation = 0;
-
-if(graphValues.length > 0){
-
-    const lastGraphValue = graphValues[graphValues.length - 1];
-
-    if(!isNaN(lastGraphValue)){
-        variation = total - lastGraphValue;
-    }
+if(values.length){
+    variation = total - values[values.length - 1];
 }
 
 const varEl = document.getElementById("variation");
+if(varEl){
+    varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
+    applyPerfClass(varEl, variation);
+}
 
-varEl.innerText = (variation>=0?"+":"") + formatEuro(variation);
-applyPerfClass(varEl, variation);
-
-
-
-
-console.log(labels, values);
-
-
-
-
-
-
-if(window.chart10j){ window.chart10j.destroy(); }
+// ===== CHART =====
+if(window.chart10j) window.chart10j.destroy();
 
 window.chart10j = new Chart(document.getElementById("chart-10j"), {
     type: 'line',
     data: {
-        labels: labels.slice(-10),
+        labels,
         datasets: [{
-            data: values.slice(-10),
-
+            data: values,
             borderColor: "#facc15",
             borderWidth: 3,
-
-            backgroundColor: (ctx) => {
-                const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 220);
-                gradient.addColorStop(0, "rgba(250,204,21,0.35)");
-                gradient.addColorStop(1, "rgba(250,204,21,0)");
-                return gradient;
-            },
-
             fill: true,
-            tension: 0.45,
-            pointRadius: 0,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "#facc15"
+            tension: 0.4,
+            pointRadius: 0
         }]
     },
-
     options: {
-        responsive: true,
-        maintainAspectRatio: false,
-
-        plugins: {
-            legend: { display: false },
-
-            tooltip: {
-                backgroundColor: "#020617",
-                borderColor: "#facc15",
-                borderWidth: 1,
-                titleColor: "#fff",
-                bodyColor: "#facc15",
-                padding: 10,
-                displayColors: false,
-                callbacks: {
-                    label: (ctx) => ctx.raw.toLocaleString('fr-BE') + " €"
-                }
-            }
-        },
-
-        scales: {
-            x: {
-                ticks: {
-                    color: "#64748b",
-                    maxRotation: 0
-                },
-                grid: { display: false }
-            },
-
-            y: {
-                ticks: {
-                    color: "#64748b",
-                    callback: (value) => value + "€"
-                },
-                grid: {
-                    color: "rgba(255,255,255,0.05)"
-                }
-            }
-        },
-
-        interaction: {
-            intersect: false,
-            mode: 'index'
-        }
+        plugins: { legend: { display: false } }
     }
 });
 
-
-    
-
 } catch(e){
-    console.error("Erreur JS :", e);
+    console.error(e);
 }
 
-isLoading = false; // 🔥 libère le lock
-
+isLoading = false;
 }
 
 // ===== INIT =====
 loadData();
-setInterval(loadData, 300000); // refresh 5 min
+setInterval(loadData, 300000);
 
-
-// ===== EVENT LISTENER =====
-document.getElementById("refresh-btn").addEventListener("click", (e) => {
-
-    if(isLoading) return; // 🔥 évite spam click
-
-    const btn = e.currentTarget;
-
-    btn.style.transform = "rotate(360deg)";
-    btn.style.transition = "0.5s";
-
-    setTimeout(() => {
-        btn.style.transform = "rotate(0deg)";
-    }, 500);
-
-    loadData();
+// ===== REFRESH BTN =====
+document.getElementById("refresh-btn").addEventListener("click", () => {
+    if(!isLoading) loadData();
 });
 
-    
-
-
-
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js")
-        .then(() => console.log("SW OK"))
-        .catch(err => console.log("SW erreur", err));
-}
-
-console.log("CLICK");
-    
-
-    
 </script>
 </body>
 </html>
