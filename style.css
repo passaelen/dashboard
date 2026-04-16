@@ -127,7 +127,7 @@ h3 {
 /* ===== Total Global ===== */
 
 .highlight {
-    box-shadow: 
+     box-shadow: 
         0 0 20px rgba(250, 204, 21, 0.08),
         0 0 60px rgba(250, 204, 21, 0.03);
     border: 1px solid rgba(250, 204, 21, 0.4);
@@ -154,6 +154,7 @@ h3 {
 
 /* ===== KPI ===== */
 .kpi-grid {
+    margin-bottom: 8px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
