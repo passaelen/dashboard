@@ -308,6 +308,7 @@ setHTML("perf-argent", formatPerfDual(
 // ===== TOTAL METAUX =====
 setText("metaux-total-value", formatEuro(cleanNumber(data["metaux_total_valeur"])));
 setText("metaux-total-perf", formatPercent(cleanNumber(data["metaux_total_percent"])));
+setText("metaux-total-bottom", formatEuro(cleanNumber(data["metaux_total_valeur"])));
 
 // ===== DONUT METAUX =====
 const totalMetaux = orS + orB + ag || 1;
@@ -329,7 +330,7 @@ const etfSeniors = cleanNumber(data["etf_seniors_valeur"]) || 0;
 const totalETF = etfMonde + etfSeniors;
 
 setText("etf-total-value", formatEuro(totalETF));
-
+setText("etf-total-bottom", formatEuro(totalETF));
 setText("etf-monde-parts", data["etf_monde_parts"]);
 setText("etf-monde-prix", formatEuro(cleanNumber(data["etf_monde_prix"])));
 setHTML("etf-monde-perf", formatPerfDual(
