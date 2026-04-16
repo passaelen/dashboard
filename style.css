@@ -291,20 +291,20 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
 .legend {
     margin-top: 10px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
 
 .legend-item {
-     display: grid;
-    grid-template-columns: 10px 1fr auto;
+     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+    width: 160px;
     font-size: 13px;
     margin: 4px 0;
-    max-width: 160px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .legend-item span {
