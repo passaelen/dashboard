@@ -287,17 +287,27 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
 
 .legend-item {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 10px 1fr auto;
     align-items: center;
     gap: 6px;
     font-size: 13px;
     margin: 4px 0;
 }
 
+.legend-item span {
+    opacity: 0.9;
+}
+
+.legend-item:hover {
+    transform: translateX(4px);
+    transition: 0.2s;
+}
+
 .dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
+    display: inline-block;   /* 🔥 IMPORTANT */
 }
 
 /* couleurs EXACTEMENT comme tes donuts */
