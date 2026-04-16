@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
     
-    <link rel="stylesheet" href="style.css?v=47">
+    <link rel="stylesheet" href="style.css?v=49">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -326,11 +326,12 @@ function applyZoneStyle(ratio){
 
 
 
-// ===== DATA PARSING =====
 function parseCSV(text){
 
     const lines = text.split("\n");
-    const data = {};
+
+    const temp = {}; // stocke TOUTES les valeurs
+    const data = {}; // résultat final
 
     for (let line of lines){
 
@@ -342,10 +343,10 @@ function parseCSV(text){
         const key = cols[0].replace(/"/g, "").trim();
         const value = cols[1].replace(/"/g, "").trim();
 
-        // ❌ IGNORE LES DATES
+        // ignore dates
         if(/\d{2}\/\d{2}\/\d{4}/.test(key)) continue;
 
-        // ❌ IGNORE LES TITRES
+        // ignore titres
         if (
             key.includes("GLOBAL") ||
             key.includes("METAUX") ||
@@ -353,10 +354,14 @@ function parseCSV(text){
             key.includes("Onglet")
         ) continue;
 
-        // ✅ ON PREND LA DERNIÈRE VALEUR (PAS LA PREMIÈRE)
-        if (key) {
-            data[key] = value || "0";
-        }
+        // 🔥 stocke toutes les valeurs
+        if (!temp[key]) temp[key] = [];
+        temp[key].push(value);
+    }
+
+    // 🔥 prend TOUJOURS la dernière valeur stable
+    for (let key in temp){
+        data[key] = temp[key][temp[key].length - 1];
     }
 
     return data;
