@@ -256,23 +256,37 @@ async function fetchPrices(){
 }
 
     
+
 async function fetchETFPrices(){
 
     const API_KEY = "e10aefe097fe40fba25f4e129bdf0c4f";
 
-    const [vwce, gdx, gdxj] = await Promise.all([
-        fetch(`https://api.twelvedata.com/price?symbol=VWCE.AS&apikey=${API_KEY}`).then(r=>r.json()),
+    const [vwce, gdx, gdxj, fx] = await Promise.all([
+        fetch(`https://api.twelvedata.com/price?symbol=VWCE&apikey=${API_KEY}`).then(r=>r.json()),
         fetch(`https://api.twelvedata.com/price?symbol=GDX&apikey=${API_KEY}`).then(r=>r.json()),
-        fetch(`https://api.twelvedata.com/price?symbol=GDXJ&apikey=${API_KEY}`).then(r=>r.json())
+        fetch(`https://api.twelvedata.com/price?symbol=GDXJ&apikey=${API_KEY}`).then(r=>r.json()),
+        fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
     ]);
 
+    console.log("ETF RAW:", vwce, gdx, gdxj);
+
+    const rate = fx.rates.EUR;
+
+    function safePrice(obj){
+        if(obj && obj.price){
+            return parseFloat(obj.price);
+        } else {
+            console.warn("API error:", obj);
+            return 0;
+        }
+    }
+
     return {
-        monde: parseFloat(vwce.price) || 0,
-        seniors: parseFloat(gdx.price) || 0,
-        juniors: parseFloat(gdxj.price) || 0
+        monde: safePrice(vwce),                 // déjà en €
+        seniors: safePrice(gdx) * rate,        // USD → €
+        juniors: safePrice(gdxj) * rate
     };
 }
-
 
 
     
