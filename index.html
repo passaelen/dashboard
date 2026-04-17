@@ -592,34 +592,38 @@ async function fetchHistory(){
 
     const rows = text.split("\n").slice(1);
 
+
+
     return rows
-        .map(r => {
-            const cols = r.split(";");
+    .map(r => {
 
-            // colonne A = date
-            const date = cols[0];
+        const cols = r.includes(";") ? r.split(";") : r.split(",");
 
-            // colonne H = total global
-            let total = cols[7];
+        const date = cols[0]?.trim();
+        let total = cols[7]?.trim();
 
-            
-console.log("DATE:", date, "TOTAL:", total);
+        // 🔥 FILTRE CRITIQUE
+        // on garde uniquement les lignes avec une vraie date
+        if(!date || !date.match(/^\d{2}\/\d{2}\/\d{4}$/)){
+            return null;
+        }
 
-            if(!date || !total) return null;
+        if(!total) return null;
 
-            // 🔥 nettoyage robuste (€, espaces, virgules)
-            total = total
-                .replace("€", "")
-                .replace(/\s/g, "")
-                .replace(",", ".");
+        total = total
+            .replace("€", "")
+            .replace(/\s/g, "")
+            .replace(",", ".");
 
-            return {
-                date: date,
-                total: parseFloat(total)
-            };
-        })
-        .filter(Boolean);
-}
+        return {
+            date: date,
+            total: parseFloat(total)
+        };
+
+    })
+    .filter(h => h && !isNaN(h.total));
+
+    
 
 
 
