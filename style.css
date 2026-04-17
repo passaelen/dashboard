@@ -216,6 +216,7 @@ transition: all 0.3s ease;
     color: #93c5fd; 
 }
 
+
 /* ===== DONUT ===== */
 .repartition-grid {
     display: grid;
@@ -236,46 +237,18 @@ transition: all 0.3s ease;
     border-radius: 50%;
     margin: 10px auto;
     position: relative;
+    isolation: isolate;
 
-    /* 🔥 profondeur améliorée */
+    /* 🔥 base + glow maîtrisé */
     box-shadow: 
-        0 0 0 1px rgba(255,255,255,0.05),
-        0 10px 25px rgba(0,0,0,0.4),
-        0 0 30px rgba(250, 204, 21, 0.25);
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 8px 20px rgba(0,0,0,0.5),
+        0 0 25px rgba(250, 204, 21, 0.18);
 
     transition: transform 0.25s ease;
 }
 
-.donut::after {
-    content: "";
-    position: absolute;
-    inset: 22px; /* un peu plus large = plus élégant */
-
-    background: radial-gradient(
-        circle at 30% 30%,
-        #111827,
-        #020617
-    );
-
-    border-radius: 50%;
-
-    /* 🔥 profondeur interne */
-    box-shadow:
-        inset 0 4px 8px rgba(0,0,0,0.6),
-        inset 0 -2px 4px rgba(255,255,255,0.03);
-}
-
-.donut:hover {
-    transform: scale(1.04);
-}
-
-.donut.etf {
-    box-shadow: 
-        0 0 0 1px rgba(255,255,255,0.05),
-        0 10px 25px rgba(0,0,0,0.4),
-        0 0 30px rgba(56,189,248,0.25);
-}
-
+/* 🔥 effet lumière (haut) */
 .donut::before {
     content: "";
     position: absolute;
@@ -288,7 +261,40 @@ transition: all 0.3s ease;
         transparent 60%
     );
 
+    opacity: 0.5;
     pointer-events: none;
+}
+
+/* 🔥 centre travaillé (profondeur réelle) */
+.donut::after {
+    content: "";
+    position: absolute;
+    inset: 28px; /* 🔥 anneau plus fin = plus premium */
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle at 50% 50%,
+        #020617 50%,
+        #000 100%
+    );
+
+    box-shadow:
+        inset 0 10px 20px rgba(0,0,0,0.9),
+        inset 0 -2px 4px rgba(255,255,255,0.06),
+        0 0 0 1px rgba(255,255,255,0.04); /* 🔥 anneau net */
+}
+
+/* 🔥 hover subtil */
+.donut:hover {
+    transform: scale(1.03);
+}
+
+/* 🔵 ETF glow cohérent */
+.donut.etf {
+    box-shadow: 
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 8px 20px rgba(0,0,0,0.5),
+        0 0 25px rgba(56,189,248,0.20);
 }
 
 
