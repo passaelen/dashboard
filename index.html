@@ -596,16 +596,19 @@ async function fetchHistory(){
 
     console.log("ROW:", row);
 
-    // 🔥 trouver la date (celle qui contient "/")
+    // ✅ DATE
     const date = row.find(c => c && c.includes("/"));
 
-    // 🔥 trouver le total (nombre > 10000)
-    const total = row
-        .map(c => Number(c))
-        .find(n => n > 10000 && n < 200000);
+    // ✅ TOTAL (fix réel)
+    const totals = row
+        .map(c => cleanNumber(c))   // 🔥 ICI le fix
+        .filter(n => n > 10000 && n < 200000);
+
+    const total = totals[0]; // on prend le premier valide
 
     console.log("DATE FOUND:", date);
-    console.log("TOTAL FOUND:", total);
+    console.log("TOTALS:", totals);
+    console.log("TOTAL SELECTED:", total);
 
     if(date && total){
         history.push({
