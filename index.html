@@ -583,16 +583,25 @@ async function fetchHistory(){
     .filter(h => h && !isNaN(h.total));
     }
 
+
+
+ 
 async function renderChart(){
 
     const history = await fetchHistory();
 
-    console.log("HISTORY:", history); // 👈 ICI
-    
+    console.log("HISTORY:", history);
+
     const last = history.slice(-10);
 
-    const labels = last.map(h => h.date.slice(5)); // MM-DD
+    const labels = last.map(h => {
+        const [day, month] = h.date.split("/");
+        return day + "/" + month;
+    });
+
     const values = last.map(h => h.total);
+
+    console.log("VALUES CHART:", values);
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
 
@@ -611,7 +620,17 @@ async function renderChart(){
             }]
         },
         options: {
-            plugins: { legend: { display: false } }
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toLocaleString('fr-BE') + " €";
+                        }
+                    }
+                }
+            }
         }
     });
 }
