@@ -631,15 +631,15 @@ async function renderChart(){
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
 
-    if(window.chart10j){
-        window.chart10j.destroy();
-    }
-
-
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    
+    // 🔥 gradient dynamique (mieux que 300 fixe)
+    const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
     gradient.addColorStop(0, "rgba(56,189,248,0.4)");
     gradient.addColorStop(1, "rgba(56,189,248,0)");
 
+    if (window.chart10j) {
+        window.chart10j.destroy();
+    }
     
     window.chart10j = new Chart(ctx, {
     type: "line",
@@ -660,6 +660,9 @@ async function renderChart(){
         }]
     },
     options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
         plugins: {
             legend: { display: false },
             tooltip: {
@@ -668,6 +671,7 @@ async function renderChart(){
                 borderWidth: 1,
                 titleColor: "#e2e8f0",
                 bodyColor: "#e2e8f0",
+                displayColors: false, // 🔥 plus clean
                 callbacks: {
                     label: function(context) {
                         return context.raw.toLocaleString('fr-BE') + " €";
