@@ -3,15 +3,22 @@
 
     
 <head>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
-        
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Portefeuille</title>
-    
+
     <link rel="stylesheet" href="style.css?v=58">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- iOS / Android -->
+    <link rel="apple-touch-icon" href="icon-192-v2.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 
 <body>
@@ -856,6 +863,17 @@ init();
 
     
   
+</script>
+
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log("SW OK"))
+      .catch(err => console.log("SW error", err));
+  });
+}
 </script>
 
 
