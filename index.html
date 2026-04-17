@@ -517,8 +517,75 @@ function render(data){
 }
 
 
+    
+function saveHistory(total){
+
+    const today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+
+    let history = JSON.parse(localStorage.getItem("portfolioHistory")) || [];
+
+    // ❌ éviter doublon même jour
+    const exists = history.find(h => h.date === today);
+
+    if(!exists){
+        history.push({
+            date: today,
+            total: Math.round(total)
+        });
+
+        // garder seulement 10 jours
+        if(history.length > 10){
+            history = history.slice(-10);
+        }
+
+        localStorage.setItem("portfolioHistory", JSON.stringify(history));
+
+        console.log("📈 sauvegarde historique OK");
+    } else {
+        console.log("📅 déjà sauvegardé aujourd’hui");
+    }
+}
 
 
+
+function renderChart(){
+
+    const history = JSON.parse(localStorage.getItem("portfolioHistory")) || [];
+
+    const labels = history.map(h => h.date.slice(5)); // MM-DD
+    const values = history.map(h => h.total);
+
+    const ctx = document.getElementById("chart-10j").getContext("2d");
+
+    // éviter double chart
+    if(window.chart10j){
+        window.chart10j.destroy();
+    }
+
+    window.chart10j = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Total €",
+                data: values,
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { display: true },
+                y: { display: true }
+            }
+        }
+    });
+}
+    
 
     
 // ===== INIT =====
@@ -541,6 +608,13 @@ async function init(){
         const result = calculate();
 
         render(result);
+
+        // 🔥 sauvegarde quotidienne
+        saveHistory(result.total);
+        
+        // 🔥 affichage graphique
+        renderChart();
+        
 
     } catch(e){
         console.error("Erreur:", e);
