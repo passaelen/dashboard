@@ -255,36 +255,80 @@ async function fetchPrices(){
     };
 }
 
-    
 
-async function fetchETFPrices(){
+    async function fetchETFPrices(){
 
     const API_KEY = "e10aefe097fe40fba25f4e129bdf0c4f";
 
-    const [iwda, gdx, gdxj, fx] = await Promise.all([
-        fetch(`https://api.twelvedata.com/price?symbol=IWDA&apikey=${API_KEY}`).then(r=>r.json()),
-        fetch(`https://api.twelvedata.com/price?symbol=GDX&apikey=${API_KEY}`).then(r=>r.json()),
-        fetch(`https://api.twelvedata.com/price?symbol=GDXJ&apikey=${API_KEY}`).then(r=>r.json()),
-        fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
-    ]);
+    // ===== CACHE =====
+    const cache = JSON.parse(localStorage.getItem("etfPrices"));
+    const last = localStorage.getItem("etfPricesTime");
 
-    console.log("ETF RAW:", iwda, gdx, gdxj);
-
-    const rate = fx.rates.EUR;
-
-    function safePrice(obj){
-        if(obj && obj.price){
-            return parseFloat(obj.price);
-        } else {
-            console.warn("API error:", obj);
-            return 0;
-        }
+    // 🔥 si cache < 10 min → on l’utilise
+    if(cache && last && (Date.now() - last < 600000)){
+        console.log("⚡ cache récent utilisé");
+        return cache;
     }
 
+    try {
+
+        const [vwce, gdx, gdxj, fx] = await Promise.all([
+            fetch(`https://api.twelvedata.com/price?symbol=IWDA&apikey=${API_KEY}`).then(r=>r.json()),
+            fetch(`https://api.twelvedata.com/price?symbol=GDX&apikey=${API_KEY}`).then(r=>r.json()),
+            fetch(`https://api.twelvedata.com/price?symbol=GDXJ&apikey=${API_KEY}`).then(r=>r.json()),
+            fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
+        ]);
+
+        console.log("ETF RAW:", vwce, gdx, gdxj);
+
+        const rate = fx.rates.EUR;
+
+        function safePrice(obj){
+            if(obj && obj.price){
+                return parseFloat(obj.price);
+            } else {
+                console.warn("API error:", obj);
+                return 0;
+            }
+        }
+
+        const result = {
+            monde: safePrice(vwce),                 // déjà en €
+            seniors: safePrice(gdx) * rate,        // USD → €
+            juniors: safePrice(gdxj) * rate
+        };
+
+        // ===== SAVE CACHE =====
+        localStorage.setItem("etfPrices", JSON.stringify(result));
+        localStorage.setItem("etfPricesTime", Date.now());
+
+        return result;
+
+    } catch(e){
+
+        console.warn("❌ API HS → fallback cache");
+
+        return cache || {
+            monde: 0,
+            seniors: 0,
+            juniors: 0
+        };
+    }
+}
+
+   
+
+    
+
+
+    
+
+    
+
     return {
-        monde: safePrice(iwda),                 // déjà en €
-        seniors: safePrice(gdx) * rate,        // USD → €
-        juniors: safePrice(gdxj) * rate
+        monde: safePrice(vwce, 100),     // valeur secours réaliste
+        seniors: safePrice(gdx, 30) * rate,
+        juniors: safePrice(gdxj, 40) * rate
     };
 }
 
