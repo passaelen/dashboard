@@ -546,13 +546,40 @@ async function init(){
         console.log("Silver €/g:", state.prices.silver_per_g);
         
 
-        const result = calculate();
+const result = calculate();
+render(result);
 
-        render(result);
-        
-        // 🔥 affichage graphique
-        await renderChart();
-        
+// 🔥 récupérer historique
+const history = await fetchHistory();
+const lastHistory = history.at(-1)?.total || 0;
+
+// 🔥 calcul variation
+const diff = result.total - lastHistory;
+const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
+
+// 🔥 affichage badge
+const el = document.getElementById("variation");
+
+const sign = diff >= 0 ? "+" : "";
+
+const diffStr = sign + diff.toLocaleString('fr-BE') + " €";
+const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+el.innerText = diffStr + " (" + pctStr + ")";
+
+// 🔥 couleur
+el.classList.remove("positive", "negative");
+
+if (diff >= 0) {
+    el.classList.add("positive");
+} else {
+    el.classList.add("negative");
+}
+
+// 🔥 affichage graphique
+await renderChart();       
+
+
 
     } catch(e){
         console.error("Erreur:", e);
