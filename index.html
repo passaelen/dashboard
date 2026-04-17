@@ -334,7 +334,11 @@ function parseCSV(text) {
     return text
         .trim()
         .split("\n")
-        .map(row => row.split(";"));
+        .map(row => {
+            // auto-detect séparateur
+            if (row.includes(";")) return row.split(";");
+            return row.split(",");
+        });
 }
 
 
@@ -575,21 +579,17 @@ async function fetchHistory(){
 
     const history = [];
 
-    for (let i = 1; i < rows.length; i++) {
+   for (let i = 1; i < rows.length; i++) {
 
     const row = rows[i];
     if (!row) continue;
 
-    const date = row[0];
-    const totalRaw = row[row.length - 3]; // 🔥 FIX
+    const date = row[0]?.replace("\r", "").trim();
+    const totalRaw = row[row.length - 3]?.replace("\r", "").trim();
 
     const total = cleanNumber(totalRaw);
 
-    console.log("ROW:", row);
-    console.log("TOTAL RAW:", totalRaw);
-    console.log("TOTAL CLEAN:", total);
-
-    if(date && !isNaN(total) && total > 10000){ // 🔥 filtre sécurité
+    if(date && !isNaN(total) && total > 10000){
         history.push({
             date: date,
             total: total
