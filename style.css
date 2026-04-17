@@ -121,6 +121,10 @@ transition: all 0.3s ease;
         inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
+.card.repartition {
+    padding: 10px;
+}
+
 .card:hover {
     transform: translateY(-2px);
     box-shadow: 
@@ -235,7 +239,7 @@ transition: all 0.3s ease;
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    margin: 10px auto;
+    margin: 6px auto;
     position: relative;
     isolation: isolate;
 
@@ -345,8 +349,10 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
     font-weight: 700;
 }
 
+
+/* ===== RÉDUIRE L’ESPACE ENTRE DONUT ET LÉGENDE ===== */
 .legend {
-    margin-top: 10px;
+    margin-top: 6px;
     width: 100%;
     display: flex;
     flex-direction: column;
