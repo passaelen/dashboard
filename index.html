@@ -294,7 +294,7 @@ async function fetchPrices(){
 
               const result = {
             monde: safePrice(vwce) || 150,   // 👈 fallback
-            seniors: safePrice(gdx) * rate,
+            seniors: (safePrice(gdx) * rate) || 90,
             juniors: safePrice(gdxj) * rate
         };
 
