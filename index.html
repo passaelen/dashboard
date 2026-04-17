@@ -582,13 +582,12 @@ async function fetchHistory(){
         const date = row[0]?.trim();
         const totalRaw = row[1]?.trim();
 
-        // 🔥 nettoyage béton
-        const total = Number(
-            totalRaw
-                .replace(/\s/g, "")   // enlève espaces
-                .replace("€", "")     // enlève €
-                .replace(",", ".")    // virgule -> point
-        );
+        // 🔥 extrait uniquement le nombre
+        const match = totalRaw?.match(/[\d\s,]+/);
+        
+        const total = match
+            ? Number(match[0].replace(/\s/g, "").replace(",", "."))
+            : NaN;
 
         console.log("DATE:", date);
         console.log("RAW:", totalRaw);
