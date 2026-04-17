@@ -510,47 +510,6 @@ function render(data){
 }
 
 
-
-function renderChart(){
-
-    const history = JSON.parse(localStorage.getItem("portfolioHistory")) || [];
-
-    const labels = history.map(h => h.date.slice(5)); // MM-DD
-    const values = history.map(h => h.total);
-
-    const ctx = document.getElementById("chart-10j").getContext("2d");
-
-    // éviter double chart
-    if(window.chart10j){
-        window.chart10j.destroy();
-    }
-
-    window.chart10j = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Total €",
-                data: values,
-                tension: 0.3,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                x: { display: true },
-                y: { display: true }
-            }
-        }
-    });
-}
-    
-
-    
 // ===== INIT =====
 async function init(){
 
@@ -620,10 +579,9 @@ async function fetchHistory(){
         };
 
     })
+        
     .filter(h => h && !isNaN(h.total));
-    
-
-
+    }
 
 async function renderChart(){
 
