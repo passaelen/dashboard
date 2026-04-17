@@ -292,9 +292,9 @@ async function fetchPrices(){
             }
         }
 
-        const result = {
-            monde: safePrice(vwce),                 // déjà en €
-            seniors: safePrice(gdx) * rate,        // USD → €
+              const result = {
+            monde: safePrice(vwce) || 100,   // 👈 fallback
+            seniors: safePrice(gdx) * rate,
             juniors: safePrice(gdxj) * rate
         };
 
