@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 
+
+
+
+    
 <head>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -251,24 +255,23 @@ async function fetchPrices(){
     };
 }
 
-    async function fetchETFPrices(){
     
-        const [vwce, gdx, gdxj, fx] = await Promise.all([
-            fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=VWCE.AS").then(r=>r.json()),
-            fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=GDX").then(r=>r.json()),
-            fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=GDXJ").then(r=>r.json()),
-            fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
-        ]);
-    
-        const rate = fx.rates.EUR;
-    
-        return {
-            monde: vwce.quoteResponse.result?.[0]?.regularMarketPrice || 0,
-            seniors: (gdx.quoteResponse.result?.[0]?.regularMarketPrice || 0) * rate,
-            juniors: (gdxj.quoteResponse.result?.[0]?.regularMarketPrice || 0) * rate
-        };
-    }
+async function fetchETFPrices(){
 
+    const API_KEY = "e10aefe097fe40fba25f4e129bdf0c4f";
+
+    const [vwce, gdx, gdxj] = await Promise.all([
+        fetch(`https://api.twelvedata.com/price?symbol=VWCE.AS&apikey=${API_KEY}`).then(r=>r.json()),
+        fetch(`https://api.twelvedata.com/price?symbol=GDX&apikey=${API_KEY}`).then(r=>r.json()),
+        fetch(`https://api.twelvedata.com/price?symbol=GDXJ&apikey=${API_KEY}`).then(r=>r.json())
+    ]);
+
+    return {
+        monde: parseFloat(vwce.price) || 0,
+        seniors: parseFloat(gdx.price) || 0,
+        juniors: parseFloat(gdxj.price) || 0
+    };
+}
 
 
 
