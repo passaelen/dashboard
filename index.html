@@ -606,13 +606,10 @@ return history;
 
 
     
-
- 
+// ===== async function renderChart =====
 async function renderChart(){
 
     const history = await fetchHistory();
-
-    console.log("HISTORY:", history);
 
     const last = history.slice(-10);
 
@@ -621,18 +618,22 @@ async function renderChart(){
         return day + "/" + month;
     });
 
-    const values = last.map(h => h.total);
+    // 🔥 ENRICHISSEMENT DATA (clé du système)
+    const enriched = last.map((h, i) => {
+        const prev = last[i - 1]?.total || h.total;
 
-    console.log("HISTORY FULL:", history);
-    console.log("LAST 10:", last);
-    console.log("VALUES CHART:", values);
- 
-    
+        const diff = h.total - prev;
+        const pct = prev ? (diff / prev) * 100 : 0;
+
+        return {
+            total: h.total,
+            diff,
+            pct
+        };
+    });
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
 
-    
-    // 🔥 gradient dynamique (mieux que 300 fixe)
     const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
     gradient.addColorStop(0, "rgba(56,189,248,0.4)");
     gradient.addColorStop(1, "rgba(56,189,248,0)");
@@ -640,74 +641,94 @@ async function renderChart(){
     if (window.chart10j) {
         window.chart10j.destroy();
     }
-    
+
     window.chart10j = new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: labels,
-        datasets: [{
-            data: values,
-            tension: 0.4, // 🔥 plus fluide
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: enriched.map(e => e.total),
+                tension: 0.4,
 
-            borderColor: "#38bdf8",
-            backgroundColor: gradient,
-
-            fill: true,
-            pointRadius: 3,
-            pointHoverRadius: 6,
-            pointBackgroundColor: "#38bdf8",
-            pointBorderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-
-        plugins: {
-            legend: { display: false },
-            tooltip: {
-                backgroundColor: "#0f172a",
                 borderColor: "#38bdf8",
-                borderWidth: 1,
-                titleColor: "#e2e8f0",
-                bodyColor: "#e2e8f0",
-                displayColors: false, // 🔥 plus clean
-                callbacks: {
-                    label: function(context) {
-                        return context.raw.toLocaleString('fr-BE') + " €";
-                    }
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: "#94a3b8"
+                backgroundColor: gradient,
+                fill: true,
+
+                pointRadius: 3,
+                pointHoverRadius: 6,
+
+                // 🔥 couleur dynamique des points
+                pointBackgroundColor: function(context) {
+                    const i = context.dataIndex;
+                    const diff = enriched[i]?.diff || 0;
+                    return diff >= 0 ? "#22c55e" : "#ef4444";
                 },
-                grid: {
-                    color: "rgba(148,163,184,0.05)"
+
+                pointBorderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: "#0f172a",
+                    borderColor: "#38bdf8",
+                    borderWidth: 1,
+                    titleColor: "#e2e8f0",
+                    bodyColor: "#e2e8f0",
+                    displayColors: false,
+
+                    // 🔥 TOOLTIP BOOSTÉ
+                    callbacks: {
+                        label: function(context) {
+
+                            const i = context.dataIndex;
+                            const point = enriched[i];
+
+                            const value = point.total.toLocaleString('fr-BE') + " €";
+
+                            const diff = point.diff;
+                            const pct = point.pct;
+
+                            const sign = diff >= 0 ? "+" : "";
+
+                            const diffStr = sign + diff.toLocaleString('fr-BE') + " €";
+                            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+                            return [
+                                value,
+                                diffStr + " (" + pctStr + ")"
+                            ];
+                        }
+                    }
                 }
             },
-            y: {
-                beginAtZero: false,
-                ticks: {
-                    color: "#94a3b8",
-                    callback: function(value) {
-                        return value.toLocaleString('fr-BE') + " €";
-                    }
+
+            scales: {
+                x: {
+                    ticks: { color: "#94a3b8" },
+                    grid: { color: "rgba(148,163,184,0.05)" }
                 },
-                grid: {
-                    color: "rgba(148,163,184,0.05)"
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        color: "#94a3b8",
+                        callback: v => v.toLocaleString('fr-BE') + " €"
+                    },
+                    grid: { color: "rgba(148,163,184,0.05)" }
                 }
+            },
+
+            animation: {
+                duration: 800,
+                easing: "easeOutQuart"
             }
-        },
-        animation: {
-            duration: 800,
-            easing: "easeOutQuart"
         }
-    }
-});
-    }
+    });
+}
 
 
 
