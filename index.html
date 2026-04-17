@@ -568,6 +568,8 @@ async function fetchHistory(){
     const res = await fetch(url);
     const text = await res.text();
 
+    console.log(text);
+
     const rows = text.trim().split("\n").map(r => r.split(";"));
 
     const history = [];
