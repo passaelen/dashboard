@@ -589,31 +589,32 @@ async function fetchHistory(){
 
         if(!date || !date.includes("/")) continue;
 
-        // 🔥 FIX ICI (détection automatique du total global)
-    const totals = row
-        .map(c => cleanNumber(c))   // on convertit toutes les cellules en nombre
-        .filter(n => n > 10000);    // on garde uniquement les grosses valeurs (€)
-    
-    if (totals.length === 0) {
-        console.log("❌ aucune valeur trouvée sur ligne:", row);
-        continue;
-    }
-    
-    const total = Math.max(...totals);
-    
-    // DEBUG
-    console.log("ROW:", row);
-    console.log("TOTALS:", totals);
-    console.log("SELECTED TOTAL:", total);
-    
-    // push dans history
-    if (!isNaN(total)) {
-        history.push({
-            date: date,
-            total: total
-        });
-    }
 
+        
+        // 🔥 FIX PROPRE (ignore dates & texte)
+const totals = row
+    .filter(c => c && c.includes(",") && !c.includes("/")) // 👈 exclut dates
+    .map(c => cleanNumber(c))
+    .filter(n => n > 10000 && n < 1000000); // 👈 garde valeurs réalistes
+
+if (totals.length === 0) {
+    console.log("❌ rien trouvé:", row);
+    continue;
+}
+
+const total = Math.max(...totals);
+
+// DEBUG
+console.log("ROW:", row);
+console.log("TOTALS:", totals);
+console.log("SELECTED TOTAL:", total);
+
+history.push({
+    date: date,
+    total: total
+});
+
+        
         
     }
 
