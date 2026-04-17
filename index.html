@@ -520,11 +520,19 @@ function render(data){
     
 function saveHistory(total){
 
-    const today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+    const now = new Date();
+    const day = now.getDay(); // 0 = dimanche, 6 = samedi
+
+    // ❌ on ignore samedi (6) et dimanche (0)
+    if(day === 0 || day === 6){
+        console.log("📅 Week-end → pas de sauvegarde");
+        return;
+    }
+
+    const today = now.toISOString().slice(0,10);
 
     let history = JSON.parse(localStorage.getItem("portfolioHistory")) || [];
 
-    // ❌ éviter doublon même jour
     const exists = history.find(h => h.date === today);
 
     if(!exists){
@@ -533,14 +541,14 @@ function saveHistory(total){
             total: Math.round(total)
         });
 
-        // garder seulement 10 jours
+        // garder 10 jours ouvrés max
         if(history.length > 10){
             history = history.slice(-10);
         }
 
         localStorage.setItem("portfolioHistory", JSON.stringify(history));
 
-        console.log("📈 sauvegarde historique OK");
+        console.log("📈 sauvegarde OK (jour ouvré)");
     } else {
         console.log("📅 déjà sauvegardé aujourd’hui");
     }
