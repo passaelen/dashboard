@@ -291,7 +291,7 @@ function calculate(){
     
 // ===== FORMAT % =====
 function percent(v){
-    return v.toFixed(1).replace('.',',') + "%";
+    return (v || 0).toFixed(2).replace('.',',') + "%";
 }
 
     
