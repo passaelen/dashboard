@@ -227,16 +227,21 @@ function setText(id, value){
 // ===== API =====
 async function fetchPrices(){
 
-    const [gold, silver] = await Promise.all([
+    const [gold, silver, eurusd] = await Promise.all([
         fetch("https://api.gold-api.com/price/XAU").then(r=>r.json()),
-        fetch("https://api.gold-api.com/price/XAG").then(r=>r.json())
+        fetch("https://api.gold-api.com/price/XAG").then(r=>r.json()),
+        fetch("https://api.exchangerate.host/latest?base=USD&symbols=EUR").then(r=>r.json())
     ]);
 
+    const rate = eurusd.rates.EUR;
+
     return {
-        gold_per_g: gold.price / OZ_TO_G,
-        silver_per_g: silver.price / OZ_TO_G
+        gold_per_g: (gold.price * rate) / OZ_TO_G,
+        silver_per_g: (silver.price * rate) / OZ_TO_G
     };
 }
+
+    
     
 // ===== CALCUL =====
 function calculate(){
@@ -329,6 +334,11 @@ async function init(){
         setText("ratio", "...");
 
         state.prices = await fetchPrices();
+
+// 🔥 log price
+        console.log("Gold €/g:", state.prices.gold_per_g);
+        console.log("Silver €/g:", state.prices.silver_per_g);
+        
 
         const result = calculate();
 
