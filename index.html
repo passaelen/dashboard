@@ -594,13 +594,16 @@ async function fetchHistory(){
 
     return rows
         .map(r => {
-            const cols = r.split(",");
+            const cols = r.split(";");
 
             // colonne A = date
             const date = cols[0];
 
             // colonne H = total global
             let total = cols[7];
+
+            
+console.log("DATE:", date, "TOTAL:", total);
 
             if(!date || !total) return null;
 
