@@ -554,34 +554,33 @@ async function fetchHistory(){
 
 
     return rows
-    .map(r => {
+.map(r => {
 
-        const cols = r.includes(";") ? r.split(";") : r.split(",");
+    const cols = r.split(";"); // ✅ FORCÉ
 
-        const date = cols[0]?.trim();
-        let total = cols[7]?.trim();
+    const date = cols[0]?.trim();
+    let total = cols[7]?.trim();
 
-        // ✅ filtre plus souple
-        if(!date || date.length < 8){
-            return null;
-        }
+    if(!date || date.length < 8) return null;
+    if(!total) return null;
 
-        if(!total) return null;
+    total = total
+        .replace("€", "")
+        .replace(/\s/g, "")
+        .replace(",", ".");
 
-        total = total
-            .replace("€", "")
-            .replace(/\s/g, "")
-            .replace(",", ".");
+    const parsed = parseFloat(total);
 
-        return {
-            date: date,
-            total: parseFloat(total)
-        };
+    console.log("PARSED:", date, total, parsed);
 
-    })
-        
-    .filter(h => h && !isNaN(h.total));
-    }
+    return {
+        date: date,
+        total: parsed
+    };
+
+})
+.filter(h => h && !isNaN(h.total));
+   
 
 
 
