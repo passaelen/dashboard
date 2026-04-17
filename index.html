@@ -211,9 +211,9 @@ const OZ_TO_G = 31.1035;
 const state = {
     prices: null,
     portfolio: {
-        or_suisse_g: 338.66,
-        or_belgique_g: 130.62,
-        argent_g: 6000 * 1000 // 6kg
+        or_suisse_g: 338.66, //338,66gr
+        or_belgique_g: 130.62, //130,62gr
+        argent_g: 6000 // 6kg
     }
 };
 
@@ -246,17 +246,17 @@ async function fetchPrices(){
 // ===== CALCUL =====
 function calculate(){
 
-console.log("Argent g:", pf.argent_g);
-    
     const p = state.prices;
     const pf = state.portfolio;
+
+    console.log("Argent g:", pf.argent_g); // ✅ ici
 
     const goldTotal =
         (pf.or_suisse_g + pf.or_belgique_g) * p.gold_per_g;
 
     const silverTotal =
         pf.argent_g * p.silver_per_g;
-        
+
     const total = goldTotal + silverTotal;
 
     const ratio = p.gold_per_g / p.silver_per_g;
