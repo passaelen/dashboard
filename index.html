@@ -573,41 +573,29 @@ async function fetchHistory(){
     const res = await fetch(url);
     const text = await res.text();
 
-    const rows = parseCSV(text);
+    const rows = text.trim().split("\n").map(r => r.split(";"));
 
     const history = [];
 
-   for (let i = 1; i < rows.length; i++) {
+    for (let i = 1; i < rows.length; i++) {
 
-    const row = rows[i];
-    if (!row) continue;
+        const row = rows[i];
+        if (!row) continue;
 
-    console.log("ROW:", row);
+        const date = row[0]?.trim();
+        const total = Number(row[1]); // ✅ colonne B
 
-    // ✅ DATE
-    const date = row.find(c => c && c.includes("/"));
+        console.log("DATE:", date);
+        console.log("TOTAL:", total);
 
-    // ✅ TOTAL (fix réel)
-    const totals = row
-        .map(c => cleanNumber(c))   // 🔥 ICI le fix
-        .filter(n => n > 10000 && n < 200000);
-
-    const total = totals[0]; // on prend le premier valide
-
-    console.log("DATE FOUND:", date);
-    console.log("TOTALS:", totals);
-    console.log("TOTAL SELECTED:", total);
-
-    if(date && total){
-        history.push({
-            date: date,
-            total: total
-        });
+        // 🔥 filtre intelligent
+        if(date && !isNaN(total) && total > 10000){
+            history.push({
+                date: date,
+                total: total
+            });
+        }
     }
-}
-
-
-    
 
     return history;
 }
