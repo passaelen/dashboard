@@ -610,7 +610,6 @@ return history;
 async function renderChart(){
 
     const history = await fetchHistory();
-
     const last = history.slice(-10);
 
     const labels = last.map(h => {
@@ -618,7 +617,7 @@ async function renderChart(){
         return day + "/" + month;
     });
 
-    // 🔥 ENRICHISSEMENT DATA (clé du système)
+    // ===== ENRICHISSEMENT =====
     const enriched = last.map((h, i) => {
         const prev = last[i - 1]?.total || h.total;
 
@@ -630,6 +629,16 @@ async function renderChart(){
             diff,
             pct
         };
+    });
+
+    // ===== MOYENNE MOBILE 7 =====
+    const movingAvg = enriched.map((_, i, arr) => {
+        if (i < 6) return null;
+
+        const slice = arr.slice(i - 6, i + 1);
+        const sum = slice.reduce((acc, v) => acc + v.total, 0);
+
+        return sum / 7;
     });
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
@@ -646,33 +655,53 @@ async function renderChart(){
         type: "line",
         data: {
             labels: labels,
-            datasets: [{
-                data: enriched.map(e => e.total),
-                tension: 0.4,
+            datasets: [
 
-                borderColor: "#38bdf8",
-                backgroundColor: gradient,
-                fill: true,
+                // 🔵 COURBE PRINCIPALE
+                {
+                    data: enriched.map(e => e.total),
+                    tension: 0.4,
+                    borderColor: "#38bdf8",
+                    backgroundColor: gradient,
+                    fill: true,
 
-                pointRadius: 3,
-                pointHoverRadius: 6,
+                    pointRadius: 4,          // 🔥 + gros
+                    pointHoverRadius: 8,     // 🔥 + facile mobile
 
-                // 🔥 couleur dynamique des points
-                pointBackgroundColor: function(context) {
-                    const i = context.dataIndex;
-                    const diff = enriched[i]?.diff || 0;
-                    return diff >= 0 ? "#22c55e" : "#ef4444";
+                    pointBackgroundColor: function(context) {
+                        const i = context.dataIndex;
+                        const diff = enriched[i]?.diff || 0;
+                        return diff >= 0 ? "#22c55e" : "#ef4444";
+                    },
+
+                    pointBorderWidth: 0
                 },
 
-                pointBorderWidth: 0
-            }]
+                // 🟣 MOYENNE MOBILE
+                {
+                    data: movingAvg,
+                    tension: 0.4,
+                    borderColor: "#a78bfa",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    borderDash: [6,6],
+                    fill: false
+                }
+            ]
         },
+
         options: {
             responsive: true,
             maintainAspectRatio: false,
 
+            interaction: {
+                mode: "index",
+                intersect: false   // 🔥 KEY MOBILE FIX
+            },
+
             plugins: {
                 legend: { display: false },
+
                 tooltip: {
                     backgroundColor: "#0f172a",
                     borderColor: "#38bdf8",
@@ -681,9 +710,11 @@ async function renderChart(){
                     bodyColor: "#e2e8f0",
                     displayColors: false,
 
-                    // 🔥 TOOLTIP BOOSTÉ
                     callbacks: {
                         label: function(context) {
+
+                            // ignore MM7 tooltip
+                            if (context.datasetIndex === 1) return null;
 
                             const i = context.dataIndex;
                             const point = enriched[i];
@@ -713,7 +744,6 @@ async function renderChart(){
                     grid: { color: "rgba(148,163,184,0.05)" }
                 },
                 y: {
-                    beginAtZero: false,
                     ticks: {
                         color: "#94a3b8",
                         callback: v => v.toLocaleString('fr-BE') + " €"
@@ -729,6 +759,8 @@ async function renderChart(){
         }
     });
 }
+
+
 
 
 
