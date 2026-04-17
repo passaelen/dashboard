@@ -635,31 +635,74 @@ async function renderChart(){
         window.chart10j.destroy();
     }
 
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, "rgba(56,189,248,0.4)");
+    gradient.addColorStop(1, "rgba(56,189,248,0)");
+
+    
     window.chart10j = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [{
-                data: values,
-                tension: 0.3,
-                fill: true
-            }]
-        },
-        options: {
-            plugins: { legend: { display: false } },
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        callback: function(value) {
-                            return value.toLocaleString('fr-BE') + " €";
-                        }
+    type: "line",
+    data: {
+        labels: labels,
+        datasets: [{
+            data: values,
+            tension: 0.4, // 🔥 plus fluide
+
+            borderColor: "#38bdf8",
+            backgroundColor: gradient,
+
+            fill: true,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            pointBackgroundColor: "#38bdf8",
+            pointBorderWidth: 0
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: "#0f172a",
+                borderColor: "#38bdf8",
+                borderWidth: 1,
+                titleColor: "#e2e8f0",
+                bodyColor: "#e2e8f0",
+                callbacks: {
+                    label: function(context) {
+                        return context.raw.toLocaleString('fr-BE') + " €";
                     }
                 }
             }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: "#94a3b8"
+                },
+                grid: {
+                    color: "rgba(148,163,184,0.05)"
+                }
+            },
+            y: {
+                beginAtZero: false,
+                ticks: {
+                    color: "#94a3b8",
+                    callback: function(value) {
+                        return value.toLocaleString('fr-BE') + " €";
+                    }
+                },
+                grid: {
+                    color: "rgba(148,163,184,0.05)"
+                }
+            }
+        },
+        animation: {
+            duration: 800,
+            easing: "easeOutQuart"
         }
-    });
-}
+    }
+});
 
 
 
