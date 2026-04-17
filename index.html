@@ -596,10 +596,9 @@ async function fetchHistory(){
         const date = row[0];
         const totalRaw = row[7];
 
-        const total = cleanNumber(totalRaw);
-
-        if(date && total > 1000){
-            history.push({
+       const total = cleanNumber(totalRaw);
+        if(date && !isNaN(total) && total > 0){
+        history.push({
                 date: date,
                 total: total
             });
