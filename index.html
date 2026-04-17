@@ -329,7 +329,42 @@ async function fetchPrices(){
     }
 }
 
-  
+
+function parseCSV(text) {
+    return text.trim().split("\n").map(row => {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let char of row) {
+            if (char === '"') inQuotes = !inQuotes;
+            else if (char === ',' && !inQuotes) {
+                result.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current);
+        return result;
+    });
+}
+
+
+function cleanNumber(value) {
+    if (!value) return 0;
+
+    return Number(
+        value
+            .replace(/[^0-9,-]/g, '')
+            .replace(',', '.')
+    ) || 0;
+}
+
+
+
+
+
 
 
     
@@ -549,39 +584,30 @@ async function fetchHistory(){
     const res = await fetch(url);
     const text = await res.text();
 
-    const rows = text.split("\n").slice(1);
+    const rows = parseCSV(text);
 
+    const history = [];
 
+    for (let i = 1; i < rows.length; i++) {
 
-    return rows
-.map(r => {
+        const row = rows[i];
+        if (!row) continue;
 
-    const cols = r.split(";"); // ✅ FORCÉ
+        const date = row[0];
+        const totalRaw = row[7];
 
-    const date = cols[0]?.trim();
-    let total = cols[7]?.trim();
+        const total = cleanNumber(totalRaw);
 
-    if(!date || date.length < 8) return null;
-    if(!total) return null;
+        if(date && total > 1000){
+            history.push({
+                date: date,
+                total: total
+            });
+        }
+    }
 
-    total = total
-        .replace("€", "")
-        .replace(/\s/g, "")
-        .replace(",", ".");
-
-    const parsed = parseFloat(total);
-
-    console.log("PARSED:", date, total, parsed);
-
-    return {
-        date: date,
-        total: parsed
-    };
-
-})
-.filter(h => h && !isNaN(h.total));
- }   
-
+    return history;
+}
 
 
  
