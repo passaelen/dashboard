@@ -766,7 +766,8 @@ label: function(context) {
 
     const sign = diff >= 0 ? "+" : "";
 
-    const diffStr = sign + diff.toLocaleString('fr-BE') + " €";
+    const diffStr = sign + diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
+
     const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
 
     return [
