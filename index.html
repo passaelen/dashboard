@@ -631,6 +631,8 @@ async function renderChart(){
 
     const history = await fetchHistory();
 
+    console.log("HISTORY:", history); // 👈 ICI
+    
     const last = history.slice(-10);
 
     const labels = last.map(h => h.date.slice(5)); // MM-DD
