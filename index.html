@@ -204,24 +204,6 @@
 
 
 
-document.getElementById("argent").innerText = "...";
-document.getElementById("ratio").innerText = "...";
-window.addEventListener("DOMContentLoaded", () => {
-document.getElementById("refresh-btn")
-        .addEventListener("click", init);
-    setText("total", "Chargement...");
-    setText("or", "...");
-    setText("argent", "...");
-    setText("ratio", "...");
-init();
-
-
-    
-
-    
-    
-
-
 // ===== CONFIG =====
 const OZ_TO_G = 31.1035;
 
@@ -234,6 +216,13 @@ const state = {
         argent_g: 6000 * 1000 // 6kg
     }
 };
+
+    
+// ===== HELPER =====
+function setText(id, value){
+    const el = document.getElementById(id);
+    if(el) el.innerText = value;
+}
 
 // ===== API =====
 async function fetchPrices(){
@@ -248,19 +237,6 @@ async function fetchPrices(){
         silver_per_g: silver.price / OZ_TO_G
     };
 }
-
-
-    
-// ===== HELPER =====
-function setText(id, value){
-    const el = document.getElementById(id);
-    if(el) el.innerText = value;
-}
-
-
-
-
-
     
 // ===== CALCUL =====
 function calculate(){
@@ -292,8 +268,7 @@ function euro(v){
 }
 
 
-
-
+// ===== ALERT =====
 function getAlertMessage(ratio){
 
     if(ratio >= 70) return "❄️ Hibernation";
@@ -326,8 +301,8 @@ function applyRatioColor(ratio){
 }
 
 
-    
-    
+  
+// ===== RENDER =====  
 function render(data){
 
     setText("or", euro(data.goldTotal));
@@ -348,6 +323,11 @@ function render(data){
 async function init(){
 
     try{
+        setText("total", "Chargement...");
+        setText("or", "...");
+        setText("argent", "...");
+        setText("ratio", "...");
+
         state.prices = await fetchPrices();
 
         const result = calculate();
@@ -356,13 +336,24 @@ async function init(){
 
     } catch(e){
         console.error("Erreur:", e);
-        document.getElementById("total").innerText = "Erreur chargement";
+        setText("total", "Erreur chargement");
     }
 }
 
 
+// ===== START =====
+window.addEventListener("DOMContentLoaded", () => {
+document.getElementById("refresh-btn")
+        .addEventListener("click", init);
+    setText("total", "Chargement...");
+    setText("or", "...");
+    setText("argent", "...");
+    setText("ratio", "...");
+init();
 
 
+
+});
 
 
     
