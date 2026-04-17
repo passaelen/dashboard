@@ -482,42 +482,58 @@ function render(data){
     setText("total", euro(data.total));
     setText("etf-total-bottom", euro(data.totalETF));
     
-    // ===== METAUX =====
-    const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
-    const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
-    const p3 = Math.max(0, 100 - (p1 + p2));
+ 
+   // ===== METAUX =====
+const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
+const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
+const p3 = Math.max(0, 100 - (p1 + p2));
 
-    setText("p-or-suisse", percent(p1));
-    setText("p-or-belgique", percent(p2));
-    setText("p-argent", percent(p3));
+setText("p-or-suisse", percent(p1));
+setText("p-or-belgique", percent(p2));
+setText("p-argent", percent(p3));
 
-    const el = document.getElementById("donut-metaux");
-    if(el){
-        el.style.background =
-        `conic-gradient(
-            #facc15 0% ${p1}%,
-            #f59e0b ${p1}% ${p1 + p2}%,
-            #9ca3af ${p1 + p2}% 100%
-        )`;   
-    }
+const el = document.getElementById("donut-metaux");
+const gap = 0.8; // 🔥 IMPORTANT → ici
+
+if(el){
+    el.style.background =
+    `conic-gradient(
+        #facc15 0% ${Math.max(0, p1 - gap)}%,
+        #020617 ${Math.max(0, p1 - gap)}% ${p1}%,
+
+        #f59e0b ${p1}% ${Math.max(p1, p1 + p2 - gap)}%,
+        #020617 ${Math.max(p1, p1 + p2 - gap)}% ${p1 + p2}%,
+
+        #9ca3af ${p1 + p2}% 100%
+    )`;
+}
+
+
 
     // ===== ETF =====
-    const e1 = Math.max(0, Math.min(100, data.pMonde || 0));
-    const e2 = Math.max(0, Math.min(100, data.pSeniors || 0));
-    const e3 = Math.max(0, 100 - (e1 + e2));
+const e1 = Math.max(0, Math.min(100, data.pMonde || 0));
+const e2 = Math.max(0, Math.min(100, data.pSeniors || 0));
+const e3 = Math.max(0, 100 - (e1 + e2));
 
-    setText("p-monde", percent(e1));
-    setText("p-seniors", percent(e2));
+setText("p-monde", percent(e1));
+setText("p-seniors", percent(e2));
 
-    const elETF = document.querySelector(".donut.etf");
-    if(elETF){
-        elETF.style.background =
-        `conic-gradient(
-            #22c55e 0% ${e1}%,
-            #06b6d4 ${e1}% ${e1 + e2}%,
-            #64748b ${e1 + e2}% 100%
-        )`;
-    }
+const elETF = document.querySelector(".donut.etf");
+
+if(elETF){
+    elETF.style.background =
+    `conic-gradient(
+        #22c55e 0% ${Math.max(0, e1 - gap)}%,
+        #020617 ${Math.max(0, e1 - gap)}% ${e1}%,
+
+        #06b6d4 ${e1}% ${e1 + e2}%,
+
+        #64748b ${e1 + e2}% 100%
+    )`;
+}
+
+
+
 
     // ===== GLOBAL =====
     setText("ratio",
