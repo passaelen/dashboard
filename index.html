@@ -329,14 +329,7 @@ async function fetchPrices(){
     }
 }
 
-   
-
-    
-
-
-    
-
-    
+  
 
 
     
@@ -517,44 +510,6 @@ function render(data){
 }
 
 
-    
-function saveHistory(total){
-
-    const now = new Date();
-    const day = now.getDay(); // 0 = dimanche, 6 = samedi
-
-    // ❌ on ignore samedi (6) et dimanche (0)
-    if(day === 0 || day === 6){
-        console.log("📅 Week-end → pas de sauvegarde");
-        return;
-    }
-
-    const today = now.toISOString().slice(0,10);
-
-    let history = JSON.parse(localStorage.getItem("portfolioHistory")) || [];
-
-    const exists = history.find(h => h.date === today);
-
-    if(!exists){
-        history.push({
-            date: today,
-            total: Math.round(total)
-        });
-
-        // garder 10 jours ouvrés max
-        if(history.length > 10){
-            history = history.slice(-10);
-        }
-
-        localStorage.setItem("portfolioHistory", JSON.stringify(history));
-
-        console.log("📈 sauvegarde OK (jour ouvré)");
-    } else {
-        console.log("📅 déjà sauvegardé aujourd’hui");
-    }
-}
-
-
 
 function renderChart(){
 
@@ -616,12 +571,9 @@ async function init(){
         const result = calculate();
 
         render(result);
-
-        // 🔥 sauvegarde quotidienne
-        saveHistory(result.total);
         
         // 🔥 affichage graphique
-        renderChart();
+        await renderChart();
         
 
     } catch(e){
@@ -629,6 +581,81 @@ async function init(){
         setText("total", "Erreur chargement");
     }
 }
+
+
+async function fetchHistory(){
+
+    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQqy9DRNPqKY59Ka56rNkWGwYfd7XqKiGh6YJxudczufOx7ZOW6SzlTObz4DLG4t6AK9qmBfn6Tl78/pub?output=csv";
+
+    const res = await fetch(url);
+    const text = await res.text();
+
+    const rows = text.split("\n").slice(1);
+
+    return rows
+        .map(r => {
+            const cols = r.split(",");
+
+            // colonne A = date
+            const date = cols[0];
+
+            // colonne H = total global
+            let total = cols[7];
+
+            if(!date || !total) return null;
+
+            // 🔥 nettoyage robuste (€, espaces, virgules)
+            total = total
+                .replace("€", "")
+                .replace(/\s/g, "")
+                .replace(",", ".");
+
+            return {
+                date: date,
+                total: parseFloat(total)
+            };
+        })
+        .filter(Boolean);
+}
+
+
+
+async function renderChart(){
+
+    const history = await fetchHistory();
+
+    const last = history.slice(-10);
+
+    const labels = last.map(h => h.date.slice(5)); // MM-DD
+    const values = last.map(h => h.total);
+
+    const ctx = document.getElementById("chart-10j").getContext("2d");
+
+    if(window.chart10j){
+        window.chart10j.destroy();
+    }
+
+    window.chart10j = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+
+
+
+    
+    
 
 
 // ===== START =====
@@ -639,6 +666,10 @@ document.getElementById("refresh-btn")
 init();
 
 
+
+
+
+    
 
 });
 
