@@ -331,23 +331,11 @@ async function fetchPrices(){
 
 
 function parseCSV(text) { 
-    return text.trim().split("\n").map(row => {
-        const result = [];
-        let current = '';
-        let inQuotes = false;
-
-        for (let char of row) {
-            if (char === '"') inQuotes = !inQuotes;
-            else if (char === ',' && !inQuotes) {
-                result.push(current);
-                current = '';
-            } else {
-                current += char;
-            }
-        }
-        result.push(current);
-        return result;
-    });
+    function parseCSV(text) {
+    return text
+        .trim()
+        .split("\n")
+        .map(row => row.split(";")); // 🔥 SEULE LIGNE IMPORTANTE
 }
 
 
