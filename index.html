@@ -330,25 +330,21 @@ async function fetchPrices(){
 }
 
 
-function parseCSV(text) {
+function parseCSV(text) { 
     return text.trim().split("\n").map(row => {
         const result = [];
         let current = '';
         let inQuotes = false;
 
         for (let char of row) {
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } 
-            else if ((char === ',' || char === ';') && !inQuotes) {
+            if (char === '"') inQuotes = !inQuotes;
+            else if (char === ',' && !inQuotes) {
                 result.push(current);
                 current = '';
-            } 
-            else {
+            } else {
                 current += char;
             }
         }
-
         result.push(current);
         return result;
     });
@@ -593,27 +589,34 @@ async function fetchHistory(){
 
     const history = [];
 
-    for (let i = 1; i < rows.length; i++) {
+   for (let i = 1; i < rows.length; i++) {
 
-        const row = rows[i];
-        if (!row) continue;
+    const row = rows[i];
+    if (!row) continue;
 
-        const date = row[0]?.trim();
-        const totalRaw = row[7]?.trim(); // ✅ colonne H
+    console.log("ROW:", row);
 
-        const total = Number(totalRaw);
+    // 🔥 trouver la date (celle qui contient "/")
+    const date = row.find(c => c && c.includes("/"));
 
-        console.log("DATE:", date);
-        console.log("TOTAL RAW:", totalRaw);
-        console.log("TOTAL:", total);
+    // 🔥 trouver le total (nombre > 10000)
+    const total = row
+        .map(c => Number(c))
+        .find(n => n > 10000 && n < 200000);
 
-        if(date && !isNaN(total) && total > 10000){
-            history.push({
-                date: date,
-                total: total
-            });
-        }
+    console.log("DATE FOUND:", date);
+    console.log("TOTAL FOUND:", total);
+
+    if(date && total){
+        history.push({
+            date: date,
+            total: total
+        });
     }
+}
+
+
+    
 
     return history;
 }
