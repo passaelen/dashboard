@@ -568,6 +568,7 @@ async function init(){
 }
 
 
+    
 
 async function fetchHistory(){
 
@@ -586,40 +587,25 @@ async function fetchHistory(){
         if (!row) continue;
 
         const date = row[0]?.trim();
+        const totalRaw = row[7]?.trim(); // ✅ colonne H
 
-        if(!date || !date.includes("/")) continue;
+        const total = cleanNumber(totalRaw);
 
+        console.log("DATE:", date);
+        console.log("TOTAL RAW:", totalRaw);
+        console.log("TOTAL CLEAN:", total);
 
-        
-        // 🔥 FIX PROPRE (ignore dates & texte)
-const totals = row
-    .filter(c => c && c.includes(",") && !c.includes("/")) // 👈 exclut dates
-    .map(c => cleanNumber(c))
-    .filter(n => n > 10000 && n < 1000000); // 👈 garde valeurs réalistes
-
-if (totals.length === 0) {
-    console.log("❌ rien trouvé:", row);
-    continue;
-}
-
-const total = Math.max(...totals);
-
-// DEBUG
-console.log("ROW:", row);
-console.log("TOTALS:", totals);
-console.log("SELECTED TOTAL:", total);
-
-history.push({
-    date: date,
-    total: total
-});
-
-        
-        
+        if(date && total > 10000){
+            history.push({
+                date: date,
+                total: total
+            });
+        }
     }
 
     return history;
 }
+
 
     
 
