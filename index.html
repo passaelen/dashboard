@@ -227,13 +227,13 @@ function setText(id, value){
 // ===== API =====
 async function fetchPrices(){
 
-    const [gold, silver, eurusd] = await Promise.all([
+    const [gold, silver, fx] = await Promise.all([
         fetch("https://api.gold-api.com/price/XAU").then(r=>r.json()),
         fetch("https://api.gold-api.com/price/XAG").then(r=>r.json()),
-        fetch("https://api.exchangerate.host/latest?base=USD&symbols=EUR").then(r=>r.json())
+        fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
     ]);
 
-    const rate = eurusd.rates.EUR;
+    const rate = fx.rates.EUR;
 
     return {
         gold_per_g: (gold.price * rate) / OZ_TO_G,
