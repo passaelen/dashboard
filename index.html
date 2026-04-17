@@ -602,9 +602,8 @@ async function fetchHistory(){
         const date = cols[0]?.trim();
         let total = cols[7]?.trim();
 
-        // 🔥 FILTRE CRITIQUE
-        // on garde uniquement les lignes avec une vraie date
-        if(!date || !date.match(/^\d{2}\/\d{2}\/\d{4}$/)){
+        // ✅ filtre plus souple
+        if(!date || date.length < 8){
             return null;
         }
 
@@ -622,7 +621,6 @@ async function fetchHistory(){
 
     })
     .filter(h => h && !isNaN(h.total));
-}
     
 
 
