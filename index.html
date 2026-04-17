@@ -575,35 +575,34 @@ async function fetchHistory(){
     const history = [];
 
     for (let i = 1; i < rows.length; i++) {
-
+    
         const row = rows[i];
         if (!row || row.length < 2) continue;
-
+    
         const date = row[0]?.trim();
         const totalRaw = row[1]?.trim();
-
-        // 🔥 extrait uniquement le nombre
-        const match = totalRaw?.match(/[\d\s,]+/);
-        
-        const total = match
-            ? Number(match[0].replace(/\s/g, "").replace(",", "."))
-            : NaN;
-
+    
+        // 🔥 nettoyage SIMPLE (pas besoin de regex complexe maintenant)
+        const total = Number(
+            totalRaw
+                ?.replace(/\s/g, "")   // enlève espaces invisibles
+                ?.replace(",", ".")    // sécurité décimale
+        );
+    
         console.log("DATE:", date);
         console.log("RAW:", totalRaw);
         console.log("TOTAL:", total);
-
+    
         // 🔥 filtre propre
-        if(date && date.includes("/") && !isNaN(total) && total > 10000){
+        if (date && date.includes("/") && !isNaN(total) && total > 10000) {
             history.push({
                 date: date,
                 total: total
             });
         }
     }
-
-    return history;
-}    
+    
+    return history;    
 
 
 
