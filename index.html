@@ -280,7 +280,7 @@ async function fetchPrices(){
         ]);
 
         console.log("ETF RAW:", vwce, gdx, gdxj);
-
+   
         const rate = fx.rates.EUR;
 
         function safePrice(obj){
@@ -374,7 +374,11 @@ function calculate(){
     // TOTAL GLOBAL
     const total = goldTotal + silverTotal + totalETF;
     
-    
+    console.log("ETF prices:", pe);
+    console.log("ETF values:", {
+    monde: etf.monde.parts * pe.monde,
+    seniors: etf.seniors.parts * pe.seniors
+    });
 
     
 
