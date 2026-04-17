@@ -261,14 +261,40 @@ function calculate(){
 
     const ratio = p.gold_per_g / p.silver_per_g;
 
+
+    const totalMetaux = goldTotal + silverTotal || 1;
+    
+    const pOrSuisse =
+        (pf.or_suisse_g * p.gold_per_g) / totalMetaux * 100;
+    
+    const pOrBelgique =
+        (pf.or_belgique_g * p.gold_per_g) / totalMetaux * 100;
+    
+    const pArgent =
+        (silverTotal / totalMetaux) * 100;
+
+    
+
     return {
         goldTotal,
         silverTotal,
         total,
         ratio
-    };
+        pOrSuisse,
+        pOrBelgique,
+        pArgent
+     };
+    
 }
 
+
+    
+// ===== FORMAT % =====
+function percent(v){
+    return v.toFixed(1).replace('.',',') + "%";
+}
+
+    
 // ===== FORMAT =====
 function euro(v){
     return v.toLocaleString('fr-BE', {maximumFractionDigits:0}) + " €";
@@ -315,6 +341,9 @@ function render(data){
     setText("or", euro(data.goldTotal));
     setText("argent", euro(data.silverTotal));
     setText("total", euro(data.total));
+    setText("p-or-suisse", percent(data.pOrSuisse));
+    setText("p-or-belgique", percent(data.pOrBelgique));
+    setText("p-argent", percent(data.pArgent));
 
     setText("ratio",
         data.ratio.toFixed(2).replace('.',',')
@@ -323,7 +352,21 @@ function render(data){
     setText("alert-text", getAlertMessage(data.ratio));
 
     applyRatioColor(data.ratio);
-}
+
+    const el = document.getElementById("donut-metaux");
+    
+    if(el){
+    const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
+    const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
+    const p3 = 100 - (p1 + p2);
+        
+    el.style.background =
+    `conic-gradient(
+        #facc15 0% ${p1}%,
+        #f59e0b ${p1}% ${p1 + p2}%,
+        #9ca3af ${p1 + p2}% ${p1 + p2 + p3}%
+    )`;   
+}}
 
     
 // ===== INIT =====
