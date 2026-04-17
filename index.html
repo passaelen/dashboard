@@ -711,29 +711,38 @@ async function renderChart(){
                     displayColors: false,
 
                     callbacks: {
-                        label: function(context) {
+                        
 
-                            // ignore MM7 tooltip
-                            if (context.datasetIndex === 1) return null;
+label: function(context) {
 
-                            const i = context.dataIndex;
-                            const point = enriched[i];
+    // ignore la MM7
+    if (context.datasetIndex === 1) return null;
 
-                            const value = point.total.toLocaleString('fr-BE') + " €";
+    const i = context.dataIndex;
+    const point = enriched[i];
 
-                            const diff = point.diff;
-                            const pct = point.pct;
+    const value = point.total.toLocaleString('fr-BE') + " €";
 
-                            const sign = diff >= 0 ? "+" : "";
+    const diff = point.diff;
+    const pct = point.pct;
 
-                            const diffStr = sign + diff.toLocaleString('fr-BE') + " €";
-                            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+    // 🔥 AJOUT ICI
+    if (Math.abs(diff) < 1) {
+        return [value];
+    }
 
-                            return [
-                                value,
-                                diffStr + " (" + pctStr + ")"
-                            ];
-                        }
+    const sign = diff >= 0 ? "+" : "";
+
+    const diffStr = sign + diff.toLocaleString('fr-BE') + " €";
+    const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+    return [
+        value,
+        diffStr + " (" + pctStr + ")"
+    ];
+}
+
+
                     }
                 }
             },
