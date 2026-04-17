@@ -246,6 +246,8 @@ async function fetchPrices(){
 // ===== CALCUL =====
 function calculate(){
 
+console.log("Argent g:", pf.argent_g);
+    
     const p = state.prices;
     const pf = state.portfolio;
 
@@ -254,7 +256,7 @@ function calculate(){
 
     const silverTotal =
         pf.argent_g * p.silver_per_g;
-
+        
     const total = goldTotal + silverTotal;
 
     const ratio = p.gold_per_g / p.silver_per_g;
