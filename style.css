@@ -85,17 +85,13 @@ h3 {
 
 /* Badge perf style app */
 .badge-perf {
-    font-size: 14px;        /* 🔥 réduit */
-    padding: 6px 12px;      /* 🔥 plus compact */
+    font-size: 13px;
+    padding: 5px 10px;
+
     border-radius: 999px;
+    font-weight: 500;   /* 🔥 moins agressif */
 
-    font-weight: 600;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    white-space: nowrap;
+    opacity: 0.9;       /* 🔥 un peu plus soft */
 }
 
 
