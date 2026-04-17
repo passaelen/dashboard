@@ -202,10 +202,24 @@
 
 <script>
 
-document.getElementById("total").innerText = "Chargement...";
-document.getElementById("or").innerText = "...";
+
+
 document.getElementById("argent").innerText = "...";
 document.getElementById("ratio").innerText = "...";
+window.addEventListener("DOMContentLoaded", () => {
+document.getElementById("refresh-btn")
+        .addEventListener("click", init);
+    setText("total", "Chargement...");
+    setText("or", "...");
+    setText("argent", "...");
+    setText("ratio", "...");
+init();
+
+
+    
+
+    
+    
 
 
 // ===== CONFIG =====
@@ -235,6 +249,19 @@ async function fetchPrices(){
     };
 }
 
+
+    
+// ===== HELPER =====
+function setText(id, value){
+    const el = document.getElementById(id);
+    if(el) el.innerText = value;
+}
+
+
+
+
+
+    
 // ===== CALCUL =====
 function calculate(){
 
@@ -264,40 +291,6 @@ function euro(v){
     return v.toLocaleString('fr-BE', {maximumFractionDigits:0}) + " €";
 }
 
-// ===== RENDER =====
-function render(data){
-
-    document.getElementById("or").innerText = euro(data.goldTotal);
-    document.getElementById("argent").innerText = euro(data.silverTotal);
-    document.getElementById("total").innerText = euro(data.total);
-
-    document.getElementById("ratio").innerText =
-        data.ratio.toFixed(2).replace('.',',');
-
-    document.getElementById("alert-text").innerText =
-    getAlertMessage(data.ratio);
-    applyRatioColor(data.ratio);
-
-}
-
-// ===== INIT =====
-async function init(){
-
-    try{
-        state.prices = await fetchPrices();
-
-        const result = calculate();
-
-        render(result);
-
-    } catch(e){
-        console.error("Erreur:", e);
-        document.getElementById("total").innerText = "Erreur chargement";
-    }
-}
-
-init();
-
 
 
 
@@ -319,7 +312,7 @@ function applyRatioColor(ratio){
     const el = document.getElementById("alert-text");
 
     el.classList.remove("positive", "negative");
-
+    
     if(ratio >= 50){
         el.style.color = "#93c5fd"; // bleu froid
     } else if(ratio >= 40){
@@ -327,7 +320,50 @@ function applyRatioColor(ratio){
     } else {
         el.style.color = "#ef4444"; // rouge
     }
+    el.style.fontWeight = "600";
+        el.style.transition = "0.3s";
+           
 }
+
+
+    
+    
+function render(data){
+
+    setText("or", euro(data.goldTotal));
+    setText("argent", euro(data.silverTotal));
+    setText("total", euro(data.total));
+
+    setText("ratio",
+        data.ratio.toFixed(2).replace('.',',')
+    );
+
+    setText("alert-text", getAlertMessage(data.ratio));
+
+    applyRatioColor(data.ratio);
+}
+
+    
+// ===== INIT =====
+async function init(){
+
+    try{
+        state.prices = await fetchPrices();
+
+        const result = calculate();
+
+        render(result);
+
+    } catch(e){
+        console.error("Erreur:", e);
+        document.getElementById("total").innerText = "Erreur chargement";
+    }
+}
+
+
+
+
+
 
     
   
