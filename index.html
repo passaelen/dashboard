@@ -294,11 +294,22 @@ async function fetchPrices(){
             }
         }
 
-              const result = {
-            monde: safePrice(vwce) || 150,   // 👈 fallback
-            seniors: (safePrice(gdx) * rate) || 90,
+       
+        let seniors = safePrice(gdx) * rate;
+        
+        if(!seniors || seniors < 85 || seniors > 110){
+            console.warn("fallback Seniors utilisé");
+            seniors = 93.38;
+        }
+        
+        const result = {
+            monde: safePrice(vwce) || 150,
+            seniors: seniors,
             juniors: safePrice(gdxj) * rate
         };
+        
+
+        
 
         // ===== SAVE CACHE =====
         localStorage.setItem("etfPrices", JSON.stringify(result));
