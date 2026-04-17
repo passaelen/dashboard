@@ -549,6 +549,11 @@ async function init(){
 const result = calculate();
 render(result);
 
+
+
+
+
+
 // 🔥 récupérer historique
 const history = await fetchHistory();
 const lastHistory = history.at(-1)?.total || 0;
@@ -562,8 +567,12 @@ const el = document.getElementById("variation");
 
 const sign = diff >= 0 ? "+" : "";
 
-const diffStr = sign + diff.toLocaleString('fr-BE') + " €";
-const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+// ✅ ARRONDI PROPRE
+const diffRounded = Math.round(diff);
+const pctRounded = pct.toFixed(2).replace('.', ',');
+
+const diffStr = sign + diffRounded.toLocaleString('fr-BE') + " €";
+const pctStr = sign + pctRounded + "%";
 
 el.innerText = diffStr + " (" + pctStr + ")";
 
@@ -575,6 +584,8 @@ if (diff >= 0) {
 } else {
     el.classList.add("negative");
 }
+
+
 
 // 🔥 affichage graphique
 await renderChart();       
