@@ -92,6 +92,8 @@ h3 {
     font-weight: 500;   /* 🔥 moins agressif */
 
     opacity: 0.9;       /* 🔥 un peu plus soft */
+transform: translateY(-1px);
+transition: all 0.3s ease;
 }
 
 
