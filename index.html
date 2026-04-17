@@ -334,7 +334,7 @@ function parseCSV(text) {
     return text
         .trim()
         .split("\n")
-        .map(row => row.split(";"));
+        .map(row => row.split(",")); // 👈 VIRGULE ici
 }
 
 
