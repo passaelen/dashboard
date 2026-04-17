@@ -570,39 +570,37 @@ async function fetchHistory(){
 
     console.log(text);
 
-    const rows = text.trim().split("\n").map(r => r.split(";"));
+    const rows = text.trim().split("\n").map(r => r.split(","));
 
-    const history = [];
+const history = [];
 
-    for (let i = 1; i < rows.length; i++) {
-    
-        const row = rows[i];
-        if (!row || row.length < 2) continue;
-    
-        const date = row[0]?.trim();
-        const totalRaw = row[1]?.trim();
-    
-        // 🔥 nettoyage SIMPLE (pas besoin de regex complexe maintenant)
-        const total = Number(
-            totalRaw
-                ?.replace(/\s/g, "")   // enlève espaces invisibles
-                ?.replace(",", ".")    // sécurité décimale
-        );
-    
-        console.log("DATE:", date);
-        console.log("RAW:", totalRaw);
-        console.log("TOTAL:", total);
-    
-        // 🔥 filtre propre
-        if (date && date.includes("/") && !isNaN(total) && total > 10000) {
-            history.push({
-                date: date,
-                total: total
-            });
-        }
+for (let i = 1; i < rows.length; i++) {
+
+    const row = rows[i];
+    if (!row || row.length < 2) continue;
+
+    const date = row[0]?.trim();
+    const totalRaw = row[1]?.trim();
+
+    const total = Number(
+        totalRaw
+            ?.replace(/\s/g, "")
+            ?.replace(",", ".")
+    );
+
+    console.log("DATE:", date);
+    console.log("RAW:", totalRaw);
+    console.log("TOTAL:", total);
+
+    if (date && date.includes("/") && !isNaN(total) && total > 10000) {
+        history.push({
+            date: date,
+            total: total
+        });
     }
-    
-    return history;    
+}
+
+return history;   
 }
 
 
