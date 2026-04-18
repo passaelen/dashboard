@@ -384,6 +384,7 @@ function render(data){
     setText("p-seniors", percent(data.pSeniors));
 }
 
+
 // ===== INIT =====
 async function init(){
 
@@ -393,27 +394,56 @@ async function init(){
     const result = calculate();
     render(result);
 
+// ===== VARIATION =====
+const history = await fetchHistory();
+const lastHistory = history.at(-1)?.total || 0;
+
+const diff = result.total - lastHistory;
+const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
+
+const el = document.getElementById("variation");
+
+if (el) {
+    const sign = diff >= 0 ? "+" : "";
+
+    const diffStr = sign + Math.round(diff).toLocaleString('fr-BE') + " €";
+    const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+    el.innerText = diffStr + " (" + pctStr + ")";
+
+    el.classList.remove("positive", "negative");
+    el.classList.add(diff >= 0 ? "positive" : "negative");
+}
+
     await renderChart();
 }
 
+
 // ===== REFRESH =====
-const refreshBtn = document.getElementById("refresh-btn");
+window.addEventListener("DOMContentLoaded", () => {
 
-if (refreshBtn) {
-    refreshBtn.addEventListener("click", async () => {
+    const refreshBtn = document.getElementById("refresh-btn");
 
-        if (refreshBtn.classList.contains("spin")) return;
+    if (refreshBtn) {
+        refreshBtn.addEventListener("click", async () => {
 
-        refreshBtn.classList.add("spin");
+            if (refreshBtn.classList.contains("spin")) return;
 
-        try {
-            await init();
-        } finally {
-            refreshBtn.classList.remove("spin");
-        }
+            refreshBtn.classList.add("spin");
 
-    });
-}
+            try {
+                await init();
+            } finally {
+                refreshBtn.classList.remove("spin");
+            }
+
+        });
+    }
+
+    init();
+});
+
+
 
 // ===== START =====
 window.addEventListener("DOMContentLoaded", () => {
