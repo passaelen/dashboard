@@ -778,23 +778,30 @@ async function renderChart(){
 
 
 
-    
-    
 
 
 // ===== START =====
 window.addEventListener("DOMContentLoaded", () => {
-document.getElementById("refresh-btn")
-        .addEventListener("click", init);
-   
-init();
 
+    const refreshBtn = document.getElementById("refresh-btn");
 
+    if (refreshBtn) {
+        refreshBtn.addEventListener("click", async () => {
 
+            if (refreshBtn.classList.contains("spin")) return;
 
+            refreshBtn.classList.add("spin");
 
-    
+            try {
+                await init();
+            } finally {
+                refreshBtn.classList.remove("spin");
+            }
 
+        });
+    }
+
+    init();
 });
 
 
