@@ -223,7 +223,12 @@ const state = {
     portfolio: {
         or_suisse_g: 338.66,
         or_belgique_g: 130.62,
-        argent_g: 6000
+        argent_g: 6000,
+
+        // 🔥 AJOUT ICI
+        or_suisse_cost: 19722.90,
+        or_belgique_cost: 8375.39,
+        argent_cost: 3379.88
     },
 
     etf: {
@@ -231,8 +236,9 @@ const state = {
         seniors: { parts: 13, buy: 1048.57 },
         juniors: { parts: 0, buy: 0 }
     }
-};
-    
+};  
+
+
 
     
 // ===== HELPER =====
@@ -669,8 +675,11 @@ function perf(current, buy){
 }
 
 // 👉 à adapter si tu veux être précis plus tard
-const avgGold = 55;   // 💡 à ajuster
-const avgSilver = 0.8;
+const avgGoldSuisse = pf.or_suisse_cost / pf.or_suisse_g;
+const avgGoldBelgique = pf.or_belgique_cost / pf.or_belgique_g;
+const avgSilver = pf.argent_cost / pf.argent_g;
+
+
 
 // ===== AFFICHAGE =====
 setText("q-or-suisse", pf.or_suisse_g.toFixed(2));
@@ -683,8 +692,8 @@ setText("p-or-belgique-g", goldPrice.toFixed(2) + " €");
 setText("p-argent-g", silverPrice.toFixed(2) + " €");
 
 // perf
-const perfOrSuisse = perf(goldPrice, avgGold);
-const perfOrBelgique = perf(goldPrice, avgGold);
+const perfOrSuisse = perf(goldPrice, avgGoldSuisse);
+const perfOrBelgique = perf(goldPrice, avgGoldBelgique);
 const perfArgent = perf(silverPrice, avgSilver);
 
 setText("perf-or-suisse", perfOrSuisse.text);
