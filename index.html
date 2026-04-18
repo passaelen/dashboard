@@ -1,148 +1,632 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portefeuille</title>
-
-    <link rel="stylesheet" href="style.css?v=70">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
-
-    <link rel="apple-touch-icon" href="icon-192-v2.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="header">
-    <div class="header-left">
-        <h2>💼 Portefeuille</h2>
-        <small>Or · Argent · ETF</small>
-    </div>
-
-    <div class="header-actions">
-        <div id="refresh-btn" class="refresh">⟳</div>
-        <div id="variation" class="badge-perf"></div>
-    </div>
-</div>
-
-<div class="card highlight">
-    <small>Total global</small>
-    <h2 id="total" class="gold"></h2>
-</div>
-
-<div class="kpi-grid">
-    <div class="kpi"><small>OR</small><h3 id="or"></h3></div>
-    <div class="kpi"><small>ARGENT</small><h3 id="argent"></h3></div>
-    <div class="kpi"><small>RATIO</small><h3 id="ratio"></h3></div>
-</div>
-
-<div class="card alert-box">
-    <span id="alert-text"></span>
-</div>
-
-<div class="card">
-    <h3>Évolution 10 jours</h3>
-    <canvas id="chart-10j"></canvas>
-</div>
-
-</div>
-
-<script>
-
-const OZ_TO_G = 31.1035;
-
-const state = {
-    prices: null,
-    portfolio: {
-        or_suisse_g: 338.66,
-        or_belgique_g: 130.62,
-        argent_g: 6000
-    }
-};
-
-function setText(id, value){
-    const el = document.getElementById(id);
-    if(el) el.innerText = value;
-}
-
-function euro(v){
-    return v.toLocaleString('fr-BE', {maximumFractionDigits:0}) + " €";
-}
-
-async function fetchPrices(){
-    const [gold, silver, fx] = await Promise.all([
-        fetch("https://api.gold-api.com/price/XAU").then(r=>r.json()),
-        fetch("https://api.gold-api.com/price/XAG").then(r=>r.json()),
-        fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
-    ]);
-
-    const rate = fx.rates.EUR;
-
-    return {
-        gold_per_g: (gold.price * rate) / OZ_TO_G,
-        silver_per_g: (silver.price * rate) / OZ_TO_G,
-    };
-}
-
-function calculate(){
-
-    const p = state.prices;
-    const pf = state.portfolio;
-
-    const goldTotal =
-        (pf.or_suisse_g + pf.or_belgique_g) * p.gold_per_g;
-
-    const silverTotal =
-        pf.argent_g * p.silver_per_g;
-
-    const ratio = p.gold_per_g / p.silver_per_g;
-
-    const total = goldTotal + silverTotal;
-
-    return {
-        goldTotal,
-        silverTotal,
-        total,
-        ratio
-    };
-}
-
-function render(data){
-
-    setText("total", euro(data.total));
-    setText("or", euro(data.goldTotal));
-    setText("argent", euro(data.silverTotal));
-    setText("ratio", data.ratio.toFixed(2).replace('.',','));
-}
-
-async function init(){
-
-    state.prices = await fetchPrices();
-
-    const result = calculate();
-    render(result);
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-
-    const refreshBtn = document.getElementById("refresh-btn");
-
-    if (refreshBtn) {
-        refreshBtn.addEventListener("click", init);
-    }
-
-    init();
-});
-
-</script>
-
-</body>
+<IDOCTYPE html> 
+<html lang="fr"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" 
+content="width=device-width, initialscale=1.0"> 
+<title>Portefeuille</title> 
+<link rel="stylesheet" href="style.css?v=59"> 
+<script src="https://cdn.jsdelivr.net/npm/ 
+chart.js"></script> 
+<!- PWA --> 
+<link rel="manifest" href="manifest.json"> 
+<meta name="theme-color" 
+content="#0f172a"> 
+<!-- iOS / Android --><link rel="apple-touch-icon" href="icon-192- 
+v2.png"> 
+<meta name="apple-mobile-web-appcapable” content="yes"> 
+<meta name="apple-mobile-web-appstatus-bar-style" content="black-translucent"> 
+</head> 
+<body> 
+<div class="container"> 
+<!-- HEADER --> 
+<div class="header"> 
+<div class="header-left"> 
+<h2>@ Portefeuille</h2> 
+<small>Or - Argent - ETF</small> 
+</div> 
+<div class="header-actions"> 
+<div id="refresh-btn" class="refresh"> c </
+div><div id="variation" class="badge-perf"></ 
+div> 
+</div> 
+</div> 
+<!- TOTAL —> 
+<div class="card highlight"> 
+<small>Total global</small> 
+<h2 id="total" class="gold"></h2> 
+</div> 
+<I- KPI --> 
+<div class="kpi-grid"> 
+<div class="kpi"><small>OR</small><h3 
+id="or"></h3></div> 
+<div class="kpi"><small>ARGENT</ 
+small><h3 id="argent"></h3></div> 
+<div class="kpi"><small>RATIO</small><h3 
+id="ratio"></h3></div> 
+</div> <!-- ALERT --> 
+<div class="card alert-box"> 
+<span id="alert-text"></span> 
+</div> 
+<!- REPARTITION --> 
+<div class="card repartition"> 
+<h3>Répartitions</h3> 
+<div class="repartition-grid"> 
+<div class="bloc"> 
+<h4>Métaux</h4> 
+<div class="donut" id="donut-metaux"></div> 
+<div class="legend"> 
+<div class="legend-item"> 
+<span class="dot dot-or-suisse'></span> 
+<span>Or Suisse :</span> 
+<span id="p-or-suisse"></span> 
+</div> <div class="legend-item"> 
+<span class="dot dot-or-belgique"></span> 
+<span>Or Belgique :</span> 
+<span id="p-or-belgique"></span> 
+</div> 
+<div class="legend-item"> 
+<span class="dot dot-argent"></span> 
+<span>Argent :</span> 
+<span id="p-argent"></span> 
+</div> 
+</div> 
+</div> 
+<div class="bloc"> 
+<h4>ETF</h4> 
+<div class="donut etf"></div> 
+<div class="legend"> 
+<div class="legend-item"> <span class="dot dot-monde"></span> 
+<span>Monde :</span> 
+<span id="p-monde"></span> 
+</div> 
+<div class="legend-item"> 
+<span class="dot dot-seniors"></span> 
+<span>Séniors :</span> 
+<span id="p-seniors"></span> 
+</div> 
+</div> 
+</div> 
+</div> 
+</div> 
+<!-- GRAPH --> 
+<div class="card"> 
+<h3>Évolution 10 jours</h3> 
+<canvas id="chart-10j"></canvas></div> 
+<!-- METAUX -> 
+<div class="card"> 
+<h3>Métaux Précieux</h3> 
+<l-- 
+<div id="metaux-total-value"></div> 
+<div id="metaux-total-perf"></div> 
+-—> 
+<table> 
+<tr><th>Type</th><th>Stockage</ 
+th><th>Qté</th><th>€/g</th><th>Perf</th></ 
+tr> 
+<ir> 
+<td>Or</td><td>Suisse</td> 
+<td id="q-or-suisse"></td><td id="p-or-suisse-g"></td> 
+<td id="perf-or-suisse"></td> 
+</tr> 
+<tr> 
+<td>Or</td><td>Belgique</td> 
+<td id="q-or-belgique"></td> 
+<td id="p-or-belgique-g"></td> 
+<td id="perf-or-belgique"></td> 
+</tr> 
+<tr> 
+<td>Argent</td><td>Suisse</td> 
+<td id="g-argent"></td> 
+<td id="p-argent-g"></td> 
+<td id="perf-argent"></td> 
+</tr> 
+</table> 
+<div class="total-line"> 
+<span>X Total Métaux</span><span id="metaux-total-bottom"></span> 
+</div> 
+</div> 
+<!|- ETF -> 
+<div class="card"> 
+<h3>ETF</h3> 
+<l-- 
+<div id="etf-total-value"></div> 
+-—> 
+<table> 
+<tr><th>Nom</th><th>Parts</ 
+th><th>Spot</th><th>Perf</th></tr> 
+<tr> 
+<td>Monde</td> 
+<td id="etf-monde-parts"></td><td id="etf-monde-prix"></td> 
+<td id="etf-monde-perf"></td> 
+</tr> 
+<tr> 
+<td>Séniors</td> 
+<td id="etf-seniors-parts"></td> 
+<td id="etf-seniors-prix"></td> 
+<td id="etf-seniors-perf"></td> 
+</tr> 
+<tr> 
+<td>Juniors</td> 
+<td id="etf-juniors-parts"></td> 
+<td id="etf-juniors-prix"></td> 
+<td id="etf-juniors-perf"></td> 
+</tr> 
+</table> 
+<div class="total-line"> 
+<span>. Total ETF</span> 
+<span id="etf-total-bottom"></span></div> 
+</div> 
+<script> 
+const state = { 
+prices: null, 
+etfPrices: null, 
+portfolio: { 
+or_suisse_g: 338.66, 
+or_belgique_g: 130.62, 
+argent_g: 6000b 
+etf: { 
+monde: { parts: 5, buy: 761.06 }, 
+seniors: { parts: 13, buy: 1048.57 }, 
+juniors: { parts: 0, buy: 0 } 
+} 
+// ===== HELPER ===== 
+function setText(id, value){ 
+const el = document.getElementByld(id); 
+if(el) el.innerText = value; 
+async function fetchPrices(){ 
+const [gold, silver, fx] = await Promise.all([ 
+fetch("https://api.gold-api.com/price/XAU").then(r=>r.json()), 
+fetch("https://api.gold-api.com/price/ 
+XAG").then(r=>r.json()), 
+fetch("https://open.er-api.com/v6/latest/ 
+USD").then(r=>r.json()) 
+D; 
+const rate = fx.rates.EUR; 
+return { 
+gold_per_g: (gold.price * rate) / 0Z_TO_G, 
+silver_per_g: (silver.price * rate) / 
+0Z_TO_G, 
+} 
+} 
+async function fetchETFPrices(){ 
+const API_KEY = 
+"e10aefe097fe40fba25f4e129bdf0c4f";const cache = 
+JSON.parse(localStorage.getltem("etfPrices") 
+} 
+const last = 
+localStorage.getltem("etfPricesTime"); 
+// @ si cache < 10 min > on l'utilise 
+if(cache && last && (Date.now() - last < 
+1800000)){ 
+console.log(" / cache récent utilisé"); 
+return cache; 
+} 
+try {
+const [vwce, gdx, gdxj, fx] = await 
+Promise.all([ 
+fetch( https://api.twelvedata.com/ 
+price?symbol=IWDA&apikey=S{API_KEY} 
+*).then(r=>r.json()), 
+fetch( https://api.twelvedata.com/price?symbol=GDX&apikey=S{API_KEY} 
+*).then(r=>r.json()), 
+fetch('https://api.twelvedata.com/ 
+price?symbol=GDXJ&apikey=S{API_KEY} 
+*).then(r=>r.json()), 
+fetch("https://open.er-api.com/v6/ 
+latest/USD").then(r=>r.json()) 
+D); 
+console.log("ETF RAW:", vwce, gdx, gdxj); 
+console.log("VWCE:", vwce); 
+console.log("GDX:", gdx); 
+const rate = fx.rates.EUR; 
+function safePrice(obj){ 
+if(obj && obj.price){ 
+return parseFloat(obj.price); 
+} else { 
+console.warn("API error:", obj); 
+return 0; 
+}let seniors = safePrice(gdx) * rate; 
+if(Iseniors || seniors < 85 || seniors > 110){ 
+console.warn("fallback Seniors utilisé"); 
+seniors = 93.38; 
+} 
+const result = { 
+monde: safePrice(vwce) || 150, 
+seniors: seniors, 
+juniors: safePrice(gdxj) * rate 
+} 
+// ==z=z== SAVE CACHE ==z=z== 
+localStorage.setltem("etfPrices", 
+JSON.stringify(result));localStorage.setltem("etfPricesTime", 
+Date.now()); 
+return result; 
+} catch(e){ 
+console.warn(")X API HS — fallback 
+cache"); 
+return cache || { 
+monde: 0, 
+seniors: 0, 
+juniors: 0 
+} 
+} 
+} 
+function parseCSV(text) { 
+return text 
+trim().split("\n") 
+.map(row => row.split(";")); 
+function cleanNumber(value) { 
+if (Ivalue) return 0; 
+return Number( 
+value 
+replace(/[*0-9,]/g, ") 
+replace(,, ")) 
+)11 0; 
+}) ===== CALEUL ===s 
+function calculate(){ 
+const p = state.prices; 
+const pf = state.portfolio; 
+const etf = state.etf, 
+const pe = state.etfPrices; 
+console.log("Argent g:", pf.argent_g); // 
+ici 
+const goldTotal = 
+(pf.or_suisse_g + pf.or_belgique_g) * 
+p.gold_per_g; 
+const silverTotal = 
+pf.argent_g * p.silver_per_g; 
+const ratio = p.gold_per_g / p.silver_per_g;const totalMetaux = (goldTotal + 
+silverTotal) || 1; 
+const pOrSuisse = 
+(pf.or_suisse_g *p.gold_per_g) / 
+totalMetaux * 100; 
+const pOrBelgique = 
+(pf.or_belgique_g * p.gold_per_g) / 
+totalMetaux * 100; 
+const pArgent = 
+(silverTotal / totalMetaux) * 100; 
+// valeurs € 
+const vMonde = etf.monde.parts * 
+pe.monde; 
+const vSeniors = etf.seniors.parts * 
+pe.seniors; 
+const vJuniors = etf.juniors.parts * 
+pe.juniors; const totalETF = vMonde + vSeniors + 
+vJuniors || 0; 
+// % ETF 
+const pMonde = totalETF ? (vMonde / 
+totalETF) * 100 : 0; 
+const pSeniors = totalETF ? (vSeniors / 
+totalETF) * 100 : 0; 
+const pJuniors = totalETF ? (vJuniors / 
+totalETF) * 100 : 0; 
+// TOTAL GLOBAL 
+const total = goldTotal + silverTotal + 
+totalETF; 
+console.log("ETF prices:", pe); 
+console.log("ETF values:", { 
+monde: etf.monde.parts * pe.monde, 
+seniors: etf.seniors.parts * pe.seniors 
+Nreturn { 
+goldTotal, 
+silverTotal, 
+total, 
+ratio, 
+pOrSuisse, 
+pOrBelgique, 
+pArgent, 
+vMonde, 
+vSeniors, 
+vJuniors, 
+totalETF, 
+pMonde, 
+pSeniors, 
+pJuniors,function percent(v){ 
+return (v || 0).toFixed(2).replace(!;) + "%"; 
+// ===== FORMAT ===== 
+function euro(v){ 
+return v.toLocaleString(‘fr-BE, 
+{maximumFractionDigits:0}) + " €"; 
+function getAlertMessage(ratio){ 
+if(ratio >= 70) return "% Hibernation"; 
+if(ratio >= 50) return "Cÿ Zone Nord", 
+if(ratio >= 45) return "@ Tempéré"; 
+if(ratio >= 40) return "¢y Chaud";return "&@ Extrême"; 
+} 
+function applyRatioColor(ratio){ 
+const el = document.getElementByld("alerttext"); 
+el.classList.remove("positive", negative"); 
+if(ratio >= 50){ 
+e sty 
+} else if 
+e sty 
+} else { 
+e 
+sty 
+} 
+e.co 
+ratio 
+or = "#93c5fd"; // bleu froid >= 40){ 
+e.co 
+or = "#facc15"; // jaune 
+e.co 
+or = "#ef4444"; // rouge 
+el.style.fontWeight = "600"; 
+el.style.transition = "0.3s";function render(data){ 
+setText("or", euro(data.goldTotal)); 
+setText("argent", euro(data.silverTotal)); 
+setText("total", euro(data.total)); 
+setText("etf-total-bottom", 
+euro(data.totalETF)); 
+// ===== METAUX ===== 
+const p1 = Math.max(0, Math.min(100, 
+data.pOrSuisse || 0)); 
+const p2 = Math.max(0, Math.min(100, 
+data.pOrBelgique || 0)); 
+const p3 = Math.max(0, 100 - (p1 + p2)); setText("p-or-suisse", percent(p1)); 
+setText("p-or-belgique", percent(p2)); 
+setText("p-argent", percent(p3)); 
+const el = document.getElementByld("donutmetaux"); 
+const gap = 0.8; // @ IMPORTANT — ici 
+if(el){ 
+el.style.background = 
+“conic-gradient( 
+#facc15 0% S{Math.max(0, p1 - gap)}%, 
+#020617 ${Math.max(0, p1 - gap)}% $ 
+{p1}%, 
+#f59e0b ${p1}% S{Math.max(p1, p1 + p2 
+- gap)}%, 
+#020617 ${Math.max(p1, p1 + p2 - gap)} 
+% S{p1 + p2}%, 
+#9ca3af S{p1 + p2}% 100% 
+}const e1 = Math.max(0, Math.min(100, 
+data.pMonde || 0)); 
+const e2 = Math.max(0, Math.min(100, 
+data.pSeniors || 0)); 
+const e3 = Math.max(0, 100 - (e1 + e2)); 
+setText("p-monde", percent(e1)); 
+setText("p-seniors", percent(e2)); 
+const elETF = 
+document.querySelector(".donut.etf"); 
+if(elETF){ 
+elETF.style.background = 
+“conic-gradient( 
+#22c55e 0% S{Math.max(0, e1 - gap)}%, 
+#020617 S{Math.max(0, e1 - gap)}% ${e1}%, 
+#06b6d4 ${e1}% S{e1 + e2}%, 
+#64748b S{e1 + e2}% 100% 
+} 
+); setText("ratio", 
+data.ratio.toFixed(2).replace('.,, 
+); 
+setText("alert-text", 
+getAlertMessage(data.ratio)); 
+applyRatioColor(data.ratio); 
+}// =====NIT ===== 
+async function init(){ 
+try{ 
+setText("total", "Chargement..."); 
+setText("or", "..."); 
+setText("argent" …" 
+setText("ratio", "…"); 
+state.prices = await fetchPrices(); 
+state.etfPrices = await fetchETFPrices(); 
+// @ log price 
+console.log("Gold €/g:", 
+state.prices.gold_per_g); 
+console.log("Silver €/g:", 
+state.prices.silver_per_g); 
+const result = calculate(); 
+render(result);// @ récupérer historique 
+const history = await fetchHistory(); 
+const lastHistory = history.at(-1)?.total || 0; 
+// @ calcul variation 
+const diff = result.total - lastHistory; 
+const pct = lastHistory ? (diff / lastHistory) * 
+100 : 0; 
+// @ affichage badge 
+const el = 
+document.getElementByld("variation"); 
+const sign = diff >= 0 ? "+" : ""; 
+// &4 ARRONDI PROPRE 
+const diffRounded = Math.round(diff);const pctRounded = pct.toFixed(2).replace(., 
+const diffStr = sign + 
+diffRounded.toLocaleString(fr-BE" + " €"; 
+const pctStr = sign + pctRounded + "%"; 
+el.innerText = diffStr + " (" + pctStr + ")"; 
+// @ couleur 
+el.classList.remove("positive", "negative"); 
+if (diff >= 0) { 
+el.classList.add("positive"); 
+} else { 
+el.classList.add("negative"); 
+} 
+// @ affichage graphique 
+await renderChart();} catch(e){ 
+console.error("Erreur:", e); 
+setText("total", "Erreur chargement"); 
+} 
+} 
+async function fetchHistory(){ 
+const url = "https://docs.google.com/ 
+spreadsheets/d/e/ 
+2PACX-1vQQqy9DRNPgKY59Ka56rNkWGwYf 
+d7XqKiGh6YJxudezufOx7ZOW6SzITObz4DLG 
+4t6AK9qmBfn6TI78/pub? 
+gid=1311770820&single=true&output=csv"; 
+const res = await fetch(url); 
+const text = await res.text();console.log(text); 
+const rows = text.trim().split("\n").map(r => 
+r.split(",)); 
+const history = []; 
+for (let i = 1; i < rows.length; i++) { 
+const row = rows]i]; 
+if ([row || row.length < 2) continue; 
+const date = row[0]?.trim(); 
+const totalRaw = row[1]?.trim(); 
+const total = Number( 
+totalRaw 
+?.replace(/\s/g, ") 
+?.replace("", ".") 
+); 
+console.log("DATE:", date);console.log("RAW:", totalRaw); 
+console.log("TOTAL:", total); 
+if (date && date.includes("/") && ! 
+isNaN(total) && total > 10000) { 
+history.push({ 
+date: date, 
+total: total 
+» 
+} 
+} 
+return history; 
+} 
+// ===== async function renderChart ===== 
+async function renderChart(){ 
+const history = await fetchHistory();const last = history.slice(-10); 
+const labels = last.map(h => {
+const [day, month] = h.date.split("/"); 
+return day + "/" + month; 
+)k 
+// ===== ENRICHISSEMENT ===== 
+const enriched = last.map((h, i) => { 
+const prev = last[i - 1]?.total || h.total; 
+const diff = h.total - prey; 
+const pct = prev ? (diff / prev) * 100 : 0; 
+return { 
+total: h.total, 
+diff, 
+pctconst movingAvg = enriched.map((_, i, arr) 
+=> { 
+if (i < 6) return null; 
+const slice = arr.slice(i - 6, i + 1); 
+const sum = slice.reduce((acc, v) => acc 
++ v.total, 0); 
+return sum / 7; 
+1 
+const ctx = 
+document.getElementByld("chart-10j").getCon 
+text("2d"); 
+const first = enriched[0].total; 
+const lastVal = enriched.at(-1).total; 
+const isUp = lastVal >= first; 
+const color = isUp ? "34,197,94" : 
+"239,68,68",const gradient = ctx.createLinearGradient(0, 
+0, 0, ctx.canvas.height); 
+gradient.addColorStop(0, ‘rgba(S{color},0.4)"); 
+gradient.addColorStop(1, ‘rgba(S{color},0)"); 
+if (window.chart10j) { 
+window.chart10j.destroy(); 
+} 
+window.chart10j = new Chart(ctx, { 
+type: "line", 
+data: { 
+labels: labels, 
+datasets: [ 
+// @ COURBE PRINCIPALE 
+{ 
+data: enriched.map(e => e.total), 
+tension: 0.4, 
+borderColor: isUp ? "#22c55e" : 
+"Hef4444", 
+backgroundColor: gradient,fill: true, 
+pointRadius: 4, // & + gros 
+pointHoverRadius: 8, // & + 
+facile mobile 
+pointBackgroundColor: 
+function(context) { 
+const i = context.datalndex; 
+const diff = enriched[i]?.diff || 0; 
+return diff >= 0 ? "#22c55e" : 
+"Hef4444", 
+y 
+pointBorderWidth: 0 
+}, 
+// @ MOYENNE MOBILE 
+{ 
+data: movingAvg, 
+tension: 0.4, 
+borderColor: "#a78bfa",borderWidth: 2, 
+pointRadius: 0, 
+borderDash: [6,6], 
+fill: false 
+} 
+] 
+y 
+options: { 
+responsive: true, 
+maintainAspectRatio: false, 
+interaction: { 
+mode: "index", 
+intersect: false // @ KEY MOBILE 
+FIX 
+J 
+plugins: { 
+legend: { display: false }, 
+tooltip: {backgroundColor: "#0f172a", 
+borderColor: "#38bdf8", 
+borderWidth: 1, 
+titleColor: "#e2e8f0", 
+bodyColor: "#e2e8f0", 
+displayColors: false, 
+callbacks: { 
+label: function(context) { 
+// ignore la MM7 
+if (context.datasetIndex === 1) return null; 
+const i = context.datalndex; 
+const point = enriched[i]; 
+const value = point.total.toLocaleString('frBEI) + n €ll; 
+const diff = point.diff;const pct = point.pct; 
+// @ AJOUT ICI 
+if (Math.abs(diff) < 1) { 
+return [value]; 
+} 
+const sign = diff >= 0 ? "+": ", 
+const diffStr = sign + diff.toLocaleString('frBE', {maximumFractionDigits: 0}) + " €"; 
+const pctStr = sign + 
+pct.toFixed(2).replace('.,")) + "%"; 
+return [ 
+value, 
+diffStr +" (" + petStr + ")" 
+I; 
+}} 
+} 
+y 
+scales: { 
+X: { 
+ticks: { color: "#94a3b8" }, 
+grid: { color: 
+"rgba(148,163,184,0.05)" } 
+}, 
+y:{ 
+ticks: { 
+color: "#94a3b8", 
+callback: v => 
+v.toLocaleString(fr-BE") + " €" 
+}, 
+grid: { color: 
+"rgba(148,163,184,0.05)" } 
+} 
+}, 
+animation: {duration: 800, 
+easing: "easeOutQuart” 
+} 
+} 
+} 
+} 
+// ===== START ===== 
+window.addEventListener("DOMContentLoade 
+d',() =>{ 
+document.getElementByld("refresh-btn") 
+.addEventListener("click", init); 
+init();</script> 
+<script> 
+if (serviceWorker' in navigator) { 
+window.addEventListener(load', () => {
+navigator.serviceWorker.register('sw.js’) 
+then(() => console.log("SW OK")) 
+.catch(err => console.log("SW error", err)); 
+»:} 
+</script> 
+</body> 
 </html>
