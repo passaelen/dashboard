@@ -526,6 +526,12 @@ function render(data){
 
     setText("alert-text", getAlertMessage(data.ratio));
     applyRatioColor(data.ratio);
+
+document.querySelectorAll(".donut").forEach(el => {
+        el.classList.remove("enter");
+        void el.offsetWidth; // force reflow
+        el.classList.add("enter");
+    });
 }
 
 
