@@ -1,4 +1,4 @@
-const CACHE_NAME = "portfolio-v1";
+const CACHE_NAME = "portfolio-v2";
 
 const urlsToCache = [
   "/",
@@ -9,9 +9,26 @@ const urlsToCache = [
 
 // INSTALL
 self.addEventListener("install", event => {
+  self.skipWaiting(); // 🔥 active direct
+
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+// ACTIVATE (nettoyage anciens caches)
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
   );
 });
 
