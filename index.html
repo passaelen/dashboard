@@ -642,6 +642,55 @@ if (elETF) {
     setText("alert-text", getAlertMessage(data.ratio));
     applyRatioColor(data.ratio);
 
+
+// ===== METAUX TABLE =====
+const p = state.prices;
+const pf = state.portfolio;
+
+// PRIX
+const goldPrice = p.gold_per_g;
+const silverPrice = p.silver_per_g;
+
+// VALEURS €
+const orSuisseValue = pf.or_suisse_g * goldPrice;
+const orBelgiqueValue = pf.or_belgique_g * goldPrice;
+const argentValue = pf.argent_g * silverPrice;
+
+// PERF (simple estimation vs prix d'achat moyen)
+function perf(current, buy){
+    if(!buy) return "-";
+    const pct = ((current - buy) / buy) * 100;
+    return pct.toFixed(1).replace(".", ",") + "%";
+}
+
+// 👉 à adapter si tu veux être précis plus tard
+const avgGold = 55;   // 💡 à ajuster
+const avgSilver = 0.8;
+
+// ===== AFFICHAGE =====
+setText("q-or-suisse", pf.or_suisse_g.toFixed(2));
+setText("q-or-belgique", pf.or_belgique_g.toFixed(2));
+setText("q-argent", pf.argent_g.toFixed(0));
+
+// prix
+setText("p-or-suisse-g", goldPrice.toFixed(2) + " €");
+setText("p-or-belgique-g", goldPrice.toFixed(2) + " €");
+setText("p-argent-g", silverPrice.toFixed(2) + " €");
+
+// perf
+setText("perf-or-suisse", perf(goldPrice, avgGold));
+setText("perf-or-belgique", perf(goldPrice, avgGold));
+setText("perf-argent", perf(silverPrice, avgSilver));
+
+// total
+const totalMetaux = orSuisseValue + orBelgiqueValue + argentValue;
+setText("metaux-total-bottom", euro(totalMetaux));
+
+
+
+
+
+// 🔥🔥 ANIMATION DONUTS
 setTimeout(() => {
 document.querySelectorAll(".donut").forEach(el => {
 
