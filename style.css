@@ -460,3 +460,13 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
     100% { transform: scale(1); }
 }
 
+/* ===== bouton refresh haut droit ===== */
+.spin {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
