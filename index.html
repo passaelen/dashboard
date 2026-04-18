@@ -632,7 +632,8 @@ async function renderChart(){
         };
     });
 
-    // ===== MOYENNE MOBILE 7 =====
+    
+// ===== MOYENNE MOBILE 7 =====
     const movingAvg = enriched.map((_, i, arr) => {
         if (i < 6) {
     return arr.slice(0, i+1).reduce((a,v)=>a+v.total,0)/(i+1);
@@ -803,17 +804,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     init();
 });
-
-
-// ===== START =====
-window.addEventListener("DOMContentLoaded", () => {
-document.getElementById("refresh-btn")
-        .addEventListener("click", init);
-
-init();
-});
-
-
     
   
 </script>
