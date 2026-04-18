@@ -249,6 +249,26 @@ transition: all 0.3s ease;
 
 
 /* ===== DONUT ===== */
+@keyframes donutEnter {
+    0% {
+        transform: rotate(-120deg) scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: rotate(10deg) scale(1.05);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+.donut.enter {
+    animation: donutEnter 0.8s ease-out;
+}
+
+
+
 .repartition-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
