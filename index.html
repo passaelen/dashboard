@@ -541,22 +541,22 @@ if(elETF){
     applyRatioColor(data.ratio);
 
 setTimeout(() => {
-   
- document.querySelectorAll(".donut").forEach(el => {
+document.querySelectorAll(".donut").forEach(el => {
 
-    const inner = el.querySelector(".donut-inner");
+        const inner = el.querySelector(".donut-inner");
 
-    const angle = Math.random() * 360;
+        const angle = Math.random() * 360;
 
-    el.style.transform = `rotate(${angle}deg) scale(1)`;
+        el.style.transform = `rotate(${angle}deg) scale(1)`;
 
-    el.classList.add("show");
+        el.classList.add("show");
 
-    inner.classList.remove("enter");
-    void inner.offsetWidth;
-    inner.classList.add("enter");
-});
+        inner.classList.remove("enter");
+        void inner.offsetWidth;
+        inner.classList.add("enter");
+    });
 
+}, 50);
 
 
 // ===== INIT =====
