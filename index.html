@@ -687,8 +687,16 @@ async function renderChart(){
     const color = isUp ? "34,197,94" : "239,68,68";
 
     const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-    gradient.addColorStop(0, `rgba(${color},0.4)`);
-    gradient.addColorStop(1, `rgba(${color},0)`);
+gradient.addColorStop(0, isUp
+    ? "rgba(34,197,94,0.5)"
+    : "rgba(239,68,68,0.5)"
+);
+gradient.addColorStop(0.6, isUp
+    ? "rgba(34,197,94,0.15)"
+    : "rgba(239,68,68,0.15)"
+);
+gradient.addColorStop(1, "rgba(0,0,0,0)");
+
 
     if (window.chart10j) {
         window.chart10j.destroy();
