@@ -491,7 +491,7 @@ setText("p-or-suisse", percent(p1));
 setText("p-or-belgique", percent(p2));
 setText("p-argent", percent(p3));
 
-const gap = 0.6;
+const gap = 0.35;
 
 const el = document.getElementById("donut-metaux");
 if(el){
@@ -540,11 +540,12 @@ if(elETF){
     setText("alert-text", getAlertMessage(data.ratio));
     applyRatioColor(data.ratio);
 
-document.querySelectorAll(".donut").forEach(el => {
-        el.classList.remove("enter");
-        void el.offsetWidth; // force reflow
-        el.classList.add("enter");
+setTimeout(() => {
+    document.querySelectorAll(".donut").forEach(d => {
+        d.classList.add("show");
     });
+}, 50);
+
 }
 
 
