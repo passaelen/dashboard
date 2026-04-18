@@ -634,13 +634,17 @@ async function renderChart(){
 
     // ===== MOYENNE MOBILE 7 =====
     const movingAvg = enriched.map((_, i, arr) => {
-        if (i < 6) return null;
+        if (i < 6) {
+    return arr.slice(0, i+1).reduce((a,v)=>a+v.total,0)/(i+1);
+}
 
         const slice = arr.slice(i - 6, i + 1);
         const sum = slice.reduce((acc, v) => acc + v.total, 0);
 
         return sum / 7;
     });
+
+
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
 
