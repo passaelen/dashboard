@@ -480,6 +480,35 @@ function applyRatioColor(ratio){
 
 
 
+function animateValue(target, duration = 600) {
+    let start = 0;
+    const stepTime = 16; // ~60fps
+    const steps = duration / stepTime;
+    const increment = target / steps;
+
+    return new Promise(resolve => {
+        const values = [];
+        let current = 0;
+
+        const interval = setInterval(() => {
+            current += increment;
+
+            if (current >= target) {
+                current = target;
+                clearInterval(interval);
+                values.push(current);
+                resolve(values);
+            } else {
+                values.push(current);
+            }
+        }, stepTime);
+    });
+}
+
+
+
+
+
 // ===== RENDER =====  
 function render(data){
 
@@ -488,7 +517,8 @@ function render(data){
     setText("total", euro(data.total));
     setText("etf-total-bottom", euro(data.totalETF));
     
-    // ===== METAUX =====
+    
+// ===== METAUX =====
 const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
 const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
 const p3 = Math.max(0, 100 - (p1 + p2));
@@ -498,20 +528,50 @@ setText("p-or-belgique", percent(p2));
 setText("p-argent", percent(p3));
 
 const gap = 0.35;
-
 const el = document.getElementById("donut-metaux");
-if(el){
-    el.style.background =
-    `conic-gradient(
-        #facc15 0% ${Math.max(0, p1 - gap)}%,
-        #020617 ${Math.max(0, p1 - gap)}% ${p1}%,
 
-        #f59e0b ${p1}% ${Math.max(p1, p1 + p2 - gap)}%,
-        #020617 ${Math.max(p1, p1 + p2 - gap)}% ${p1 + p2}%,
+if (el) {
 
-        #9ca3af ${p1 + p2}% 100%
-    )`;   
+    const inner = el.querySelector(".donut-inner") || el;
+
+    const duration = 600;
+    const stepTime = 16;
+    const steps = duration / stepTime;
+
+    let current = 0;
+    const increment = p1 / steps;
+
+    const safeP1 = p1 || 1;
+
+    const interval = setInterval(() => {
+
+    const progress = current / (p1 || e1 || 1);
+    const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+current += increment * (1 + ease * 2);
+
+        if (current >= p1) {
+            current = p1;
+            clearInterval(interval);
+        }
+
+        const p1a = current;
+        const p2a = p2 * (p1a / safeP1);
+        const total = p1a + p2a;
+
+        inner.style.background =
+        `conic-gradient(
+            #facc15 0% ${Math.max(0, p1a - gap)}%,
+            #020617 ${Math.max(0, p1a - gap)}% ${p1a}%,
+
+            #f59e0b ${p1a}% ${Math.max(p1a, total - gap)}%,
+            #020617 ${Math.max(p1a, total - gap)}% ${total}%,
+
+            #9ca3af ${total}% 100%
+        )`;
+
+    }, stepTime);
 }
+
 
 
 // ===== ETF =====
@@ -524,17 +584,48 @@ setText("p-seniors", percent(e2));
 
 const elETF = document.querySelector(".donut.etf");
 
-if(elETF){
-    elETF.style.background =
-    `conic-gradient(
-        #22c55e 0% ${Math.max(0, e1 - gap)}%,
-        #020617 ${Math.max(0, e1 - gap)}% ${e1}%,
+if (elETF) {
 
-        #06b6d4 ${e1}% ${Math.max(e1, e1 + e2 - gap)}%,
-        #020617 ${Math.max(e1, e1 + e2 - gap)}% ${e1 + e2}%,
+    const inner = elETF.querySelector(".donut-inner") || elETF;
 
-        #64748b ${e1 + e2}% 100%
-    )`;
+    const gap = 0.35;
+
+    const duration = 600;
+    const stepTime = 16;
+    const steps = duration / stepTime;
+
+    let current = 0;
+    const increment = e1 / steps;
+
+    const safeE1 = e1 || 1;
+
+    const interval = setInterval(() => {
+
+    const progress = current / (p1 || e1 || 1);
+    const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    current += increment * (1 + ease * 2);
+
+        if (current >= e1) {
+            current = e1;
+            clearInterval(interval);
+        }
+
+        const e1a = current;
+        const e2a = e2 * (e1a / safeE1);
+        const total = e1a + e2a;
+
+        inner.style.background =
+        `conic-gradient(
+            #22c55e 0% ${Math.max(0, e1a - gap)}%,
+            #020617 ${Math.max(0, e1a - gap)}% ${e1a}%,
+
+            #06b6d4 ${e1a}% ${Math.max(e1a, total - gap)}%,
+            #020617 ${Math.max(e1a, total - gap)}% ${total}%,
+
+            #64748b ${total}% 100%
+        )`;
+
+    }, stepTime);
 }
 
 
