@@ -283,25 +283,30 @@ transition: all 0.3s ease;
 }
 
 .donut {
+    margin: 4px auto;
+    isolation: isolate;
+    transform: scale(0.85);
+    opacity: 0;
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    margin: 4px auto;
     position: relative;
-    isolation: isolate;
+    transition: transform 1s ease;
+}
 
-    /* 🔥 base + glow maîtrisé */
+
+.donut-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     box-shadow: 
         0 0 0 1px rgba(255,255,255,0.06),
         0 8px 20px rgba(0,0,0,0.5),
         0 0 40px rgba(250, 204, 21, 0.18);
-
-    transform: scale(0.85);
-    opacity: 0;
-    transition: all 0.6s ease;
     animation: donutBreath 6s ease-in-out infinite;
-
 }
+
+
 
 
 .donut.show {
