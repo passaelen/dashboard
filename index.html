@@ -556,19 +556,17 @@ const refreshBtn = document.getElementById("refresh-btn");
 if (refreshBtn) {
     refreshBtn.addEventListener("click", async () => {
 
-        // 🔥 bloque double clic
-        if (refreshBtn.classList.contains("spin")) return;
+    if (refreshBtn.classList.contains("spin")) return;
 
-        refreshBtn.classList.add("spin");
+    refreshBtn.classList.add("spin");
 
+    try {
         await init(); // 🔁 relance tout
+    } finally {
+        refreshBtn.classList.remove("spin"); // ✅ stop EXACT au bon moment
+    }
 
-        setTimeout(() => {
-            refreshBtn.classList.remove("spin");
-        }, 800);
-
-    });
-}
+});
 
 
 
