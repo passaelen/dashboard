@@ -570,6 +570,13 @@ if (el) {
 
     el.classList.remove("positive", "negative");
     el.classList.add(diff >= 0 ? "positive" : "negative");
+
+el.classList.add("flash");
+setTimeout(() => {
+    el.classList.remove("flash");
+}, 400);
+
+
 }
 
 
