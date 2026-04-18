@@ -658,9 +658,14 @@ const argentValue = pf.argent_g * silverPrice;
 
 // PERF (simple estimation vs prix d'achat moyen)
 function perf(current, buy){
-    if(!buy) return "-";
+    if(!buy) return { text: "-", class: "" };
+
     const pct = ((current - buy) / buy) * 100;
-    return pct.toFixed(1).replace(".", ",") + "%";
+
+    return {
+        text: pct.toFixed(1).replace(".", ",") + "%",
+        class: pct >= 0 ? "positive" : "negative"
+    };
 }
 
 // 👉 à adapter si tu veux être précis plus tard
@@ -678,9 +683,17 @@ setText("p-or-belgique-g", goldPrice.toFixed(2) + " €");
 setText("p-argent-g", silverPrice.toFixed(2) + " €");
 
 // perf
-setText("perf-or-suisse", perf(goldPrice, avgGold));
-setText("perf-or-belgique", perf(goldPrice, avgGold));
-setText("perf-argent", perf(silverPrice, avgSilver));
+const perfOrSuisse = perf(goldPrice, avgGold);
+const perfOrBelgique = perf(goldPrice, avgGold);
+const perfArgent = perf(silverPrice, avgSilver);
+
+setText("perf-or-suisse", perfOrSuisse.text);
+setText("perf-or-belgique", perfOrBelgique.text);
+setText("perf-argent", perfArgent.text);
+
+document.getElementById("perf-or-suisse").className = perfOrSuisse.class;
+document.getElementById("perf-or-belgique").className = perfOrBelgique.class;
+document.getElementById("perf-argent").className = perfArgent.class;
 
 // total
 const totalMetaux = orSuisseValue + orBelgiqueValue + argentValue;
