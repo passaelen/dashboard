@@ -78,7 +78,7 @@ h3 {
 }
 
 .refresh:active {
-    transform: rotate(90deg);
+    transform: scale(0.9);
 }
 
 
