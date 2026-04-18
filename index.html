@@ -132,12 +132,13 @@
 -->
     
 <table>
-        <tr><th>Type</th><th>Stockage</th><th>Qté</th><th>€/g</th><th>Perf</th></tr>
+        <tr><th>Type</th><th>Stockage</th><th>Qté</th><th>€/g</th><th>Bén</th><th>Perf</th></tr>
         
         <tr>
         <td>Or</td><td>Suisse</td>
         <td id="q-or-suisse"></td>
         <td id="p-or-suisse-g"></td>
+        <td id="benef-or-suisse"></td>
         <td id="perf-or-suisse"></td>
         </tr>
         
@@ -145,6 +146,7 @@
         <td>Or</td><td>Belgique</td>
         <td id="q-or-belgique"></td>
         <td id="p-or-belgique-g"></td>
+        <td id="benef-or-belgique"></td>
         <td id="perf-or-belgique"></td>
         </tr>
         
@@ -152,6 +154,7 @@
         <td>Argent</td><td>Suisse</td>
         <td id="q-argent"></td>
         <td id="p-argent-g"></td>
+        <td id="benef-argent"></td>
         <td id="perf-argent"></td>
         </tr>
 
@@ -661,6 +664,36 @@ const silverPrice = p.silver_per_g;
 const orSuisseValue = pf.or_suisse_g * goldPrice;
 const orBelgiqueValue = pf.or_belgique_g * goldPrice;
 const argentValue = pf.argent_g * silverPrice;
+
+
+// ===== BENEFICES =====
+const benefOrSuisse = orSuisseValue - pf.or_suisse_cost;
+const benefOrBelgique = orBelgiqueValue - pf.or_belgique_cost;
+const benefArgent = argentValue - pf.argent_cost;
+
+function euroSigned(v){
+    const sign = v >= 0 ? "+" : "";
+    return sign + v.toLocaleString('fr-BE', {maximumFractionDigits:0}) + " €";
+}
+
+setText("benef-or-suisse", euroSigned(benefOrSuisse));
+setText("benef-or-belgique", euroSigned(benefOrBelgique));
+setText("benef-argent", euroSigned(benefArgent));
+
+function applyColor(id, value){
+    const el = document.getElementById(id);
+    if(!el) return;
+
+    el.classList.remove("positive", "negative");
+    el.classList.add(value >= 0 ? "positive" : "negative");
+}
+
+applyColor("benef-or-suisse", benefOrSuisse);
+applyColor("benef-or-belgique", benefOrBelgique);
+applyColor("benef-argent", benefArgent);
+
+
+
 
 // PERF (simple estimation vs prix d'achat moyen)
 function perf(current, buy){
