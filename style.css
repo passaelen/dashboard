@@ -8,6 +8,14 @@ body {
     overscroll-behavior: none;
 }
 
+th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
 .container {
     max-width: 900px;
     margin: auto;
