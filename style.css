@@ -438,3 +438,13 @@ th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),
     );
     color: #e0f2fe;
 }
+
+
+.refresh.spin {
+    animation: spin 0.8s linear;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
