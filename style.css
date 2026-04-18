@@ -8,13 +8,6 @@ body {
     overscroll-behavior: none;
 }
 
-th {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #94a3b8;
-    font-weight: 500;
-}
 
 .container {
     max-width: 900px;
@@ -396,21 +389,96 @@ transition: all 0.3s ease;
 
 
 /* ===== TABLE ===== */
-table {margin: 0;width: 100%;border-collapse: collapse;font-size: 13px;table-layout: fixed;}
-table tr:last-child td {border-bottom: none; /* enlève ligne + espace visuel */}
-th {color: #9ca3af;text-align: left;}
-td {padding: 6px;border-bottom: 1px solid #1f2937;}
-td:last-child div {font-weight: 600;}
-td:last-child {
+table {
+    margin: 0;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+/* lignes */
+table tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+/* headers */
+th {
+    color: #94a3b8;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+    padding: 6px;
+    padding-bottom: 8px; /* 🔥 respiration */
+}
+
+/* cellules */
+td {
+    padding: 6px;
+    border-bottom: 1px solid #1f2937;
+    transition: color 0.3s ease; /* 🔥 smooth update */
+}
+
+/* éviter retour ligne */
+th, td {
+    white-space: nowrap;
+}
+
+/* ===== ALIGNEMENTS PAR COLONNE ===== */
+
+/* Type */
+th:nth-child(1), td:nth-child(1) {
+    text-align: left;
+}
+
+/* Stockage */
+th:nth-child(2), td:nth-child(2) {
+    text-align: center;
+}
+
+/* Qté */
+th:nth-child(3), td:nth-child(3) {
+    text-align: right;
+}
+
+/* Prix / Spot */
+th:nth-child(4), td:nth-child(4) {
+    text-align: right;
+}
+
+
+td:nth-child(5) {
+    text-align: right;
+    font-weight: 700;
+}
+
+td:nth-child(5).positive {
+    text-shadow: 0 0 6px rgba(34,197,94,0.25);
+}
+
+td:nth-child(5).negative {
+    text-shadow: 0 0 6px rgba(239,68,68,0.25);
+}
+
+td:nth-child(5),
+td:nth-child(6) {
     font-variant-numeric: tabular-nums;
+}
+
+td:nth-child(6) {
     font-weight: 600;
 }
-tr:hover {background: rgba(255,255,255,0.03);}
-th, td {white-space: nowrap;}
-th:nth-child(1),td:nth-child(1) {    text-align: left;}
-th:nth-child(2),td:nth-child(2) {    text-align: center;}
-th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4),th:nth-child(5),td:nth-child(5) {    text-align: right;}
 
+td, th {
+    padding-left: 6px;
+    padding-right: 6px;
+}
 
 /* ===== GRAPH ===== */
 #chart-10j {
