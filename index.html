@@ -541,10 +541,21 @@ if(elETF){
     applyRatioColor(data.ratio);
 
 setTimeout(() => {
-    document.querySelectorAll(".donut").forEach(d => {
-        d.classList.add("show");
-    });
-}, 50);
+   
+ document.querySelectorAll(".donut").forEach(el => {
+
+    const inner = el.querySelector(".donut-inner");
+
+    const angle = Math.random() * 360;
+
+    el.style.transform = `rotate(${angle}deg) scale(1)`;
+
+    el.classList.add("show");
+
+    inner.classList.remove("enter");
+    void inner.offsetWidth;
+    inner.classList.add("enter");
+});
 
 }
 
