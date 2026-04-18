@@ -545,9 +545,12 @@ if (el) {
 
     const interval = setInterval(() => {
 
-    const progress = current / (p1 || e1 || 1);
-    const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-current += increment * (1 + ease * 2);
+        const progress = current / safeP1;
+
+        // ✅ easing correct (ralentit à la fin)
+        const ease = Math.pow(1 - progress, 2);
+
+        current += increment * ease;
 
         if (current >= p1) {
             current = p1;
@@ -601,9 +604,12 @@ if (elETF) {
 
     const interval = setInterval(() => {
 
-    const progress = current / (p1 || e1 || 1);
-    const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-    current += increment * (1 + ease * 2);
+        const progress = current / safeE1;
+
+        // ✅ easing correct
+        const ease = Math.pow(1 - progress, 2);
+
+        current += increment * ease;
 
         if (current >= e1) {
             current = e1;
@@ -627,7 +633,6 @@ if (elETF) {
 
     }, stepTime);
 }
-
 
     // ===== GLOBAL =====
     setText("ratio",
