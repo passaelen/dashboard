@@ -611,9 +611,6 @@ return history;
 async function renderChart(){
 
     const history = await fetchHistory();
-
-    console.log("HISTORY:", history);
-
     const last = history.slice(-10);
 
     const labels = last.map(h => {
@@ -621,93 +618,159 @@ async function renderChart(){
         return day + "/" + month;
     });
 
-    const values = last.map(h => h.total);
+    // ===== ENRICHISSEMENT =====
+    const enriched = last.map((h, i) => {
+        const prev = last[i - 1]?.total || h.total;
 
-    console.log("HISTORY FULL:", history);
-    console.log("LAST 10:", last);
-    console.log("VALUES CHART:", values);
- 
-    
+        const diff = h.total - prev;
+        const pct = prev ? (diff / prev) * 100 : 0;
+
+        return {
+            total: h.total,
+            diff,
+            pct
+        };
+    });
+
+    // ===== MOYENNE MOBILE 7 =====
+    const movingAvg = enriched.map((_, i, arr) => {
+        if (i < 6) return null;
+
+        const slice = arr.slice(i - 6, i + 1);
+        const sum = slice.reduce((acc, v) => acc + v.total, 0);
+
+        return sum / 7;
+    });
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
 
-    
-    // 🔥 gradient dynamique (mieux que 300 fixe)
+    const first = enriched[0].total;
+    const lastVal = enriched.at(-1).total;
+    const isUp = lastVal >= first;
+
+    const color = isUp ? "34,197,94" : "239,68,68";
+
     const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-    gradient.addColorStop(0, "rgba(56,189,248,0.4)");
-    gradient.addColorStop(1, "rgba(56,189,248,0)");
+    gradient.addColorStop(0, `rgba(${color},0.4)`);
+    gradient.addColorStop(1, `rgba(${color},0)`);
 
     if (window.chart10j) {
         window.chart10j.destroy();
     }
-    
+
     window.chart10j = new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: labels,
-        datasets: [{
-            data: values,
-            tension: 0.4, // 🔥 plus fluide
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
 
-            borderColor: "#38bdf8",
-            backgroundColor: gradient,
+                // 🔵 COURBE PRINCIPALE
+                {
+                    data: enriched.map(e => e.total),
+                    tension: 0.4,
+                    borderColor: isUp ? "#22c55e" : "#ef4444",
+                    backgroundColor: gradient,
+                    fill: true,
 
-            fill: true,
-            pointRadius: 3,
-            pointHoverRadius: 6,
-            pointBackgroundColor: "#38bdf8",
-            pointBorderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
+                    pointRadius: 4,
+                    pointHoverRadius: 8,
 
-        plugins: {
-            legend: { display: false },
-            tooltip: {
-                backgroundColor: "#0f172a",
-                borderColor: "#38bdf8",
-                borderWidth: 1,
-                titleColor: "#e2e8f0",
-                bodyColor: "#e2e8f0",
-                displayColors: false, // 🔥 plus clean
-                callbacks: {
-                    label: function(context) {
-                        return context.raw.toLocaleString('fr-BE') + " €";
-                    }
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: "#94a3b8"
+                    pointBackgroundColor: function(context) {
+                        const i = context.dataIndex;
+                        const diff = enriched[i]?.diff || 0;
+                        return diff >= 0 ? "#22c55e" : "#ef4444";
+                    },
+
+                    pointBorderWidth: 0
                 },
-                grid: {
-                    color: "rgba(148,163,184,0.05)"
+
+                // 🟣 MOYENNE MOBILE (MM7)
+                {
+                    data: movingAvg,
+                    tension: 0.4,
+                    borderColor: "#a78bfa",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    borderDash: [6,6],
+                    fill: false
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            interaction: {
+                mode: "index",
+                intersect: false
+            },
+
+            plugins: {
+                legend: { display: false },
+
+                tooltip: {
+                    backgroundColor: "#0f172a",
+                    borderColor: "#38bdf8",
+                    borderWidth: 1,
+                    titleColor: "#e2e8f0",
+                    bodyColor: "#e2e8f0",
+                    displayColors: false,
+
+                    callbacks: {
+
+                        label: function(context) {
+
+                            // ignore MM7
+                            if (context.datasetIndex === 1) return null;
+
+                            const i = context.dataIndex;
+                            const point = enriched[i];
+
+                            const value = point.total.toLocaleString('fr-BE') + " €";
+
+                            const diff = point.diff;
+                            const pct = point.pct;
+
+                            if (Math.abs(diff) < 1) {
+                                return [value];
+                            }
+
+                            const sign = diff >= 0 ? "+" : "";
+
+                            const diffStr = sign + diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
+                            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+                            return [
+                                value,
+                                diffStr + " (" + pctStr + ")"
+                            ];
+                        }
+                    }
                 }
             },
-            y: {
-                beginAtZero: false,
-                ticks: {
-                    color: "#94a3b8",
-                    callback: function(value) {
-                        return value.toLocaleString('fr-BE') + " €";
-                    }
+
+            scales: {
+                x: {
+                    ticks: { color: "#94a3b8" },
+                    grid: { color: "rgba(148,163,184,0.05)" }
                 },
-                grid: {
-                    color: "rgba(148,163,184,0.05)"
+                y: {
+                    ticks: {
+                        color: "#94a3b8",
+                        callback: v => v.toLocaleString('fr-BE') + " €"
+                    },
+                    grid: { color: "rgba(148,163,184,0.05)" }
                 }
+            },
+
+            animation: {
+                duration: 800,
+                easing: "easeOutQuart"
             }
-        },
-        animation: {
-            duration: 800,
-            easing: "easeOutQuart"
         }
-    }
-});
-    }
+    });
+}
 
 
 
