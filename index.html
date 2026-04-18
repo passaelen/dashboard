@@ -803,6 +803,19 @@ init();
 </script>
 
 
+
+<script id="b7f0w9">
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log("SW OK"))
+      .catch(err => console.log("SW error", err));
+  });
+}
+</script>
+
+
+
     
 </body>
 </html>
