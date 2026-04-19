@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🇨🇭 Or Suisse</title>  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="data.js"></script>
 </head><body>  <!-- HEADER -->  <div class="header">
     <div class="header-left">
       <h2>🇨🇭 Or Suisse</h2>
@@ -15,19 +16,19 @@
   </div>  <div class="container"><!-- TOTAL -->
 <div class="highlight">
   <small>Total Or Suisse</small>
-  <h2 id="totalSwiss">338.66 g</h2>
+  <h2 id="totalSwiss">0 g</h2>
 </div>
 
 <!-- KPI -->
 <div class="kpi-grid">
   <div class="kpi">
     <small>Poids</small>
-    <h3>338.66 g</h3>
+    <h3 id="kpiWeight">0 g</h3>
   </div>
 
   <div class="kpi">
-    <small>Valeur</small>
-    <h3>44 661 €</h3>
+    <small>Type</small>
+    <h3>Or</h3>
   </div>
 
   <div class="kpi">
@@ -51,21 +52,12 @@
         <th>Perf %</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>Or</td>
-        <td>Suisse</td>
-        <td>338.66</td>
-        <td>131.84 €</td>
-        <td class="positive">+24 926 €</td>
-        <td class="positive">126,4%</td>
-      </tr>
-    </tbody>
+    <tbody id="tableSwiss"></tbody>
   </table>
 
   <div class="total-line">
     <span>Total</span>
-    <span>44 661 €</span>
+    <span id="tableTotal">0 g</span>
   </div>
 </div>
 
@@ -74,7 +66,6 @@
   <h3>Répartition</h3>
 
   <div class="repartition-grid">
-
     <div class="bloc">
       <canvas id="chartSwiss"></canvas>
 
@@ -88,11 +79,41 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
   </div>  <script>
+    // =========================
+    // 🔢 DATA
+    // =========================
+    const weight = DATA.gold.suisse;
+
+    // =========================
+    // 🧾 INJECTION
+    // =========================
+    document.getElementById("totalSwiss").textContent =
+      weight.toFixed(2) + " g";
+
+    document.getElementById("kpiWeight").textContent =
+      weight.toFixed(2) + " g";
+
+    document.getElementById("tableTotal").textContent =
+      weight.toFixed(2) + " g";
+
+    document.getElementById("tableSwiss").innerHTML = `
+      <tr>
+        <td>Or</td>
+        <td>Suisse</td>
+        <td>${weight.toFixed(2)}</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    `;
+
+    // =========================
+    // 📊 GRAPH
+    // =========================
     const ctx = document.getElementById('chartSwiss');
 
     new Chart(ctx, {
