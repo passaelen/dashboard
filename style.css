@@ -309,6 +309,8 @@ transition: all 0.3s ease;
 
 
 .donut-label {
+    font-size: 11px;   /* 🔽 plus petit */
+    line-height: 1.2;
     position: absolute;
     inset: 0;
 
@@ -319,7 +321,10 @@ transition: all 0.3s ease;
     z-index: 3; /* 🔥 AU-DESSUS du donut */
 }
 
-
+.donut-label span {
+    font-size: 13px;   /* valeur € un peu plus visible */
+    font-weight: 600;
+}
 
 .donut-inner {
     width: 100%;
