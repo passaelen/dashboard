@@ -427,9 +427,14 @@ th {
 
 /* cellules */
 td {
+    text-align: right;
     padding: 6px;
     border-bottom: 1px solid #1f2937;
     transition: color 0.3s ease; /* 🔥 smooth update */
+}
+
+td:first-child {
+    text-align: left;
 }
 
 /* éviter retour ligne */
