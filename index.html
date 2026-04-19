@@ -889,9 +889,9 @@ state.etfPrices = await fetchETFPrices();
 // 🔥 3. override avec TON sheet
 if(last){
     state.etfPrices = {
-        monde: last.monde || 0,
-        seniors: last.seniors || 0,
-        juniors: last.juniors || 0
+        monde: last.monde > 0 ? last.monde : state.etfPrices.monde,
+        seniors: last.seniors > 0 ? last.seniors : state.etfPrices.seniors,
+        juniors: last.juniors > 0 ? last.juniors : state.etfPrices.juniors
     };
 }
 
