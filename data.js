@@ -16,7 +16,7 @@ const DATA = {
 
     or_suisse_cost: 1.01,
     or_belgique_cost: 1.01,
-    argent_cost: 1.01
+    argent_cost: 1.01,
 
 
     bor_suisse_g: 338.66,
