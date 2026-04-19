@@ -145,7 +145,7 @@
 <th>Perf %</th>
 </tr>
 
-        <tr onclick="window.location.href='or-suisse.html'" style="cursor:pointer;">
+<tr onclick="goToPage(this, 'or-suisse.html')">
     <td>Or</td>
     <td>Suisse</td>
     <td id="q-or-suisse"></td>
@@ -234,6 +234,8 @@
 </div>
 
 
+
+
 <script>
 
 
@@ -267,8 +269,6 @@ const state = {
         juniors: { parts: 0, buy: 0 }
     }
 };  
-
-
 
 
 // ===== HELPER =====
@@ -1283,6 +1283,17 @@ if ('serviceWorker' in navigator) {
 </script>
 
 
+
+<script>
+function goToPage(el, url) {
+    el.style.transform = "scale(0.97)";
+    el.style.opacity = "0.6";
+
+    setTimeout(() => {
+        window.location.href = url;
+    }, 120);
+}
+</script>
 
 
 </body>
