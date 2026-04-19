@@ -740,7 +740,9 @@ const benefOrBelgique = orBelgiqueValue - pf.or_belgique_cost;
 const benefArgent = argentValue - pf.argent_cost;
 
 function euroSigned(v){
-    const sign = v >= 0 ? "+" : "";
+    if (v === 0) return "0 €";
+
+    const sign = v > 0 ? "+" : "";
     return sign + v.toLocaleString('fr-BE', {maximumFractionDigits:0}) + " €";
 }
 
@@ -790,7 +792,13 @@ function applyColor(id, value){
     if(!el) return;
 
     el.classList.remove("positive", "negative");
-    el.classList.add(value >= 0 ? "positive" : "negative");
+
+    if(value > 0){
+        el.classList.add("positive");
+    } else if(value < 0){
+        el.classList.add("negative");
+    }
+    // = 0 → aucune classe → neutre
 }
 
 applyColor("benef-or-suisse", benefOrSuisse);
