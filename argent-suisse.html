@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🥈 Argent Suisse</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="data.js"></script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h2>🥈 Argent Suisse</h2>
+    <small>Stock sécurisé</small>
+  </div>
+
+  <div class="header-right">
+    <a href="index.html" class="badge">← Retour</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TOTAL -->
+  <div class="highlight">
+    <small>Total Argent Suisse</small>
+    <h2 id="totalSilver">0 g</h2>
+  </div>
+
+  <!-- TABLE -->
+  <div class="card">
+    <h3>Métaux Suisse</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Qté</th>
+          <th>Poids</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- LINGOTS -->
+        <tr>
+          <td colspan="3"><strong>🧱 Lingots</strong></td>
+        </tr>
+
+        <tr>
+          <td>Lingot Argent 1 kg</td>
+          <td>6</td>
+          <td>6000 g</td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><strong>Total lingots</strong></td>
+          <td><strong>6000 g</strong></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="total-line">
+      <span>🥈 Total Argent Suisse</span>
+      <span id="tableTotal">0 g</span>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+const weight = DATA?.portfolio?.argent_g || 0;
+
+const formatted = weight.toFixed(0) + " g";
+
+document.getElementById("totalSilver").textContent = formatted;
+document.getElementById("tableTotal").textContent = formatted;
+</script>
+
+</body>
+</html>
