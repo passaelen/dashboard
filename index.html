@@ -374,15 +374,6 @@ function parseCSV(text) {
 }
 
 
-const monde = cleanNumber(row[2]);
-const seniors = cleanNumber(row[3]);
-const juniors = cleanNumber(row[4]);
-
-
-
-
-
-
 
     
 
@@ -888,8 +879,8 @@ async function init(){
         
         
 // 🔥 1. récupérer ton sheet AVANT
-const history = await fetchHistory();
-const last = history.at(-1);
+const historyData = await fetchHistory();
+const last = historyData.at(-1);
 
 // 🔥 2. récupérer API
 state.prices = await fetchPrices();
@@ -917,7 +908,7 @@ render(result);
 
 // ===== VARIATION =====
 const history = await fetchHistory();
-const lastHistory = history.at(-1)?.total || 0;
+const lastHistory = historyData.at(-1)?.total || 0;
 
 const diff = result.total - lastHistory;
 const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
