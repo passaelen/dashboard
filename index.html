@@ -979,7 +979,12 @@ async function fetchHistory(){
 
     console.log(text);
 
-    const rows = text.trim().split("\n").map(r => r.split(","));
+    const rows = text.trim().split("\n").map(r => {
+    const matches = r.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+    return matches ? matches.map(v => v.replace(/"/g, "")) : [];
+});
+
+
 
 const history = [];
 
