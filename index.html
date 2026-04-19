@@ -374,15 +374,9 @@ function parseCSV(text) {
 }
 
 
-function cleanNumber(value) {
-    if (!value) return 0;
-
-    return Number(
-        value
-            .replace(/[^0-9,-]/g, '')
-            .replace(',', '.')
-    ) || 0;
-}
+const monde = cleanNumber(row[2]);
+const seniors = cleanNumber(row[3]);
+const juniors = cleanNumber(row[4]);
 
 
 
@@ -972,14 +966,42 @@ for (let i = 1; i < rows.length; i++) {
             ?.replace(",", ".")
     );
 
+
+const mondeRaw = row[2]?.trim();
+const seniorsRaw = row[3]?.trim();
+const juniorsRaw = row[4]?.trim();
+
+const monde = Number(
+    mondeRaw
+        ?.replace(/\s/g, "")
+        ?.replace(",", ".")
+) || 0;
+
+const seniors = Number(
+    seniorsRaw
+        ?.replace(/\s/g, "")
+        ?.replace(",", ".")
+) || 0;
+
+const juniors = Number(
+    juniorsRaw
+        ?.replace(/\s/g, "")
+        ?.replace(",", ".")
+) || 0;
+
+
+
     console.log("DATE:", date);
     console.log("RAW:", totalRaw);
     console.log("TOTAL:", total);
 
     if (date && date.includes("/") && !isNaN(total) && total > 10000) {
         history.push({
-            date: date,
-            total: total
+    date: date,
+    total: total,
+    monde: monde,
+    seniors: seniors,
+    juniors: juniors
         });
     }
 }
