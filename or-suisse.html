@@ -39,36 +39,61 @@
     <thead>
       <tr>
         <th>Type</th>
-        <th>Stockage</th>
         <th>Qté</th>
+        <th>Poids</th>
       </tr>
     </thead>
-    <tbody id="tableSwiss"></tbody>
-  </table>
 
-  <div class="total-line">
-    <span>Total</span>
-    <span id="tableTotal">0 g</span>
-  </div>
+    <tbody>
+
+      <!-- 🔹 LINGOTS -->
+      <tr>
+        <td colspan="3"><strong>🧱 Lingots & lingotins</strong></td>
+      </tr>
+
+      <tr><td>Lingotin 1 g Umicore</td><td>2</td><td>2 g</td></tr>
+      <tr><td>Lingotin 1 g PAMP</td><td>4</td><td>4 g</td></tr>
+      <tr><td>Lingotin 2,5 g PAMP</td><td>4</td><td>10 g</td></tr>
+      <tr><td>Lingotin 5 g PAMP</td><td>8</td><td>40 g</td></tr>
+      <tr><td>Lingotin 10 g PAMP</td><td>5</td><td>50 g</td></tr>
+      <tr><td>Lingot 50 g PAMP</td><td>1</td><td>50 g</td></tr>
+      <tr><td>Lingot 1 oz PAMP</td><td>2</td><td>62,21 g</td></tr>
+
+      <tr>
+        <td colspan="2"><strong>Total lingots</strong></td>
+        <td><strong>218,21 g</strong></td>
+      </tr>
+
+      <!-- 🔹 PIÈCES -->
+      <tr>
+        <td colspan="3"><strong>🪙 Pièces</strong></td>
+      </tr>
+
+      <tr><td>Philharmonique 1/10 oz</td><td>5</td><td>15,55 g</td></tr>
+      <tr><td>Kangourou 1 oz</td><td>3</td><td>93,31 g</td></tr>
+      <tr><td>40 Francs Napoléon</td><td>1</td><td>11,61 g</td></tr>
+
+      <tr>
+        <td colspan="2"><strong>Total pièces</strong></td>
+        <td><strong>120,47 g</strong></td>
+      </tr>
+
+      <!-- 🔹 TOTAL GLOBAL -->
+      <tr>
+        <td colspan="2"><strong>Total GoldAvenue</strong></td>
+        <td class="gold"><strong id="tableTotal">0 g</strong></td>
+      </tr>
+
+    </tbody>
+  </table>
 </div>
 
   </div>  <script>
-    // DATA
     const weight = DATA.gold.suisse;
-
-    // INJECTION
     const formatted = weight.toFixed(2) + " g";
 
     document.getElementById("totalSwiss").textContent = formatted;
     document.getElementById("kpiWeight").textContent = formatted;
     document.getElementById("tableTotal").textContent = formatted;
-
-    document.getElementById("tableSwiss").innerHTML = `
-      <tr>
-        <td>Or</td>
-        <td>Suisse</td>
-        <td>${formatted}</td>
-      </tr>
-    `;
   </script></body>
 </html>
