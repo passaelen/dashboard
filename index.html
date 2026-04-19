@@ -885,17 +885,34 @@ async function init(){
         setText("argent", "...");
         setText("ratio", "...");
 
-        state.prices = await fetchPrices();
-        state.etfPrices = await fetchETFPrices();
         
-// 🔥 log price
-        console.log("Gold €/g:", state.prices.gold_per_g);
-        console.log("Silver €/g:", state.prices.silver_per_g);
+        
+// 🔥 1. récupérer ton sheet AVANT
+const history = await fetchHistory();
+const last = history.at(-1);
+
+// 🔥 2. récupérer API
+state.prices = await fetchPrices();
+state.etfPrices = await fetchETFPrices();
+
+// 🔥 3. override avec TON sheet
+if(last){
+    state.etfPrices = {
+        monde: last.monde || 0,
+        seniors: last.seniors || 0,
+        juniors: last.juniors || 0
+    };
+}
+
+// 🔥 log pour vérifier
+console.log("ETF SHEET:", state.etfPrices);
+
+// 🔥 4. calcul après tout
+const result = calculate();
+render(result);
         
 
-        const result = calculate();
-
-        render(result);
+        
         
 
 // ===== VARIATION =====
