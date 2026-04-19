@@ -1002,25 +1002,6 @@ const monde = cleanNumber(row[2]);
 const seniors = cleanNumber(row[3]);
 const juniors = cleanNumber(row[4]);
 
-const monde = Number(
-    mondeRaw
-        ?.replace(/\s/g, "")
-        ?.replace(",", ".")
-) || 0;
-
-const seniors = Number(
-    seniorsRaw
-        ?.replace(/\s/g, "")
-        ?.replace(",", ".")
-) || 0;
-
-const juniors = Number(
-    juniorsRaw
-        ?.replace(/\s/g, "")
-        ?.replace(",", ".")
-) || 0;
-
-
 
     console.log("DATE:", date);
     console.log("RAW:", totalRaw);
