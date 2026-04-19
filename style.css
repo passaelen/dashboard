@@ -254,6 +254,13 @@ transition: all 0.3s ease;
     color: #93c5fd; 
 }
 
+#zone-action {
+    font-size: 11px;
+    opacity: 0.75;
+    display: block;
+    margin-top: 2px;
+}
+
 
 /* ===== DONUT ===== */
 @keyframes donutEnter {
