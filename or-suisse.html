@@ -3,7 +3,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🇨🇭 Or Suisse</title>  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="data.js"></script>
 </head><body>  <!-- HEADER -->  <div class="header">
     <div class="header-left">
@@ -21,8 +20,6 @@
 
 <!-- KPI -->
 <div class="kpi-grid">
-  
-
   <div class="kpi">
     <small>Type</small>
     <h3>Or</h3>
@@ -32,8 +29,6 @@
     <small>Poids</small>
     <h3 id="kpiWeight">0 g</h3>
   </div>
-
-
 </div>
 
 <!-- TABLE -->
@@ -46,7 +41,7 @@
         <th>Type</th>
         <th>Stockage</th>
         <th>Qté</th>
-       </tr>
+      </tr>
     </thead>
     <tbody id="tableSwiss"></tbody>
   </table>
@@ -57,8 +52,23 @@
   </div>
 </div>
 
- <script>
-    
-    
+  </div>  <script>
+    // DATA
+    const weight = DATA.gold.suisse;
+
+    // INJECTION
+    const formatted = weight.toFixed(2) + " g";
+
+    document.getElementById("totalSwiss").textContent = formatted;
+    document.getElementById("kpiWeight").textContent = formatted;
+    document.getElementById("tableTotal").textContent = formatted;
+
+    document.getElementById("tableSwiss").innerHTML = `
+      <tr>
+        <td>Or</td>
+        <td>Suisse</td>
+        <td>${formatted}</td>
+      </tr>
+    `;
   </script></body>
 </html>
