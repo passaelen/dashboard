@@ -608,6 +608,18 @@ if (el) {
         )`;
 
     }, stepTime);
+
+const elMetauxText = document.querySelector("#donut-metaux .donut-inner");
+
+if(elMetauxText){
+    elMetauxText.innerHTML = `
+        <div>
+            <div style="font-size:11px; opacity:0.6;">Métaux</div>
+            <span>${euro(data.goldTotal + data.silverTotal)}</span>
+        </div>
+    `;
+}
+
 }
 
 
@@ -641,6 +653,18 @@ if (elETF) {
 
         #64748b ${a2}% 100%
     )`;
+
+const elETFText = document.querySelector(".donut.etf .donut-inner");
+
+if(elETFText){
+    elETFText.innerHTML = `
+        <div>
+            <div style="font-size:11px; opacity:0.6;">ETF</div>
+            <span>${euro(data.totalETF)}</span>
+        </div>
+    `;
+}
+
 }
 
     // ===== GLOBAL =====
