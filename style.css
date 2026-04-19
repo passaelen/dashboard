@@ -390,14 +390,15 @@ transition: all 0.3s ease;
 .donut::after {
     content: "";
     position: absolute;
-    inset: 22px; /* 🔥 anneau plus fin = plus premium */
+    inset: 22px; 
     border-radius: 50%;
-
     background: radial-gradient(
         circle at 50% 50%,
         #020617 50%,
         #000 100%
-    );
+    )
+    z-index: 1;
+;
 
     box-shadow:
         inset 0 10px 20px rgba(0,0,0,0.9),
