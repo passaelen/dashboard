@@ -479,15 +479,17 @@ function getAlertMessage(ratio){
 }
 
 function getZoneAction(ratio){
-    if(ratio >= 120) return "🐻‍❄️ Accumulation forte d’argent — aucun arbitrage";
-    if(ratio >= 100) return "❄️ Accumulation régulière — attente active";
-    if(ratio >= 80)  return "🧊 Accumulation légère — aucune action sur l’or";
-    if(ratio >= 60)  return "☔️ Stabilisation — conserver positions";
-    if(ratio >= 50)  return "⚖️ Préparer arbitrages — zone pivot";
-    if(ratio >= 45)  return "🌤️ Premiers arbitrages vers l’or";
-    if(ratio >= 40)  return "🔥 Arbitrage actif — accélération";
-    if(ratio >= 35)  return "🌋 Arbitrage massif — réduction argent";
-    return "🚨 Arbitrage maximal — fin de cycle";
+if(ratio >= 140) return "🐻‍❄️ Acheter énormément d’argent — !!! ne rien vendre !!!";
+    if(ratio >= 120) return "❄️ Acheter beaucoup d’argent — ne rien vendre";
+    if(ratio >= 100) return "🧊 Acheter régulièrement de l’argent";
+    if(ratio >= 80)  return "☃️ Acheter un peu d’argent";
+    if(ratio >= 60)  return "☔️ Ne rien faire — garder tel quel";
+    if(ratio >= 50)  return "⚖️ Se préparer à échanger argent contre or";
+    if(ratio >= 45)  return "🌤️ Commencer à échanger un peu d’argent contre or";
+    if(ratio >= 40)  return "🔥 Échanger activement argent contre or";
+    if(ratio >= 35)  return "🌋 Échanger tout l'argent contre or";
+
+    return "🚨 Tout échanger vers l’or (opportunité rare)";
 }
 
 
