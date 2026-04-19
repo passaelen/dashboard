@@ -958,7 +958,7 @@ async function fetchHistory(){
 
     console.log(text);
 
-    const rows = text.trim().split("\n").map(r => r.split(","));
+    const rows = text.trim().split("\n").map(r => r.split(/[,;]/));
 
 const history = [];
 
