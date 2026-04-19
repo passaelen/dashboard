@@ -323,7 +323,7 @@ transition: all 0.3s ease;
 
 .donut-label span {
     font-size: 10px;   /* valeur € un peu plus visible */
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .donut-inner {
