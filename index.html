@@ -882,18 +882,24 @@ async function init(){
 const historyData = await fetchHistory();
 const last = historyData.at(-1);
 
-// 🔥 2. récupérer API
+// 🔥 2. FORCER le sheet comme source principale
 state.prices = await fetchPrices();
-state.etfPrices = await fetchETFPrices();
+
+// ⚠️ on initialise vide
+state.etfPrices = {
+    monde: 0,
+    seniors: 0,
+    juniors: 0
+};
 
 // 🔥 3. override avec TON sheet
 if(last){
     console.log("SHEET RAW:", last);
 
     state.etfPrices = {
-        monde: last.monde || state.etfPrices.monde,
-        seniors: last.seniors || state.etfPrices.seniors,
-        juniors: last.juniors || state.etfPrices.juniors
+        monde: last.monde,
+        seniors: last.seniors,
+        juniors: last.juniors
     };
 }
 
