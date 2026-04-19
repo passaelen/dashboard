@@ -879,8 +879,9 @@ async function init(){
         
         
 // 🔥 1. récupérer ton sheet AVANT
-const historyData = await fetchHistory();
-const last = historyData.at(-1);
+const last = historyData
+    .filter(r => r.monde > 0 && r.seniors > 0)
+    .at(-1);
 
 // 🔥 2. récupérer API
 state.prices = await fetchPrices();
