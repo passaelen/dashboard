@@ -721,6 +721,19 @@ const benefSeniors = vSeniors - etf.seniors.buy;
 const benefJuniors = vJuniors - etf.juniors.buy;
 
 
+// Parts
+setText("etf-monde-parts", etf.monde.parts);
+setText("etf-seniors-parts", etf.seniors.parts);
+setText("etf-juniors-parts", etf.juniors.parts);
+
+// Prix (spot)
+setText("etf-monde-prix", pe.monde.toFixed(2) + " €");
+setText("etf-seniors-prix", pe.seniors.toFixed(2) + " €");
+setText("etf-juniors-prix", pe.juniors.toFixed(2) + " €");
+
+
+
+
 // ===== BENEFICES =====
 const benefOrSuisse = orSuisseValue - pf.or_suisse_cost;
 const benefOrBelgique = orBelgiqueValue - pf.or_belgique_cost;
