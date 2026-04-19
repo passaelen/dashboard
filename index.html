@@ -224,8 +224,11 @@
 
 // ===== CONFIG =====
 const OZ_TO_G = 31.1035;
+// ajustement revente Suisse
+const silverRealFactor = 0.965; 
 
     
+
 // ===== state =====
 const state = {
     prices: null,
@@ -671,8 +674,7 @@ const silverPrice = p.silver_per_g;
 // VALEURS €
 const orSuisseValue = pf.or_suisse_g * goldPrice;
 const orBelgiqueValue = pf.or_belgique_g * goldPrice;
-const argentValue = pf.argent_g * silverPrice;
-
+const argentValue = pf.argent_g * silverPrice * silverRealFactor;
 
 // ===== BENEFICES =====
 const benefOrSuisse = orSuisseValue - pf.or_suisse_cost;
