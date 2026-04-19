@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇨🇭 Or Suisse</title>  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head><body>  <!-- HEADER -->  <div class="header">
+    <div class="header-left">
+      <h2>🇨🇭 Or Suisse</h2>
+      <small>Stock sécurisé</small>
+    </div><div class="header-right">
+  <a href="index.html" class="badge">← Retour</a>
+</div>
+
+  </div>  <div class="container"><!-- TOTAL -->
+<div class="highlight">
+  <small>Total Or Suisse</small>
+  <h2 id="totalSwiss">338.66 g</h2>
+</div>
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <small>Poids</small>
+    <h3>338.66 g</h3>
+  </div>
+
+  <div class="kpi">
+    <small>Valeur</small>
+    <h3>44 661 €</h3>
+  </div>
+
+  <div class="kpi">
+    <small>Stockage</small>
+    <h3 class="gold">Suisse</h3>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="card">
+  <h3>Métaux Suisse</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Stockage</th>
+        <th>Qté</th>
+        <th>Spot</th>
+        <th>Gain €</th>
+        <th>Perf %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Or</td>
+        <td>Suisse</td>
+        <td>338.66</td>
+        <td>131.84 €</td>
+        <td class="positive">+24 926 €</td>
+        <td class="positive">126,4%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="total-line">
+    <span>Total</span>
+    <span>44 661 €</span>
+  </div>
+</div>
+
+<!-- GRAPH -->
+<div class="card repartition">
+  <h3>Répartition</h3>
+
+  <div class="repartition-grid">
+
+    <div class="bloc">
+      <canvas id="chartSwiss"></canvas>
+
+      <div class="legend">
+        <div class="legend-item">
+          <span>
+            <span class="dot dot-or-suisse"></span>
+            Or Suisse
+          </span>
+          <span>100%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </div>  <script>
+    const ctx = document.getElementById('chartSwiss');
+
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Or Suisse'],
+        datasets: [{
+          data: [100],
+          backgroundColor: ['#facc15'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  </script></body>
+</html>
