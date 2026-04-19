@@ -11,6 +11,9 @@ Dashboard personnel pour suivre :
 - Répartition dynamique
 - Suivi des ratios
 
+## Accès
+👉 https://passaelen.github.io/dashboard/
+
 ## Structure
 - index.html
 - style.css
@@ -19,5 +22,12 @@ Dashboard personnel pour suivre :
 ## Version
 V1 stable (backup du 19/04/2026)
 
+## À venir
+- Amélioration animation donuts ETF
+- Optimisation responsive mobile
+- Ajout indicateurs complémentaires
+
+## Notes
+Projet personnel – non destiné à la production publique
 ## Notes
 Projet personnel – non destiné à la production publique
