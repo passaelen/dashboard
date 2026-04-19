@@ -683,6 +683,17 @@ if (elETF) {
         )`;
 
     }, stepTime);
+
+const elETFText = document.querySelector(".donut.etf .donut-label");
+
+if(elETFText){
+    elETFText.innerHTML = `
+        <div>
+            <div style="font-size:11px; opacity:0.6;">ETF</div>
+            <span>${euro(data.totalETF)}</span>
+        </div>
+    `;
+}
 }
 
 
