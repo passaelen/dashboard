@@ -752,6 +752,39 @@ setText("etf-seniors-benef", euroSigned(benefSeniors));
 setText("etf-juniors-benef", euroSigned(benefJuniors));
 
 
+
+// ===== PERF ETF =====
+function perfETF(value, buy){
+    if(!buy) return { text: "-", class: "" };
+
+    const pct = ((value - buy) / buy) * 100;
+
+    return {
+        text: pct.toFixed(1).replace(".", ",") + "%",
+        class: pct >= 0 ? "positive" : "negative"
+    };
+}
+
+const perfMonde = perfETF(vMonde, etf.monde.buy);
+const perfSeniors = perfETF(vSeniors, etf.seniors.buy);
+const perfJuniors = perfETF(vJuniors, etf.juniors.buy);
+
+setText("etf-monde-perf", perfMonde.text);
+setText("etf-seniors-perf", perfSeniors.text);
+setText("etf-juniors-perf", perfJuniors.text);
+
+applyColor("etf-monde-perf", vMonde - etf.monde.buy);
+applyColor("etf-seniors-perf", vSeniors - etf.seniors.buy);
+applyColor("etf-juniors-perf", vJuniors - etf.juniors.buy);
+
+
+
+
+
+
+
+
+
 function applyColor(id, value){
     const el = document.getElementById(id);
     if(!el) return;
@@ -763,9 +796,7 @@ function applyColor(id, value){
 applyColor("benef-or-suisse", benefOrSuisse);
 applyColor("benef-or-belgique", benefOrBelgique);
 applyColor("benef-argent", benefArgent);
-applyColor("etf-monde-benef", benefMonde);
-applyColor("etf-seniors-benef", benefSeniors);
-applyColor("etf-juniors-benef", benefJuniors);
+
 applyColor("etf-monde-benef", benefMonde);
 applyColor("etf-seniors-benef", benefSeniors);
 applyColor("etf-juniors-benef", benefJuniors);
