@@ -322,8 +322,8 @@ transition: all 0.3s ease;
 }
 
 .donut-label span {
-    font-size: 10px;   /* valeur € un peu plus visible */
-    font-weight: 500;
+    font-size: 11px;   /* valeur € un peu plus visible */
+    font-weight: 550;
 }
 
 .donut-inner {
