@@ -661,3 +661,12 @@ td, th {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+tr[onclick] {
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+tr[onclick]:active {
+    transform: scale(0.97);
+    opacity: 0.6;
+}
