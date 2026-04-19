@@ -47,10 +47,7 @@
         <th>Type</th>
         <th>Stockage</th>
         <th>Qté</th>
-        <th>Spot</th>
-        <th>Gain €</th>
-        <th>Perf %</th>
-      </tr>
+       </tr>
     </thead>
     <tbody id="tableSwiss"></tbody>
   </table>
@@ -101,14 +98,11 @@
       weight.toFixed(2) + " g";
 
     document.getElementById("tableSwiss").innerHTML = `
-      <tr>
-        <td>Or</td>
-        <td>Suisse</td>
-        <td>${weight.toFixed(2)}</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
+   <tr>
+    <td>Or</td>
+    <td>Suisse</td>
+    <td>${weight.toFixed(2)} g</td>
+  </tr>
     `;
 
     // =========================
