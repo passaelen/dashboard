@@ -21,10 +21,7 @@
 
 <!-- KPI -->
 <div class="kpi-grid">
-  <div class="kpi">
-    <small>Poids</small>
-    <h3 id="kpiWeight">0 g</h3>
-  </div>
+  
 
   <div class="kpi">
     <small>Type</small>
@@ -32,9 +29,11 @@
   </div>
 
   <div class="kpi">
-    <small>Stockage</small>
-    <h3 class="gold">Suisse</h3>
+    <small>Poids</small>
+    <h3 id="kpiWeight">0 g</h3>
   </div>
+
+
 </div>
 
 <!-- TABLE -->
@@ -58,74 +57,8 @@
   </div>
 </div>
 
-<!-- GRAPH -->
-<div class="card repartition">
-  <h3>Répartition</h3>
-
-  <div class="repartition-grid">
-    <div class="bloc">
-      <canvas id="chartSwiss"></canvas>
-
-      <div class="legend">
-        <div class="legend-item">
-          <span>
-            <span class="dot dot-or-suisse"></span>
-            Or Suisse
-          </span>
-          <span>100%</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-  </div>  <script>
-    // =========================
-    // 🔢 DATA
-    // =========================
-    const weight = DATA.gold.suisse;
-
-    // =========================
-    // 🧾 INJECTION
-    // =========================
-    document.getElementById("totalSwiss").textContent =
-      weight.toFixed(2) + " g";
-
-    document.getElementById("kpiWeight").textContent =
-      weight.toFixed(2) + " g";
-
-    document.getElementById("tableTotal").textContent =
-      weight.toFixed(2) + " g";
-
-    document.getElementById("tableSwiss").innerHTML = `
-   <tr>
-    <td>Or</td>
-    <td>Suisse</td>
-    <td>${weight.toFixed(2)} g</td>
-  </tr>
-    `;
-
-    // =========================
-    // 📊 GRAPH
-    // =========================
-    const ctx = document.getElementById('chartSwiss');
-
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Or Suisse'],
-        datasets: [{
-          data: [100],
-          backgroundColor: ['#facc15'],
-          borderWidth: 0
-        }]
-      },
-      options: {
-        cutout: '70%',
-        plugins: {
-          legend: { display: false }
-        }
-      }
-    });
+ <script>
+    
+    
   </script></body>
 </html>
