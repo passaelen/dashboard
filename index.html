@@ -644,31 +644,45 @@ if (elETF) {
 
     const inner = elETF.querySelector(".donut-inner") || elETF;
 
-    const gap = 0.35;
+    const duration = 600;
+    const stepTime = 16;
+    const steps = duration / stepTime;
 
-    const a1 = e1;
-    const a2 = e1 + e2;
+    let current = 0;
+    const increment = e1 / steps;
 
-    inner.style.background =
-    `conic-gradient(
-        #22c55e 0% ${Math.max(0, a1 - gap)}%,
-        #020617 ${Math.max(0, a1 - gap)}% ${a1}%,
+    const safeE1 = e1 || 1;
 
-        #06b6d4 ${a1}% ${Math.max(a1, a2 - gap)}%,
-        #020617 ${Math.max(a1, a2 - gap)}% ${a2}%,
+    const interval = setInterval(() => {
 
-        #64748b ${a2}% 100%
-    )`;
+        const progress = current / safeE1;
 
-const elETFText = document.querySelector(".donut.etf .donut-label");
+        // ✅ même easing que métaux
+        const ease = Math.pow(1 - progress, 2);
 
-if(elETFText){
-    elETFText.innerHTML = `
-        <div>
-            <div style="font-size:11px; opacity:0.6;">ETF</div>
-            <span>${euro(data.totalETF)}</span>
-        </div>
-    `;
+        current += increment * ease;
+
+        if (current >= e1) {
+            current = e1;
+            clearInterval(interval);
+        }
+
+        const e1a = current;
+        const e2a = e2 * (e1a / safeE1);
+        const total = e1a + e2a;
+
+        inner.style.background =
+        `conic-gradient(
+            #22c55e 0% ${Math.max(0, e1a - gap)}%,
+            #020617 ${Math.max(0, e1a - gap)}% ${e1a}%,
+
+            #06b6d4 ${e1a}% ${Math.max(e1a, total - gap)}%,
+            #020617 ${Math.max(e1a, total - gap)}% ${total}%,
+
+            #64748b ${total}% 100%
+        )`;
+
+    }, stepTime);
 }
 
 }
