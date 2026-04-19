@@ -477,6 +477,20 @@ function getAlertMessage(ratio){
     return "🚨 Extrême";
 }
 
+function getZoneAction(ratio){
+    if(ratio >= 120) return "🐻‍❄️ Accumulation forte d’argent — aucun arbitrage";
+    if(ratio >= 100) return "❄️ Accumulation régulière — attente active";
+    if(ratio >= 80)  return "🧊 Accumulation légère — aucune action sur l’or";
+    if(ratio >= 60)  return "☔️ Stabilisation — conserver positions";
+    if(ratio >= 50)  return "⚖️ Préparer arbitrages — zone pivot";
+    if(ratio >= 45)  return "🌤️ Premiers arbitrages vers l’or";
+    if(ratio >= 40)  return "🔥 Arbitrage actif — accélération";
+    if(ratio >= 35)  return "🌋 Arbitrage massif — réduction argent";
+    return "🚨 Arbitrage maximal — fin de cycle";
+}
+
+
+
 
     
 
@@ -659,8 +673,9 @@ if (elETF) {
         data.ratio.toFixed(2).replace('.',',')
     );
 
-    setText("alert-text", getAlertMessage(data.ratio));
-    applyRatioColor(data.ratio);
+setText("alert-text", getAlertMessage(data.ratio));
+applyRatioColor(data.ratio);
+setText("zone-action", getZoneAction(data.ratio));
 
 
 // ===== METAUX TABLE =====
