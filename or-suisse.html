@@ -80,11 +80,16 @@
 
 </div>
 
-  </div>  <script>
-    const weight = DATA.gold.suisse;
-const formatted = weight.toFixed(2) + " g";
+  </div>  
+
+<script>
+    const weight = DATA.portfolio.or_suisse_g;
+
+const weight = DATA?.portfolio?.or_suisse_g || 0;
 
 document.getElementById("totalSwiss").textContent = formatted;
 document.getElementById("tableTotal").textContent = formatted;
-  </script></body>
+</script>
+
+</body>
 </html>
