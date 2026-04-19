@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇧🇪 Or Belgique</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="data.js?v=2"></script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h2>🇧🇪 Or Belgique</h2>
+    <small>Stock privé</small>
+  </div>
+
+  <div class="header-right">
+    <a href="index.html" class="badge">← Retour</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- TOTAL -->
+<div class="highlight">
+  <small>Total Or Belgique</small>
+  <h2 id="totalBelgique">0 g</h2>
+</div>
+
+<!-- TABLE -->
+<div class="card">
+  <h3>Or Privé</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Qté</th>
+        <th>Poids</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <!-- PIÈCES -->
+      <tr>
+        <td colspan="3"><strong>🪙 Pièces</strong></td>
+      </tr>
+
+      <tr><td>Maple Leaf 1/10 oz</td><td>29</td><td>90,19 g</td></tr>
+      <tr><td>Philharmonique 1/10 oz</td><td>5</td><td>15,55 g</td></tr>
+      <tr><td>Koala 1/10 oz</td><td>2</td><td>6,22 g</td></tr>
+      <tr><td>Kookaburra 1/10 oz</td><td>1</td><td>3,11 g</td></tr>
+      <tr><td>Maple Leaf 1/4 oz</td><td>2</td><td>15,55 g</td></tr>
+
+      <tr>
+        <td colspan="2"><strong>Total pièces</strong></td>
+        <td><strong>130,62 g</strong></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="total-line">
+    <span>🟠 Total Or Privé</span>
+    <span id="tableTotalBelgique">0 g</span>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+  // 🔥 connexion DATA propre
+  const weight = DATA?.portfolio?.or_belgique_g || 0;
+
+  const formatted = weight.toFixed(2) + " g";
+
+  document.getElementById("totalBelgique").textContent = formatted;
+  document.getElementById("tableTotalBelgique").textContent = formatted;
+</script>
+
+</body>
+</html>
