@@ -1,13 +1,4 @@
 const DATA = {
-  gold: {
-    suisse: 338.66,
-    belgique: 130.62
-  },
-
-  silver: {
-    suisse: 6000
-  },
-
   portfolio: {
     or_suisse_g: 338.66,
     or_belgique_g: 130.62,
