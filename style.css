@@ -340,7 +340,7 @@ transition: all 0.3s ease;
     align-items: center;
     justify-content: center;
 
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 600;
     color: #e2e8f0;
 
@@ -351,7 +351,7 @@ transition: all 0.3s ease;
 
 /* 🔥 DOIT être en dehors */
 .donut-inner span {
-    font-size: 11px;  /* 🔽 valeur € */
+    font-size: 12px;  /* 🔽 valeur € */
     font-weight: 600;
     text-shadow: 0 0 6px rgba(255,255,255,0.15);
 }
