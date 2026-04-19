@@ -187,29 +187,41 @@
 -->
     
     <table>
-            <tr><th>Nom</th><th>Parts</th><th>Spot</th><th>Perf</th></tr>
-            
-            <tr>
-            <td>Monde</td>
-            <td id="etf-monde-parts"></td>
-            <td id="etf-monde-prix"></td>
-            <td id="etf-monde-perf"></td>
-            </tr>
-            
-            <tr>
-            <td>Séniors</td>
-            <td id="etf-seniors-parts"></td>
-            <td id="etf-seniors-prix"></td>
-            <td id="etf-seniors-perf"></td>
-            </tr>
-            
-            <tr>
-            <td>Juniors</td>
-            <td id="etf-juniors-parts"></td>
-            <td id="etf-juniors-prix"></td>
-            <td id="etf-juniors-perf"></td>
-            </tr>
-    </table>
+<tr>
+<th>Nom</th>
+<th>Parts</th>
+<th>Spot</th>
+<th>Gain €</th>
+<th>Perf %</th>
+</tr>
+
+<tr>
+<td>Monde</td>
+<td id="etf-monde-parts"></td>
+<td id="etf-monde-prix"></td>
+<td id="etf-monde-benef"></td>
+<td id="etf-monde-perf"></td>
+</tr>
+
+<tr>
+<td>Séniors</td>
+<td id="etf-seniors-parts"></td>
+<td id="etf-seniors-prix"></td>
+<td id="etf-seniors-benef"></td>
+<td id="etf-seniors-perf"></td>
+</tr>
+
+<tr>
+<td>Juniors</td>
+<td id="etf-juniors-parts"></td>
+<td id="etf-juniors-prix"></td>
+<td id="etf-juniors-benef"></td>
+<td id="etf-juniors-perf"></td>
+</tr>
+
+</table>
+
+
 
 <div class="total-line">
     <span>🧾 Total ETF</span>
@@ -695,6 +707,20 @@ const orSuisseValue = pf.or_suisse_g * goldPrice;
 const orBelgiqueValue = pf.or_belgique_g * goldPrice;
 const argentValue = pf.argent_g * silverPrice * silverRealFactor;
 
+
+// ===== ETF TABLE =====
+const etf = state.etf;
+const pe = state.etfPrices;
+
+const vMonde = etf.monde.parts * pe.monde;
+const vSeniors = etf.seniors.parts * pe.seniors;
+const vJuniors = etf.juniors.parts * pe.juniors;
+
+const benefMonde = vMonde - etf.monde.buy;
+const benefSeniors = vSeniors - etf.seniors.buy;
+const benefJuniors = vJuniors - etf.juniors.buy;
+
+
 // ===== BENEFICES =====
 const benefOrSuisse = orSuisseValue - pf.or_suisse_cost;
 const benefOrBelgique = orBelgiqueValue - pf.or_belgique_cost;
@@ -708,6 +734,10 @@ function euroSigned(v){
 setText("benef-or-suisse", euroSigned(benefOrSuisse));
 setText("benef-or-belgique", euroSigned(benefOrBelgique));
 setText("benef-argent", euroSigned(benefArgent));
+setText("etf-monde-benef", euroSigned(benefMonde));
+setText("etf-seniors-benef", euroSigned(benefSeniors));
+setText("etf-juniors-benef", euroSigned(benefJuniors));
+
 
 function applyColor(id, value){
     const el = document.getElementById(id);
@@ -720,6 +750,12 @@ function applyColor(id, value){
 applyColor("benef-or-suisse", benefOrSuisse);
 applyColor("benef-or-belgique", benefOrBelgique);
 applyColor("benef-argent", benefArgent);
+applyColor("etf-monde-benef", benefMonde);
+applyColor("etf-seniors-benef", benefSeniors);
+applyColor("etf-juniors-benef", benefJuniors);
+applyColor("etf-monde-benef", benefMonde);
+applyColor("etf-seniors-benef", benefSeniors);
+applyColor("etf-juniors-benef", benefJuniors);
 
 
 
