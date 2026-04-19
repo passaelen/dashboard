@@ -9,13 +9,23 @@ const DATA = {
   },
 
   portfolio: {
-    or_suisse_g: 338.66,
-    or_belgique_g: 130.62,
-    argent_g: 6000,
 
-    or_suisse_cost: 19722.90,
-    or_belgique_cost: 8375.39,
-    argent_cost: 3379.88
+    or_suisse_g: 1000.00,
+    or_belgique_g: 1000.00,
+    argent_g: 1000,
+
+    or_suisse_cost: 1.01,
+    or_belgique_cost: 1.01,
+    argent_cost: 1.01
+
+
+    bor_suisse_g: 338.66,
+    bor_belgique_g: 130.62,
+    bargent_g: 6000,
+
+    bor_suisse_cost: 19722.90,
+    bor_belgique_cost: 8375.39,
+    bargent_cost: 3379.88
   },
 
   etf: {
