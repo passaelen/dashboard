@@ -880,10 +880,7 @@ async function init(){
         
 // 🔥 1. récupérer ton sheet AVANT
 const historyData = await fetchHistory();
-
-const last = historyData
-    .filter(r => r.monde > 0 && r.seniors > 0)
-    .at(-1);
+const last = historyData.at(-1);
 
 // 🔥 2. récupérer API
 state.prices = await fetchPrices();
@@ -891,10 +888,12 @@ state.etfPrices = await fetchETFPrices();
 
 // 🔥 3. override avec TON sheet
 if(last){
+    console.log("SHEET RAW:", last);
+
     state.etfPrices = {
-        monde: last.monde > 0 ? last.monde : state.etfPrices.monde,
-        seniors: last.seniors > 0 ? last.seniors : state.etfPrices.seniors,
-        juniors: last.juniors > 0 ? last.juniors : state.etfPrices.juniors
+        monde: last.monde || state.etfPrices.monde,
+        seniors: last.seniors || state.etfPrices.seniors,
+        juniors: last.juniors || state.etfPrices.juniors
     };
 }
 
