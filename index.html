@@ -461,10 +461,10 @@ function euro(v){
 // ===== ALERT =====
 function getAlertMessage(ratio){
 
-    if(ratio >= 70) return "❄️ Hibernation";
-    if(ratio >= 50) return "🧊 Zone Nord";
-    if(ratio >= 45) return "🌤️ Tempéré";
-    if(ratio >= 40) return "🔥 Chaud";
+    if(ratio >= 70) return "❄️ Hibernation :";
+    if(ratio >= 50) return "🧊 Zone Nord :";
+    if(ratio >= 45) return "🌤️ Tempéré :";
+    if(ratio >= 40) return "🔥 Chaud :";
 
     return "🚨 Extrême";
 }
@@ -493,7 +493,7 @@ function getCombinedSignal(ratio, bpgdm){
 
     // 🧊 ACCUMULATION
     if(ratio >= 50 && bpgdm < 50){
-        return "🧊 Accumulation ETF  Séniors : 🆔ISIN : IE00BQQP9F84";
+        return "🧊 Accumulation ETF Séniors : 🆔ISIN : IE00BQQP9F84";
     }
 
     // ⚖️ ZONE PIVOT
@@ -724,7 +724,7 @@ setText("ratio",
 
 // 🧊 CLIMAT + ACTION (fusion ligne 1)
 const climat = getAlertMessage(data.ratio);
-const ratioAction = getZoneAction(data.ratio).replace("Métaux : ", "");
+const ratioAction = getZoneAction(data.ratio);
 
 setText("alert-text", `${climat}   ${ratioAction}`);
 applyRatioColor(data.ratio);
