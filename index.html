@@ -1215,42 +1215,25 @@ async function renderChart(){
     );
     gradient.addColorStop(1, "rgba(0,0,0,0)");
 
-    // 🔥 UPDATE SAFE
-    if (window.chart10j) {
-        window.chart10j.data = {
-            labels: labels,
-            datasets: [
-                {
-                    data: enriched.map(e => e.total),
-                    tension: 0.4,
-                    borderColor: isUp ? "#22c55e" : "#ef4444",
-                    backgroundColor: gradient,
-                    fill: true,
-                    pointRadius: 4,
-                    pointHoverRadius: 8,
-                    pointHoverBorderWidth: 2,
-                    pointHoverBorderColor: "#fff",
-                    pointBackgroundColor: (context) => {
-                        const i = context.dataIndex;
-                        return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
-                    },
-                    pointBorderWidth: 0
-                },
-                {
-                    data: movingAvg,
-                    tension: 0.4,
-                    borderColor: "#a78bfa",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    borderDash: [6,6],
-                    fill: false
-                }
-            ]
-        };
 
-        window.chart10j.update();
-        return;
-    }
+    // 🔥 window.chart10j UPDATE SAFE
+
+    if (window.chart10j) {
+
+    window.chart10j.data.labels = labels;
+
+    window.chart10j.data.datasets[0].data = enriched.map(e => e.total);
+    window.chart10j.data.datasets[1].data = movingAvg;
+
+    window.chart10j.data.datasets[0].pointBackgroundColor = (context) => {
+        const i = context.dataIndex;
+        return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
+    };
+
+    window.chart10j.update();
+    return;
+}
+
 
     // 🔥 CREATE
     window.chart10j = new Chart(ctx, {
