@@ -749,20 +749,21 @@ td, th {
 }
 
 #tooltip-isin {
-  position: fixed;
-  display: none;
+    position: fixed;
+    display: none;
 
-  background: rgba(2,6,23,0.96);
-  color: #e5e7eb;
+    background: #020617;
+    color: #e2e8f0;
 
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 11px;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
 
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
 
-  pointer-events: none;
-  z-index: 99999;
+    z-index: 9999;
+    pointer-events: none;
+
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
