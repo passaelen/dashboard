@@ -705,3 +705,18 @@ td, th {
 .flash-strong {
     animation: flashStrong 0.9s ease-in-out infinite;
 }
+
+
+/* 🔥 glow dynamique alert */
+.alert-glow-soft {
+    box-shadow: 
+        0 0 10px rgba(251,146,60,0.25),
+        0 0 30px rgba(251,146,60,0.12);
+}
+
+.alert-glow-strong {
+    box-shadow: 
+        0 0 12px rgba(34,197,94,0.5),
+        0 0 40px rgba(34,197,94,0.25),
+        0 0 80px rgba(34,197,94,0.12);
+}
