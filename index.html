@@ -1287,9 +1287,15 @@ pointHoverBorderColor: "#fff",
             maintainAspectRatio: false,
 
             interaction: {
-                mode: "index",
-                intersect: false
-            },
+    mode: "index",
+    intersect: false,
+    axis: "x" // 🔥 verrou horizontal
+},
+
+hover: {
+    mode: "index",
+    intersect: false
+},
 
             plugins: {
                 legend: { display: false },
