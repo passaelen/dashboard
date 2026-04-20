@@ -1191,7 +1191,7 @@ if (!history || history.length === 0) {
     return;
 }
 
-const last = history.slice(-state.timeframe);
+const last = history.slice(-(state.timeframe || 10));
 
 
     const labels = last.map(h => {
@@ -1424,14 +1424,20 @@ window.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".tf").forEach(btn => {
         btn.addEventListener("click", () => {
 
-            document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+            document.querySelectorAll(".tf").forEach(btn => {
+    btn.addEventListener("click", () => {
 
-            state.timeframe = parseInt(btn.dataset.days);
+        // reset active
+        document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
 
-            renderChart();
-        });
+        // update timeframe
+        state.timeframe = parseInt(btn.dataset.days);
+
+        // redraw
+        renderChart();
     });
+});
 
     init();
 });
