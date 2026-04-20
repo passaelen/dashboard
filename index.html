@@ -1168,15 +1168,14 @@ console.log("ROW 1:", rows[1]);
 
 async function renderChart(){
 
-    let history = state.history;
+    const history = state.history;
 
-    // 🔥 fallback sécurité (ne change rien au comportement)
-    if (!history || history.length === 0) {
-        const data = await fetchHistory();
-        history = data.history;
-    }
+if (!history || history.length === 0) {
+    console.warn("Pas de données history");
+    return;
+}
 
-    const last = history.slice(-10);
+const last = history.slice(-10);
 
 
     const labels = last.map(h => {
