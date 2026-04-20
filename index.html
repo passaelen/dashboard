@@ -47,7 +47,8 @@
 <!-- ALERT -->
 <div class="card alert-box">
     <span id="alert-text"></span><br>
-    <small id="zone-action"></small>
+    <small id="zone-main"></small>
+    <small id="zone-bpgdm"></small>
 </div>
 
 <!-- REPARTITION -->
@@ -730,7 +731,11 @@ applyRatioColor(data.ratio);
 const ratioAction = getZoneAction(data.ratio);
 const combo = getCombinedSignal(data.ratio, state.bpgdm);
 
-setText("zone-action", ratioAction + " • " + combo);
+// 👉 ligne 1 = ratio (à côté du climat)
+setText("zone-main", ratioAction.replace("Métaux : ", ""));
+
+// 👉 ligne 2 = BPGDM
+setText("zone-bpgdm", combo);
 
 
 // ===== METAUX TABLE =====
