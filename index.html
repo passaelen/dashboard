@@ -917,7 +917,7 @@ state.bpgdm = bpgdmLive || last?.bpgdm;
 const elB = document.getElementById("bpgdm");
 
 if(elB){
-    elB.innerText = "Bpgdm : " + (state.bpgdm?.toFixed(2) || 0) + "%";
+    elB.innerText = "bpgdm : " + (state.bpgdm?.toFixed(2) || 0) + "%";
 
     // 🎨 couleur dynamique (dans TON esprit UI)
     elB.classList.remove("positive", "negative");
