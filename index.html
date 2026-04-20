@@ -942,142 +942,141 @@ async function init(){
         setText("ratio", "...");
 
 
+        // 🔥 1. récupérer ton sheet UNE SEULE FOIS
+        const historyData = await fetchHistory();
 
-// 🔥 1. récupérer ton sheet AVANT
-const { history: historyList, bpgdmLive } = await fetchHistory();
-const last = historyList?.at(-1) || {};
+        // 🔥 stocker dans state (clé de l’optimisation)
+        state.history = historyData.history;
+        state.bpgdm = historyData.bpgdmLive || historyData.history.at(-1)?.bpgdm;
 
-console.log("LAST:", last); // 👈 ICI
-console.log("BPGDM LIVE (G2):", bpgdmLive);
+        // 🔥 raccourcis locaux
+        const historyList = state.history;
+        const last = historyList?.at(-1) || {};
 
-
-
-        
-
-// 🔥 2. FORCER le sheet comme source principale
-state.prices = await fetchPrices();
-state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
-
-
-// 🔥 input Bpgdm dans ETF        
-const elB = document.getElementById("bpgdm");
-
-if(elB){
-
-    elB.classList.remove("flash-strong");
-
-    const value = state.bpgdm?.toFixed(2) || 0;
-
-    // 🔥 PRIORITÉ 1 — ACHAT
-    if(state.bpgdm <= 5){
-
-        elB.innerText = `Bpgdm : ${value}% • Achats Séniors`;
-        elB.style.color = "#22c55e";
-        elB.classList.add("flash-strong");
-
-    }
-
-    // 🔥 PRIORITÉ 2 — VENTE
-    else if(state.bpgdm >= 70){
-
-        elB.innerText = `Bpgdm : ${value}% • Vendre Séniors`;
-        elB.style.color = "#ef4444";
-        elB.classList.add("flash-strong");
-
-    }
-
-    // 🟠 ZONE NEUTRE
-    else if(state.bpgdm >= 50){
-
-        elB.innerText = `Bpgdm : ${value}%`;
-        elB.style.color = "#fb923c";
-
-    }
-
-    // 🟢 ACCUMULATION
-    else {
-
-        elB.innerText = `Bpgdm : ${value}%`;
-        elB.style.color = "#4ade80";
-
-    }
-}
+        console.log("LAST:", last);
+        console.log("BPGDM LIVE (G2):", historyData.bpgdmLive);
 
 
 
-
-        
-// ⚠️ on initialise vide
-state.etfPrices = {
-    monde: 0,
-    seniors: 0,
-    juniors: 0
-};
-
-// 🔥 3. override avec sheet
-if(last && last.monde !== undefined){
-    console.log("SHEET RAW:", last);
-
-    state.etfPrices = {
-        monde: last.monde,
-        seniors: last.seniors,
-        juniors: last.juniors
-    };
-}
-
-// 🔥 log pour vérifier
-console.log("ETF SHEET:", state.etfPrices);
-
-// 🔥 4. calcul après tout
-const result = calculate();
-render(result);
-
-
-const alertBox = document.querySelector(".alert-box");
-
-if(alertBox){
-    alertBox.classList.remove("alert-glow-soft", "alert-glow-strong");
-
-    // 💥 SIGNAL FORT (achat)
-    if(state.bpgdm <= 5){
-        alertBox.classList.add("alert-glow-strong");
-    }
-
-    // ⚠️ SIGNAL HAUT (vente)
-    else if(state.bpgdm >= 70){
-        alertBox.classList.add("alert-glow-soft");
-    }
-}
-        
+        // 🔥 2. PRICES
+        state.prices = await fetchPrices();
 
 
 
+        // 🔥 input Bpgdm dans ETF        
+        const elB = document.getElementById("bpgdm");
+
+        if(elB){
+
+            elB.classList.remove("flash-strong");
+
+            const value = state.bpgdm?.toFixed(2) || 0;
+
+            // 🔥 PRIORITÉ 1 — ACHAT
+            if(state.bpgdm <= 5){
+
+                elB.innerText = `Bpgdm : ${value}% • Achats Séniors`;
+                elB.style.color = "#22c55e";
+                elB.classList.add("flash-strong");
+
+            }
+
+            // 🔥 PRIORITÉ 2 — VENTE
+            else if(state.bpgdm >= 70){
+
+                elB.innerText = `Bpgdm : ${value}% • Vendre Séniors`;
+                elB.style.color = "#ef4444";
+                elB.classList.add("flash-strong");
+
+            }
+
+            // 🟠 ZONE NEUTRE
+            else if(state.bpgdm >= 50){
+
+                elB.innerText = `Bpgdm : ${value}%`;
+                elB.style.color = "#fb923c";
+
+            }
+
+            // 🟢 ACCUMULATION
+            else {
+
+                elB.innerText = `Bpgdm : ${value}%`;
+                elB.style.color = "#4ade80";
+
+            }
+        }
 
 
-// ===== VARIATION =====
-const lastHistory = historyList.at(-1)?.total || 0;
 
-const diff = result.total - lastHistory;
-const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
+        // ⚠️ on initialise vide
+        state.etfPrices = {
+            monde: 0,
+            seniors: 0,
+            juniors: 0
+        };
 
-const el = document.getElementById("variation");
+        // 🔥 3. override avec sheet
+        if(last && last.monde !== undefined){
+            console.log("SHEET RAW:", last);
 
-if (el) {
-    const sign = diff >= 0 ? "+" : "";
+            state.etfPrices = {
+                monde: last.monde,
+                seniors: last.seniors,
+                juniors: last.juniors
+            };
+        }
 
-    const diffStr = sign + Math.round(diff).toLocaleString('fr-BE') + " €";
-    const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+        console.log("ETF SHEET:", state.etfPrices);
 
-    el.innerText = diffStr + " (" + pctStr + ")";
 
-    el.classList.remove("positive", "negative");
-    el.classList.add(diff >= 0 ? "positive" : "negative");
 
-el.classList.add("flash");
-setTimeout(() => {
-    el.classList.remove("flash");
-}, 400);
-}
+        // 🔥 4. calcul
+        const result = calculate();
+        render(result);
+
+
+
+        // 🔥 ALERT GLOW
+        const alertBox = document.querySelector(".alert-box");
+
+        if(alertBox){
+            alertBox.classList.remove("alert-glow-soft", "alert-glow-strong");
+
+            if(state.bpgdm <= 5){
+                alertBox.classList.add("alert-glow-strong");
+            }
+            else if(state.bpgdm >= 70){
+                alertBox.classList.add("alert-glow-soft");
+            }
+        }
+
+
+
+        // ===== VARIATION =====
+        const lastHistory = historyList.at(-1)?.total || 0;
+
+        const diff = result.total - lastHistory;
+        const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
+
+        const el = document.getElementById("variation");
+
+        if (el) {
+            const sign = diff >= 0 ? "+" : "";
+
+            const diffStr = sign + Math.round(diff).toLocaleString('fr-BE') + " €";
+            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+            el.innerText = diffStr + " (" + pctStr + ")";
+
+            el.classList.remove("positive", "negative");
+            el.classList.add(diff >= 0 ? "positive" : "negative");
+
+            el.classList.add("flash");
+            setTimeout(() => {
+                el.classList.remove("flash");
+            }, 400);
+        }
 
 
 
@@ -1168,9 +1167,15 @@ console.log("ROW 1:", rows[1]);
 
 async function renderChart(){
 
-    const { history } = await fetchHistory();
+    // 🔥 UTILISE LE CACHE (plus de double fetch)
+    const history = state.history;
+
+    if (!history || history.length === 0) {
+        console.warn("Pas de data pour le graph");
+        return;
+    }
+
     const last = history.slice(-10);
-    
 
     const labels = last.map(h => {
         const [day, month] = h.date.split("/");
@@ -1184,27 +1189,14 @@ async function renderChart(){
         const diff = h.total - prev;
         const pct = prev ? (diff / prev) * 100 : 0;
 
-        return {
-            total: h.total,
-            diff,
-            pct
-        };
+        return { total: h.total, diff, pct };
     });
 
-
-// ===== MOYENNE MOBILE 7 =====
+    // ===== MOYENNE MOBILE =====
     const movingAvg = enriched.map((_, i, arr) => {
-        if (i < 6) {
-    return arr.slice(0, i+1).reduce((a,v)=>a+v.total,0)/(i+1);
-}
-
-        const slice = arr.slice(i - 6, i + 1);
-        const sum = slice.reduce((acc, v) => acc + v.total, 0);
-
-        return sum / 7;
+        const slice = arr.slice(Math.max(0, i - 6), i + 1);
+        return slice.reduce((a,v)=>a+v.total,0) / slice.length;
     });
-
-
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
 
@@ -1212,22 +1204,24 @@ async function renderChart(){
     const lastVal = enriched.at(-1).total;
     const isUp = lastVal >= first;
 
-    const color = isUp ? "34,197,94" : "239,68,68";
-
     const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-gradient.addColorStop(0, isUp
-    ? "rgba(34,197,94,0.5)"
-    : "rgba(239,68,68,0.5)"
-);
-gradient.addColorStop(0.6, isUp
-    ? "rgba(34,197,94,0.15)"
-    : "rgba(239,68,68,0.15)"
-);
-gradient.addColorStop(1, "rgba(0,0,0,0)");
+    gradient.addColorStop(0, isUp
+        ? "rgba(34,197,94,0.5)"
+        : "rgba(239,68,68,0.5)"
+    );
+    gradient.addColorStop(0.6, isUp
+        ? "rgba(34,197,94,0.15)"
+        : "rgba(239,68,68,0.15)"
+    );
+    gradient.addColorStop(1, "rgba(0,0,0,0)");
 
-
+    // 🔥 UPDATE au lieu de destroy (perf)
     if (window.chart10j) {
-        window.chart10j.destroy();
+        window.chart10j.data.labels = labels;
+        window.chart10j.data.datasets[0].data = enriched.map(e => e.total);
+        window.chart10j.data.datasets[1].data = movingAvg;
+        window.chart10j.update();
+        return;
     }
 
     window.chart10j = new Chart(ctx, {
@@ -1236,7 +1230,6 @@ gradient.addColorStop(1, "rgba(0,0,0,0)");
             labels: labels,
             datasets: [
 
-                // 🔵 COURBE PRINCIPALE
                 {
                     data: enriched.map(e => e.total),
                     tension: 0.4,
@@ -1246,19 +1239,17 @@ gradient.addColorStop(1, "rgba(0,0,0,0)");
 
                     pointRadius: 4,
                     pointHoverRadius: 8,
-pointHoverBorderWidth: 2,
-pointHoverBorderColor: "#fff",
+                    pointHoverBorderWidth: 2,
+                    pointHoverBorderColor: "#fff",
 
                     pointBackgroundColor: function(context) {
                         const i = context.dataIndex;
-                        const diff = enriched[i]?.diff || 0;
-                        return diff >= 0 ? "#22c55e" : "#ef4444";
+                        return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
                     },
 
                     pointBorderWidth: 0
                 },
 
-                // 🟣 MOYENNE MOBILE (MM7)
                 {
                     data: movingAvg,
                     tension: 0.4,
@@ -1275,9 +1266,10 @@ pointHoverBorderColor: "#fff",
             responsive: true,
             maintainAspectRatio: false,
 
+            // 🔥 FIX MOBILE (tooltip stable)
             interaction: {
-                mode: "index",
-                intersect: false
+                mode: "nearest",
+                intersect: true
             },
 
             plugins: {
@@ -1290,12 +1282,11 @@ pointHoverBorderColor: "#fff",
                     titleColor: "#e2e8f0",
                     bodyColor: "#e2e8f0",
                     displayColors: false,
+                    position: "nearest",
 
                     callbacks: {
-
                         label: function(context) {
 
-                            // ignore MM7
                             if (context.datasetIndex === 1) return null;
 
                             const i = context.dataIndex;
@@ -1303,17 +1294,14 @@ pointHoverBorderColor: "#fff",
 
                             const value = point.total.toLocaleString('fr-BE') + " €";
 
-                            const diff = point.diff;
-                            const pct = point.pct;
-
-                            if (Math.abs(diff) < 1) {
+                            if (Math.abs(point.diff) < 1) {
                                 return [value];
                             }
 
-                            const sign = diff >= 0 ? "+" : "";
+                            const sign = point.diff >= 0 ? "+" : "";
 
-                            const diffStr = sign + diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
-                            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+                            const diffStr = sign + point.diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
+                            const pctStr = sign + point.pct.toFixed(2).replace('.', ',') + "%";
 
                             return [
                                 value,
@@ -1345,7 +1333,6 @@ pointHoverBorderColor: "#fff",
         }
     });
 }
-
 
 
 
