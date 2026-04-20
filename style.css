@@ -685,11 +685,23 @@ td, th {
 }
 
 @keyframes flashStrong {
-    0%   { transform: scale(1); opacity: 1; }
-    50%  { transform: scale(1.15); opacity: 0.6; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        text-shadow: 0 0 0px rgba(34,197,94,0.4);
+    }
+    50% {
+        transform: scale(1.25);
+        opacity: 0.6;
+        text-shadow: 0 0 12px rgba(34,197,94,0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        text-shadow: 0 0 0px rgba(34,197,94,0.4);
+    }
 }
 
 .flash-strong {
-    animation: flashStrong 0.8s ease infinite;
+    animation: flashStrong 0.9s ease-in-out infinite;
 }
