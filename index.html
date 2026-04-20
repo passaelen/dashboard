@@ -903,7 +903,7 @@ const { history: historyList, bpgdmLive } = await fetchHistory();
 const last = historyList?.at(-1) || {};
 
 console.log("LAST:", last); // 👈 ICI
-console.log("BPGDM LIVE (G2):", rows[1]?.[6]);
+console.log("BPGDM LIVE (G2):", bpgdmLive);
 
 
         
@@ -917,7 +917,7 @@ state.bpgdm = bpgdmLive || last?.bpgdm;
 const elB = document.getElementById("bpgdm");
 
 if(elB){
-    elB.innerText = "bpgdm : " + (state.bpgdm?.toFixed(2) || 0) + "%";
+    elB.innerText = "Bpgdm : " + (state.bpgdm?.toFixed(2) || 0) + "%";
 
     // 🎨 couleur dynamique (dans TON esprit UI)
     elB.classList.remove("positive", "negative");
