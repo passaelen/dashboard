@@ -1024,22 +1024,26 @@ if(elB){
 
 
 // ⚠️ on initialise vide
-state.etfPrices = {
-    monde: 0,
-    seniors: 0,
-    juniors: 0
-};
+// 🔥 ETF PRICES (Sheet priorité, API fallback)
 
-// 🔥 3. override avec sheet
-if(last && last.monde !== undefined){
-    console.log("SHEET RAW:", last);
+if (last && last.monde !== undefined) {
+
+    console.log("✅ ETF depuis SHEET");
 
     state.etfPrices = {
         monde: last.monde,
         seniors: last.seniors,
         juniors: last.juniors
     };
+
+} else {
+
+    console.warn("⚠️ Sheet vide → fallback API ETF");
+
+    state.etfPrices = await fetchETFPrices();
 }
+
+
 
 // 🔥 log pour vérifier
 console.log("ETF SHEET:", state.etfPrices);
