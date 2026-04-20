@@ -1017,22 +1017,6 @@ async function fetchHistory(){
         const juniors = cleanNumber(row[4]);
         const bpgdm = cleanNumber(row[5]);
 
-
-    console.log("DATE:", date);
-    console.log("RAW:", totalRaw);
-    console.log("TOTAL:", total);
-    console.log("bpgdm:", bpgdm);
-    /* New check*/
-    console.log("ROW:", row);
-    console.log("MONDE:", row[2], "=>", monde);
-    console.log("SENIORS:", row[3], "=>", seniors);
-    console.log("JUNIORS:", row[4], "=>", juniors);
-    console.log("BPGDM:", row[5], "=>", bpgdm);
-    console.log("LAST VALID:", history.at(-1));
-
-
-
-
         if (date && total > 0) {
             history.push({
                 date,
@@ -1045,7 +1029,6 @@ async function fetchHistory(){
         }
     }
 
-    // 🔥 bpgdm live (ligne 2)
     const bpgdmLive = cleanNumber(rows[1]?.[5]);
 
     return {
