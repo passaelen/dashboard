@@ -729,6 +729,7 @@ td, th {
 
 
 #tooltip-isin {
+    all: initial;
     position: fixed;
     display: none;
 
