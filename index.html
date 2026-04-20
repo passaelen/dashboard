@@ -484,7 +484,35 @@ function getZoneAction(ratio){
     return "🚨 Tout échanger vers l’or (opportunité rare)";
 }
 
+function getCombinedSignal(ratio, bpgdm){
 
+    // 💥 ULTRA SIGNAL
+    if(ratio >= 50 && bpgdm <= 5){
+        return "💥 Achat massif Séniors";
+    }
+
+    // 🧊 ACCUMULATION
+    if(ratio >= 50 && bpgdm < 50){
+        return "🧊 Accumulation Séniors";
+    }
+
+    // ⚖️ ZONE PIVOT
+    if(ratio >= 45 && ratio < 50){
+        return "⚖️ Zone charnière";
+    }
+
+    // ⚠️ SORTIE MINIÈRES
+    if(ratio < 45 && bpgdm >= 70){
+        return "⚠️ Vente Séniors";
+    }
+
+    // 🔥 ROTATION
+    if(ratio < 45){
+        return "🔥 Rotation vers Or";
+    }
+
+    return "📊 Marché neutre";
+}
 
 
 
@@ -696,7 +724,7 @@ if(elETFText){
 
 setText("alert-text", getAlertMessage(data.ratio));
 applyRatioColor(data.ratio);
-setText("zone-action", getZoneAction(data.ratio));
+setText("zone-action", getCombinedSignal(data.ratio, state.bpgdm));
 
 
 // ===== METAUX TABLE =====
