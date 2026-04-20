@@ -729,26 +729,30 @@ td, th {
 
 
 #tooltip-isin {
-    position: fixed; /* 🔥 IMPORTANT (pas absolute) */
+    position: fixed;
     display: none;
 
-    background: rgba(15, 23, 42, 0.95);
+    background: #0f172a; /* 🔥 fond solide */
     color: #e2e8f0;
 
-    padding: 6px 10px;
-    border-radius: 6px;
+    padding: 8px 12px;   /* 🔥 important pour le cadre */
+    border-radius: 8px;
 
     font-size: 12px;
+    font-weight: 500;
+
+    border: 1px solid rgba(148, 163, 184, 0.25);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.6),
+        0 0 10px rgba(56,189,248,0.15); /* petit glow léger */
+
     white-space: nowrap;
+    pointer-events: none;
 
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    z-index: 99999; /* 🔥 monte plus haut */
 
-    pointer-events: none; /* 🔥 CRUCIAL */
-    z-index: 9999;        /* 🔥 AU DESSUS DE TOUT */
-
-    transform: translate(-50%, -120%); /* 🎯 centre au-dessus de la souris */
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transform: translate(-50%, -130%);
 }
 
 .etf-name:hover::after {
