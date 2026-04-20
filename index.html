@@ -1034,6 +1034,8 @@ async function fetchHistory(){
     .split("\n")
     .map(r => r.split(/[;,]/));
 
+console.log("ROW 1:", rows[1]);
+    
     const history = [];
 
     for (let i = 1; i < rows.length; i++) {
