@@ -1167,11 +1167,17 @@ console.log("ROW 1:", rows[1]);
 
 async function renderChart(){
 
-    // 🔥 UTILISE LE CACHE (plus de double fetch)
-    const history = state.history;
+    let history = state.history;
+
+    // 🔥 fallback sécurité (ultra important)
+    if (!history || history.length === 0) {
+        console.warn("Fallback fetchHistory utilisé");
+        const data = await fetchHistory();
+        history = data.history;
+    }
 
     if (!history || history.length === 0) {
-        console.warn("Pas de data pour le graph");
+        console.warn("Aucune donnée pour le graph");
         return;
     }
 
