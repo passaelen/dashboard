@@ -683,3 +683,13 @@ td, th {
 
     letter-spacing: 0.2px;
 }
+
+@keyframes flashStrong {
+    0%   { transform: scale(1); opacity: 1; }
+    50%  { transform: scale(1.15); opacity: 0.6; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.flash-strong {
+    animation: flashStrong 0.8s ease infinite;
+}
