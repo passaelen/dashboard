@@ -1269,40 +1269,40 @@ async function renderChart(){
             ]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: {
-                mode: "nearest",
-                intersect: true
-            },
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    displayColors: false,
-                    callbacks: {
-                        label: function(context) {
-                            if (context.datasetIndex === 1) return null;
+    responsive: true,
+    maintainAspectRatio: false,
 
-                            const i = context.dataIndex;
-                            const point = enriched[i];
+    interaction: {
+        mode: "index",
+        intersect: false
+    },
 
-                            const value = point.total.toLocaleString('fr-BE') + " €";
+    plugins: {
+        legend: { display: false },
+        tooltip: {
+            displayColors: false,
+            callbacks: {
+                label: function(context) {
+                    if (context.datasetIndex === 1) return null;
 
-                            if (Math.abs(point.diff) < 1) return [value];
+                    const i = context.dataIndex;
+                    const point = enriched[i];
 
-                            const sign = point.diff >= 0 ? "+" : "";
+                    const value = point.total.toLocaleString('fr-BE') + " €";
 
-                            return [
-                                value,
-                                sign + point.diff.toLocaleString('fr-BE') + " €",
-                                sign + point.pct.toFixed(2).replace('.', ',') + "%"
-                            ];
-                        }
-                    }
+                    if (Math.abs(point.diff) < 1) return [value];
+
+                    const sign = point.diff >= 0 ? "+" : "";
+
+                    return [
+                        value,
+                        sign + point.diff.toLocaleString('fr-BE') + " €",
+                        sign + point.pct.toFixed(2).replace('.', ',') + "%"
+                    ];
                 }
             }
         }
-    });
+    }
 }
 
 
