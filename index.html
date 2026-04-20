@@ -1260,9 +1260,19 @@ gradient.addColorStop(1, "rgba(0,0,0,0)");
 // 🔥 effet snap
 pointHitRadius: 20,
 
-pointHoverRadius: 10,
-pointHoverBorderWidth: 2,
-pointHoverBorderColor: "#fff",
+pointHoverRadius: 12,
+pointHoverBorderWidth: 3,
+pointHoverBorderColor: "#ffffff",
+
+// 🔥 effet glow
+pointHoverBackgroundColor: function(context) {
+    const i = context.dataIndex;
+    const diff = enriched[i]?.diff || 0;
+
+    return diff >= 0 ? "#4ade80" : "#f87171";
+},
+
+pointHoverBorderColor: "#ffffff",
 
 
                     pointBackgroundColor: function(context) {
