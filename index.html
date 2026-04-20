@@ -903,6 +903,7 @@ const { history: historyList, bpgdmLive } = await fetchHistory();
 const last = historyList?.at(-1) || {};
 
 console.log("LAST:", last); // 👈 ICI
+console.log("BPGDM LIVE (G2):", rows[1]?.[6]);
 
 
         
@@ -1046,6 +1047,7 @@ async function fetchHistory(){
         const seniors = cleanNumber(row[3]);
         const juniors = cleanNumber(row[4]);
         const bpgdm = cleanNumber(row[5]);
+        
 
         if (date && total > 0) {
             history.push({
@@ -1059,7 +1061,7 @@ async function fetchHistory(){
         }
     }
 
-    const bpgdmLive = cleanNumber(rows[1]?.[5]);
+    const bpgdmLive = cleanNumber(rows[1]?.[6]);
 
     return {
         history,
