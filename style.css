@@ -743,7 +743,9 @@ td, th {
     border-color: #0ea5e9;
 }
 
-
+.timeframe {
+    margin-top: 12px;
+}
 
 
 /*
