@@ -486,17 +486,27 @@ function getZoneAction(ratio){
 
 function getCombinedSignal(ratio, bpgdm){
 
-    // 💥 ULTRA SIGNAL ACHAT
+    // 🚨 ULTRA ACHAT (extrême)
+    if(bpgdm <= 3){
+        return "🚨 Achat ultra agressif ETF Séniors : 🆔ISIN : IE00BQQP9F84";
+    }
+
+    // 💥 ACHAT MASSIF
     if(ratio >= 50 && bpgdm <= 5){
         return "💥 Achat massif ETF Séniors : 🆔ISIN : IE00BQQP9F84";
     }
 
-    // ⚠️ PRIORITÉ VENTE (🔥 important)
+    // 🚨 VENTE AGRESSIVE
+    if(bpgdm >= 80){
+        return "🚨 Vente agressive ETF Séniors : 🆔ISIN : IE00BQQP9F84";
+    }
+
+    // ⚠️ VENTE
     if(bpgdm >= 70){
         return "⚠️ Vente ETF Séniors : 🆔ISIN : IE00BQQP9F84";
     }
 
-    // 🧊 ACCUMULATION
+    // 🧊 ACCUMULATION (zone calme)
     if(ratio >= 50 && bpgdm < 50){
         return "🧊 Accumulation ETF Séniors : 🆔ISIN : IE00BQQP9F84";
     }
