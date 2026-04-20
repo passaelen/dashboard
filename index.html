@@ -897,9 +897,7 @@ async function init(){
 
 
 // 🔥 1. récupérer ton sheet AVANT
-const historyData = await fetchHistory();
-const history = historyData.history;
-const bpgdmLive = historyData.bpgdmLive;
+const { history: historyList, bpgdmLive } = await fetchHistory();
 const last = history?.at(-1) || {};
         
 
