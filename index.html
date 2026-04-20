@@ -117,8 +117,15 @@
 
 <!-- GRAPH -->
 <div class="card">
-<h3>Évolution 10 jours</h3>
-<canvas id="chart-10j"></canvas>
+    <h3>Évolution 10 jours</h3>
+
+    <canvas id="chart-10j"></canvas>
+
+    <div class="timeframe">
+        <button class="tf active" data-days="10">10J</button>
+        <button class="tf" data-days="30">30J</button>
+        <button class="tf" data-days="90">90J</button>
+    </div>
 </div>
 
 <!-- METAUX -->
@@ -239,11 +246,8 @@
 </div>
 
 
-<div class="timeframe">
-    <button class="tf active" data-days="10">10J</button>
-    <button class="tf" data-days="30">30J</button>
-    <button class="tf" data-days="90">90J</button>
-</div>
+
+
 
 
 <script src="data.js"></script>
