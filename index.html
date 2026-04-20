@@ -1420,24 +1420,24 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 🔥 TIMEFRAME BUTTONS
+    // 🔥 TIMEFRAME BUTTONS (FIX CLEAN)
     document.querySelectorAll(".tf").forEach(btn => {
         btn.addEventListener("click", () => {
 
-            document.querySelectorAll(".tf").forEach(btn => {
-    btn.addEventListener("click", () => {
+            // reset active
+            document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
 
-        // reset active
-        document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+            // update timeframe
+            state.timeframe = parseInt(btn.dataset.days);
 
-        // update timeframe
-        state.timeframe = parseInt(btn.dataset.days);
-
-        // redraw
-        renderChart();
+            // redraw graph
+            renderChart();
+        });
     });
-});
+
+    // 🔥 sécurité
+    state.timeframe = 10;
 
     init();
 });
