@@ -265,7 +265,8 @@ const state = {
     etfPrices: null,
 
     portfolio: DATA.portfolio,
-    etf: DATA.etf
+    etf: DATA.etf,
+    timeframe: 10
 };
 
 
@@ -1186,7 +1187,7 @@ if (!history || history.length === 0) {
     return;
 }
 
-const last = history.slice(-10);
+const last = history.slice(-state.timeframe);
 
 
     const labels = last.map(h => {
@@ -1415,9 +1416,21 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 🔥 TIMEFRAME BUTTONS
+    document.querySelectorAll(".tf").forEach(btn => {
+        btn.addEventListener("click", () => {
+
+            document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            state.timeframe = parseInt(btn.dataset.days);
+
+            renderChart();
+        });
+    });
+
     init();
 });
-
 
 </script>
 
