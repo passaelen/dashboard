@@ -117,7 +117,7 @@
 
 <!-- GRAPH -->
 <div class="card">
-    <h3>Évolution 10 jours</h3>
+    <h3 id="chart-title">Évolution 10 jours</h3>
 
     <canvas id="chart-10j"></canvas>
 
@@ -1420,21 +1420,28 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 🔥 TIMEFRAME BUTTONS (FIX CLEAN)
-    document.querySelectorAll(".tf").forEach(btn => {
-        btn.addEventListener("click", () => {
+    // 🔥 TIMEFRAME BUTTONS (avec titre dynamique)
+document.querySelectorAll(".tf").forEach(btn => {
+    btn.addEventListener("click", () => {
 
-            // reset active
-            document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+        // reset active
+        document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
 
-            // update timeframe
-            state.timeframe = parseInt(btn.dataset.days);
+        // update timeframe
+        const days = parseInt(btn.dataset.days);
+        state.timeframe = days;
 
-            // redraw graph
-            renderChart();
-        });
+        // 🔥 update titre
+        const title = document.getElementById("chart-title");
+        if (title) {
+            title.innerText = `Évolution ${days} jours`;
+        }
+
+        // redraw graph
+        renderChart();
     });
+});
 
     // 🔥 sécurité
     state.timeframe = 10;
