@@ -1023,6 +1023,24 @@ const result = calculate();
 render(result);
 
 
+const alertBox = document.querySelector(".alert-box");
+
+if(alertBox){
+    alertBox.classList.remove("alert-glow-soft", "alert-glow-strong");
+
+    // 💥 SIGNAL FORT (achat)
+    if(state.bpgdm <= 5){
+        alertBox.classList.add("alert-glow-strong");
+    }
+
+    // ⚠️ SIGNAL HAUT (vente)
+    else if(state.bpgdm >= 70){
+        alertBox.classList.add("alert-glow-soft");
+    }
+}
+        
+
+
 
 
 
@@ -1049,8 +1067,6 @@ el.classList.add("flash");
 setTimeout(() => {
     el.classList.remove("flash");
 }, 400);
-
-
 }
 
 
