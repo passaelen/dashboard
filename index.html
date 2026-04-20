@@ -945,6 +945,10 @@ async function init(){
 
 // 🔥 1. récupérer ton sheet AVANT
 const { history: historyList, bpgdmLive } = await fetchHistory();
+
+// 🔥 ON STOCKE POUR LE GRAPH
+state.history = historyList;
+
 const last = historyList?.at(-1) || {};
 
 console.log("LAST:", last); // 👈 ICI
