@@ -153,7 +153,7 @@
     <td id="perf-or-suisse"></td>
 </tr>
 
-        
+
 <tr onclick="goToPage(this, 'or-belgique.html')">
         <td>Or</td>
         <td>Belgique</td>
@@ -163,7 +163,7 @@
         <td id="perf-or-belgique"></td>
         </tr>
 
-               
+
 <tr onclick="goToPage(this, 'argent-suisse.html')">
         <td>Argent</td><td>Suisse</td>
         <td id="q-argent"></td>
@@ -184,7 +184,7 @@
 <!-- ETF -->
 <div class="card">
 
-    
+
     <div class="etf-header">
          <h3>ETF <small>(clôtures veille)</small></h3>
          <div id="bpgdm" class="bpgdm-badge">--%</div>
@@ -942,141 +942,142 @@ async function init(){
         setText("ratio", "...");
 
 
-        // 🔥 1. récupérer ton sheet UNE SEULE FOIS
-        const historyData = await fetchHistory();
 
-        // 🔥 stocker dans state (clé de l’optimisation)
-        state.history = historyData.history;
-        state.bpgdm = historyData.bpgdmLive || historyData.history.at(-1)?.bpgdm;
+// 🔥 1. récupérer ton sheet AVANT
+const { history: historyList, bpgdmLive } = await fetchHistory();
+const last = historyList?.at(-1) || {};
 
-        // 🔥 raccourcis locaux
-        const historyList = state.history;
-        const last = historyList?.at(-1) || {};
-
-        console.log("LAST:", last);
-        console.log("BPGDM LIVE (G2):", historyData.bpgdmLive);
+console.log("LAST:", last); // 👈 ICI
+console.log("BPGDM LIVE (G2):", bpgdmLive);
 
 
 
-        // 🔥 2. PRICES
-        state.prices = await fetchPrices();
+
+
+// 🔥 2. FORCER le sheet comme source principale
+state.prices = await fetchPrices();
+state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
+
+
+// 🔥 input Bpgdm dans ETF        
+const elB = document.getElementById("bpgdm");
+
+if(elB){
+
+    elB.classList.remove("flash-strong");
+
+    const value = state.bpgdm?.toFixed(2) || 0;
+
+    // 🔥 PRIORITÉ 1 — ACHAT
+    if(state.bpgdm <= 5){
+
+        elB.innerText = `Bpgdm : ${value}% • Achats Séniors`;
+        elB.style.color = "#22c55e";
+        elB.classList.add("flash-strong");
+
+    }
+
+    // 🔥 PRIORITÉ 2 — VENTE
+    else if(state.bpgdm >= 70){
+
+        elB.innerText = `Bpgdm : ${value}% • Vendre Séniors`;
+        elB.style.color = "#ef4444";
+        elB.classList.add("flash-strong");
+
+    }
+
+    // 🟠 ZONE NEUTRE
+    else if(state.bpgdm >= 50){
+
+        elB.innerText = `Bpgdm : ${value}%`;
+        elB.style.color = "#fb923c";
+
+    }
+
+    // 🟢 ACCUMULATION
+    else {
+
+        elB.innerText = `Bpgdm : ${value}%`;
+        elB.style.color = "#4ade80";
+
+    }
+}
 
 
 
-        // 🔥 input Bpgdm dans ETF        
-        const elB = document.getElementById("bpgdm");
-
-        if(elB){
-
-            elB.classList.remove("flash-strong");
-
-            const value = state.bpgdm?.toFixed(2) || 0;
-
-            // 🔥 PRIORITÉ 1 — ACHAT
-            if(state.bpgdm <= 5){
-
-                elB.innerText = `Bpgdm : ${value}% • Achats Séniors`;
-                elB.style.color = "#22c55e";
-                elB.classList.add("flash-strong");
-
-            }
-
-            // 🔥 PRIORITÉ 2 — VENTE
-            else if(state.bpgdm >= 70){
-
-                elB.innerText = `Bpgdm : ${value}% • Vendre Séniors`;
-                elB.style.color = "#ef4444";
-                elB.classList.add("flash-strong");
-
-            }
-
-            // 🟠 ZONE NEUTRE
-            else if(state.bpgdm >= 50){
-
-                elB.innerText = `Bpgdm : ${value}%`;
-                elB.style.color = "#fb923c";
-
-            }
-
-            // 🟢 ACCUMULATION
-            else {
-
-                elB.innerText = `Bpgdm : ${value}%`;
-                elB.style.color = "#4ade80";
-
-            }
-        }
 
 
+// ⚠️ on initialise vide
+state.etfPrices = {
+    monde: 0,
+    seniors: 0,
+    juniors: 0
+};
 
-        // ⚠️ on initialise vide
-        state.etfPrices = {
-            monde: 0,
-            seniors: 0,
-            juniors: 0
-        };
+// 🔥 3. override avec sheet
+if(last && last.monde !== undefined){
+    console.log("SHEET RAW:", last);
 
-        // 🔥 3. override avec sheet
-        if(last && last.monde !== undefined){
-            console.log("SHEET RAW:", last);
+    state.etfPrices = {
+        monde: last.monde,
+        seniors: last.seniors,
+        juniors: last.juniors
+    };
+}
 
-            state.etfPrices = {
-                monde: last.monde,
-                seniors: last.seniors,
-                juniors: last.juniors
-            };
-        }
+// 🔥 log pour vérifier
+console.log("ETF SHEET:", state.etfPrices);
 
-        console.log("ETF SHEET:", state.etfPrices);
+// 🔥 4. calcul après tout
+const result = calculate();
+render(result);
+
+
+const alertBox = document.querySelector(".alert-box");
+
+if(alertBox){
+    alertBox.classList.remove("alert-glow-soft", "alert-glow-strong");
+
+    // 💥 SIGNAL FORT (achat)
+    if(state.bpgdm <= 5){
+        alertBox.classList.add("alert-glow-strong");
+    }
+
+    // ⚠️ SIGNAL HAUT (vente)
+    else if(state.bpgdm >= 70){
+        alertBox.classList.add("alert-glow-soft");
+    }
+}
 
 
 
-        // 🔥 4. calcul
-        const result = calculate();
-        render(result);
 
 
 
-        // 🔥 ALERT GLOW
-        const alertBox = document.querySelector(".alert-box");
+// ===== VARIATION =====
+const lastHistory = historyList.at(-1)?.total || 0;
 
-        if(alertBox){
-            alertBox.classList.remove("alert-glow-soft", "alert-glow-strong");
+const diff = result.total - lastHistory;
+const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
 
-            if(state.bpgdm <= 5){
-                alertBox.classList.add("alert-glow-strong");
-            }
-            else if(state.bpgdm >= 70){
-                alertBox.classList.add("alert-glow-soft");
-            }
-        }
+const el = document.getElementById("variation");
 
+if (el) {
+    const sign = diff >= 0 ? "+" : "";
 
+    const diffStr = sign + Math.round(diff).toLocaleString('fr-BE') + " €";
+    const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
 
-        // ===== VARIATION =====
-        const lastHistory = historyList.at(-1)?.total || 0;
+    el.innerText = diffStr + " (" + pctStr + ")";
 
-        const diff = result.total - lastHistory;
-        const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
+    el.classList.remove("positive", "negative");
+    el.classList.add(diff >= 0 ? "positive" : "negative");
 
-        const el = document.getElementById("variation");
-
-        if (el) {
-            const sign = diff >= 0 ? "+" : "";
-
-            const diffStr = sign + Math.round(diff).toLocaleString('fr-BE') + " €";
-            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
-
-            el.innerText = diffStr + " (" + pctStr + ")";
-
-            el.classList.remove("positive", "negative");
-            el.classList.add(diff >= 0 ? "positive" : "negative");
-
-            el.classList.add("flash");
-            setTimeout(() => {
-                el.classList.remove("flash");
-            }, 400);
-        }
+el.classList.add("flash");
+setTimeout(() => {
+    el.classList.remove("flash");
+}, 400);
+}
 
 
 
@@ -1123,7 +1124,7 @@ async function fetchHistory(){
     });
 
 console.log("ROW 1:", rows[1]);
-    
+
     const history = [];
 
     for (let i = 1; i < rows.length; i++) {
@@ -1138,7 +1139,7 @@ console.log("ROW 1:", rows[1]);
         const seniors = cleanNumber(row[3]);
         const juniors = cleanNumber(row[4]);
         const bpgdm = cleanNumber(row[5]);
-        
+
 
         if (date && total > 0) {
             history.push({
@@ -1167,36 +1168,43 @@ console.log("ROW 1:", rows[1]);
 
 async function renderChart(){
 
-    let history = state.history;
-
-    if (!history || history.length === 0) {
-        const data = await fetchHistory();
-        history = data.history;
-    }
-
-    if (!history || history.length === 0) {
-        console.warn("Aucune donnée pour le graph");
-        return;
-    }
-
+    const { history } = await fetchHistory();
     const last = history.slice(-10);
+
 
     const labels = last.map(h => {
         const [day, month] = h.date.split("/");
         return day + "/" + month;
     });
 
+    // ===== ENRICHISSEMENT =====
     const enriched = last.map((h, i) => {
         const prev = last[i - 1]?.total || h.total;
+
         const diff = h.total - prev;
         const pct = prev ? (diff / prev) * 100 : 0;
-        return { total: h.total, diff, pct };
+
+        return {
+            total: h.total,
+            diff,
+            pct
+        };
     });
 
+
+// ===== MOYENNE MOBILE 7 =====
     const movingAvg = enriched.map((_, i, arr) => {
-        const slice = arr.slice(Math.max(0, i - 6), i + 1);
-        return slice.reduce((a,v)=>a+v.total,0) / slice.length;
+        if (i < 6) {
+    return arr.slice(0, i+1).reduce((a,v)=>a+v.total,0)/(i+1);
+}
+
+        const slice = arr.slice(i - 6, i + 1);
+        const sum = slice.reduce((acc, v) => acc + v.total, 0);
+
+        return sum / 7;
     });
+
+
 
     const ctx = document.getElementById("chart-10j").getContext("2d");
 
@@ -1204,70 +1212,53 @@ async function renderChart(){
     const lastVal = enriched.at(-1).total;
     const isUp = lastVal >= first;
 
+    const color = isUp ? "34,197,94" : "239,68,68";
+
     const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-    gradient.addColorStop(0, isUp
-        ? "rgba(34,197,94,0.5)"
-        : "rgba(239,68,68,0.5)"
-    );
-    gradient.addColorStop(0.6, isUp
-        ? "rgba(34,197,94,0.15)"
-        : "rgba(239,68,68,0.15)"
-    );
-    gradient.addColorStop(1, "rgba(0,0,0,0)");
+gradient.addColorStop(0, isUp
+    ? "rgba(34,197,94,0.5)"
+    : "rgba(239,68,68,0.5)"
+);
+gradient.addColorStop(0.6, isUp
+    ? "rgba(34,197,94,0.15)"
+    : "rgba(239,68,68,0.15)"
+);
+gradient.addColorStop(1, "rgba(0,0,0,0)");
 
-
-
-    // 🔥 window.chart10j UPDATE SAFE
 
     if (window.chart10j) {
+        window.chart10j.destroy();
+    }
 
-    // 1. update DATA
-    window.chart10j.data.labels = labels;
-    window.chart10j.data.datasets[0].data = enriched.map(e => e.total);
-    window.chart10j.data.datasets[1].data = movingAvg;
-
-    // 2. update STYLE
-    window.chart10j.data.datasets[0].pointBackgroundColor = (context) => {
-        const i = context.dataIndex;
-        return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
-    };
-
-    // 3. 🔥 REAPPLY OPTIONS (IMPORTANT)
-    window.chart10j.options.interaction.mode = "index";
-    window.chart10j.options.interaction.intersect = false;
-
-    window.chart10j.options.plugins.tooltip.filter = function(context) {
-        return context.datasetIndex === 0;
-    };
-
-    // 4. APPLY
-    window.chart10j.update();
-
-    return;
-}
-
-    // 🔥 CREATE
     window.chart10j = new Chart(ctx, {
         type: "line",
         data: {
             labels: labels,
             datasets: [
+
+                // 🔵 COURBE PRINCIPALE
                 {
                     data: enriched.map(e => e.total),
                     tension: 0.4,
                     borderColor: isUp ? "#22c55e" : "#ef4444",
                     backgroundColor: gradient,
                     fill: true,
+
                     pointRadius: 4,
                     pointHoverRadius: 8,
-                    pointHoverBorderWidth: 2,
-                    pointHoverBorderColor: "#fff",
-                    pointBackgroundColor: (context) => {
+pointHoverBorderWidth: 2,
+pointHoverBorderColor: "#fff",
+
+                    pointBackgroundColor: function(context) {
                         const i = context.dataIndex;
-                        return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
+                        const diff = enriched[i]?.diff || 0;
+                        return diff >= 0 ? "#22c55e" : "#ef4444";
                     },
+
                     pointBorderWidth: 0
                 },
+
+                // 🟣 MOYENNE MOBILE (MM7)
                 {
                     data: movingAvg,
                     tension: 0.4,
@@ -1279,47 +1270,84 @@ async function renderChart(){
                 }
             ]
         },
+
         options: {
-    responsive: true,
-    maintainAspectRatio: false,
+            responsive: true,
+            maintainAspectRatio: false,
 
-    interaction: {
-        mode: "index",
-        intersect: false
-    },
-
-    plugins: {
-        legend: { display: false },
-        tooltip: {
-            displayColors: false,
-
-            filter: function(context) {
-                return context.datasetIndex === 0;
+            interaction: {
+                mode: "index",
+                intersect: false
             },
 
-            callbacks: {
-                label: function(context) {
+            plugins: {
+                legend: { display: false },
 
-                    const i = context.dataIndex;
-                    const point = enriched[i];
+                tooltip: {
+                    backgroundColor: "#0f172a",
+                    borderColor: "#38bdf8",
+                    borderWidth: 1,
+                    titleColor: "#e2e8f0",
+                    bodyColor: "#e2e8f0",
+                    displayColors: false,
 
-                    const value = point.total.toLocaleString('fr-BE') + " €";
+                    callbacks: {
 
-                    if (Math.abs(point.diff) < 1) return [value];
+                        label: function(context) {
 
-                    const sign = point.diff >= 0 ? "+" : "";
+                            // ignore MM7
+                            if (context.datasetIndex === 1) return null;
 
-                    return [
-                        value,
-                        sign + point.diff.toLocaleString('fr-BE') + " €",
-                        sign + point.pct.toFixed(2).replace('.', ',') + "%"
-                    ];
+                            const i = context.dataIndex;
+                            const point = enriched[i];
+
+                            const value = point.total.toLocaleString('fr-BE') + " €";
+
+                            const diff = point.diff;
+                            const pct = point.pct;
+
+                            if (Math.abs(diff) < 1) {
+                                return [value];
+                            }
+
+                            const sign = diff >= 0 ? "+" : "";
+
+                            const diffStr = sign + diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
+                            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+                            return [
+                                value,
+                                diffStr + " (" + pctStr + ")"
+                            ];
+                        }
+                    }
                 }
+            },
+
+            scales: {
+                x: {
+                    ticks: { color: "#94a3b8" },
+                    grid: { color: "rgba(148,163,184,0.05)" }
+                },
+                y: {
+                    ticks: {
+                        color: "#94a3b8",
+                        callback: v => v.toLocaleString('fr-BE') + " €"
+                    },
+                    grid: { color: "rgba(148,163,184,0.05)" }
+                }
+            },
+
+            animation: {
+                duration: 800,
+                easing: "easeOutQuart"
             }
         }
-    }
-} 
-});
+    });
+}
+
+
+
 
 
 // ===== START =====
