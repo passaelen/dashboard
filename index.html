@@ -935,8 +935,7 @@ render(result);
 
 
 // ===== VARIATION =====
-const history = await fetchHistory();
-const lastHistory = history.at(-1)?.total || 0;
+const lastHistory = historyList.at(-1)?.total || 0;
 
 const diff = result.total - lastHistory;
 const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
