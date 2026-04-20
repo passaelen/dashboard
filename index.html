@@ -899,6 +899,10 @@ async function init(){
 // 🔥 1. récupérer ton sheet AVANT
 const { history: historyList, bpgdmLive } = await fetchHistory();
 const last = historyList?.at(-1) || {};
+
+console.log("LAST:", last); // 👈 ICI
+
+
         
 
 // 🔥 2. FORCER le sheet comme source principale
@@ -913,7 +917,7 @@ state.etfPrices = {
 };
 
 // 🔥 3. override avec sheet
-if(last?.monde){
+if(last && last.monde !== undefined){
     console.log("SHEET RAW:", last);
 
     state.etfPrices = {
@@ -1043,8 +1047,9 @@ async function fetchHistory(){
 
 async function renderChart(){
 
-    const history = await fetchHistory();
+    const { history } = await fetchHistory();
     const last = history.slice(-10);
+    
 
     const labels = last.map(h => {
         const [day, month] = h.date.split("/");
