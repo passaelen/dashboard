@@ -1,5 +1,7 @@
 /* ===== GLOBAL ===== */ 
 body {
+    position: relative;
+    z-index: 0;
     overflow: visible;
     -webkit-tap-highlight-color: transparent;
     margin: 0;
@@ -301,7 +303,6 @@ transition: all 0.3s ease;
 
 .donut {
     margin: 4px auto;
-    isolation: isolate;
     opacity: 0;
     width: 110px;
     height: 110px;
@@ -746,7 +747,7 @@ td, th {
         0 0 10px rgba(56,189,248,0.15);
     white-space: nowrap;
     pointer-events: none;
-    z-index: 999999;
+    z-index: 9999999;
     will-change: transform;
 }
 
