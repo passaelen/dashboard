@@ -717,14 +717,20 @@ if(elETFText){
 }
 
 
-    // ===== GLOBAL =====
-    setText("ratio",
-        data.ratio.toFixed(2).replace('.',',')
-    );
+// ===== GLOBAL =====
+setText("ratio",
+    data.ratio.toFixed(2).replace('.',',')
+);
 
+// 🧊 CLIMAT
 setText("alert-text", getAlertMessage(data.ratio));
 applyRatioColor(data.ratio);
-setText("zone-action", getCombinedSignal(data.ratio, state.bpgdm));
+
+// 🧠 ACTIONS
+const ratioAction = getZoneAction(data.ratio);
+const combo = getCombinedSignal(data.ratio, state.bpgdm);
+
+setText("zone-action", ratioAction + " • " + combo);
 
 
 // ===== METAUX TABLE =====
