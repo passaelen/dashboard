@@ -1235,6 +1235,12 @@ const last = history.slice(-(state.timeframe || 10));
     const lastVal = enriched.at(-1).total;
     const isUp = lastVal >= first;
 
+// 🔥 couleur du titre selon tendance
+const title = document.getElementById("chart-title");
+if (title) {
+    title.style.color = isUp ? "#22c55e" : "#ef4444";
+}
+
     const color = isUp ? "34,197,94" : "239,68,68";
 
     const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
