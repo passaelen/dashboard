@@ -1029,10 +1029,14 @@ async function fetchHistory(){
     const res = await fetch(url);
     const text = await res.text();
 
+    // ===== parsing =====
    const rows = text
     .trim()
     .split("\n")
-    .map(r => r.split(/[;,]/));
+    .map(r => {
+        const matches = r.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+        return matches ? matches.map(v => v.replace(/"/g, "")) : [];
+    });
 
 console.log("ROW 1:", rows[1]);
     
