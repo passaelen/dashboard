@@ -1388,9 +1388,17 @@ hover: {
             },
 
             animation: {
-                duration: 800,
-                easing: "easeOutQuart"
-            }
+    duration: 600,
+    easing: "easeOutCubic"
+},
+transitions: {
+    active: {
+        animation: {
+            duration: 300
+        }
+    }
+}
+
         }
     });
 }
