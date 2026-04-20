@@ -919,28 +919,42 @@ const elB = document.getElementById("bpgdm");
 
 if(elB){
 
-    elB.innerText = "Bpgdm : " + (state.bpgdm?.toFixed(2) || 0) + "%";
+    elB.classList.remove("flash-strong");
 
-    elB.classList.remove("positive", "negative", "flash-strong");
+    const value = state.bpgdm?.toFixed(2) || 0;
 
-    // 🔥 PRIORITÉ ABSOLUE
+    // 🔥 PRIORITÉ 1 — ACHAT
     if(state.bpgdm <= 5){
 
-        elB.innerText += " - Achats Séniors";
+        elB.innerText = `Bpgdm : ${value}% • Achats Séniors`;
         elB.style.color = "#22c55e";
-
-        // effet flash fort
         elB.classList.add("flash-strong");
 
     }
+
+    // 🔥 PRIORITÉ 2 — VENTE
     else if(state.bpgdm >= 70){
-        elB.style.color = "#f87171"; // rouge soft
-    } 
+
+        elB.innerText = `Bpgdm : ${value}% • Vendre Séniors`;
+        elB.style.color = "#ef4444";
+        elB.classList.add("flash-strong");
+
+    }
+
+    // 🟠 ZONE NEUTRE
     else if(state.bpgdm >= 50){
-        elB.style.color = "#fb923c"; // orange soft
-    } 
+
+        elB.innerText = `Bpgdm : ${value}%`;
+        elB.style.color = "#fb923c";
+
+    }
+
+    // 🟢 ACCUMULATION
     else {
-        elB.style.color = "#4ade80"; // vert soft
+
+        elB.innerText = `Bpgdm : ${value}%`;
+        elB.style.color = "#4ade80";
+
     }
 }
 
