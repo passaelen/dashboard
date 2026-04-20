@@ -1295,45 +1295,50 @@ pointHoverBorderColor: "#fff",
                 legend: { display: false },
 
                 tooltip: {
-                    backgroundColor: "#0f172a",
-                    borderColor: "#38bdf8",
-                    borderWidth: 1,
-                    titleColor: "#e2e8f0",
-                    bodyColor: "#e2e8f0",
-                    displayColors: false,
+    backgroundColor: "#0f172a",
+    borderColor: "#38bdf8",
+    borderWidth: 1,
+    titleColor: "#e2e8f0",
+    bodyColor: "#e2e8f0",
+    displayColors: false,
 
-                    callbacks: {
+    // 🔥 filtre direct (plus propre que dans label)
+    filter: function(context) {
+        return context.datasetIndex === 0;
+    },
 
-                        label: function(context) {
+    callbacks: {
 
-                            // ignore MM7
-                            if (context.datasetIndex === 1) return null;
+        label: function(context) {
 
-                            const i = context.dataIndex;
-                            const point = enriched[i];
+            const i = context.dataIndex;
+            const point = enriched[i];
 
-                            const value = point.total.toLocaleString('fr-BE') + " €";
+            if (!point) return "";
 
-                            const diff = point.diff;
-                            const pct = point.pct;
+            const value = point.total.toLocaleString('fr-BE') + " €";
 
-                            if (Math.abs(diff) < 1) {
-                                return [value];
-                            }
+            const diff = point.diff || 0;
+            const pct = point.pct || 0;
 
-                            const sign = diff >= 0 ? "+" : "";
+            if (Math.abs(diff) < 1) {
+                return [value];
+            }
 
-                            const diffStr = sign + diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
-                            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+            const sign = diff >= 0 ? "+" : "";
 
-                            return [
-                                value,
-                                diffStr + " (" + pctStr + ")"
-                            ];
-                        }
-                    }
-                }
-            },
+            const diffStr = sign + diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
+            const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
+
+            return [
+                value,
+                diffStr + " (" + pctStr + ")"
+            ];
+        }
+    }
+}
+
+},
 
             scales: {
                 x: {
