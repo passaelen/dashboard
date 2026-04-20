@@ -726,47 +726,28 @@ td, th {
     cursor: pointer;
 }
 
-.etf-name:hover::after {
-    content: "ISIN : " attr(data-isin);
 
-    position: absolute;
-    left: 0;
-    bottom: 120%;
-
-    background: rgba(2,6,23,0.95);
-    color: #e5e7eb;
-
-    padding: 5px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 9999;
-}
 
 #tooltip-isin {
-    position: fixed;
+    position: fixed; /* 🔥 IMPORTANT (pas absolute) */
     display: none;
 
-    background: rgba(2, 6, 23, 0.95);
+    background: rgba(15, 23, 42, 0.95);
     color: #e2e8f0;
 
-    padding: 8px 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+
     font-size: 12px;
+    white-space: nowrap;
 
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(148, 163, 184, 0.2);
 
-    z-index: 999999; /* 🔥 très important */
+    pointer-events: none; /* 🔥 CRUCIAL */
+    z-index: 9999;        /* 🔥 AU DESSUS DE TOUT */
 
-    pointer-events: none;
+    transform: translate(-50%, -120%); /* 🎯 centre au-dessus de la souris */
 
-    box-shadow: 
-        0 0 15px rgba(0,0,0,0.6),
-        0 0 8px rgba(56,189,248,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
