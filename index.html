@@ -486,9 +486,14 @@ function getZoneAction(ratio){
 
 function getCombinedSignal(ratio, bpgdm){
 
-    // 💥 ULTRA SIGNAL
+    // 💥 ULTRA SIGNAL ACHAT
     if(ratio >= 50 && bpgdm <= 5){
         return "💥 Achat massif ETF Séniors : 🆔ISIN : IE00BQQP9F84";
+    }
+
+    // ⚠️ PRIORITÉ VENTE (🔥 important)
+    if(bpgdm >= 70){
+        return "⚠️ Vente ETF Séniors : 🆔ISIN : IE00BQQP9F84";
     }
 
     // 🧊 ACCUMULATION
@@ -499,11 +504,6 @@ function getCombinedSignal(ratio, bpgdm){
     // ⚖️ ZONE PIVOT
     if(ratio >= 45 && ratio < 50){
         return "⚖️ Zone charnière";
-    }
-
-    // ⚠️ SORTIE MINIÈRES
-    if(ratio < 45 && bpgdm >= 70){
-        return "⚠️ Vente ETF Séniors : 🆔ISIN : IE00BQQP9F84";
     }
 
     // 🔥 ROTATION
