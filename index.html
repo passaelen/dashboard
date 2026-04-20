@@ -1169,9 +1169,7 @@ async function renderChart(){
 
     let history = state.history;
 
-    // 🔥 fallback sécurité (ultra important)
     if (!history || history.length === 0) {
-        console.warn("Fallback fetchHistory utilisé");
         const data = await fetchHistory();
         history = data.history;
     }
@@ -1188,17 +1186,13 @@ async function renderChart(){
         return day + "/" + month;
     });
 
-    // ===== ENRICHISSEMENT =====
     const enriched = last.map((h, i) => {
         const prev = last[i - 1]?.total || h.total;
-
         const diff = h.total - prev;
         const pct = prev ? (diff / prev) * 100 : 0;
-
         return { total: h.total, diff, pct };
     });
 
-    // ===== MOYENNE MOBILE =====
     const movingAvg = enriched.map((_, i, arr) => {
         const slice = arr.slice(Math.max(0, i - 6), i + 1);
         return slice.reduce((a,v)=>a+v.total,0) / slice.length;
@@ -1221,52 +1215,65 @@ async function renderChart(){
     );
     gradient.addColorStop(1, "rgba(0,0,0,0)");
 
-    // 🔥 UPDATE au lieu de destroy (perf)
+    // 🔥 UPDATE SAFE
     if (window.chart10j) {
-
-    window.chart10j.data = {
-        labels: labels,
-        datasets: [
-            {
-                data: enriched.map(e => e.total),
-                tension: 0.4,
-                borderColor: isUp ? "#22c55e" : "#ef4444",
-                backgroundColor: gradient,
-                fill: true,
-                pointRadius: 4,
-                pointHoverRadius: 8,
-                pointHoverBorderWidth: 2,
-                pointHoverBorderColor: "#fff",
-                pointBackgroundColor: function(context) {
-                    const i = context.dataIndex;
-                    return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
-                },
-                pointBorderWidth: 0
-            },
-            {
-                data: movingAvg,
-                tension: 0.4,
-                borderColor: "#a78bfa",
-                borderWidth: 2,
-                pointRadius: 0,
-                borderDash: [6,6],
-                fill: false
-            }
-        ]
-    };
-
-    window.chart10j.update();
-    return;
-} 
-
-function(context) {
+        window.chart10j.data = {
+            labels: labels,
+            datasets: [
+                {
+                    data: enriched.map(e => e.total),
+                    tension: 0.4,
+                    borderColor: isUp ? "#22c55e" : "#ef4444",
+                    backgroundColor: gradient,
+                    fill: true,
+                    pointRadius: 4,
+                    pointHoverRadius: 8,
+                    pointHoverBorderWidth: 2,
+                    pointHoverBorderColor: "#fff",
+                    pointBackgroundColor: (context) => {
                         const i = context.dataIndex;
                         return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
                     },
-
                     pointBorderWidth: 0
                 },
+                {
+                    data: movingAvg,
+                    tension: 0.4,
+                    borderColor: "#a78bfa",
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    borderDash: [6,6],
+                    fill: false
+                }
+            ]
+        };
 
+        window.chart10j.update();
+        return;
+    }
+
+    // 🔥 CREATE
+    window.chart10j = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    data: enriched.map(e => e.total),
+                    tension: 0.4,
+                    borderColor: isUp ? "#22c55e" : "#ef4444",
+                    backgroundColor: gradient,
+                    fill: true,
+                    pointRadius: 4,
+                    pointHoverRadius: 8,
+                    pointHoverBorderWidth: 2,
+                    pointHoverBorderColor: "#fff",
+                    pointBackgroundColor: (context) => {
+                        const i = context.dataIndex;
+                        return enriched[i]?.diff >= 0 ? "#22c55e" : "#ef4444";
+                    },
+                    pointBorderWidth: 0
+                },
                 {
                     data: movingAvg,
                     tension: 0.4,
@@ -1278,32 +1285,19 @@ function(context) {
                 }
             ]
         },
-
         options: {
             responsive: true,
             maintainAspectRatio: false,
-
-            // 🔥 FIX MOBILE (tooltip stable)
             interaction: {
                 mode: "nearest",
                 intersect: true
             },
-
             plugins: {
                 legend: { display: false },
-
                 tooltip: {
-                    backgroundColor: "#0f172a",
-                    borderColor: "#38bdf8",
-                    borderWidth: 1,
-                    titleColor: "#e2e8f0",
-                    bodyColor: "#e2e8f0",
                     displayColors: false,
-                    position: "nearest",
-
                     callbacks: {
                         label: function(context) {
-
                             if (context.datasetIndex === 1) return null;
 
                             const i = context.dataIndex;
@@ -1311,46 +1305,22 @@ function(context) {
 
                             const value = point.total.toLocaleString('fr-BE') + " €";
 
-                            if (Math.abs(point.diff) < 1) {
-                                return [value];
-                            }
+                            if (Math.abs(point.diff) < 1) return [value];
 
                             const sign = point.diff >= 0 ? "+" : "";
 
-                            const diffStr = sign + point.diff.toLocaleString('fr-BE', {maximumFractionDigits: 0}) + " €";
-                            const pctStr = sign + point.pct.toFixed(2).replace('.', ',') + "%";
-
                             return [
                                 value,
-                                diffStr + " (" + pctStr + ")"
+                                sign + point.diff.toLocaleString('fr-BE') + " €",
+                                sign + point.pct.toFixed(2).replace('.', ',') + "%"
                             ];
                         }
                     }
                 }
-            },
-
-            scales: {
-                x: {
-                    ticks: { color: "#94a3b8" },
-                    grid: { color: "rgba(148,163,184,0.05)" }
-                },
-                y: {
-                    ticks: {
-                        color: "#94a3b8",
-                        callback: v => v.toLocaleString('fr-BE') + " €"
-                    },
-                    grid: { color: "rgba(148,163,184,0.05)" }
-                }
-            },
-
-            animation: {
-                duration: 800,
-                easing: "easeOutQuart"
             }
         }
     });
 }
-
 
 
 
