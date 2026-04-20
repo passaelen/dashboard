@@ -47,7 +47,6 @@
 <!-- ALERT -->
 <div class="card alert-box">
     <span id="alert-text"></span><br>
-    <small id="zone-main"></small>
     <small id="zone-bpgdm"></small>
 </div>
 
@@ -723,18 +722,15 @@ setText("ratio",
     data.ratio.toFixed(2).replace('.',',')
 );
 
-// 🧊 CLIMAT
-setText("alert-text", getAlertMessage(data.ratio));
+// 🧊 CLIMAT + ACTION (fusion ligne 1)
+const climat = getAlertMessage(data.ratio);
+const ratioAction = getZoneAction(data.ratio).replace("Métaux : ", "");
+
+setText("alert-text", `${climat}   ${ratioAction}`);
 applyRatioColor(data.ratio);
 
-// 🧠 ACTIONS
-const ratioAction = getZoneAction(data.ratio);
+// 🧠 BPGDM (ligne 2)
 const combo = getCombinedSignal(data.ratio, state.bpgdm);
-
-// 👉 ligne 1 = ratio (à côté du climat)
-setText("zone-main", ratioAction.replace("Métaux : ", ""));
-
-// 👉 ligne 2 = BPGDM
 setText("zone-bpgdm", combo);
 
 
