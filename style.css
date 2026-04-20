@@ -661,3 +661,27 @@ td, th {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+
+/* ===== BPGDM ===== */
+.etf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bpgdm-badge {
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+
+    color: #94a3b8;
+    font-weight: 500;
+
+    letter-spacing: 0.3px;
+
+    transition: 0.3s ease;
+}
