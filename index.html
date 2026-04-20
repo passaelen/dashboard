@@ -898,7 +898,7 @@ async function init(){
 
 // 🔥 1. récupérer ton sheet AVANT
 const { history: historyList, bpgdmLive } = await fetchHistory();
-const last = history?.at(-1) || {};
+const last = historyList?.at(-1) || {};
         
 
 // 🔥 2. FORCER le sheet comme source principale
