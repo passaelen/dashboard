@@ -730,29 +730,28 @@ td, th {
 
 
 #tooltip-isin {
-    all: initial;
     position: fixed;
     display: none;
 
-    background: #0f172a; /* 🔥 fond solide */
+    background: #0f172a;
     color: #e2e8f0;
 
-    padding: 8px 12px;   /* 🔥 important pour le cadre */
+    padding: 8px 12px;
     border-radius: 8px;
 
     font-size: 12px;
-    font-weight: 500;
+    font-family: system-ui, sans-serif;
 
     border: 1px solid rgba(148, 163, 184, 0.25);
 
     box-shadow:
         0 8px 25px rgba(0,0,0,0.6),
-        0 0 10px rgba(56,189,248,0.15); /* petit glow léger */
+        0 0 10px rgba(56,189,248,0.15);
 
     white-space: nowrap;
     pointer-events: none;
 
-    z-index: 99999; /* 🔥 monte plus haut */
+    z-index: 99999;
 
     transform: translate(-50%, -130%);
 }
