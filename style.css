@@ -1,5 +1,6 @@
 /* ===== GLOBAL ===== */ 
 body {
+    overflow: visible;
     -webkit-tap-highlight-color: transparent;
     margin: 0;
     font-family: system-ui, sans-serif;
