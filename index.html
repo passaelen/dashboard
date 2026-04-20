@@ -1280,33 +1280,36 @@ async function renderChart(){
     plugins: {
         legend: { display: false },
         tooltip: {
-    displayColors: false,
+            displayColors: false,
 
-    filter: function(context) {
-        return context.datasetIndex === 0; // 🔥 garde que la courbe principale
-    },
+            filter: function(context) {
+                return context.datasetIndex === 0;
+            },
 
-    callbacks: {
-        label: function(context) {
+            callbacks: {
+                label: function(context) {
 
-            const i = context.dataIndex;
-            const point = enriched[i];
+                    const i = context.dataIndex;
+                    const point = enriched[i];
 
-            const value = point.total.toLocaleString('fr-BE') + " €";
+                    const value = point.total.toLocaleString('fr-BE') + " €";
 
-            if (Math.abs(point.diff) < 1) return [value];
+                    if (Math.abs(point.diff) < 1) return [value];
 
-            const sign = point.diff >= 0 ? "+" : "";
+                    const sign = point.diff >= 0 ? "+" : "";
 
-            return [
-                value,
-                sign + point.diff.toLocaleString('fr-BE') + " €",
-                sign + point.pct.toFixed(2).replace('.', ',') + "%"
-            ];
+                    return [
+                        value,
+                        sign + point.diff.toLocaleString('fr-BE') + " €",
+                        sign + point.pct.toFixed(2).replace('.', ',') + "%"
+                    ];
+                }
+            }
         }
     }
-}
+} 
 });
+
 
 // ===== START =====
 window.addEventListener("DOMContentLoaded", () => {
