@@ -1168,7 +1168,14 @@ console.log("ROW 1:", rows[1]);
 
 async function renderChart(){
 
-    const { history } = await fetchHistory();
+    let history = state.history;
+
+    // 🔥 fallback sécurité (ne change rien au comportement)
+    if (!history || history.length === 0) {
+        const data = await fetchHistory();
+        history = data.history;
+    }
+
     const last = history.slice(-10);
 
 
@@ -1176,6 +1183,7 @@ async function renderChart(){
         const [day, month] = h.date.split("/");
         return day + "/" + month;
     });
+
 
     // ===== ENRICHISSEMENT =====
     const enriched = last.map((h, i) => {
