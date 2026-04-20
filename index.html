@@ -904,14 +904,14 @@ const last = historyList?.at(-1) || {};
 
 console.log("LAST:", last); // 👈 ICI
 console.log("BPGDM LIVE (G2):", bpgdmLive);
-console.log("ROWS[1]:", rows[1]);
+
 
 
         
 
 // 🔥 2. FORCER le sheet comme source principale
 state.prices = await fetchPrices();
-state.bpgdm = bpgdmLive || last?.bpgdm;
+state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
 
 
 // 🔥 input Bpgdm dans ETF        
