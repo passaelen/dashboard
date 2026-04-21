@@ -85,18 +85,18 @@ body {
 
 <div class="boussole-container">
 
-    <img src="boussole.jpg" class="boussole-img">
+    <img src="bous.png" class="boussole-img" alt="Boussole">
 
     <div class="needle" id="needle"></div>
 
 </div>
 
-<div class="zone" id="zone-text"></div>
-<div class="value" id="ratio-text"></div>
+<div class="boussole-zone" id="zone-text"></div>
+<div class="boussole-value" id="ratio-text"></div>
 
 <script>
 
-// ===== récupérer ratio depuis URL =====
+// ===== PARAM =====
 const params = new URLSearchParams(window.location.search);
 const ratio = parseFloat(params.get("ratio")) || 50;
 
@@ -112,32 +112,32 @@ function getZone(r){
 }
 
 
-// ===== ANGLE (fluide) =====
-// map 30 → 120 vers 180° → 0°
+// ===== ANGLE ADAPTÉ À TON IMAGE =====
+// ici on utilise un angle vertical
 function getAngle(r){
+
     const min = 30;
     const max = 120;
 
     const clamped = Math.max(min, Math.min(max, r));
 
-    return 180 - ((clamped - min) / (max - min)) * 180;
+    // mapping vers -90° (haut) à +90° (bas)
+    return ((clamped - min) / (max - min)) * 180 - 90;
 }
 
 
-// ===== AFFICHAGE =====
+// ===== ANIMATION =====
+const needle = document.getElementById("needle");
 const angle = getAngle(ratio);
 
-const needle = document.getElementById("needle");
-
 setTimeout(() => {
-    needle.style.transition = "transform 0.8s easeOutCubic";
+    needle.style.transition = "transform 1.2s cubic-bezier(0.22,1,0.36,1)";
     needle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
 }, 100);
 
 
 // ===== TEXTE =====
-document.getElementById("zone-text").innerText =
-    "Zone actuelle : " + getZone(ratio);
+document.getElementById("zone-text").innerText = getZone(ratio);
 
 document.getElementById("ratio-text").innerText =
     ratio.toFixed(2).replace(".", ",");
