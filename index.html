@@ -500,12 +500,12 @@ function getCombinedSignal(ratio, bpgdm){
 
     // 🚨 ULTRA ACHAT (capitulation extrême)
     if (bpgdm <= 3 && ratio >= 65) {
-        return "🚨 Achat ULTRA agressif (Séniors [IE00BQQP9F84] + Juniors [IE00BQQP9G91])";
+        return "🟢 Achat ULTRA agressif (Séniors [IE00BQQP9F84] + Juniors [IE00BQQP9G91])";
     }
 
     // 💥 ACHAT MASSIF
     if (bpgdm <= 5 && ratio >= 65) {
-        return "💥 Achat massif (Séniors [IE00BQQP9F84] + Juniors [IE00BQQP9G91])";
+        return "🟢 Achat massif (Séniors [IE00BQQP9F84] + Juniors [IE00BQQP9G91])";
     }
 
     // 🟡 ACHAT STANDARD
@@ -513,24 +513,29 @@ function getCombinedSignal(ratio, bpgdm){
         return "🟡 Achat Séniors [IE00BQQP9F84]";
     }
 
-    // 🔥 PRIORITÉ MÉTAUX (CLIMAT)
-    if (ratio < 45) {
-        return "🔥 Rotation Argent → Or / ETF Monde (10 ans min) [IE00BK5BQT80]";
-    }
-
-    // 🚨 VENTE ETF
+    // 🚨 VENTE ETF (priorité haute)
     if (bpgdm >= 70) {
-        return "🚨 Vente Séniors [IE00BQQP9F84] → ETF Monde [IE00BK5BQT80]";
+        return "🔴 Vente Séniors [IE00BQQP9F84] → ETF Monde [IE00BK5BQT80]";
     }
 
     // ⚠️ ALLÈGEMENT JUNIORS
     if (bpgdm >= 60) {
-        return "⚠️ Alléger Juniors [IE00BQQP9G91] / Conserver Séniors [IE00BQQP9F84]";
+        return "🟠 Alléger Juniors [IE00BQQP9G91] / 🔵 Conserver Séniors [IE00BQQP9F84]";
     }
 
-    // 🔵 HOLD
-    if (bpgdm > 10 && bpgdm < 60) {
-        return "🔵 HOLD / Conserver positions";
+    // 🔥 PRIORITÉ MÉTAUX (climat)
+    if (ratio < 45) {
+        return "🔥 Rotation Argent → Or / ETF Monde (10 ans min. [IE00BK5BQT80])";
+    }
+
+    // 🔵 HOLD GLOBAL
+    if (bpgdm > 10 && bpgdm < 60 && ratio >= 50) {
+        return "🔵 HOLD global (ETF + Métaux)";
+    }
+
+    // ⚖️ TRANSITION MÉTAUX
+    if (bpgdm > 10 && bpgdm < 60 && ratio < 50) {
+        return "⚖️ Métaux en transition / 🔵 HOLD ETF";
     }
 
     return "📊 Marché neutre";
