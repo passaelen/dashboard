@@ -132,7 +132,10 @@ const angle = getAngle(ratio);
 
 setTimeout(() => {
     needle.style.transition = "transform 1.2s cubic-bezier(0.22,1,0.36,1)";
-    needle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+ 
+needle.style.transform = `rotate(${angle}deg)`;
+
+// needle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
 
 // ===== change l'extrémité aiguille =====
 }, 100);
