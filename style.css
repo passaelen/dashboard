@@ -801,11 +801,11 @@ td, th {
 .needle {
     position: absolute;
 
-    top: 38.5%;
+    top: 38%;
     left: 50%;
 
     width: 3px;
-    height: 40%;
+    height: 30%;
 
     background: linear-gradient(to top, #f59e0b, #facc15);
 
