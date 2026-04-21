@@ -780,6 +780,7 @@ td, th {
     transform: scale(1.2);
 }
 
+
 /* ===== BOUSSOLE ===== */
 .boussole-container {
     position: relative;
@@ -791,13 +792,16 @@ td, th {
     width: 100%;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+
+    /* 👇 debug temporaire */
+    outline: 2px solid red;
 }
 
 /* aiguille */
 .needle {
     position: absolute;
 
-    top: 45%;
+    top: 50%;
     left: 50%;
 
     width: 3px;
@@ -807,8 +811,8 @@ td, th {
 
     transform-origin: bottom center;
 
-    /* 👇 IMPORTANT */
-    transform: translate(-50%, -88%);
+    /* 👇 BASE PROPRE */
+    transform: translate(-50%, -100%);
 
     border-radius: 2px;
 
