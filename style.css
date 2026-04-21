@@ -782,19 +782,19 @@ td, th {
 
 
 /* ===== BOUSSOLE ===== */
+
+/* container */
 .boussole-container {
     position: relative;
     max-width: 360px;
     margin: 60px auto 20px;
 }
 
+/* image */
 .boussole-img {
     width: 100%;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-
-    /* 👇 debug temporaire */
-    outline: 2px solid red;
 }
 
 /* aiguille */
@@ -816,13 +816,15 @@ td, th {
     box-shadow: 0 0 12px rgba(250,204,21,0.7);
 }
 
-/* centre */
+/* centre de l’aiguille */
 .needle::after {
     content: "";
     position: absolute;
-    bottom: 0px;
+
+    bottom: 0;
     left: 50%;
     transform: translate(-50%, 50%);
+
     width: 12px;
     height: 12px;
 
@@ -832,20 +834,17 @@ td, th {
     box-shadow: 0 0 14px rgba(250,204,21,0.9);
 }
 
-/* texte boussole */
+/* texte zone */
 .boussole-zone {
     margin-top: 20px;
     font-size: 13px;
     opacity: 0.7;
 }
 
+/* valeur ratio */
 .boussole-value {
     font-size: 26px;
     font-weight: 600;
-}
-
-.boussole-img {
-    outline: 20px solid red;
 }
 
 /*
