@@ -801,7 +801,7 @@ td, th {
 .needle {
     position: absolute;
 
-    top: 50%;
+    top: 45%;
     left: 50%;
 
     width: 3px;
@@ -823,10 +823,9 @@ td, th {
 .needle::after {
     content: "";
     position: absolute;
-    bottom: -7px;
+    bottom: 0px;
     left: 50%;
-    transform: translateX(-50%);
-
+    transform: translate(-50%, 50%);
     width: 12px;
     height: 12px;
 
