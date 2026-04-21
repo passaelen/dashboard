@@ -96,6 +96,53 @@ body {
 
 <script>
 
+// ===== récupérer ratio depuis URL =====
+const params = new URLSearchParams(window.location.search);
+const ratio = parseFloat(params.get("ratio")) || 50;
+
+
+// ===== ZONE =====
+function getZone(r){
+    if(r >= 70) return "❄️ Hibernation";
+    if(r >= 50) return "🧊 Zone Nord";
+    if(r >= 47) return "🌤️ Transition";
+    if(r >= 45) return "☀️ Chaud";
+    if(r >= 40) return "🔥 Très chaud";
+    return "🚨 Extrême";
+}
+
+
+// ===== ANGLE (fluide) =====
+// map 30 → 120 vers 180° → 0°
+function getAngle(r){
+    const min = 30;
+    const max = 120;
+
+    const clamped = Math.max(min, Math.min(max, r));
+
+    return 180 - ((clamped - min) / (max - min)) * 180;
+}
+
+
+// ===== AFFICHAGE =====
+const angle = getAngle(ratio);
+
+const needle = document.getElementById("needle");
+
+setTimeout(() => {
+    needle.style.transition = "transform 0.8s easeOutCubic";
+    needle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+}, 100);
+
+
+// ===== TEXTE =====
+document.getElementById("zone-text").innerText =
+    "Zone actuelle : " + getZone(ratio);
+
+document.getElementById("ratio-text").innerText =
+    ratio.toFixed(2).replace(".", ",");
+
+    
 </script>
 </body>
 </html>
