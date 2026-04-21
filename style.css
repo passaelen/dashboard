@@ -817,7 +817,7 @@ td, th {
     content: "";
     position: absolute;
     bottom: -7px;
-    left: 50%;
+    left: 54%;
     transform: translateX(-50%);
 
     width: 12px;
