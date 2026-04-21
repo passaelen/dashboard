@@ -404,7 +404,7 @@ transition: all 0.3s ease;
         circle at 50% 50%,
         #020617 50%,
         #000 100%
-    ); /* 🔥 ICI le ; manquait */
+    );
 
     z-index: 1;
 
@@ -412,14 +412,6 @@ transition: all 0.3s ease;
         inset 0 10px 20px rgba(0,0,0,0.9),
         inset 0 -2px 4px rgba(255,255,255,0.06),
         0 0 0 1px rgba(255,255,255,0.03);
-}
-
-
-
-    box-shadow:
-        inset 0 10px 20px rgba(0,0,0,0.9),
-        inset 0 -2px 4px rgba(255,255,255,0.06),
-        0 0 0 1px rgba(255,255,255,0.03); /* 🔥 anneau net */
 }
 
 
@@ -788,7 +780,66 @@ td, th {
     transform: scale(1.2);
 }
 
+/* ===== BOUSSOLE ===== */
+.boussole-container {
+    position: relative;
+    max-width: 360px;
+    margin: 60px auto 20px;
+}
 
+.boussole-img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+/* aiguille */
+.needle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 3px;
+    height: 44%;
+
+    background: linear-gradient(to top, #f59e0b, #facc15);
+
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%) rotate(0deg);
+
+    border-radius: 2px;
+
+    box-shadow: 0 0 12px rgba(250,204,21,0.7);
+}
+
+/* centre */
+.needle::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 12px;
+    height: 12px;
+
+    background: radial-gradient(circle, #facc15, #f59e0b);
+    border-radius: 50%;
+
+    box-shadow: 0 0 14px rgba(250,204,21,0.9);
+}
+
+/* texte boussole */
+.boussole-zone {
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.boussole-value {
+    font-size: 26px;
+    font-weight: 600;
+}
 
 
 /*
