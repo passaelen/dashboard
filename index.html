@@ -1033,7 +1033,7 @@ if(elB){
 // ⚠️ on initialise vide
 // 🔥 ETF PRICES (Sheet priorité, API fallback)
 
-if (last && last.monde !== undefined) {
+if (last && last.monde && last.seniors && last.juniors) {
 
     console.log("✅ ETF depuis SHEET");
 
@@ -1057,6 +1057,7 @@ console.log("ETF SHEET:", state.etfPrices);
 
 // 🔥 4. calcul après tout
 const result = calculate();
+state.ratio = result.ratio;
 render(result);
 
 
@@ -1444,6 +1445,20 @@ window.addEventListener("DOMContentLoaded", () => {
 
         });
     }
+
+// 🔗 ouverture boussole au clic sur le ratio
+const ratioEl = document.getElementById("ratio");
+
+if (ratioEl) {
+    ratioEl.addEventListener("click", () => {
+        if (!state.ratio) return; // sécurité
+        window.location.href = "boussole.html?ratio=" + state.ratio;
+    });
+}
+
+
+
+    
 
     // 🔥 TIMEFRAME BUTTONS (avec titre dynamique)
 document.querySelectorAll(".tf").forEach(btn => {
