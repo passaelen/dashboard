@@ -796,7 +796,7 @@ td, th {
 /* aiguille */
 .needle {
     position: absolute;
-    top: 42%;      /* 👈 ajuste ici */
+    top: 35%;      /* 👈 ajuste ici */
     left: 53%;     /* 👈 ajuste ici */
 
     width: 3px;
