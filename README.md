@@ -1,34 +1,23 @@
 📊 Dashboard Or, Argent & ETF
 
-   
-
-
 ---
 
 🧭 Description
 
 Dashboard personnel de suivi patrimonial permettant de visualiser en temps réel :
 
-🟡 Portefeuille Or (Suisse & Privé)
-
-⚪ Portefeuille Argent (Suisse)
-
-📈 ETF Monde & Minières
-
-⚖️ Allocation globale et ratios
-
-🌡️ Lecture climatique du marché (Ratio Or/Argent + BPGDM)
-
+- 🟡 Portefeuille Or (Suisse & Privé)
+- ⚪ Portefeuille Argent (Suisse)
+- 📈 ETF Monde & Minières
+- ⚖️ Allocation globale et ratios
+- 🌡️ Lecture climatique du marché (Ratio Or/Argent + BPGDM)
 
 👉 Architecture hybride intelligente :
 
-⚡ API live → métaux (or & argent)
-
-🧾 Google Sheet → ETF + historique + BPGDM
-
-🧠 Calcul interne → ratio & signaux
-
-
+- ⚡ API live → métaux (or & argent)
+- 🧾 Google Sheet → ETF + historique + BPGDM
+- 🧠 Calcul interne → ratio & signaux
+- 🔗 URL state → transmission du ratio entre pages
 
 ---
 
@@ -36,96 +25,91 @@ Dashboard personnel de suivi patrimonial permettant de visualiser en temps réel
 
 📊 Visualisation
 
-Donuts dynamiques :
+- Donuts dynamiques :
+  
+  - Métaux (Or Suisse / Or Privé / Argent)
+  - ETF (Monde / Minières)
 
-Métaux (Or Suisse / Or Privé / Argent)
-
-ETF (Monde / Minières)
-
-
-Graphique d’évolution :
-
-10 / 30 / 90 jours
-
-Moyenne mobile (MM7)
-
-Couleur dynamique (hausse / baisse)
-
-Tooltip détaillé (€, Δ€, %)
-
-
-
+- Graphique d’évolution :
+  
+  - 10 / 30 / 90 jours
+  - Moyenne mobile (MM7)
+  - Couleur dynamique (hausse / baisse)
+  - Tooltip détaillé (€ / Δ€ / %)
 
 ---
 
 ⚡ Données en temps réel
 
-🟡 Or → API live
-
-⚪ Argent → API live
-
-📈 ETF → clôture (Google Sheet)
-
-📊 Historique → Google Sheet
-
-🧠 BPGDM → live depuis Sheet
-
-
+- 🟡 Or → API live
+- ⚪ Argent → API live
+- 📈 ETF → clôture (Google Sheet)
+- 📊 Historique → Google Sheet
+- 🧠 BPGDM → Google Sheet (live + fixé)
 
 ---
 
 🧠 Intelligence intégrée
 
-Calcul du ratio Or / Argent
+- Calcul du ratio Or / Argent
 
-Signal marché combiné :
+- Signal marché combiné :
+  
+  - Ratio → climat macro
+  - BPGDM → timing ETF
 
-Ratio → climat
-
-BPGDM → timing ETF
-
-
-Messages dynamiques :
-
-Zones (Nord / Tempéré / Chaud…)
-
-Actions suggérées
-
-
-
+- Messages dynamiques :
+  
+  - Zones (Nord / Transition / Chaud / Extrême)
+  - Actions suggérées
 
 ---
 
 📈 Suivi de performance
 
-Total global (live)
+- Total global (live)
 
-Variation vs dernière clôture
+- Variation vs dernière clôture
 
-Gains / pertes :
-
-Par actif
-
-En €
-
-En %
-
-
-
+- Gains / pertes :
+  
+  - Par actif
+  - En €
+  - En %
 
 ---
 
 🎛️ Interactions
 
-Timeframe : 10J / 30J / 90J
+- Timeframe : 10J / 30J / 90J
+- Hover tactile fluide
+- Animations (graph + donuts)
+- Refresh manuel
+- Navigation multi-pages
 
-Hover tactile fluide
+---
 
-Animations (graph + donuts)
+🧭 Module Boussole
 
-Refresh manuel
+Nouvelle page dédiée à la lecture visuelle du cycle :
 
+- 🧭 Affichage du ratio sous forme d’aiguille
+- Mapping dynamique ratio → angle
+- Zones visuelles (Nord / Sud / Transition)
+- Calibration manuelle précise (centre + angle + longueur)
 
+🔗 Transmission intelligente
+
+Le ratio est transmis via l’URL :
+
+boussole.html?ratio=61.54
+
+👉 Avantages :
+
+- Aucun recalcul
+- Aucune dépendance externe
+- Navigation rapide et fiable
+- Partage possible (snapshot de marché)
 
 ---
 
@@ -133,46 +117,50 @@ Refresh manuel
 
 Sources de données
 
-data.js → portefeuille (quantités & coûts)
+- "data.js" → portefeuille (quantités & coûts)
+- Google Sheet → historique + ETF + BPGDM
+- URL → transport du ratio entre pages
 
-Google Sheet → historique + ETF + BPGDM
-
+---
 
 APIs utilisées
 
-Gold API (XAU / XAG)
-
-Exchange Rate API (USD → EUR)
-
-
+- Gold API (XAU / XAG)
+- Exchange Rate API (USD → EUR)
 
 ---
 
 ⚙️ Logique
 
-Métaux → prix live €/g
-
-ETF → valorisation via Sheet
-
-Total → Métaux + ETF
-
-Ratio → calcul live
-
-
+- Métaux → prix live €/g
+- ETF → valorisation via Sheet
+- Total → Métaux + ETF
+- Ratio → calcul live (index)
+- Boussole → affichage via URL (sans recalcul)
 
 ---
 
 📊 Graphique
 
-Chart.js
+- Chart.js
+- Slice dynamique (timeframe)
+- Moyenne mobile intégrée
+- Couleur adaptative (trend)
 
-Slice dynamique (timeframe)
+---
 
-Moyenne mobile intégrée
+🛟 Résilience des données
 
-Couleur adaptative (trend)
+BPGDM
 
+- Source principale → Google Sheet (live + fixée)
+- Source secondaire (backup) → scraping StockCharts
 
+👉 Usage :
+
+- Backup uniquement (non prioritaire)
+- Validation possible entre sources
+- Sécurisation contre panne ou absence de données
 
 ---
 
@@ -180,10 +168,18 @@ Couleur adaptative (trend)
 
 Ce dashboard est une boussole patrimoniale, pas un simple tracker.
 
-📍 Lire le marché
+- 📍 Lire le marché
+- 🧭 Comprendre les cycles
+- ⚖️ Ajuster les allocations
+- 🧠 Garder une vision long terme
 
-🧭 Comprendre les cycles
+---
 
-⚖️ Ajuster les allocations
+🚀 Évolutions possibles
 
-🧠 Garder
+- 📩 Alertes automatiques (ex : ratio 50)
+- 📸 Snapshots de cycle (URL partageable)
+- 🔄 Multi-sources de validation
+- 📊 Historique enrichi des signaux
+
+---
