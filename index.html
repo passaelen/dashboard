@@ -747,9 +747,13 @@ if(elETFText){
 
 
 // ===== GLOBAL =====
-setText("ratio",
-    data.ratio.toFixed(2).replace('.',',')
-);
+const ratioEl = document.getElementById("ratio");
+if (ratioEl) {
+    ratioEl.innerHTML = `
+        ${data.ratio.toFixed(2).replace('.',',')}
+        <span class="ratio-hint">🧭</span>
+    `;
+}
 
 // 🧊 CLIMAT + ACTION (fusion ligne 1)
 const climat = getAlertMessage(data.ratio);
