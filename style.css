@@ -817,7 +817,7 @@ td, th {
     content: "";
     position: absolute;
     bottom: -7px;
-    left: 54%;
+    left: 50%; /* 👈 ajuste l'aiguille de la boussole ici */
     transform: translateX(-50%);
 
     width: 12px;
