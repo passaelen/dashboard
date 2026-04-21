@@ -796,13 +796,14 @@ td, th {
 /* aiguille */
 .needle {
     position: absolute;
-    top: 52%;      /* 👈 ajuste ici */
+    top: 42%;      /* 👈 ajuste ici */
     left: 53%;     /* 👈 ajuste ici */
 
     width: 3px;
     height: 44%;
 
-    background: linear-gradient(to top, #f59e0b, #facc15);
+    background:red;/* 👈temporairement*/
+    /*background: linear-gradient(to top, #f59e0b, #facc15);*/
 
     transform-origin: bottom center;
     transform: translateX(-50%);
