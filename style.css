@@ -776,6 +776,19 @@ td, th {
     transform: scale(0.96);
 }
 
+.ratio-hint {
+    font-size: 12px;
+    opacity: 0.5;
+    margin-left: 4px;
+    transition: 0.2s;
+}
+
+#ratio:hover .ratio-hint {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+
 
 
 /*
