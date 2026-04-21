@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boussole</title>
+
+<link rel="stylesheet" href="style.css?v=97">
+
+<style>
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="header-left">
+        <h2>🧭 Boussole du cycle</h2>
+    </div>
+
+    <div class="header-right">
+        <a href="index.html" class="badge">← Retour</a>
+    </div>
+
+</div>
+
+
+
+<div class="boussole-container">
+
+    <img src="bous.png" class="boussole-img" alt="Boussole">
+
+    <div class="needle" id="needle"></div>
+
+</div>
+
+
+<div class="zone-wrapper">
+
+    <div class="boussole-zone" id="zone-text"></div>
+    <div class="boussole-value" id="ratio-text"></div>
+
+</div>
+
+
+<script>
+
+// ===== PARAM =====
+const params = new URLSearchParams(window.location.search);
+const ratio = parseFloat(params.get("ratio")) || 50;
+
+
+// ===== ZONE =====
+function getZone(r){
+    if(r >= 70) return "❄️ Hibernation";
+    if(r >= 50) return "🧊 Zone Nord";
+    if(r >= 47) return "🌤️ Transition";
+    if(r >= 45) return "☀️ Chaud";
+    if(r >= 40) return "🔥 Très chaud";
+    return "🚨 Extrême";
+}
+
+
+// ===== ANGLE ADAPTÉ À TON IMAGE =====
+// ici on utilise un angle vertical
+function getAngle(r){
+
+    const min = 30;
+    const max = 120;
+
+    const clamped = Math.max(min, Math.min(max, r));
+
+    // mapping vers -90° (haut) à +90° (bas)
+    return ((clamped - min) / (max - min)) * 180 - 90 - 55;
+}
+
+
+// ===== ANIMATION =====
+const needle = document.getElementById("needle");
+const angle = getAngle(ratio);
+
+setTimeout(() => {
+    needle.style.transition = "transform 1.2s cubic-bezier(0.22,1,0.36,1)";
+
+needle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+
+// ===== change l'extrémité aiguille =====
+}, 100);
+
+
+// ===== TEXTE =====
+document.getElementById("zone-text").innerText = getZone(ratio);
+
+document.getElementById("ratio-text").innerText =
+    ratio.toFixed(2).replace(".", ",");
+
+
+</script>
+</body>
+</html>
