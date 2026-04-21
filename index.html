@@ -475,8 +475,9 @@ function getAlertMessage(ratio){
 
     if(ratio >= 70) return "❄️ Hibernation :";
     if(ratio >= 50) return "🧊 Zone Nord :";
-    if(ratio >= 45) return "🌤️ Tempéré :";
-    if(ratio >= 40) return "🔥 Chaud :";
+    if(ratio >= 47) return "🌤️ Transition :";
+    if(ratio >= 45) return "☀️ Chaud :";
+    if(ratio >= 40) return "🔥 Très chaud :";
 
     return "🚨 Extrême";
 }
@@ -487,9 +488,10 @@ function getZoneAction(ratio){
     if(ratio >= 120) return "❄️ Métaux : Acheter beaucoup d’argent — ne rien vendre";
     if(ratio >= 100) return "🧊 Métaux : Acheter régulièrement de l’argent";
     if(ratio >= 80)  return "☃️ Métaux : Acheter un peu d’argent";
-    if(ratio >= 60)  return "☔️ Métaux : Ne rien faire (garder tel quel)";
+    if(ratio >= 60)  return "☔️ Métaux : Observation / possible accumulation";
     if(ratio >= 50)  return "⚖️ Métaux : Se préparer à échanger argent contre or";
-    if(ratio >= 45)  return "🌤️ Métaux : Commencer à échanger un peu d’argent contre or";
+    if(ratio >= 47)  return "🌤️ Métaux : Commencer à se positionner";
+    if(ratio >= 45)  return "☀️ Métaux : Échanger un peu d’argent contre or";
     if(ratio >= 40)  return "🔥 Métaux : Échanger activement argent contre or";
     if(ratio >= 35)  return "🌋 Métaux : Échanger beaucoup d’argent contre or";
 
