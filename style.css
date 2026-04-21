@@ -808,7 +808,7 @@ td, th {
     transform-origin: bottom center;
 
     /* 👇 IMPORTANT */
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -88%);
 
     border-radius: 2px;
 
