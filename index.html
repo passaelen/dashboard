@@ -498,42 +498,43 @@ function getZoneAction(ratio){
 
 function getCombinedSignal(ratio, bpgdm){
 
-    // 🚨 ULTRA ACHAT (capitulation extrême)
-if (bpgdm <= 3 && ratio >= 65) {
-    return "🚨 Achat ULTRA agressif (Seniors [IE00BQQP9F84] + Juniors [IE00BQQP9G91])";
-}
 
-// 💥 ACHAT MASSIF
-if (bpgdm <= 5 && ratio >= 65) {
-    return "💥 Achat massif (Seniors [IE00BQQP9F84]  + Juniors [IE00BQQP9G91])";
-}
+// 🚨 ULTRA ACHAT (capitulation extrême)
+    if (bpgdm <= 3 && ratio >= 65) {
+        return "🚨 Achat ULTRA agressif (Séniors [IE00BQQP9F84] + Juniors [IE00BQQP9G91])";
+    }
 
-// 🟡 ACHAT STANDARD
-if (bpgdm <= 10 && ratio >= 60) {
-    return "🟡 Achat Séniors [IE00BQQP9F84] ";
-}
+    // 💥 ACHAT MASSIF
+    if (bpgdm <= 5 && ratio >= 65) {
+        return "💥 Achat massif (Séniors [IE00BQQP9F84] + Juniors [IE00BQQP9G91])";
+    }
 
-// 🔵 HOLD (zone principale)
-if (bpgdm > 10 && bpgdm < 60) {
-    return "🔵 HOLD / Conserver positions";
-}
+    // 🟡 ACHAT STANDARD
+    if (bpgdm <= 10 && ratio >= 60) {
+        return "🟡 Achat Séniors [IE00BQQP9F84]";
+    }
 
-// ⚠️ ALLÈGEMENT JUNIORS
-if (bpgdm >= 60 && bpgdm < 70) {
-    return "⚠️ Alléger Juniors [IE00BQQP9G91] / Conserver Séniors [IE00BQQP9F84]";
-}
+    // 🔥 PRIORITÉ MÉTAUX (CLIMAT)
+    if (ratio < 45) {
+        return "🔥 Rotation Argent → Or / ETF Monde [IE00BK5BQT80] (10 ans min)";
+    }
 
-// 🚨 VENTE (zone cible)
-if (bpgdm >= 70 || ratio <= 45) {
-    return "🚨 Vente Séniors [IE00BQQP9F84] → ETF Monde (10 ans - IE00BK5BQT80)";
-}
+    // 🚨 VENTE ETF
+    if (bpgdm >= 70) {
+        return "🚨 Vente Séniors [IE00BQQP9F84] → ETF Monde [IE00BK5BQT80]";
+    }
 
-// 🔥 ROTATION MÉTAUX
-if (ratio < 45) {
-    return "🔥 Rotation Argent → Or / ETF Monde (10 ans Min. - IE00BK5BQT80)";
-}
+    // ⚠️ ALLÈGEMENT JUNIORS
+    if (bpgdm >= 60) {
+        return "⚠️ Alléger Juniors [IE00BQQP9G91] / Conserver Séniors [IE00BQQP9F84]";
+    }
 
-return "📊 Marché neutre";
+    // 🔵 HOLD
+    if (bpgdm > 10 && bpgdm < 60) {
+        return "🔵 HOLD / Conserver positions";
+    }
+
+    return "📊 Marché neutre";
 }
 
 
