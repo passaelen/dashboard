@@ -13,7 +13,7 @@ body {
     max-width: 900px;
     margin: auto;
     padding: 12px;
-
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 12px;  /* 🔥 ESPACE GLOBAL ENTRE TOUS LES BLOCS */
