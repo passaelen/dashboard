@@ -801,7 +801,7 @@ td, th {
 .needle {
     position: absolute;
 
-    top: 44%;
+    top: 50%;
     left: 50%;
 
     width: 3px;
@@ -809,10 +809,7 @@ td, th {
 
     background: linear-gradient(to top, #f59e0b, #facc15);
 
-    transform-origin: center center;
-
-    /* 👇 BASE PROPRE */
-    transform: translate(-50%, -0%);
+    transform-origin: bottom center;
 
     border-radius: 2px;
 
