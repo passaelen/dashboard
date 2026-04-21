@@ -805,7 +805,7 @@ td, th {
     background: linear-gradient(to top, #f59e0b, #facc15);
 
     transform-origin: bottom center;
-    transform: translate(-50%, -100%) rotate(0deg);
+    transform: translateX(-50%);
 
     border-radius: 2px;
 
@@ -818,7 +818,7 @@ td, th {
     position: absolute;
     bottom: -7px;
     left: 50%; /* 👈 ajuste l'aiguille de la boussole ici */
-    transform: translateX(-50%);
+    transform: translateX(-54%);
 
     width: 12px;
     height: 12px;
