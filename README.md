@@ -163,17 +163,74 @@ BPGDM
 - Sécurisation contre panne ou absence de données
 
 ---
+🧠 Intelligence & Lecture du Marché
 
-🎯 Philosophie
+Le dashboard ne se limite pas à afficher des données :
+il interprète le marché via une double lecture structurée.
 
-Ce dashboard est une boussole patrimoniale, pas un simple tracker.
 
-- 📍 Lire le marché
-- 🧭 Comprendre les cycles
-- ⚖️ Ajuster les allocations
-- 🧠 Garder une vision long terme
+
+🧭 1. Climat macro (Ratio Or / Argent)
+
+Le ratio agit comme une boussole de cycle :
+
+- ❄️ Nord → accumulation Argent
+- ⚖️ Zone pivot → préparation des arbitrages
+- 🔥 Sud → rotation Argent → Or
+
+👉 Le ratio définit le contexte global, indépendant du bruit court terme.
+
+
+
+📊 2. Timing marché (BPGDM)
+
+Le BPGDM apporte une lecture comportementale :
+
+- Zones basses → opportunités ETF (accumulation)
+- Zones hautes → prudence / rotation
+
+👉 Il agit comme un indicateur de timing, complémentaire au ratio.
+
+
+
+⚖️ 3. Signal combiné
+
+Les deux indicateurs sont fusionnés pour produire un signal opérationnel unique :
+
+- 🟢 Achat ETF (si BPGDM bas + climat favorable)
+- 🔴 Vente / rotation (si BPGDM élevé)
+- 🔥 Priorité métaux (si ratio bas)
+- 🔵 HOLD (zone neutre)
+
+👉 Le système ne donne pas une prédiction, mais une lecture cohérente du moment.
+
+
+
+🧭 4. Boussole visuelle
+
+Une représentation graphique du ratio permet une lecture immédiate :
+
+- Aiguille dynamique (mapping ratio → angle)
+- Zones visuelles (Nord / Sud / Transition)
+- Lecture intuitive du cycle
+
+👉 Permet de comprendre sans lire.
+
+
+
+🧠 5. Principe fondamental
+
+Le système repose sur une séparation claire :
+
+- Ratio → structure de cycle
+- BPGDM → timing d’intervention
+
+👉 Objectif :
+
+«Ne pas subir le marché, mais s’y positionner avec cohérence.»
 
 ---
+
 
 🚀 Évolutions possibles
 
@@ -183,3 +240,12 @@ Ce dashboard est une boussole patrimoniale, pas un simple tracker.
 - 📊 Historique enrichi des signaux
 
 ---
+
+🎯 Philosophie
+
+Ce dashboard est une boussole patrimoniale, pas un simple tracker.
+
+- 📍 Lire le marché
+- 🧭 Comprendre les cycles
+- ⚖️ Ajuster les allocations
+- 🧠 Garder une vision long terme
