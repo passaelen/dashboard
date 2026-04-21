@@ -809,10 +809,10 @@ td, th {
 
     background: linear-gradient(to top, #f59e0b, #facc15);
 
-    transform-origin: bottom center;
+    transform-origin: center center;
 
     /* 👇 BASE PROPRE */
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -0%);
 
     border-radius: 2px;
 
