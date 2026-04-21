@@ -801,7 +801,7 @@ td, th {
 .needle {
     position: absolute;
 
-    top: 20%;
+    top: 50%;
     left: 50%;
 
     width: 3px;
