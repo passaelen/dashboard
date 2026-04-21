@@ -796,8 +796,8 @@ td, th {
 /* aiguille */
 .needle {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 52%;      /* 👈 ajuste ici */
+    left: 53%;     /* 👈 ajuste ici */
 
     width: 3px;
     height: 44%;
@@ -817,8 +817,8 @@ td, th {
     content: "";
     position: absolute;
     bottom: -7px;
-    left: 50%; /* 👈 ajuste l'aiguille de la boussole ici */
-    transform: translateX(-54%);
+    left: 50%;
+    transform: translateX(-50%);
 
     width: 12px;
     height: 12px;
