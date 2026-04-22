@@ -709,13 +709,27 @@ function render(data){
     // centre ETF
     const elETFText = document.querySelector(".donut.etf .donut-label");
     if(elETFText){
-        elETFText.innerHTML = `
-            <div>
-                <div style="font-size:11px; opacity:0.6;">ETF</div>
-                <span>${euro(data.totalETF)}</span>
-            </div>
-        `;
-    }
+    elETFText.innerHTML = `
+        <div>
+            <div style="font-size:11px; opacity:0.6;">ETF</div>
+            <span>${euro(data.totalETF)}</span>
+        </div>
+    `;
+} // ✅ FERMETURE ICI
+
+
+// ===== TABLE METAUX =====
+if(state.portfolio && state.prices){
+
+    setText("q-or-suisse", state.portfolio.or_suisse_g);
+    setText("q-or-belgique", state.portfolio.or_belgique_g);
+    setText("q-argent", state.portfolio.argent_g);
+
+    setText("p-or-suisse-g", euro(state.prices.gold_per_g));
+    setText("p-or-belgique-g", euro(state.prices.gold_per_g));
+    setText("p-argent-g", euro(state.prices.silver_per_g));
+}
+
 }
 
 
