@@ -629,19 +629,39 @@ if (el) {
 
     const safeP1 = p1 || 1;
 
-    const interval = setInterval(() => {
+    const duration = 600;
+const start = performance.now();
 
-        const progress = current / safeP1;
+function animate(now){
 
-        // ✅ easing correct (ralentit à la fin)
-        const ease = Math.pow(1 - progress, 2);
+    const progress = Math.min((now - start) / duration, 1);
 
-        current += increment * ease;
+    // easing identique (important)
+    const ease = Math.pow(1 - progress, 2);
 
-        if (current >= p1) {
-            current = p1;
-            clearInterval(interval);
-        }
+    const p1a = p1 * (1 - ease);
+    const p2a = p2 * (p1a / (p1 || 1));
+    const total = p1a + p2a;
+
+    inner.style.background =
+    `conic-gradient(
+        #facc15 0% ${Math.max(0, p1a - gap)}%,
+        #020617 ${Math.max(0, p1a - gap)}% ${p1a}%,
+
+        #f59e0b ${p1a}% ${Math.max(p1a, total - gap)}%,
+        #020617 ${Math.max(p1a, total - gap)}% ${total}%,
+
+        #9ca3af ${total}% 100%
+    )`;
+
+    if(progress < 1){
+        requestAnimationFrame(animate);
+    }
+}
+
+requestAnimationFrame(animate);
+
+    
 
         const p1a = current;
         const p2a = p2 * (p1a / safeP1);
@@ -702,36 +722,36 @@ if (elETF) {
 
     const safeE1 = e1 || 1;
 
-    const interval = setInterval(() => {
+    const duration = 600;
+const start = performance.now();
 
-        const progress = current / safeE1;
+function animate(now){
 
-        // ✅ même easing que métaux
-        const ease = Math.pow(1 - progress, 2);
+    const progress = Math.min((now - start) / duration, 1);
 
-        current += increment * ease;
+    const ease = Math.pow(1 - progress, 2);
 
-        if (current >= e1) {
-            current = e1;
-            clearInterval(interval);
-        }
+    const e1a = e1 * (1 - ease);
+    const e2a = e2 * (e1a / (e1 || 1));
+    const total = e1a + e2a;
 
-        const e1a = current;
-        const e2a = e2 * (e1a / safeE1);
-        const total = e1a + e2a;
+    inner.style.background =
+    `conic-gradient(
+        #22c55e 0% ${Math.max(0, e1a - gap)}%,
+        #020617 ${Math.max(0, e1a - gap)}% ${e1a}%,
 
-        inner.style.background =
-        `conic-gradient(
-            #22c55e 0% ${Math.max(0, e1a - gap)}%,
-            #020617 ${Math.max(0, e1a - gap)}% ${e1a}%,
+        #06b6d4 ${e1a}% ${Math.max(e1a, total - gap)}%,
+        #020617 ${Math.max(e1a, total - gap)}% ${total}%,
 
-            #06b6d4 ${e1a}% ${Math.max(e1a, total - gap)}%,
-            #020617 ${Math.max(e1a, total - gap)}% ${total}%,
+        #64748b ${total}% 100%
+    )`;
 
-            #64748b ${total}% 100%
-        )`;
+    if(progress < 1){
+        requestAnimationFrame(animate);
+    }
+}
 
-    }, stepTime);
+
 
 const elETFText = document.querySelector(".donut.etf .donut-label");
 
