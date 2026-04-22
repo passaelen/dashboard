@@ -592,6 +592,68 @@ function animateValue(target, duration = 600) {
 }
 
 
+function animateDonut(el, target1, target2, duration = 800){
+
+    let start = null;
+
+    function step(timestamp){
+        if(!start) start = timestamp;
+
+        const progress = Math.min((timestamp - start) / duration, 1);
+
+        const p1 = target1 * progress;
+        const p2 = target2 * progress;
+
+        el.style.background = `
+            conic-gradient(
+                #facc15 0% ${p1}%,
+                #f59e0b ${p1}% ${p1 + p2}%,
+                #9ca3af ${p1 + p2}% 100%
+            )
+        `;
+
+        if(progress < 1){
+            requestAnimationFrame(step);
+        }
+    }
+
+    requestAnimationFrame(step);
+}
+
+
+function animateDonutETF(el, e1, e2, duration = 800){
+
+    let start = null;
+
+    function step(timestamp){
+        if(!start) start = timestamp;
+
+        const progress = Math.min((timestamp - start) / duration, 1);
+
+        const p1 = e1 * progress;
+        const p2 = e2 * progress;
+
+        el.style.background = `
+            conic-gradient(
+                #22c55e 0% ${p1}%,
+                #06b6d4 ${p1}% ${p1 + p2}%,
+                #64748b ${p1 + p2}% 100%
+            )
+        `;
+
+        if(progress < 1){
+            requestAnimationFrame(step);
+        }
+    }
+
+    requestAnimationFrame(step);
+}
+
+
+
+
+
+
 
 
 
@@ -624,14 +686,13 @@ function render(data){
     const dm = document.querySelector("#donut-metaux .donut-inner");
 
     if(dm){
-        dm.style.background = `
-            conic-gradient(
-                #facc15 0% ${p1}%,
-                #f59e0b ${p1}% ${p1+p2}%,
-                #9ca3af ${p1+p2}% 100%
-            )
+        animateDonut(dm, p1, p2);
+dm.parentElement.classList.add("show", "enter");
         `;
-dm.parentElement.classList.add("show");
+dm.parentElement.classList.add("show", "enter");
+setTimeout(() => {
+dm.parentElement.classList.remove("enter");
+}, 800);
 
 const labelM = document.querySelector("#donut-metaux .donut-label");
 if(labelM){
@@ -656,14 +717,14 @@ if(labelM){
     const de = document.querySelector(".donut.etf .donut-inner");
 
     if(de){
-        de.style.background = `
-            conic-gradient(
-                #22c55e 0% ${e1}%,
-                #06b6d4 ${e1}% ${e1+e2}%,
-                #64748b ${e1+e2}% 100%
-            )
+        animateDonutETF(de, e1, e2);
+de.parentElement.classList.add("show", "enter");
         `;
-de.parentElement.classList.add("show");
+de.parentElement.classList.add("show", "enter");
+setTimeout(() => {
+de.parentElement.classList.remove("enter");
+}, 800);
+
 
 const labelE = document.querySelector(".donut.etf .donut-label");
 if(labelE){
