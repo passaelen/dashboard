@@ -718,20 +718,26 @@ setText("ratio-value",
 
 
 // ===== ALERT =====
-const climat = getAlertMessage(data.ratio);
-const action = getZoneAction(data.ratio);
-
-const cleanClimat = climat.replace(/^[^\s]+\s*/, "");
-
 const alertEl = document.getElementById("alert-text");
 
 if(alertEl){
-    alertEl.innerHTML = `
+
+    const climat = getAlertMessage(data.ratio);
+    const action = getZoneAction(data.ratio);
+
+    const cleanClimat = climat.replace(/^[^\s]+\s*/, "");
+
+    // 🔒 on protège contre écrasement inutile
+    const newHTML = `
         <div style="display:flex; align-items:center; gap:8px;">
             <span style="font-size:20px">${emoji}</span>
             <span>${cleanClimat} ${action}</span>
         </div>
     `;
+
+    if(alertEl.innerHTML !== newHTML){
+        alertEl.innerHTML = newHTML;
+    }
 }
 
 
