@@ -943,20 +943,54 @@ td, th {
 }
 
 
-@keyframes pulseGlow {
-    0% { box-shadow: 0 0 10px rgba(34,197,94,0.2); }
-    50% { box-shadow: 0 0 30px rgba(34,197,94,0.5); }
+/* ===== ANIMATIONS bloc alertes ===== */
+
+@keyframes pulseGreen {
+    0%   { box-shadow: 0 0 10px rgba(34,197,94,0.2); }
+    50%  { box-shadow: 0 0 30px rgba(34,197,94,0.5); }
     100% { box-shadow: 0 0 10px rgba(34,197,94,0.2); }
 }
 
+@keyframes pulseRed {
+    0%   { box-shadow: 0 0 10px rgba(239,68,68,0.2); }
+    50%  { box-shadow: 0 0 30px rgba(239,68,68,0.5); }
+    100% { box-shadow: 0 0 10px rgba(239,68,68,0.2); }
+}
+
+@keyframes pulseOrange {
+    0%   { box-shadow: 0 0 10px rgba(250,204,21,0.2); }
+    50%  { box-shadow: 0 0 30px rgba(250,204,21,0.5); }
+    100% { box-shadow: 0 0 10px rgba(250,204,21,0.2); }
+}
+
+
+/* ===== BASE ===== */
+
+.alert-box {
+    transition: box-shadow 0.4s ease;
+}
+
+
+/* ===== STATES ===== */
+
+/* 🟢 Achat fort */
 .alert-glow-strong {
-    animation: pulseGlow 2s infinite;
+    animation: pulseGreen 2.5s infinite;
 }
 
-
-/*
-.etf-name {
-    position: relative;
-    cursor: pointer;
+/* 🔴 Vente */
+.alert-glow-soft {
+    animation: pulseRed 2.5s infinite;
 }
-*/
+
+/* 🟠 Transition / métaux chauds */
+.alert-glow-warm {
+    animation: pulseOrange 2.5s infinite;
+}
+
+/* 🔵 Hold */
+.alert-glow-neutral {
+    box-shadow:
+        0 0 10px rgba(56,189,248,0.15),
+        0 0 25px rgba(56,189,248,0.2);
+}
