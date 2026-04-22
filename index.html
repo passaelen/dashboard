@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1325">
+    <link rel="stylesheet" href="style.css?v=1330">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -603,9 +603,8 @@ function animateDonut(el, target1, target2, duration = 800){
 
         const p1 = target1 * progress;
         const p2 = target2 * progress;
-
-        // ✅ gap dynamique
-        const gap = Math.min(1.5, p1/2, p2/2);
+        const p3 = 100 - (p1 + p2);
+        const gap = Math.min(1.5, p1/2, p2/2, p3/2);
 
         el.style.background = `
             conic-gradient(
