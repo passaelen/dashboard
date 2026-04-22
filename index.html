@@ -251,7 +251,7 @@
 
 <script src="data.js"></script>
 
-    
+
 <script>
 
 
@@ -621,7 +621,7 @@ function render(data){
 
     if (el) {
 
-        const inner = el;
+        const inner = el.querySelector(".donut-inner");
         const duration = 600;
         const start = performance.now();
 
@@ -675,7 +675,7 @@ function render(data){
     if (elETF) {
 
         const gap = 0.35;
-        const inner = elETF;
+        const inner = elETF.querySelector(".donut-inner");
         const duration = 600;
         const start = performance.now();
 
@@ -1229,7 +1229,7 @@ if (ratioEl) {
 
 
 
-    
+
 
     // 🔥 TIMEFRAME BUTTONS (avec titre dynamique)
 document.querySelectorAll(".tf").forEach(btn => {
