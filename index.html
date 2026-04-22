@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1480">
+    <link rel="stylesheet" href="style.css?v=1490">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -725,15 +725,16 @@ if(alertEl){
     const climat = getAlertMessage(data.ratio);
     const action = getZoneAction(data.ratio);
 
-    const cleanClimat = climat.replace(/^[^\s]+\s*/, "");
+    const cleanClimat = climat.split(" ").slice(1).join(" ");
 
-    // 🔒 on protège contre écrasement inutile
-    const newHTML = `
+    alertEl.innerHTML = `
         <div style="display:flex; align-items:center; gap:8px;">
             <span style="font-size:20px">${emoji}</span>
             <span>${cleanClimat} ${action}</span>
         </div>
     `;
+}
+
 
     if(alertEl.innerHTML !== newHTML){
         alertEl.innerHTML = newHTML;
