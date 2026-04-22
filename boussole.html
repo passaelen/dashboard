@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boussole</title>
 
-<link rel="stylesheet" href="style.css?v=110">
+<link rel="stylesheet" href="style.css?v=111">
 
 <style>
 
@@ -75,7 +75,7 @@ function getAngle(r){
     const clamped = Math.max(min, Math.min(max, r));
 
     // mapping vers -90° (haut) à +90° (bas)
-    return ((clamped - min) / (max - min)) * 180 - 90 - 47.5;
+    return ((clamped - min) / (max - min)) * 180 - 90 - 49.5;
 }
 
 
