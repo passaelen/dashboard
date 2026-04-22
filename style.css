@@ -888,15 +888,30 @@ td, th {
 
 
 .boussole-info {
-    margin-top: 10px;
-    font-size: 11px;
-    opacity: 0.6;
+    position: relative;
     text-align: center;
+    font-size: 11px;
+    opacity: 0.7;
+    cursor: pointer;
 }
 
-.boussole-info .hint {
-    font-size: 10px;
-    opacity: 0.5;
+.tooltip {
+    display: none;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #020617;
+    color: #e2e8f0;
+    padding: 6px 10px;
+    border-radius: 6px;
+
+    font-size: 11px;
+    white-space: nowrap;
+
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
 
