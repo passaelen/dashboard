@@ -47,8 +47,11 @@
 </div>
 
 
-<div class="boussole-info" title="Ratio = Prix de l’once d’or ÷ Prix de l’once d’argent">
+<div class="boussole-info" onclick="toggleInfo()">
     ℹ️ Ratio Or / Argent
+    <div id="tooltip" class="tooltip">
+        Ratio = Prix de l’once d’or ÷ Prix de l’once d’argent
+    </div>
 </div>
 
 	
@@ -131,6 +134,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
+function toggleInfo() {
+    const el = document.getElementById("tooltip");
+    el.style.display = (el.style.display === "block") ? "none" : "block";
+}
+	
     
 </script>
 </body>
