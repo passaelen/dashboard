@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boussole</title>
 
-<link rel="stylesheet" href="style.css?v=2000">
+<link rel="stylesheet" href="style.css?v=2050">
 
 <style>
 
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function toggleInfo() {
     const el = document.getElementById("tooltip");
-    el.style.display = (el.style.display === "block") ? "none" : "block";
+    el.classList.toggle("show");
 }
 	
     
