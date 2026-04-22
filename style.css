@@ -309,11 +309,12 @@ transition: all 0.3s ease;
 
 
 .donut-label {
-    font-size: 9px;   /* 🔽 plus petit */
+    text-align: center;
+    font-size: 10px;
+    color: #cbd5f5;
     line-height: 1.2;
     position: absolute;
     inset: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -322,8 +323,13 @@ transition: all 0.3s ease;
 }
 
 .donut-label span {
-    font-size: 11px;   /* valeur € un peu plus visible */
-    font-weight: 550;
+display: block;
+    font-size: 13px;/* valeur € un peu plus visible */
+    font-weight: 600;
+    color: #fff;
+
+    
+
 }
 
 .donut-inner {
