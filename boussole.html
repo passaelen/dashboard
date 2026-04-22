@@ -47,7 +47,7 @@
 </div>
 
 
-<div class="boussole-info" onclick="toggleInfo()">
+<div class="boussole-info" onclick="toggleInfo(event)">
     ℹ️ Ratio Or / Argent
     <div id="tooltip" class="tooltip">
         <br>Ratio = Prix de l’once d’or ÷ Prix de l’once d’argent
@@ -135,7 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function toggleInfo() {
+function toggleInfo(event) {
+    event.stopPropagation(); // 🔥 empêche la fermeture immédiate
     const el = document.getElementById("tooltip");
     el.classList.toggle("show");
 }
