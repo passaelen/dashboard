@@ -595,137 +595,130 @@ function animateValue(target, duration = 600) {
 
 
 
-// ===== RENDER =====  
 function render(data){
 
+    if (!data) return;
+
+    // ✅ KPI
     setText("or", euro(data.goldTotal));
     setText("argent", euro(data.silverTotal));
     setText("total", euro(data.total));
     setText("etf-total-bottom", euro(data.totalETF));
 
+    // ✅ RATIO (MANQUANT)
+    setText("ratio", (data.ratio || 0).toFixed(2));
 
-// ===== METAUX =====
-const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
-const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
-const p3 = Math.max(0, 100 - (p1 + p2));
+    // ===== METAUX =====
+    const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
+    const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
+    const p3 = Math.max(0, 100 - (p1 + p2));
 
-setText("p-or-suisse", percent(p1));
-setText("p-or-belgique", percent(p2));
-setText("p-argent", percent(p3));
+    setText("p-or-suisse", percent(p1));
+    setText("p-or-belgique", percent(p2));
+    setText("p-argent", percent(p3));
 
-const gap = 0.35;
-const el = document.getElementById("donut-metaux");
+    const gap = 0.35;
+    const el = document.getElementById("donut-metaux");
 
-if (el) {
+    if (el) {
 
-    const inner = el;
+        const inner = el;
+        const duration = 600;
+        const start = performance.now();
 
-    const duration = 600;
-    const start = performance.now();
+        function animate(now){
 
-    function animate(now){
+            const progress = Math.min((now - start) / duration, 1);
+            const ease = Math.pow(1 - progress, 2);
 
-        const progress = Math.min((now - start) / duration, 1);
-        const ease = Math.pow(1 - progress, 2);
+            const p1a = p1 * (1 - ease);
+            const p2a = p2 * (p1a / (p1 || 1));
 
-        const p1a = p1 * (1 - ease);
-        const p2a = p2 * (p1a / (p1 || 1));
-        const total = p1a + p2a;
+            inner.style.background =
+            `conic-gradient(
+                #facc15 0% ${Math.max(0, p1a - gap)}%,
+                #020617 ${Math.max(0, p1a - gap)}% ${p1a}%,
 
-        inner.style.background =
-        `conic-gradient(
-            #facc15 0% ${Math.max(0, p1a - gap)}%,
-            #020617 ${Math.max(0, p1a - gap)}% ${p1a}%,
+                #f59e0b ${p1a}% ${Math.max(p1a, p1a + p2a - gap)}%,
+                #020617 ${Math.max(p1a, p1a + p2a - gap)}% ${p1a + p2a}%,
 
-            #f59e0b ${p1a}% ${Math.max(p1a, total - gap)}%,
-            #020617 ${Math.max(p1a, total - gap)}% ${total}%,
+                #9ca3af ${p1a + p2a}% 100%
+            )`;
 
-            #9ca3af ${total}% 100%
-        )`;
-
-        if(progress < 1){
-            requestAnimationFrame(animate);
+            if(progress < 1){
+                requestAnimationFrame(animate);
+            }
         }
+
+        requestAnimationFrame(animate);
     }
 
-    requestAnimationFrame(animate);
-}
+    // ===== ETF =====
+    const e1 = Math.max(0, data.pMonde || 0);
+    const e2 = Math.max(0, data.pSeniors || 0);
 
-// texte centre métaux
-const elMetauxText = document.querySelector("#donut-metaux .donut-label");
+    setText("p-monde", percent(e1));
+    setText("p-seniors", percent(e2));
 
-if(elMetauxText){
-    elMetauxText.innerHTML = `
-        <div>
-            <div style="font-size:11px; opacity:0.6;">Métaux</div>
-            <span>${euro(data.goldTotal + data.silverTotal)}</span>
-        </div>
-    `;
-}
+    const elETF = document.querySelector(".donut.etf");
 
+    if (elETF) {
 
+        const gap = 0.35;
+        const inner = elETF;
+        const duration = 600;
+        const start = performance.now();
 
-// ===== ETF =====
-const e1 = Math.max(0, data.pMonde || 0);
-const e2 = Math.max(0, data.pSeniors || 0);
-const e3 = Math.max(0, 100 - (e1 + e2)); // 🔥 FIX
+        function animate(now){
 
-setText("p-monde", percent(e1));
-setText("p-seniors", percent(e2));
+            const progress = Math.min((now - start) / duration, 1);
+            const ease = Math.pow(1 - progress, 2);
 
-const elETF = document.querySelector(".donut.etf");
+            const e1a = e1 * (1 - ease);
+            const e2a = e2 * (e1a / (e1 || 1));
 
-if (elETF) {
+            inner.style.background =
+            `conic-gradient(
+                #22c55e 0% ${Math.max(0, e1a - gap)}%,
+                #020617 ${Math.max(0, e1a - gap)}% ${e1a}%,
 
-    const inner = elETF;
+                #06b6d4 ${e1a}% ${Math.max(e1a, e1a + e2a - gap)}%,
+                #020617 ${Math.max(e1a, e1a + e2a - gap)}% ${e1a + e2a}%,
 
-    const duration = 600;
-    const start = performance.now();
+                #64748b ${e1a + e2a}% 100%
+            )`;
 
-    function animate(now){
-
-        const progress = Math.min((now - start) / duration, 1);
-        const ease = Math.pow(1 - progress, 2);
-
-        const e1a = e1 * (1 - ease);
-        const e2a = e2 * (e1a / (e1 || 1));
-        const total = e1a + e2a;
-
-        inner.style.background =
-     `conic-gradient(
-    #22c55e 0% ${Math.max(0, e1a - gap)}%,
-    #020617 ${Math.max(0, e1a - gap)}% ${e1a}%,
-
-    #06b6d4 ${e1a}% ${Math.max(e1a, e1a + e2a - gap)}%,
-    #020617 ${Math.max(e1a, e1a + e2a - gap)}% ${e1a + e2a}%,
-
-    #64748b ${e1a + e2a}% 100%
-)`;
-
-        if(progress < 1){
-            requestAnimationFrame(animate);
+            if(progress < 1){
+                requestAnimationFrame(animate);
+            }
         }
+
+        requestAnimationFrame(animate);
     }
 
-    requestAnimationFrame(animate);
+    // textes centre
+    const elMetauxText = document.querySelector("#donut-metaux .donut-label");
+    if(elMetauxText){
+        elMetauxText.innerHTML = `
+            <div>
+                <div style="font-size:11px; opacity:0.6;">Métaux</div>
+                <span>${euro(data.goldTotal + data.silverTotal)}</span>
+            </div>
+        `;
+    }
+
+    const elETFText = document.querySelector(".donut.etf .donut-label");
+    if(elETFText){
+        elETFText.innerHTML = `
+            <div>
+                <div style="font-size:11px; opacity:0.6;">ETF</div>
+                <span>${euro(data.totalETF)}</span>
+            </div>
+        `;
+    }
 }
 
 
-// texte centre ETF
-const elETFText = document.querySelector(".donut.etf .donut-label");
-
-if(elETFText){
-    elETFText.innerHTML = `
-        <div>
-            <div style="font-size:11px; opacity:0.6;">ETF</div>
-            <span>${euro(data.totalETF)}</span>
-        </div>
-    `;
-}
-
-} // ✅ ← ICI TU FERMES render()
-
-// ===== INIT =====
 
 // ===== INIT =====
 async function init(){
