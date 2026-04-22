@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1117">
+    <link rel="stylesheet" href="style.css?v=1150">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -833,20 +833,16 @@ if (last && last.monde && last.seniors && last.juniors) {
 }
 
 
-state.portfolio = DATA.portfolio;
-state.etf = DATA.etf;
 
 
 // 🔥 log pour vérifier
 console.log("ETF SHEET:", state.etfPrices);
 
-// 🔥 4. calcul après tout
-state.ratio = result.ratio;
 
-if(state.prices && state.etfPrices && state.portfolio){
-    const result = calculate();
-    render(result);
-}
+// 🔥 4. calcul après tout
+const result = calculate();
+state.ratio = result.ratio;
+render(result);
 
 const alertBox = document.querySelector(".alert-box");
 
