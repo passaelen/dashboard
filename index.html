@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1410">
+    <link rel="stylesheet" href="style.css?v=1420">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -39,10 +39,25 @@
 
 <!-- KPI -->
 <div class="kpi-grid">
-    <div class="kpi"><small>OR</small><h3 id="or"></h3></div>
-    <div class="kpi"><small>ARGENT</small><h3 id="argent"></h3></div>
-    <div class="kpi"><small>RATIO</small><h3 id="ratio">-- <span class="ratio-hint">🧭</span></h3></div>
+<div class="kpi">
+<small>OR</small>
+<h3 id="or"></h3>
 </div>
+
+<div class="kpi"><small>ARGENT</small>
+<h3 id="argent"></h3></div>
+    
+<div class="kpi"><small>RATIO</small>
+
+<h3 id="ratio">
+    <span id="ratio-value">--</span>
+    <span class="ratio-hint">🧭</span>
+</h3>
+
+</div>
+
+</div>
+
 
 <!-- ALERT -->
 <div class="card alert-box">
@@ -254,6 +269,7 @@
 
 <script>
 
+setText("ratio-value", data.ratio.toFixed(2).replace('.',','));
 
 
 // ===== CONFIG =====
