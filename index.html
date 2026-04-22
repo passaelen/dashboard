@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1505">
+    <link rel="stylesheet" href="style.css?v=1509">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -983,6 +983,46 @@ state.ratio = result.ratio;
 render(result);
 
 const alertBox = document.querySelector(".alert-box");
+
+if(alertBox){
+
+    // reset
+    alertBox.classList.remove(
+        "alert-glow-strong",
+        "alert-glow-soft",
+        "alert-glow-warm",
+        "alert-glow-neutral"
+    );
+
+    const action = getZoneAction(state.ratio);
+    const combo = getCombinedSignal(state.ratio, state.bpgdm);
+
+    // 🟢 Achat
+    if(combo.includes("🟢")){
+        alertBox.classList.add("alert-glow-strong");
+    }
+
+    // 🔴 Vente
+    else if(combo.includes("🔴")){
+        alertBox.classList.add("alert-glow-soft");
+    }
+
+    // 🟠 Allègement
+    else if(combo.includes("🟠")){
+        alertBox.classList.add("alert-glow-warm");
+    }
+
+    // 🔥 Métaux chauds
+    else if(action.includes("🔥") || action.includes("🌋")){
+        alertBox.classList.add("alert-glow-warm");
+    }
+
+    // 🔵 Hold
+    else{
+        alertBox.classList.add("alert-glow-neutral");
+    }
+}
+
 
 if(alertBox){
     alertBox.classList.remove("alert-glow-soft", "alert-glow-strong");
