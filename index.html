@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1501">
+    <link rel="stylesheet" href="style.css?v=1505">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -720,14 +720,12 @@ setText("ratio-value",
 // ===== ALERT =====
 const alertEl = document.getElementById("alert-text");
 
-if(alertEl){
-
-    const climat = getAlertMessage(data.ratio);
-    const action = getZoneAction(data.ratio);
-
-    const cleanClimat = climat.split(" ").slice(1).join(" ");
-
-    alertEl.innerHTML = `
+if(alertEl)
+{
+const climat = getAlertMessage(data.ratio);
+const action = getZoneAction(data.ratio);
+const cleanClimat = climat.split(" ").slice(1).join(" ");
+alertEl.innerHTML = `
         <div style="display:flex; align-items:center; gap:8px;">
             <span style="font-size:20px">${emoji}</span>
             <span>${cleanClimat} ${action}</span>
@@ -736,7 +734,8 @@ if(alertEl){
 }
 
 
-    
+const combo = getCombinedSignal(data.ratio, state.bpgdm);
+setText("zone-bpgdm", combo);  
 
 
 
