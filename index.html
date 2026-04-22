@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1460">
+    <link rel="stylesheet" href="style.css?v=1480">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -701,10 +701,12 @@ function render(data){
     setText("argent", euro(data.silverTotal));
     setText("total", euro(data.total));
     setText("etf-total-bottom", euro(data.totalETF));
-setText("ratio-value", data.ratio.toFixed(2).replace('.',','));
+setText("ratio-value",
+    `${emoji} ${data.ratio.toFixed(1).replace('.',',')}`
+);
 
 
-// 1️⃣ Ratio (source UI)
+// ===== RATIO =====
 const emoji =
     data.ratio >= 70 ? "❄️" :
     data.ratio >= 50 ? "🧊" :
@@ -717,19 +719,10 @@ setText("ratio-value",
 );
 
 
-// 2️⃣ Récup emoji depuis UI
-const ratioText = document.getElementById("ratio-value")?.innerText || "";
-
-const emojiFromRatio = ratioText.includes(" ")
-    ? ratioText.split(" ")[0]
-    : "";
-
-
-// 3️⃣ Alert box
+// ===== ALERT =====
 const climat = getAlertMessage(data.ratio);
 const action = getZoneAction(data.ratio);
 
-// enlever emoji du climat proprement
 const cleanClimat = climat.replace(/^[^\s]+\s*/, "");
 
 const alertEl = document.getElementById("alert-text");
@@ -737,7 +730,7 @@ const alertEl = document.getElementById("alert-text");
 if(alertEl){
     alertEl.innerHTML = `
         <div style="display:flex; align-items:center; gap:8px;">
-            <span style="font-size:20px">${emojiFromRatio}</span>
+            <span style="font-size:20px">${emoji}</span>
             <span>${cleanClimat} ${action}</span>
         </div>
     `;
@@ -871,15 +864,7 @@ if(labelE){
     // ===== TOTAL METAUX =====
     setText("metaux-total-bottom", euro(orSuisse + orBelgique + argent));
 
-    // ===== INTELLIGENCE =====
-    const climat = getAlertMessage(data.ratio);
-    const action = getZoneAction(data.ratio);
-    setText("alert-text", `${climat} ${action}`);
-    applyRatioColor(data.ratio);
-
-    const combo = getCombinedSignal(data.ratio, state.bpgdm);
-    setText("zone-bpgdm", combo);
-}
+    
 
 
 
