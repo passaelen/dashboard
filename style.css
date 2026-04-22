@@ -797,6 +797,7 @@ td, th {
     box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
 
+
 /* aiguille */
 .needle {
     position: absolute;
@@ -807,14 +808,23 @@ td, th {
     width: 3px;
     height: 28.9%;
 
-    background: linear-gradient(to top, #f59e0b, #facc15);
+    /* 🎯 dégradé plus lisible */
+    background: linear-gradient(to top, #b45309, #facc15 70%, #fff);
 
     transform-origin: bottom center;
 
     border-radius: 2px;
 
-    box-shadow: 0 0 12px rgba(250,204,21,0.7);
+    /* 🔥 contraste + profondeur */
+    box-shadow: 
+        0 0 10px rgba(250,204,21,0.7),
+        0 0 2px rgba(0,0,0,0.8),
+        0 0 4px rgba(0,0,0,0.6);
+
+    /* 🎯 contour léger pour détacher du fond */
+    border: 1px solid rgba(0,0,0,0.5);
 }
+
 
 /* centre de l’aiguille */
 .needle::after {
