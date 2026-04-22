@@ -139,7 +139,16 @@ function toggleInfo() {
     const el = document.getElementById("tooltip");
     el.classList.toggle("show");
 }
-	
+
+
+document.addEventListener("click", (e) => {
+    const tooltip = document.getElementById("tooltip");
+    const info = document.querySelector(".boussole-info");
+
+    if (!info.contains(e.target)) {
+        tooltip.classList.remove("show");
+    }
+});
     
 </script>
 </body>
