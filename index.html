@@ -701,8 +701,41 @@ function render(data){
     setText("argent", euro(data.silverTotal));
     setText("total", euro(data.total));
     setText("etf-total-bottom", euro(data.totalETF));
+setText("ratio-value", data.ratio.toFixed(2).replace('.',','));
 
-    setText("ratio-value", data.ratio.toFixed(2).replace('.',','));
+
+// 1️⃣ Tu affiches le ratio (source de vérité UI)
+const emoji =
+    data.ratio >= 70 ? "❄️" :
+    data.ratio >= 50 ? "🧊" :
+    data.ratio >= 45 ? "☀️" :
+    data.ratio >= 40 ? "🔥" :
+    "🚨";
+
+setText("ratio-value",
+    `${emoji} ${data.ratio.toFixed(1).replace('.',',')}`
+);
+
+
+// 2️⃣ Tu récupères l’emoji depuis le DOM (APRÈS affichage)
+const ratioText = document.getElementById("ratio-value")?.innerText || "";
+const emojiFromRatio = ratioText.split(" ")[0];
+
+
+// 3️⃣ Tu construis la box alert avec cet emoji
+const climat = getAlertMessage(data.ratio);
+const action = getZoneAction(data.ratio);
+
+setText("alert-text", `
+    <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:20px">${emojiFromRatio}</span>
+        <span>${climat.replace(emojiFromRatio, "").trim()} ${action}</span>
+    </div>
+`);
+
+
+
+
 
     // ===== DONUT METAUX =====
     const p1 = Math.max(0, data.pOrSuisse || 0);
