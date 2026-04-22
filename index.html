@@ -608,7 +608,7 @@ function render(data){
 
     setText("ratio", (data.ratio || 0).toFixed(2));
 
-    // METAUX
+    // ===== METAUX =====
     const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
     const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
     const p3 = Math.max(0, 100 - (p1 + p2));
@@ -653,9 +653,8 @@ function render(data){
         requestAnimationFrame(animate);
     }
 
-    // centre texte
+    // centre métaux
     const elMetauxText = document.querySelector("#donut-metaux .donut-label");
-
     if(elMetauxText){
         elMetauxText.innerHTML = `
             <div>
@@ -664,8 +663,6 @@ function render(data){
             </div>
         `;
     }
-
-}
 
     // ===== ETF =====
     const e1 = Math.max(0, data.pMonde || 0);
@@ -710,17 +707,7 @@ function render(data){
         requestAnimationFrame(animate);
     }
 
-    // textes centre
-    const elMetauxText = document.querySelector("#donut-metaux .donut-label");
-    if(elMetauxText){
-        elMetauxText.innerHTML = `
-            <div>
-                <div style="font-size:11px; opacity:0.6;">Métaux</div>
-                <span>${euro(data.goldTotal + data.silverTotal)}</span>
-            </div>
-        `;
-    }
-
+    // centre ETF
     const elETFText = document.querySelector(".donut.etf .donut-label");
     if(elETFText){
         elETFText.innerHTML = `
