@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boussole</title>
 
-<link rel="stylesheet" href="style.css?v=120">
+<link rel="stylesheet" href="style.css?v=7700">
 
 <style>
 
@@ -49,9 +49,16 @@
 
 <script>
 
+
+
+
+
+
+
 // ===== PARAM =====
 const params = new URLSearchParams(window.location.search);
 const ratio = parseFloat(params.get("ratio")) || 50;
+
 
 
 // ===== ZONE =====
@@ -67,36 +74,62 @@ function getZone(r){
 
 // ===== ANGLE ADAPTÉ À TON IMAGE =====
 // ici on utilise un angle vertical
+
+
+
 function getAngle(r){
 
-    const min = 30;
-    const max = 87.5;
+    if(isNaN(r)) return 0;
 
-    const clamped = Math.max(min, Math.min(max, r));
+    if(r <= 15) return -180;
+    if(r >= 120) return 0;
 
-    // mapping vers -90° (haut) à +90° (bas)
-    return ((clamped - min) / (max - min)) * 180 - 90 - 74;
+    const points = [
+   { r: 15, a: -180 },
+   { r: 35, a: -150 },
+   { r: 40, a: -140 },
+   { r: 45, a: -120 },
+   { r: 50, a: -100 },
+   { r: 60, a: -75 },
+   { r: 70, a: -70 },
+   { r: 80, a: -65 },
+   { r: 90, a: -60 },
+   { r: 100, a: -55 },
+   { r: 110, a: -27 },
+   { r: 120, a: 0 }
+	
+    ];
+
+    for(let i = 0; i < points.length - 1; i++){
+        const { r: r1, a: a1 } = points[i];
+        const { r: r2, a: a2 } = points[i + 1];
+
+        if(r >= r1 && r <= r2){
+            const t = (r - r1) / (r2 - r1);
+            return a1 + t * (a2 - a1);
+        }
+    }
+
+    return 0;
 }
-
+    
 
 // ===== ANIMATION =====
-const needle = document.getElementById("needle");
-const angle = getAngle(ratio);
+document.addEventListener("DOMContentLoaded", () => {
 
-setTimeout(() => {
+    const needle = document.getElementById("needle");
+    const angle = getAngle(ratio);
+
     needle.style.transition = "transform 1.2s cubic-bezier(0.22,1,0.36,1)";
- 
-needle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+    needle.style.transform =
+    `translate(-50%, -100%) rotate(${angle}deg)`;
 
-// ===== change l'extrémité aiguille =====
-}, 100);
+    document.getElementById("zone-text").innerText = getZone(ratio);
 
+    document.getElementById("ratio-text").innerText =
+        ratio.toFixed(2).replace(".", ",");
 
-// ===== TEXTE =====
-document.getElementById("zone-text").innerText = getZone(ratio);
-
-document.getElementById("ratio-text").innerText =
-    ratio.toFixed(2).replace(".", ",");
+});
 
     
 </script>
