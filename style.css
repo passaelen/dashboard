@@ -918,6 +918,10 @@ td, th {
     transition: opacity 0.2s ease;
 }
 
+.tooltip.show {
+    opacity: 1;
+    pointer-events: auto;
+}
 
 
 /*
