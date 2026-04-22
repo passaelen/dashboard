@@ -748,6 +748,8 @@ console.log("BPGDM LIVE (G2):", bpgdmLive);
 
 // 🔥 2. FORCER le sheet comme source principale
 state.prices = await fetchPrices();
+state.portfolio = DATA.portfolio;
+state.etf = DATA.etf;
 state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
 
 
