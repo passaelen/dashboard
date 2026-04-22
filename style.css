@@ -887,6 +887,20 @@ td, th {
 }
 
 
+.boussole-info {
+    margin-top: 10px;
+    font-size: 11px;
+    opacity: 0.6;
+    text-align: center;
+}
+
+.boussole-info .hint {
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+
+
 /*
 .etf-name {
     position: relative;
