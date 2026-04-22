@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1320">
+    <link rel="stylesheet" href="style.css?v=1325">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -605,12 +605,16 @@ function animateDonut(el, target1, target2, duration = 800){
         const p2 = target2 * progress;
 
         el.style.background = `
-            conic-gradient(
-                #facc15 0% ${p1}%,
-                #f59e0b ${p1}% ${p1 + p2}%,
-                #9ca3af ${p1 + p2}% 100%
-            )
-        `;
+    conic-gradient(
+        #facc15 0% ${p1 - 0.5}%,
+        #020617 ${p1 - 0.5}% ${p1 + 0.5}%,
+
+        #f59e0b ${p1 + 0.5}% ${p1 + p2 - 0.5}%,
+        #020617 ${p1 + p2 - 0.5}% ${p1 + p2 + 0.5}%,
+
+        #9ca3af ${p1 + p2 + 0.5}% 100%
+    )
+`;
 
         if(progress < 1){
             requestAnimationFrame(step);
@@ -634,12 +638,16 @@ function animateDonutETF(el, e1, e2, duration = 800){
         const p2 = e2 * progress;
 
         el.style.background = `
-            conic-gradient(
-                #22c55e 0% ${p1}%,
-                #06b6d4 ${p1}% ${p1 + p2}%,
-                #64748b ${p1 + p2}% 100%
-            )
-        `;
+    conic-gradient(
+        #22c55e 0% ${p1 - 0.5}%,
+        #020617 ${p1 - 0.5}% ${p1 + 0.5}%,
+
+        #06b6d4 ${p1 + 0.5}% ${p1 + p2 - 0.5}%,
+        #020617 ${p1 + p2 - 0.5}% ${p1 + p2 + 0.5}%,
+
+        #64748b ${p1 + p2 + 0.5}% 100%
+    )
+`;
 
         if(progress < 1){
             requestAnimationFrame(step);
