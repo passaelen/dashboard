@@ -604,17 +604,21 @@ function animateDonut(el, target1, target2, duration = 800){
         const p1 = target1 * progress;
         const p2 = target2 * progress;
 
+        // ✅ gap dynamique
+        const gap = Math.min(1.5, p1/2, p2/2);
+
         el.style.background = `
-    conic-gradient(
-        #facc15 0% ${p1 - 0.5}%,
-        #020617 ${p1 - 0.5}% ${p1 + 0.5}%,
+            conic-gradient(
+                #facc15 0% ${p1 - gap}%,
+                #020617 ${p1 - gap}% ${p1 + gap}%,
 
-        #f59e0b ${p1 + 0.5}% ${p1 + p2 - 0.5}%,
-        #020617 ${p1 + p2 - 0.5}% ${p1 + p2 + 0.5}%,
+                #f59e0b ${p1 + gap}% ${p1 + p2 - gap}%,
+                #020617 ${p1 + p2 - gap}% ${p1 + p2 + gap}%,
 
-        #9ca3af ${p1 + p2 + 0.5}% 100%
-    )
-`;
+                #9ca3af ${p1 + p2 + gap}% ${100 - gap}%,
+                #020617 ${100 - gap}% 100%
+            )
+        `;
 
         if(progress < 1){
             requestAnimationFrame(step);
