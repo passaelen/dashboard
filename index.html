@@ -597,137 +597,107 @@ function animateValue(target, duration = 600) {
 
 function render(data){
 
-    if (!data) return;
+if (!data || !state.prices || !state.etfPrices) return;
 
-    // KPI
-    setText("or", euro(data.goldTotal));
-    setText("argent", euro(data.silverTotal));
-    setText("total", euro(data.total));
-    setText("etf-total-bottom", euro(data.totalETF));
+// ===== KPI =====
+setText("or", euro(data.goldTotal));
+setText("argent", euro(data.silverTotal));
+setText("total", euro(data.total));
+setText("etf-total-bottom", euro(data.totalETF));
 
-    setText("ratio", (data.ratio || 0).toFixed(2));
+// ===== RATIO =====
+setText("ratio", data.ratio.toFixed(2).replace('.',','));
 
-    // ===== METAUX =====
-    const p1 = Math.max(0, Math.min(100, data.pOrSuisse || 0));
-    const p2 = Math.max(0, Math.min(100, data.pOrBelgique || 0));
-    const p3 = Math.max(0, 100 - (p1 + p2));
 
-    setText("p-or-suisse", percent(p1));
-    setText("p-or-belgique", percent(p2));
-    setText("p-argent", percent(p3));
+// ===== DONUT METAUX =====
+const p1 = Math.max(0, data.pOrSuisse || 0);
+const p2 = Math.max(0, data.pOrBelgique || 0);
+const p3 = Math.max(0, 100 - (p1 + p2));
 
-    const gap = 0.35;
-    const el = document.getElementById("donut-metaux");
+setText("p-or-suisse", percent(p1));
+setText("p-or-belgique", percent(p2));
+setText("p-argent", percent(p3));
 
-    if (el) {
+const el = document.querySelector("#donut-metaux .donut-inner");
 
-        const inner = el.querySelector(".donut-inner");
-        const duration = 600;
-        const start = performance.now();
+if(el){
+    el.style.background = `
+        conic-gradient(
+            #facc15 0% ${p1}%,
+            #f59e0b ${p1}% ${p1+p2}%,
+            #9ca3af ${p1+p2}% 100%
+        )
+    `;
+}
 
-        function animate(now){
+// label
+const metaLabel = document.querySelector("#donut-metaux .donut-label");
+if(metaLabel){
+    metaLabel.innerHTML = `
+        <div>
+            <div style="font-size:11px; opacity:0.6;">Métaux</div>
+            <span>${euro(data.goldTotal + data.silverTotal)}</span>
+        </div>
+    `;
+}
 
-            const progress = Math.min((now - start) / duration, 1);
-            const ease = Math.pow(1 - progress, 2);
 
-            const p1a = p1 * (1 - ease);
-            const p2a = p2 * (p1a / (p1 || 1));
+// ===== DONUT ETF =====
+const e1 = Math.max(0, data.pMonde || 0);
+const e2 = Math.max(0, data.pSeniors || 0);
 
-            inner.style.background =
-            `conic-gradient(
-                #facc15 0% ${Math.max(0, p1a - gap)}%,
-                #020617 ${Math.max(0, p1a - gap)}% ${p1a}%,
+setText("p-monde", percent(e1));
+setText("p-seniors", percent(e2));
 
-                #f59e0b ${p1a}% ${Math.max(p1a, p1a + p2a - gap)}%,
-                #020617 ${Math.max(p1a, p1a + p2a - gap)}% ${p1a + p2a}%,
+const elETF = document.querySelector(".donut.etf .donut-inner");
 
-                #9ca3af ${p1a + p2a}% 100%
-            )`;
+if(elETF){
+    elETF.style.background = `
+        conic-gradient(
+            #22c55e 0% ${e1}%,
+            #06b6d4 ${e1}% ${e1+e2}%,
+            #64748b ${e1+e2}% 100%
+        )
+    `;
+}
 
-            if(progress < 1){
-                requestAnimationFrame(animate);
-            }
-        }
-
-        requestAnimationFrame(animate);
-    }
-
-    // centre métaux
-    const elMetauxText = document.querySelector("#donut-metaux .donut-label");
-    if(elMetauxText){
-        elMetauxText.innerHTML = `
-            <div>
-                <div style="font-size:11px; opacity:0.6;">Métaux</div>
-                <span>${euro(data.goldTotal + data.silverTotal)}</span>
-            </div>
-        `;
-    }
-
-    // ===== ETF =====
-    const e1 = Math.max(0, data.pMonde || 0);
-    const e2 = Math.max(0, data.pSeniors || 0);
-
-    setText("p-monde", percent(e1));
-    setText("p-seniors", percent(e2));
-
-    const elETF = document.querySelector(".donut.etf");
-
-    if (elETF) {
-
-        const gap = 0.35;
-        const inner = elETF.querySelector(".donut-inner");
-        const duration = 600;
-        const start = performance.now();
-
-        function animate(now){
-
-            const progress = Math.min((now - start) / duration, 1);
-            const ease = Math.pow(1 - progress, 2);
-
-            const e1a = e1 * (1 - ease);
-            const e2a = e2 * (e1a / (e1 || 1));
-
-            inner.style.background =
-            `conic-gradient(
-                #22c55e 0% ${Math.max(0, e1a - gap)}%,
-                #020617 ${Math.max(0, e1a - gap)}% ${e1a}%,
-
-                #06b6d4 ${e1a}% ${Math.max(e1a, e1a + e2a - gap)}%,
-                #020617 ${Math.max(e1a, e1a + e2a - gap)}% ${e1a + e2a}%,
-
-                #64748b ${e1a + e2a}% 100%
-            )`;
-
-            if(progress < 1){
-                requestAnimationFrame(animate);
-            }
-        }
-
-        requestAnimationFrame(animate);
-    }
-
-    // centre ETF
-    const elETFText = document.querySelector(".donut.etf .donut-label");
-    if(elETFText){
-    elETFText.innerHTML = `
+// label ETF
+const etfLabel = document.querySelector(".donut.etf .donut-label");
+if(etfLabel){
+    etfLabel.innerHTML = `
         <div>
             <div style="font-size:11px; opacity:0.6;">ETF</div>
             <span>${euro(data.totalETF)}</span>
         </div>
     `;
-} // ✅ FERMETURE ICI
+}
 
 
 // ===== TABLE METAUX =====
-if(state.portfolio && state.prices){
+const p = state.prices;
+const pf = state.portfolio;
 
-    setText("q-or-suisse", state.portfolio.or_suisse_g);
-    setText("q-or-belgique", state.portfolio.or_belgique_g);
-    setText("q-argent", state.portfolio.argent_g);
+setText("q-or-suisse", pf.or_suisse_g.toFixed(2));
+setText("q-or-belgique", pf.or_belgique_g.toFixed(2));
+setText("q-argent", pf.argent_g.toFixed(0));
 
-    setText("p-or-suisse-g", euro(state.prices.gold_per_g));
-    setText("p-or-belgique-g", euro(state.prices.gold_per_g));
-    setText("p-argent-g", euro(state.prices.silver_per_g));
+setText("p-or-suisse-g", p.gold_per_g.toFixed(2) + " €");
+setText("p-or-belgique-g", p.gold_per_g.toFixed(2) + " €");
+setText("p-argent-g", p.silver_per_g.toFixed(2) + " €");
+
+
+// ===== ETF TABLE =====
+const etf = state.etf;
+const pe = state.etfPrices;
+
+setText("etf-monde-parts", etf.monde.parts);
+setText("etf-seniors-parts", etf.seniors.parts);
+setText("etf-juniors-parts", etf.juniors.parts);
+
+setText("etf-monde-prix", pe.monde.toFixed(2) + " €");
+setText("etf-seniors-prix", pe.seniors.toFixed(2) + " €");
+setText("etf-juniors-prix", pe.juniors.toFixed(2) + " €");
+
 }
 
 }
