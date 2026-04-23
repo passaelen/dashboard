@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1560">
+    <link rel="stylesheet" href="style.css?v=1562">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1199,17 +1199,17 @@ function renderMarketState(score, momentum){
     let text = "";
     let color = "#94a3b8";
 
-    if(score < 0.08){
+    if(score < 0.1){
         state = "🚨 EXTRÊME BAS";
         text = "stress extrême du marché";
         color = "#ef4444";
     }
-    else if(score < 0.2){
+    else if(score < 0.25){
         state = "🔻 BAS";
         text = "marché faible";
         color = "#fb923c";
     }
-    else if(score < 0.4){
+    else if(score < 0.5){
         state = "⚖️ NEUTRE";
         text = "marché en équilibre";
         color = "#94a3b8";
@@ -1226,18 +1226,34 @@ function renderMarketState(score, momentum){
     }
 
     let arrow = "→";
-    if(momentum > 0.05) arrow = "↑";
-    else if(momentum < -0.05) arrow = "↓";
+    let strength = "";
+    
+    if(momentum > 0.15){
+        arrow = "⬆️";
+        strength = "forte hausse";
+    }
+    else if(momentum > 0.05){
+        arrow = "↑";
+        strength = "hausse";
+    }
+    else if(momentum < -0.15){
+        arrow = "⬇️";
+        strength = "forte pression";
+    }
+    else if(momentum < -0.05){
+        arrow = "↓";
+        strength = "pression";
+    }
 
     badge.innerText = `${state} ${arrow}`;
     badge.style.color = color;
-
-    if(arrow === "↓") text += " sous pression";
-    if(arrow === "↑") text += " en hausse";
-
+    
+    // 🔥 ajout dynamique du contexte
+    if(strength){
+        text += " " + strength;
+    }
+    
     context.innerText = text;
-}
-
 
     
 
