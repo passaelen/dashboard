@@ -1092,21 +1092,15 @@ td, th {
 }
 
 
-/* 🔥 MOBILE = RETOUR VERSION SAFE */
 @media (max-width: 600px){
 
     .total-left {
+        width: 100%;              /* 🔥 prend toute la largeur */
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 2px;
+        align-items: center;      /* 🔥 centre horizontal */
+        text-align: center;       /* 🔥 centre texte */
     }
 
-    .total-left small::after {
-        content: ""; /* ❌ enlève ":" */
-    }
-
-    .total-left h2 {
-        font-size: 26px;
-    }
 }
 
