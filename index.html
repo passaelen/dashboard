@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1583">
+    <link rel="stylesheet" href="style.css?v=1584">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -412,8 +412,7 @@ function parseCSV(text) {
 function calculate(){
 
     const p = state.prices;
-    const goldVar = getVariation(p.gold_per_g, state.goldClose);
-    const silverVar = getVariation(p.silver_per_g, state.silverClose);
+    
     const pf = state.portfolio;
     const etf = state.etf;
     const pe = state.etfPrices;
@@ -703,6 +702,10 @@ function render(data){
     if (!data || !state.prices || !state.portfolio || !state.etf) return;
 
     const p = state.prices;
+    
+const goldVar = getVariation(p.gold_per_g, state.goldClose);
+const silverVar = getVariation(p.silver_per_g, state.silverClose);
+
     const pf = state.portfolio;
     const etf = state.etf;
     const pe = state.etfPrices || { monde:0, seniors:0, juniors:0 };
