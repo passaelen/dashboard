@@ -1072,11 +1072,13 @@ td, th {
     display: flex;
     align-items: baseline;
     gap: 6px;
+    flex-wrap: nowrap;          /* 🔥 force sur une ligne */
 }
 
 .total-left small {
     margin: 0;
     white-space: nowrap;
+    font-size: 12px;            /* 🔥 un peu plus petit */
 }
 
 .total-left small::after {
@@ -1085,7 +1087,7 @@ td, th {
 
 .total-left h2 {
     margin: 0;
-    font-size: 22px;
+    font-size: 20px;            /* 🔥 légèrement réduit */
     white-space: nowrap;
 }
 }
