@@ -28,7 +28,9 @@ Dashboard personnel de suivi patrimonial permettant de visualiser en temps réel
 - Donuts dynamiques :
   
   - Métaux (Or Suisse / Or Privé / Argent)
-  - ETF (Monde / Minières)
+  - ETF (Monde 🔵 / Minières 🟢 / Juniors ⚪)
+
+👉 Couleurs harmonisées entre donuts et légendes (cohérence visuelle totale)
 
 - Graphique d’évolution :
   
@@ -41,17 +43,19 @@ Dashboard personnel de suivi patrimonial permettant de visualiser en temps réel
 
 ⚡ Données en temps réel
 
-- 🟡 Or → API live
-- ⚪ Argent → API live
+- 🟡 Or → API live (converti en €)
+- ⚪ Argent → API live (converti en €)
 - 📈 ETF → clôture (Google Sheet)
 - 📊 Historique → Google Sheet
 - 🧠 BPGDM → Google Sheet (live + fixé)
+
+👉 Toutes les valeurs sont exprimées en € (vision patrimoniale réelle)
 
 ---
 
 🧠 Intelligence intégrée
 
-- Calcul du ratio Or / Argent
+- Calcul du ratio Or / Argent (basé sur prix €)
 
 - Signal marché combiné :
   
@@ -76,6 +80,13 @@ Dashboard personnel de suivi patrimonial permettant de visualiser en temps réel
   - Par actif
   - En €
   - En %
+
+👉 Les % KPI intègrent :
+
+- Variation du prix
+- Effet devise USD → EUR
+
+➡️ Représentation réelle de la performance portefeuille
 
 ---
 
@@ -132,10 +143,10 @@ APIs utilisées
 
 ⚙️ Logique
 
-- Métaux → prix live €/g
+- Métaux → prix live USD convertis en €/g
 - ETF → valorisation via Sheet
 - Total → Métaux + ETF
-- Ratio → calcul live (index)
+- Ratio → calcul live (€/€)
 - Boussole → affichage via URL (sans recalcul)
 
 ---
@@ -163,12 +174,13 @@ BPGDM
 - Sécurisation contre panne ou absence de données
 
 ---
+
 🧠 Intelligence & Lecture du Marché
 
 Le dashboard ne se limite pas à afficher des données :
 il interprète le marché via une double lecture structurée.
 
-
+---
 
 🧭 1. Climat macro (Ratio Or / Argent)
 
@@ -180,7 +192,7 @@ Le ratio agit comme une boussole de cycle :
 
 👉 Le ratio définit le contexte global, indépendant du bruit court terme.
 
-
+---
 
 📊 2. Timing marché (BPGDM)
 
@@ -191,7 +203,7 @@ Le BPGDM apporte une lecture comportementale :
 
 👉 Il agit comme un indicateur de timing, complémentaire au ratio.
 
-
+---
 
 ⚖️ 3. Signal combiné
 
@@ -204,7 +216,7 @@ Les deux indicateurs sont fusionnés pour produire un signal opérationnel uniqu
 
 👉 Le système ne donne pas une prédiction, mais une lecture cohérente du moment.
 
-
+---
 
 🧭 4. Boussole visuelle
 
@@ -216,7 +228,7 @@ Une représentation graphique du ratio permet une lecture immédiate :
 
 👉 Permet de comprendre sans lire.
 
-
+---
 
 🧠 5. Principe fondamental
 
@@ -227,10 +239,9 @@ Le système repose sur une séparation claire :
 
 👉 Objectif :
 
-«Ne pas subir le marché, mais s’y positionner avec cohérence.»
+« Ne pas subir le marché, mais s’y positionner avec cohérence. »
 
 ---
-
 
 🚀 Évolutions possibles
 
@@ -249,3 +260,5 @@ Ce dashboard est une boussole patrimoniale, pas un simple tracker.
 - 🧭 Comprendre les cycles
 - ⚖️ Ajuster les allocations
 - 🧠 Garder une vision long terme
+
+---
