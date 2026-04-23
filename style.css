@@ -1133,3 +1133,18 @@ td, th {
 
 }
 
+
+/* 🔥 FIX KPI GRID FINAL */
+.kpi-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px;
+}
+
+.kpi {
+    background: rgba(15,23,42,0.6);
+    border-radius: 14px;
+    padding: 12px;
+    min-width: 0;
+}
+
