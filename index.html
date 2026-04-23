@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1584">
+    <link rel="stylesheet" href="style.css?v=1585">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -747,26 +747,12 @@ if(elArgentVar && silverVar){
     // ===== KPI =====
     const elOr = document.getElementById("or");
 
-if(elOr){
-    elOr.innerHTML = `
-        ${euro(data.goldTotal)}
-        ${goldVar ? `<div style="font-size:11px;color:${goldVar.color}">
-            ${goldVar.arrow} ${goldVar.pct.toFixed(2).replace('.',',')}%
-        </div>` : ""}
-    `;
-}
+
   
   
 const elArgent = document.getElementById("argent");
 
-if(elArgent){
-    elArgent.innerHTML = `
-        ${euro(data.silverTotal)}
-        ${silverVar ? `<div style="font-size:11px;color:${silverVar.color}">
-            ${silverVar.arrow} ${silverVar.pct.toFixed(2).replace('.',',')}%
-        </div>` : ""}
-    `;
-}
+
 
 
     setText("total", euro(data.total));
