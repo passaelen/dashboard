@@ -942,25 +942,24 @@ td, th {
     border-color: #020617 transparent transparent transparent;
 }
 
-
-/* ===== ANIMATIONS bloc alertes ===== */
+/* ===== ANIMATIONS bloc alertes (version propre PC + mobile) ===== */
 
 @keyframes pulseGreen {
-    0%   { box-shadow: 0 0 10px rgba(34,197,94,0.2); }
-    50%  { box-shadow: 0 0 30px rgba(34,197,94,0.5); }
-    100% { box-shadow: 0 0 10px rgba(34,197,94,0.2); }
+    0%   { box-shadow: 0 0 6px rgba(34,197,94,0.15); }
+    50%  { box-shadow: 0 0 16px rgba(34,197,94,0.35); }
+    100% { box-shadow: 0 0 6px rgba(34,197,94,0.15); }
 }
 
 @keyframes pulseRed {
-    0%   { box-shadow: 0 0 10px rgba(239,68,68,0.2); }
-    50%  { box-shadow: 0 0 30px rgba(239,68,68,0.5); }
-    100% { box-shadow: 0 0 10px rgba(239,68,68,0.2); }
+    0%   { box-shadow: 0 0 6px rgba(239,68,68,0.15); }
+    50%  { box-shadow: 0 0 16px rgba(239,68,68,0.35); }
+    100% { box-shadow: 0 0 6px rgba(239,68,68,0.15); }
 }
 
 @keyframes pulseOrange {
-    0%   { box-shadow: 0 0 10px rgba(250,204,21,0.2); }
-    50%  { box-shadow: 0 0 30px rgba(250,204,21,0.5); }
-    100% { box-shadow: 0 0 10px rgba(250,204,21,0.2); }
+    0%   { box-shadow: 0 0 6px rgba(250,204,21,0.15); }
+    50%  { box-shadow: 0 0 16px rgba(250,204,21,0.35); }
+    100% { box-shadow: 0 0 6px rgba(250,204,21,0.15); }
 }
 
 
