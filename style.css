@@ -205,7 +205,8 @@ transition: all 0.3s ease;
 
 
 /* ===== KPI ===== */
-/*.kpi-grid {
+/*
+.kpi-grid {
     margin-top: 0; /* éviter conflits */
     margin-bottom: 8px;
     display: grid;
@@ -1135,16 +1136,30 @@ td, th {
 
 
 /* 🔥 FIX KPI GRID FINAL */
+
+
+
 .kpi-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+
+    align-items: stretch; /* 🔥 CRUCIAL */
 }
 
+
 .kpi {
-    background: rgba(15,23,42,0.6);
+    .kpi {
+    background: rgba(15, 23, 42, 0.6);
     border-radius: 14px;
     padding: 12px;
-    min-width: 0;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-height: 70px; /* 🔥 IMPORTANT */
+}
 }
 
