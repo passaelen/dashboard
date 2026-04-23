@@ -966,8 +966,11 @@ td, th {
 /* ===== BASE ===== */
 
 .alert-box {
-    transition: box-shadow 0.4s ease;
+   transition: box-shadow 0.4s ease;
+   overflow: hidden;
+   background: rgba(15,23,42,0.85);
 }
+
 
 
 /* ===== STATES ===== */
