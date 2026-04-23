@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1580">
+    <link rel="stylesheet" href="style.css?v=1581">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1201,27 +1201,27 @@ function renderMarketState(score, momentum){
 
     if(score < 0.1){
         state = "🚨 EXTRÊME BAS";
-        text = "marché en stress extrême";
+        text = "Marché en stress extrême";
         color = "#ef4444";
     }
     else if(score < 0.25){
         state = "🔻 BAS";
-        text = "marché faible";
+        text = "Marché faible";
         color = "#fb923c";
     }
     else if(score < 0.5){
         state = "⚖️ NEUTRE";
-        text = "marché équilibré";
+        text = "Marché équilibré";
         color = "#94a3b8";
     }
     else if(score < 0.75){
         state = "🔺 HAUT";
-        text = "marché solide";
+        text = "Marché solide";
         color = "#22c55e";
     }
     else{
         state = "🔥 EXTRÊME HAUT";
-        text = "marché en excès";
+        text = "Marché en excès";
         color = "#facc15";
     }
 
