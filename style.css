@@ -1138,7 +1138,7 @@ td, th {
 /* 🔥 FIX KPI GRID FINAL */
 
 
-
+/*
 .kpi-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1161,5 +1161,28 @@ td, th {
 
     min-height: 70px; /* 🔥 IMPORTANT */
 }
+}
+*/
+
+
+
+
+
+
+.kpi-grid {
+    margin-top: 0; /* éviter conflits */
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.kpi {
+    height: 65px;
+    padding: 8px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #0b1220, #020617);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.2s ease;
 }
 
