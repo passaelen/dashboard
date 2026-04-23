@@ -1067,18 +1067,18 @@ td, th {
         font-size: 11px;
     }
 
-/* 🔥 TOTAL SUR UNE LIGNE */
+/* 🔥 DESKTOP = UNE LIGNE */
 .total-left {
     display: flex;
     align-items: baseline;
     gap: 6px;
-    flex-wrap: nowrap;          /* 🔥 force sur une ligne */
+    flex-wrap: nowrap;
 }
 
 .total-left small {
     margin: 0;
     white-space: nowrap;
-    font-size: 12px;            /* 🔥 un peu plus petit */
+    font-size: 12px;
 }
 
 .total-left small::after {
@@ -1087,8 +1087,26 @@ td, th {
 
 .total-left h2 {
     margin: 0;
-    font-size: 20px;            /* 🔥 légèrement réduit */
+    font-size: 20px;
     white-space: nowrap;
 }
+
+
+/* 🔥 MOBILE = RETOUR VERSION SAFE */
+@media (max-width: 600px){
+
+    .total-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .total-left small::after {
+        content: ""; /* ❌ enlève ":" */
+    }
+
+    .total-left h2 {
+        font-size: 26px;
+    }
 }
 
