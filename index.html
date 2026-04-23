@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1558">
+    <link rel="stylesheet" href="style.css?v=1560">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1141,11 +1141,11 @@ console.log("ROW 1:", rows[1]);
     for (let i = 1; i < rows.length; i++) {
 
         const row = rows[i];
-        if (!row || row.length < 5) continue;
-
-        const date = row[0]?.trim();
-
+        if (!row || row.length < 8) continue;
         const total = cleanNumber(row[1]);
+        if (isNaN(total) || total < 1000) continue;
+        
+        const date = row[0]?.trim();
         const monde = cleanNumber(row[2]);
         const seniors = cleanNumber(row[3]);
         const juniors = cleanNumber(row[4]);
