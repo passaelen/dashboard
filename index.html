@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1555">
+    <link rel="stylesheet" href="style.css?v=1556">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1104,8 +1104,8 @@ function cleanNumber(val){
 
     return Number(
         val
-            .toString()
-            .trim()
+             .toString()
+            .replace(/\u202f/g, "")
             .replace(/\s/g, "")
             .replace(",", ".")
     ) || 0;
@@ -1124,7 +1124,12 @@ async function fetchHistory(){
    const rows = text
     .trim()
     .split("\n")
-    .map(r => r.split(";"));
+    .map(r => {
+        const matches = r.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+        return matches ? matches.map(v => v.replace(/"/g, "")) : [];
+    });
+
+    
 
 console.log("ROW 1:", rows[1]);
 
