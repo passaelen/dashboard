@@ -61,7 +61,9 @@
 
     <div class="kpi">
         <small>RATIO</small>
-        <h3 id="ratio"></h3>
+        <h3 id="ratio">
+            <span id="ratio-value">--</span>
+        </h3>
     </div>
 
 </div>
@@ -704,34 +706,6 @@ function render(data){
     
 const goldVar = getVariation(p.gold_per_g, state.goldClose);
 const silverVar = getVariation(p.silver_per_g, state.silverClose);
-
-
-setText("or", euro(data.goldTotal));
-
-const elOrVar = document.getElementById("or-var");
-
-if(elOrVar && goldVar){
-    elOrVar.innerText = `${goldVar.arrow} ${goldVar.pct.toFixed(2).replace('.',',')}%`;
-    elOrVar.style.color = goldVar.color;
-}
-
-
-
-
-setText("argent", euro(data.silverTotal));
-
-const elArgentVar = document.getElementById("argent-var");
-
-if(elArgentVar && silverVar){
-    elArgentVar.innerText = `${silverVar.arrow} ${silverVar.pct.toFixed(2).replace('.',',')}%`;
-    elArgentVar.style.color = silverVar.color;
-}
-
-
-
-
-
-
 
 
 
