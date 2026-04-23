@@ -281,7 +281,7 @@ transition: all 0.3s ease;
 /* ===== valeur kpi % ===== */
 .kpi-var {
     position: absolute;
-    bottom: 9px;
+    bottom: 8px;
     right: 8px;
 
     font-size: 11px;
