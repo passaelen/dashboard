@@ -1201,27 +1201,27 @@ function renderMarketState(score, momentum){
 
     if(score < 0.1){
         state = "🚨 EXTRÊME BAS";
-        text = "stress extrême du marché";
+        text = "marché en stress extrême :";
         color = "#ef4444";
     }
     else if(score < 0.25){
         state = "🔻 BAS";
-        text = "marché faible";
+        text = "marché faible :";
         color = "#fb923c";
     }
     else if(score < 0.5){
         state = "⚖️ NEUTRE";
-        text = "marché en équilibre";
+        text = "marché équilibré : ";
         color = "#94a3b8";
     }
     else if(score < 0.75){
         state = "🔺 HAUT";
-        text = "marché solide";
+        text = "marché solide :";
         color = "#22c55e";
     }
     else{
         state = "🔥 EXTRÊME HAUT";
-        text = "excès du marché";
+        text = "marché en excès :";
         color = "#facc15";
     }
 
