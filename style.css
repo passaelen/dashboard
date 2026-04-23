@@ -233,10 +233,13 @@ transition: all 0.3s ease;
 
 
 .kpi small {
-   font-size: 10px;
+    font-size: 10px;
     color: #9ca3af;
+    margin-bottom: 2px;
 }
 
+
+/* ===== valeur kpi centre ===== */
 .kpi h3 {
     margin: 0;
     font-size: 18px;
@@ -263,10 +266,10 @@ transition: all 0.3s ease;
     transform: scale(0.97);
 }
 
-
+/* ===== valeur kpi % ===== */
 .kpi-var {
     position: absolute;
-    bottom: 8px;
+    bottom: 9px;
     right: 8px;
 
     font-size: 11px;
