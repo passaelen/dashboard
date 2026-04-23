@@ -966,6 +966,7 @@ td, th {
 /* ===== BASE ===== */
 
 .alert-box {
+   text-align: center;   /* 🔥 centre le texte */
    transition: box-shadow 0.4s ease;
    overflow: hidden;
    background: rgba(15,23,42,0.85);
