@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1557">
+    <link rel="stylesheet" href="style.css?v=1558">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1131,9 +1131,10 @@ async function fetchHistory(){
         return matches ? matches.map(v => v.replace(/"/g, "")) : [];
     });
 
+console.log("HEADER:", rows[0]);
+console.log("ROW 1:", rows[1]);
     
 
-console.log("ROW 1:", rows[1]);
 
     const history = [];
 
@@ -1149,11 +1150,14 @@ console.log("ROW 1:", rows[1]);
         const seniors = cleanNumber(row[3]);
         const juniors = cleanNumber(row[4]);
         const bpgdm = cleanNumber(row[5]);
+        
+        // 🔥 correction ici
         const score = cleanNumber(row[6]);
         const momentum = cleanNumber(row[7]);
 
+        
         console.log("ROW:", row);
-        console.log("PARSED ROW:", row);
+      
 
         if (date && total > 0) {
             history.push({
