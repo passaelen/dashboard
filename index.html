@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1575">
+    <link rel="stylesheet" href="style.css?v=1577">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1245,15 +1245,16 @@ function renderMarketState(score, momentum){
         strength = "pression";
     }
 
-    badge.innerText = `${state} ${arrow}`;
-    badge.style.color = color;
+    badge.innerText = `${state} ${arrow} : ${text} (clôtures veille)`;
+badge.style.color = color;
+
     
     // 🔥 ajout dynamique du contexte
     if(strength){
         text += " " + strength;
     }
     
-    context.innerText = text + " (clôtures veille)";
+    context.innerText = text + "";
  }
     
 
