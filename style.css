@@ -1066,5 +1066,27 @@ td, th {
     .market-context {
         font-size: 11px;
     }
+
+/* 🔥 TOTAL SUR UNE LIGNE */
+.total-left {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.total-left small {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.total-left small::after {
+    content: " :";
+}
+
+.total-left h2 {
+    margin: 0;
+    font-size: 22px;
+    white-space: nowrap;
+}
 }
 
