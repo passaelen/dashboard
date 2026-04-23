@@ -213,7 +213,9 @@ transition: all 0.3s ease;
 
 
 .kpi {
-    height: 70px; /* fixe = évite étirement */
+    height: 70px; /* fixe = évite étirement
+    justify-content: flex-start;
+ */
     padding: 10px;
     border-radius: 14px;
 
@@ -241,8 +243,7 @@ transition: all 0.3s ease;
     font-size: 18px;
     font-weight: 600;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* 🔥 remonte le prix */
 }
 
 .kpi h3 span:first-child {
