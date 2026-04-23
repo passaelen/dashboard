@@ -205,36 +205,34 @@ transition: all 0.3s ease;
 
 
 /* ===== KPI ===== */
-/*
 .kpi-grid {
-    margin-top: 0; /* éviter conflits */
+    margin-top: 0;
     margin-bottom: 8px;
+
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
+
+    align-items: stretch; /* 🔥 garantit mêmes hauteurs */
 }
 
+
 .kpi {
-    height: 65px;
+    min-height: 65px;
     padding: 8px;
     border-radius: 14px;
+
     background: linear-gradient(145deg, #0b1220, #020617);
     border: 1px solid rgba(255,255,255,0.08);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     transition: 0.2s ease;
 }
 
-*/
 
-
-.kpi-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px;
-}
-
-.kpi {
-    min-width: 0;
-}
 
 
 .kpi small {
@@ -243,14 +241,22 @@ transition: all 0.3s ease;
 }
 
 .kpi h3 {
+    margin: 0;
     margin-top: 2px;
     font-size: 18px;
     font-weight: 600;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+.kpi h3 span:first-child {
+    white-space: nowrap;
+}
+
+
+
+
 
 .kpi:nth-child(1),
 .kpi:nth-child(3) {
@@ -269,6 +275,7 @@ transition: all 0.3s ease;
     padding-right: 2px;
     font-weight: 500;
     letter-spacing: 0.3px;
+    white-space: nowrap;
 }
 
 
@@ -1134,55 +1141,4 @@ td, th {
 
 }
 
-
-/* 🔥 FIX KPI GRID FINAL */
-
-
-/*
-.kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-
-    align-items: stretch; /* 🔥 CRUCIAL */
-}
-
-
-.kpi {
-    .kpi {
-    background: rgba(15, 23, 42, 0.6);
-    border-radius: 14px;
-    padding: 12px;
-    border: 1px solid rgba(148, 163, 184, 0.15);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    min-height: 70px; /* 🔥 IMPORTANT */
-}
-}
-*/
-
-
-
-
-
-
-.kpi-grid {
-    margin-top: 0; /* éviter conflits */
-    margin-bottom: 8px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-}
-
-.kpi {
-    height: 65px;
-    padding: 8px;
-    border-radius: 14px;
-    background: linear-gradient(145deg, #0b1220, #020617);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: 0.2s ease;
-}
 
