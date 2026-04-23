@@ -243,8 +243,12 @@ transition: all 0.3s ease;
 
 .kpi h3 {
     margin-top: 2px;
-    font-size: 18px;   /* AVANT: 20px */
+    font-size: 18px;
     font-weight: 600;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .kpi:nth-child(1),
