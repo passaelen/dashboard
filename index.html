@@ -47,18 +47,9 @@
 </div>
 
 <!-- KPI -->
-<div class="kpi">
-    <small>OR</small>
-    <h3 id="or"></h3>
-    <div id="or-var" class="kpi-var"></div>
-</div>
+<h3 id="or"></h3>
+<h3 id="argent"></h3>
 
-
-<div class="kpi">
-    <small>ARGENT</small>
-    <h3 id="argent"></h3>
-    <div id="argent-var" class="kpi-var"></div>
-</div>
     
 <div class="kpi"><small>RATIO</small>
 
@@ -744,8 +735,9 @@ if(elArgentVar && silverVar){
     const etf = state.etf;
     const pe = state.etfPrices || { monde:0, seniors:0, juniors:0 };
 
-    // ===== KPI =====
-    const elOr = document.getElementById("or");
+
+// ===== KPI =====
+const elOr = document.getElementById("or");
 
 if(elOr){
     elOr.innerHTML = `
