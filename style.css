@@ -1013,8 +1013,13 @@ td, th {
 }
 
 .total-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* 🔥 centre contenu interne */
+    align-items: flex-end;    /* garde aligné à droite */
     text-align: right;
 }
+
 
 /* badge */
 .market-badge {
