@@ -1046,3 +1046,25 @@ td, th {
     align-items: center; /* 🔥 centre verticalement */
 }
 
+@media (max-width: 600px){
+
+    .total-wrapper {
+        flex-direction: column;     /* 🔥 empile */
+        align-items: flex-start;    /* aligné gauche */
+        gap: 6px;
+    }
+
+    .total-right {
+        align-items: flex-start;    /* 🔥 aligne avec le total */
+        text-align: left;
+    }
+
+    .market-badge {
+        font-size: 12px;
+    }
+
+    .market-context {
+        font-size: 11px;
+    }
+}
+
