@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1622">
+    <link rel="stylesheet" href="style.css?v=1625">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -671,16 +671,16 @@ const gap = Math.max(0.25, rawGap); // 👈 minimum visuel
 
         el.style.background = `
             conic-gradient(
-                #22c55e 0% ${p1 - gap}%,
-                rgba(2,6,23,0.75) ${p1 - gap}% ${p1 + gap}%,
+        #38bdf8 0% ${p1 - gap}%,                      /* 🔵 MONDE */
+        rgba(2,6,23,0.75) ${p1 - gap}% ${p1 + gap}%,
 
-                #06b6d4 ${p1 + gap}% ${p1 + p2 - gap}%,
-                rgba(2,6,23,0.75) ${p1 + p2 - gap}% ${p1 + p2 + gap}%,
+        #22c55e ${p1 + gap}% ${p1 + p2 - gap}%,       /* 🟢 SENIORS */
+        rgba(2,6,23,0.75) ${p1 + p2 - gap}% ${p1 + p2 + gap}%,
 
-                #64748b ${p1 + p2 + gap}% ${100 - gap}%,
-                rgba(2,6,23,0.75) ${100 - gap}% 100%
-            )
-        `;
+        #64748b ${p1 + p2 + gap}% ${100 - gap}%,      /* ⚪ JUNIORS */
+        rgba(2,6,23,0.75) ${100 - gap}% 100%
+    )
+`;
 
         if(progress < 1){
             requestAnimationFrame(step);
