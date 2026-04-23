@@ -206,20 +206,15 @@ transition: all 0.3s ease;
 
 /* ===== KPI ===== */
 .kpi-grid {
-    margin-top: 0;
-    margin-bottom: 8px;
-
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-
-    align-items: stretch; /* 🔥 garantit mêmes hauteurs */
 }
 
 
 .kpi {
-    min-height: 65px;
-    padding: 8px;
+    height: 70px; /* fixe = évite étirement */
+    padding: 10px;
     border-radius: 14px;
 
     background: linear-gradient(145deg, #0b1220, #020617);
@@ -229,7 +224,7 @@ transition: all 0.3s ease;
     flex-direction: column;
     justify-content: space-between;
 
-    transition: 0.2s ease;
+    position: relative; /* 🔥 IMPORTANT pour les % */
 }
 
 
@@ -251,7 +246,9 @@ transition: all 0.3s ease;
 }
 
 .kpi h3 span:first-child {
-    white-space: nowrap;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 
@@ -269,12 +266,14 @@ transition: all 0.3s ease;
 
 
 .kpi-var {
-    text-align: right;
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+
     font-size: 11px;
-    margin-top: 2px;
-    padding-right: 2px;
     font-weight: 500;
     letter-spacing: 0.3px;
+
     white-space: nowrap;
 }
 
