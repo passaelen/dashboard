@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1540">
+    <link rel="stylesheet" href="style.css?v=1545">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1124,10 +1124,7 @@ async function fetchHistory(){
    const rows = text
     .trim()
     .split("\n")
-    .map(r => {
-        const matches = r.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
-        return matches ? matches.map(v => v.replace(/"/g, "")) : [];
-    });
+    .map(r => r.split(";"));
 
 console.log("ROW 1:", rows[1]);
 
