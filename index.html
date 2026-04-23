@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1530">
+    <link rel="stylesheet" href="style.css?v=1540">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -896,7 +896,11 @@ const { history: historyList, bpgdmLive } = await fetchHistory();
 state.history = historyList;
 
 const last = historyList?.at(-1) || {};
+state.scoreFinal = last?.score || 0;
+state.momentum = last?.momentum || 0;
 
+
+        
 console.log("LAST:", last); // 👈 ICI
 console.log("BPGDM LIVE (G2):", bpgdmLive);
 
@@ -990,6 +994,10 @@ console.log("ETF SHEET:", state.etfPrices);
 const result = calculate();
 state.ratio = result.ratio;
 render(result);
+
+
+renderMarketState(state.scoreFinal, state.momentum);
+        
 
 const alertBox = document.querySelector(".alert-box");
 
@@ -1137,7 +1145,10 @@ console.log("ROW 1:", rows[1]);
         const seniors = cleanNumber(row[3]);
         const juniors = cleanNumber(row[4]);
         const bpgdm = cleanNumber(row[5]);
+        const score = cleanNumber(row[6]);
+        const momentum = cleanNumber(row[7]);
 
+        console.log("ROW:", row);
 
         if (date && total > 0) {
             history.push({
@@ -1146,7 +1157,9 @@ console.log("ROW 1:", rows[1]);
                 monde,
                 seniors,
                 juniors,
-                bpgdm
+                bpgdm,
+                score,
+                momentum
             });
         }
     }
@@ -1159,6 +1172,66 @@ console.log("ROW 1:", rows[1]);
     };
 }
 
+
+
+
+// ===== MARKET STATE =====
+function renderMarketState(score, momentum){
+
+    const badge = document.getElementById("market-badge");
+    const context = document.getElementById("market-context");
+
+    if(!badge || !context) return;
+
+    let state = "";
+    let text = "";
+    let color = "#94a3b8";
+
+    if(score < 0.08){
+        state = "🚨 EXTRÊME BAS";
+        text = "stress extrême du marché";
+        color = "#ef4444";
+    }
+    else if(score < 0.2){
+        state = "🔻 BAS";
+        text = "marché faible";
+        color = "#fb923c";
+    }
+    else if(score < 0.4){
+        state = "⚖️ NEUTRE";
+        text = "marché en équilibre";
+        color = "#94a3b8";
+    }
+    else if(score < 0.75){
+        state = "🔺 HAUT";
+        text = "marché solide";
+        color = "#22c55e";
+    }
+    else{
+        state = "🔥 EXTRÊME HAUT";
+        text = "excès du marché";
+        color = "#facc15";
+    }
+
+    let arrow = "→";
+    if(momentum > 0.05) arrow = "↑";
+    else if(momentum < -0.05) arrow = "↓";
+
+    badge.innerText = `${state} ${arrow}`;
+    badge.style.color = color;
+
+    if(arrow === "↓") text += " sous pression";
+    if(arrow === "↑") text += " en hausse";
+
+    context.innerText = text;
+}
+
+
+    
+
+
+
+    
 
 
 
