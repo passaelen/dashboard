@@ -1035,3 +1035,9 @@ td, th {
     background: transparent;  
 }
 
+.total-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 🔥 centre verticalement */
+}
+
