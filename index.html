@@ -47,14 +47,18 @@
 </div>
 
 <!-- KPI -->
-<div class="kpi-grid">
 <div class="kpi">
-<small>OR</small>
-<h3 id="or"></h3>
+    <small>OR</small>
+    <h3 id="or"></h3>
+    <div id="or-var" class="kpi-var"></div>
 </div>
 
-<div class="kpi"><small>ARGENT</small>
-<h3 id="argent"></h3></div>
+
+<div class="kpi">
+    <small>ARGENT</small>
+    <h3 id="argent"></h3>
+    <div id="argent-var" class="kpi-var"></div>
+</div>
     
 <div class="kpi"><small>RATIO</small>
 
@@ -705,6 +709,36 @@ function render(data){
     
 const goldVar = getVariation(p.gold_per_g, state.goldClose);
 const silverVar = getVariation(p.silver_per_g, state.silverClose);
+
+
+setText("or", euro(data.goldTotal));
+
+const elOrVar = document.getElementById("or-var");
+
+if(elOrVar && goldVar){
+    elOrVar.innerText = `${goldVar.arrow} ${goldVar.pct.toFixed(2).replace('.',',')}%`;
+    elOrVar.style.color = goldVar.color;
+}
+
+
+
+
+setText("argent", euro(data.silverTotal));
+
+const elArgentVar = document.getElementById("argent-var");
+
+if(elArgentVar && silverVar){
+    elArgentVar.innerText = `${silverVar.arrow} ${silverVar.pct.toFixed(2).replace('.',',')}%`;
+    elArgentVar.style.color = silverVar.color;
+}
+
+
+
+
+
+
+
+
 
     const pf = state.portfolio;
     const etf = state.etf;
