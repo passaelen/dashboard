@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1556">
+    <link rel="stylesheet" href="style.css?v=1557">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1124,6 +1124,8 @@ async function fetchHistory(){
    const rows = text
     .trim()
     .split("\n")
+    .map(r => r.replace("\r", "").trim()) // 👈 nettoyage
+    .filter(r => r.length > 0)             // 👈 enlève lignes vides
     .map(r => {
         const matches = r.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
         return matches ? matches.map(v => v.replace(/"/g, "")) : [];
@@ -1138,7 +1140,7 @@ console.log("ROW 1:", rows[1]);
     for (let i = 1; i < rows.length; i++) {
 
         const row = rows[i];
-        if (!row || row.length < 2) continue;
+        if (!row || row.length < 5) continue;
 
         const date = row[0]?.trim();
 
@@ -1151,6 +1153,7 @@ console.log("ROW 1:", rows[1]);
         const momentum = cleanNumber(row[7]);
 
         console.log("ROW:", row);
+        console.log("PARSED ROW:", row);
 
         if (date && total > 0) {
             history.push({
