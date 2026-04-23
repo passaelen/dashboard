@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1581">
+    <link rel="stylesheet" href="style.css?v=1583">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -412,6 +412,8 @@ function parseCSV(text) {
 function calculate(){
 
     const p = state.prices;
+    const goldVar = getVariation(p.gold_per_g, state.goldClose);
+    const silverVar = getVariation(p.silver_per_g, state.silverClose);
     const pf = state.portfolio;
     const etf = state.etf;
     const pe = state.etfPrices;
@@ -706,8 +708,30 @@ function render(data){
     const pe = state.etfPrices || { monde:0, seniors:0, juniors:0 };
 
     // ===== KPI =====
-    setText("or", euro(data.goldTotal));
-    setText("argent", euro(data.silverTotal));
+    const elOr = document.getElementById("or");
+
+if(elOr){
+    elOr.innerHTML = `
+        ${euro(data.goldTotal)}
+        ${goldVar ? `<div style="font-size:11px;color:${goldVar.color}">
+            ${goldVar.arrow} ${goldVar.pct.toFixed(2).replace('.',',')}%
+        </div>` : ""}
+    `;
+}
+  
+  
+const elArgent = document.getElementById("argent");
+
+if(elArgent){
+    elArgent.innerHTML = `
+        ${euro(data.silverTotal)}
+        ${silverVar ? `<div style="font-size:11px;color:${silverVar.color}">
+            ${silverVar.arrow} ${silverVar.pct.toFixed(2).replace('.',',')}%
+        </div>` : ""}
+    `;
+}
+
+
     setText("total", euro(data.total));
     setText("etf-total-bottom", euro(data.totalETF));
 
@@ -892,13 +916,17 @@ async function init(){
 // 🔥 1. récupérer ton sheet AVANT
 const { history: historyList, bpgdmLive } = await fetchHistory();
 
-// 🔥 ON STOCKE POUR LE GRAPH
+
+// 🔥 ON STOCKE
 state.history = historyList;
 
 const last = historyList?.at(-1) || {};
+
+
 state.scoreFinal = last?.score || 0;
 state.momentum = last?.momentum || 0;
-
+state.goldClose = last?.goldClose || 0;
+state.silverClose = last?.silverClose || 0;
 
         
 console.log("LAST:", last); // 👈 ICI
@@ -1112,6 +1140,20 @@ function cleanNumber(val){
 }
 
 
+function getVariation(now, close){
+
+    if(!now || !close) return null;
+
+    const pct = ((now - close) / close) * 100;
+
+    return {
+        pct,
+        arrow: pct >= 0 ? "↑" : "↓",
+        color: pct >= 0 ? "#22c55e" : "#ef4444"
+    };
+}
+
+
 // ===== HISTORY =====
 async function fetchHistory(){
 
@@ -1150,11 +1192,11 @@ console.log("ROW 1:", rows[1]);
         const seniors = cleanNumber(row[3]);
         const juniors = cleanNumber(row[4]);
         const bpgdm = cleanNumber(row[5]);
-        
-        // 🔥 correction ici
         const score = cleanNumber(row[6]);
         const momentum = cleanNumber(row[7]);
 
+const goldClose = cleanNumber(row[11]);   // colonne L
+const silverClose = cleanNumber(row[12]); // colonne M
         
         console.log("ROW:", row);
       
@@ -1168,7 +1210,9 @@ console.log("ROW 1:", rows[1]);
                 juniors,
                 bpgdm,
                 score,
-                momentum
+                momentum,
+                goldClose,
+                silverClose
             });
         }
     }
