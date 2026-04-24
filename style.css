@@ -6,8 +6,12 @@ body {
     background: radial-gradient(circle at top, #0f172a, #020617);
     color: #e5e7eb;
     overscroll-behavior: none;
+     min-height: 100vh;
 }
 
+html, body {
+    height: 100%;
+}
 
 .container {
     max-width: 900px;
