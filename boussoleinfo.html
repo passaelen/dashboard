@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boussole — Lecture</title>
 
-<link rel="stylesheet" href="style.css?v=2060">
+<link rel="stylesheet" href="style.css?v=2070">
 
 <style>
 
@@ -66,16 +66,15 @@
 <div class="container">
 
 <!-- HEADER -->
-
 <div class="header">
-    <div class="header-left">
-        <h2>🧭 Lecture du cycle</h2>
-        <small>Comprendre le ratio Or / Argent</small>
-    </div>
 
+<div class="header-left">
+      <h2>🧭 Lecture du cycle</h2>
+      <small>Comprendre le ratio Or / Argent</small>
+</div>
 
 <div class="header-right">
-    <a href="index.html" class="badge">← Retour</a>
+<a id="back-btn" href="#" class="badge">← Retour</a>
 </div>
 
 
@@ -91,7 +90,7 @@
         <div class="zone-title">⬆️ ≥ 60 → ≥120 (Froid / Hibernation)</div>
         <div class="zone-title">⬆️ 50 → 59 (Nord fragile)</div>
     </center>
-    
+
 
 
 <p>Argent : ignoré monétairement</p>
@@ -116,10 +115,10 @@
 
 <div class="section sud1">
     <center>
-        
+
     <div class="zone-title">🔥 50 – 45 (Sud tempéré)</div>
     </center>
-    
+
 
 <p>Argent : réintégration monétaire</p>
 <p>Début de visibilité, sans excès, mouvement propre</p>
@@ -203,6 +202,20 @@
 
 </div>
 </div>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const ratio = parseFloat(params.get("ratio")) || 50;
+
+    document.getElementById("back-btn").href =
+        "boussole.html?ratio=" + ratio;
+});
+
+</script>
 
 </body>
 </html>
