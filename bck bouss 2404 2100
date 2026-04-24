@@ -31,7 +31,10 @@
 
 
 <div class="boussole-container">
-            <img src="bous.png" class="boussole-img" alt="Boussole" onclick="window.location.href='boussoleinfo.html'">
+
+            <img src="bous.png"
+class="boussole-img" alt="Boussole" onclick="window.location.href='boussoleinfo.html?ratio=' + ratio">
+
 <div class="needle" id="needle"></div>
 </div>
 
