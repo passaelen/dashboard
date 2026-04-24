@@ -268,8 +268,12 @@ Ce dashboard est une boussole patrimoniale, pas un simple tracker.
 
 - KPI (%) = comparent le prix actuel de l’or et de l’argent (temps réel via API) à leur dernière clôture enregistrée dans le sheet.
 
-- ETF = affichés sur base des valeurs de clôture de la veille.
+- Donuts = calculés en temps réel :
+  Métaux → basés sur les prix live (API)
+  ETF → basés sur les clôtures reprises dans le sheet
 
-- Donuts = sont calculés en temps réel
+- Graphique = basé sur les valeurs de clôture reprises dans le sheet.
 
-- Graphique = valeurs de clôtures reprises dans le sheet
+- Bloc Métaux Précieux = entièrement calculé en temps réel via API.
+
+- Bloc ETF = affiché sur base des valeurs de clôture de la veille.
