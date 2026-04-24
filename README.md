@@ -262,3 +262,14 @@ Ce dashboard est une boussole patrimoniale, pas un simple tracker.
 - 🧠 Garder une vision long terme
 
 ---
+📝 Notes personnelles
+
+- Total global = additionne les métaux en temps réel (via API) et les ETF sur leur dernière clôture reprise dans le sheet.
+
+- KPI (%) = comparent le prix actuel de l’or et de l’argent (temps réel via API) à leur dernière clôture enregistrée dans le sheet.
+
+- ETF = affichés sur base des valeurs de clôture de la veille.
+
+- Donuts = sont calculés en temps réel
+
+- Graphique = valeurs de clôtures reprises dans le sheet
