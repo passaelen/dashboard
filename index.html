@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1639">
+    <link rel="stylesheet" href="style.css?v=1640">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1678,7 +1678,10 @@ const donutMetaux = document.getElementById("donut-metaux");
 
 if (donutMetaux) {
 
-    const handler = () => {
+    const handler = (e) => {
+        e.preventDefault();   // 🔥 CRITIQUE
+        e.stopPropagation();
+
         alert("CLICK OK"); // test
 
         const pf = state.portfolio;
@@ -1702,9 +1705,9 @@ if (donutMetaux) {
         document.getElementById("donut-popup").classList.add("show");
     };
 
-    // 🔥 DOUBLE EVENT (clé mobile)
+    // 🔥 LE COMBO QUI MARCHE TOUJOURS
+    donutMetaux.addEventListener("touchend", handler, { passive: false });
     donutMetaux.addEventListener("click", handler);
-    donutMetaux.addEventListener("touchstart", handler);
 }
 
 });
