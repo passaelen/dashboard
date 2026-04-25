@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1755">
+    <link rel="stylesheet" href="style.css?v=1756">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille n7</h2>
+        <h2>💼 Portefeuille 69</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -274,6 +274,13 @@
     <span id="etf-total-bottom"></span>
 </div>   
 
+
+<div class="global-split">
+    <span id="p-metaux-global"></span>
+    <span id="p-etf-global"></span>
+</div>
+
+
 </div>
 
 
@@ -445,6 +452,11 @@ function calculate(){
     const pArgent =
         (silverTotal / totalMetaux) * 100;
 
+const pMetaux = total ? ((goldTotal + silverTotal) / total) * 100 : 0;
+const pETF = total ? (totalETF / total) * 100 : 0;
+
+
+
      // valeurs €
     const vMonde = etf.monde.parts * pe.monde;
     const vSeniors = etf.seniors.parts * pe.seniors;
@@ -483,6 +495,8 @@ function calculate(){
         pMonde,
         pSeniors,
         pJuniors,
+        pMetaux,
+        pETF
      };
 
 }
@@ -920,6 +934,12 @@ const vJuniors = data.vJuniors;
     setText("metaux-total-bottom", euro(orSuisse + orBelgique + argent));
 
     
+// ===== TOTAL METAUX/ETF % =====
+setText("p-metaux-global", "💎 Métaux : " + percent(data.pMetaux));
+setText("p-etf-global", "📊 ETF : " + percent(data.pETF));
+
+
+
 }
 
 
