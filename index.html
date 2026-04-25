@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1754">
+    <link rel="stylesheet" href="style.css?v=1755">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille n3</h2>
+        <h2>💼 Portefeuille n7</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -867,18 +867,22 @@ const vJuniors = data.vJuniors;
     const benefSeniors = vSeniors - etf.seniors.buy;
     const benefJuniors = vJuniors - etf.juniors.buy;
 
-    // ===== FORMAT =====
+// ===== FORMAT =====
     function euroSigned(v){
         const sign = v > 0 ? "+" : "";
         return sign + Math.round(v).toLocaleString('fr-BE') + " €";
     }
 
     function perf(value, buy){
-        if(!buy) return "-";
-        return (((value - buy)/buy)*100).toFixed(1).replace('.',',')+"%";
-    }
 
-    // ===== TABLE METAUX =====
+    if(!buy || buy === 0) return "-";
+
+    const pct = ((value - buy) / buy) * 100;
+
+    return pct.toFixed(2).replace('.',',') + "%";
+}
+
+// ===== TABLE METAUX =====
     setText("q-or-suisse", pf.or_suisse_g.toFixed(2));
     setText("q-or-belgique", pf.or_belgique_g.toFixed(2));
     setText("q-argent", pf.argent_g.toFixed(0));
