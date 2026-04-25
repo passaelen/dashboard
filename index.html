@@ -1613,33 +1613,33 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    // ===== CLICK DONUT =====
+// ===== CLICK DONUT =====
     const donut = document.getElementById("donut-metaux");
 
-    console.log("donut trouvé :", donut);
+if (donut) {
+    donut.addEventListener("click", () => {
 
-    if (donut) {
-        donut.addEventListener("click", () => {
-            console.log("CLICK OK");
-            alert("CLICK OK");
-        });
-    }
+        const pf = state.portfolio;
+        const p = state.prices;
 
-});
-    
+        if (!pf || !p) return;
 
+        const orSuisse = pf.or_suisse_g * p.gold_per_g;
+        const orBelgique = pf.or_belgique_g * p.gold_per_g;
+        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
 
-document.addEventListener("click", (e) => {
-    const popup = document.getElementById("donut-popup");
-    const content = document.querySelector(".popup-content");
+        document.getElementById("popup-or-suisse").innerText =
+            "🇨🇭 🟡 Or Suisse : " + euro(orSuisse);
 
-    if (!popup.classList.contains("show")) return;
+        document.getElementById("popup-or-belgique").innerText =
+            "🇧🇪 🟡 Or Belgique : " + euro(orBelgique);
 
-    if (!content.contains(e.target)) {
-        popup.classList.remove("show");
-    }
-});
+        document.getElementById("popup-argent").innerText =
+            "🇨🇭 ⚪ Argent : " + euro(argent);
 
+        document.getElementById("donut-popup").classList.add("show");
+    });
+}
 
 
 
