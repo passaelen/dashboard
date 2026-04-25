@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1631">
+    <link rel="stylesheet" href="style.css?v=1632">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1620,33 +1620,46 @@ document.querySelectorAll(".tf").forEach(btn => {
 
 
 // 🔥 CLICK DONUT METAUX
-const donutMetaux = document.getElementById("donut-metaux");
+window.addEventListener("DOMContentLoaded", async () => {
 
-if (donutMetaux) {
-    donutMetaux.addEventListener("click", () => {
+    await init(); // 🔥 important
 
-        const pf = state.portfolio;
-        const p = state.prices;
+    // 🔥 CLICK DONUT METAUX
+    const donutMetaux = document.getElementById("donut-metaux");
 
-        if (!pf || !p) return;
+    console.log("donutMetaux:", donutMetaux); // 👈 test
 
-        const orSuisse = pf.or_suisse_g * p.gold_per_g;
-        const orBelgique = pf.or_belgique_g * p.gold_per_g;
-        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
+    if (donutMetaux) {
+        donutMetaux.addEventListener("click", () => {
 
-        document.getElementById("popup-or-suisse").innerText =
-            "🇨🇭 🟡 Or Suisse : " + euro(orSuisse);
+            console.log("CLICK OK"); // 👈 test
 
-        document.getElementById("popup-or-belgique").innerText =
-            "🇧🇪 🟡 Or Belgique : " + euro(orBelgique);
+            const pf = state.portfolio;
+            const p = state.prices;
 
-        document.getElementById("popup-argent").innerText =
-            "🇨🇭 ⚪ Argent : " + euro(argent);
+            if (!pf || !p) {
+                console.warn("data pas prête");
+                return;
+            }
 
-        document.getElementById("donut-popup").classList.add("show");
-    });
-}
+            const orSuisse = pf.or_suisse_g * p.gold_per_g;
+            const orBelgique = pf.or_belgique_g * p.gold_per_g;
+            const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
 
+            document.getElementById("popup-or-suisse").innerText =
+                "🇨🇭 🟡 Or Suisse : " + euro(orSuisse);
+
+            document.getElementById("popup-or-belgique").innerText =
+                "🇧🇪 🟡 Or Belgique : " + euro(orBelgique);
+
+            document.getElementById("popup-argent").innerText =
+                "🇨🇭 ⚪ Argent : " + euro(argent);
+
+            document.getElementById("donut-popup").classList.add("show");
+        });
+    }
+
+});
     
 
     init();
