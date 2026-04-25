@@ -1645,7 +1645,31 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     await init();
 
-    // ===== CLICK DONUT =====
+    
+// ===== REFRESH BUTTON =====
+    const refreshBtn = document.getElementById("refresh-btn");
+
+    if(refreshBtn){
+        refreshBtn.addEventListener("click", async () => {
+
+            // 🔄 animation
+            refreshBtn.style.transform = "rotate(360deg)";
+            refreshBtn.style.transition = "0.6s";
+
+            setTimeout(() => {
+                refreshBtn.style.transform = "rotate(0deg)";
+            }, 600);
+
+            // 🔥 reload data
+            await init();
+        });
+    }
+
+});
+
+    
+
+// ===== CLICK DONUT =====
     const donut = document.getElementById("donut-metaux");
 
     if (donut) {
