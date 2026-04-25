@@ -1203,6 +1203,7 @@ td, th {
     z-index: 5;
     cursor: pointer;
     pointer-events: auto;
+    background: red !important;
 }
 
 .donut-inner {
