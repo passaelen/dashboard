@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1772">
+    <link rel="stylesheet" href="style.css?v=1773">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 84</h2>
+        <h2>💼 Portefeuille</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -325,9 +325,17 @@ const state = {
 
 
 // ===== HELPER =====
+const DOM_CACHE = {};
+
 function setText(id, value){
-    const el = document.getElementById(id);
-    if(el) el.innerText = value;
+
+    if(!DOM_CACHE[id]){
+        DOM_CACHE[id] = document.getElementById(id);
+    }
+
+    if(DOM_CACHE[id]){
+        DOM_CACHE[id].innerText = value;
+    }
 }
 
 // ===== API =====
