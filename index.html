@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1743">
+    <link rel="stylesheet" href="style.css?v=1744">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1622,6 +1622,13 @@ document.querySelectorAll(".tf").forEach(btn => {
 
 window.addEventListener("DOMContentLoaded", async () => {
 
+    // ===== CONFIG INIT =====
+    state.timeframe = 10;
+
+    // ===== INIT (UNE SEULE FOIS) =====
+    await init();
+
+    // ===== REFRESH =====
     const refreshBtn = document.getElementById("refresh-btn");
 
     if (refreshBtn) {
@@ -1639,8 +1646,9 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // ratio click
+    // ===== CLICK RATIO =====
     const ratioEl = document.getElementById("ratio");
+
     if (ratioEl) {
         ratioEl.addEventListener("click", () => {
             if (!state.ratio) return;
@@ -1648,7 +1656,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // timeframe
+    // ===== TIMEFRAME =====
     document.querySelectorAll(".tf").forEach(btn => {
         btn.addEventListener("click", () => {
 
@@ -1666,26 +1674,21 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    state.timeframe = 10;
-
-    // 🔥 INIT
-    await init();
-
-    // 🔥 CLICK TEST SIMPLE
+    // ===== CLICK DONUT (FINAL) =====
     const donut = document.getElementById("donut-metaux");
 
+    console.log("donut trouvé :", donut);
+
     if (donut) {
-        donut.onclick = () => {
+        donut.addEventListener("click", () => {
+            console.log("CLICK OK");
             alert("CLICK OK");
-        };
+        });
     }
 
 });
+
     
-
-    init();
-});
-
 
 
 document.addEventListener("click", (e) => {
