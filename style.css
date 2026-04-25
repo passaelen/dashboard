@@ -1182,6 +1182,16 @@ td, th {
 
 
 /* ===== Show valeur ds donut ===== */
+.donut-label {
+    pointer-events: none;
+}
+
+.donut::before,
+.donut::after {
+    pointer-events: none;
+}
+
+
 .donut-popup.show {
     opacity: 1;
     pointer-events: auto;
