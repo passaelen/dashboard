@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1628">
+    <link rel="stylesheet" href="style.css?v=1629">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -810,6 +810,33 @@ if(labelM){
         </div>
     `;
 }
+}
+
+
+// ===== CLICK DONUT METAUX =====
+const donutMetaux = document.getElementById("donut-metaux");
+
+if (donutMetaux && !donutMetaux.dataset.bound) {
+
+    donutMetaux.dataset.bound = "true"; // évite double binding
+
+    donutMetaux.onclick = () => {
+
+        const orSuisse = pf.or_suisse_g * p.gold_per_g;
+        const orBelgique = pf.or_belgique_g * p.gold_per_g;
+        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
+
+        document.getElementById("popup-or-suisse").innerText =
+            "🟡 Or Suisse : " + euro(orSuisse);
+
+        document.getElementById("popup-or-belgique").innerText =
+            "🟡 Or Belgique : " + euro(orBelgique);
+
+        document.getElementById("popup-argent").innerText =
+            "⚪ Argent : " + euro(argent);
+
+        document.getElementById("donut-popup").classList.add("show");
+    };
 }
 
 
@@ -1620,6 +1647,20 @@ document.querySelectorAll(".tf").forEach(btn => {
     init();
 });
 
+
+document.addEventListener("click", (e) => {
+    const popup = document.getElementById("donut-popup");
+    const content = document.querySelector(".popup-content");
+
+    if (!popup.classList.contains("show")) return;
+
+    if (!content.contains(e.target)) {
+        popup.classList.remove("show");
+    }
+});
+
+
+
 </script>
 
 
@@ -1646,6 +1687,17 @@ function goToPage(el, url) {
     }, 120);
 }
 </script>
+
+
+
+<div id="donut-popup" class="donut-popup">
+    <div class="popup-content">
+        <div id="popup-or-suisse"></div>
+        <div id="popup-or-belgique"></div>
+        <div id="popup-argent"></div>
+    </div>
+</div>
+
 
 
 </body>
