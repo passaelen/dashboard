@@ -1210,4 +1210,23 @@ td, th {
     margin: 6px 0;
 }
 
+#donut-metaux {
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.donut-inner {
+    pointer-events: none;
+}
+
+.donut-label {
+    pointer-events: none;
+}
+
+.donut::before,
+.donut::after {
+    pointer-events: none;
+}
+
 
