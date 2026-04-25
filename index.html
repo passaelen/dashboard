@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1638">
+    <link rel="stylesheet" href="style.css?v=1639">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1674,27 +1674,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     // 🔥 CLICK DONUT METAUX (FIX MOBILE)
 
-const donutMetaux = document.getElementById("donut-metaux").onclick = () => {
-    alert("CLICK OK");
-};
-
-console.log("donutMetaux:", donutMetaux);
+const donutMetaux = document.getElementById("donut-metaux");
 
 if (donutMetaux) {
 
-    const handler = (e) => {
-
-        e.preventDefault(); // 🔥 évite conflits mobile
-
-        console.log("CLICK OK");
+    const handler = () => {
+        alert("CLICK OK"); // test
 
         const pf = state.portfolio;
         const p = state.prices;
 
-        if (!pf || !p) {
-            console.warn("data pas prête");
-            return;
-        }
+        if (!pf || !p) return;
 
         const orSuisse = pf.or_suisse_g * p.gold_per_g;
         const orBelgique = pf.or_belgique_g * p.gold_per_g;
@@ -1712,9 +1702,9 @@ if (donutMetaux) {
         document.getElementById("donut-popup").classList.add("show");
     };
 
-    // 🔥 double event = solution mobile
+    // 🔥 DOUBLE EVENT (clé mobile)
     donutMetaux.addEventListener("click", handler);
-    donutMetaux.addEventListener("touchstart", handler, { passive: false });
+    donutMetaux.addEventListener("touchstart", handler);
 }
 
 });
