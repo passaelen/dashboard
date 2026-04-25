@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1632">
+    <link rel="stylesheet" href="style.css?v=1633">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1619,20 +1619,68 @@ document.querySelectorAll(".tf").forEach(btn => {
     state.timeframe = 10;
 
 
-// 🔥 CLICK DONUT METAUX
+
 window.addEventListener("DOMContentLoaded", async () => {
 
-    await init(); // 🔥 important
+    const refreshBtn = document.getElementById("refresh-btn");
 
-    // 🔥 CLICK DONUT METAUX
+    if (refreshBtn) {
+        refreshBtn.addEventListener("click", async () => {
+
+            if (refreshBtn.classList.contains("spin")) return;
+
+            refreshBtn.classList.add("spin");
+
+            try {
+                await init();
+            } finally {
+                refreshBtn.classList.remove("spin");
+            }
+        });
+    }
+
+    // 🔗 clic ratio
+    const ratioEl = document.getElementById("ratio");
+    if (ratioEl) {
+        ratioEl.addEventListener("click", () => {
+            if (!state.ratio) return;
+            window.location.href = "boussole.html?ratio=" + state.ratio;
+        });
+    }
+
+    // 🔥 boutons timeframe
+    document.querySelectorAll(".tf").forEach(btn => {
+        btn.addEventListener("click", () => {
+
+            document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            const days = parseInt(btn.dataset.days);
+            state.timeframe = days;
+
+            const title = document.getElementById("chart-title");
+            if (title) {
+                title.innerText = `Évolution ${days} jours`;
+            }
+
+            renderChart();
+        });
+    });
+
+    state.timeframe = 10;
+
+    // 🔥 INIT (UNE SEULE FOIS)
+    await init();
+
+    // 🔥 CLICK DONUT METAUX (AU BON ENDROIT)
     const donutMetaux = document.getElementById("donut-metaux");
 
-    console.log("donutMetaux:", donutMetaux); // 👈 test
+    console.log("donutMetaux:", donutMetaux);
 
     if (donutMetaux) {
         donutMetaux.addEventListener("click", () => {
 
-            console.log("CLICK OK"); // 👈 test
+            console.log("CLICK OK");
 
             const pf = state.portfolio;
             const p = state.prices;
@@ -1723,3 +1771,4 @@ function goToPage(el, url) {
 
 </body>
 </html>
+ 
