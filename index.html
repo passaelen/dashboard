@@ -1589,13 +1589,13 @@ window.addEventListener("DOMContentLoaded", async () => {
             const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
 
             document.getElementById("popup-or-suisse").innerText =
-                "🇨🇭 " + euro(orSuisse);
+                "🇨🇭 " + euro(orSuisse) + " (spot)";
 
             document.getElementById("popup-or-belgique").innerText =
-                "🇧🇪 " + euro(orBelgique);
+                "🇧🇪 " + euro(orBelgique) + " (spot)";
 
             document.getElementById("popup-argent").innerText =
-                "⚪ " + euro(argent);
+    "⚪ " + euro(argent) + " (revente)";
 
             tooltip.classList.toggle("show");
         });
