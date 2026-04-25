@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1775">
+    <link rel="stylesheet" href="style.css?v=1776">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuilles</h2>
+        <h2>💼 Portefeuilless</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1643,14 +1643,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
     state.timeframe = 10;
 
-    init(); // ❗ pas besoin de await ici
+    init();
 
     // ===== REFRESH BUTTON =====
     const refreshBtn = document.getElementById("refresh-btn");
 
-    if(refreshBtn){
-        refreshBtn.addEventListener("click", async () => {
+    if (refreshBtn) {
+        refreshBtn.addEventListener("click", () => {
 
+            // animation
             refreshBtn.style.transform = "rotate(360deg)";
             refreshBtn.style.transition = "0.6s";
 
@@ -1658,7 +1659,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 refreshBtn.style.transform = "rotate(0deg)";
             }, 600);
 
-            await init();
+            // reload
+            init();
         });
     }
 
