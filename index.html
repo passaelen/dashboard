@@ -818,22 +818,25 @@ const donutMetaux = document.getElementById("donut-metaux");
 
 if (donutMetaux && !donutMetaux.dataset.bound) {
 
-    donutMetaux.dataset.bound = "true"; // évite double binding
+    donutMetaux.dataset.bound = "true";
 
     donutMetaux.onclick = () => {
+
+        const pf = state.portfolio;   // ✅ FIX
+        const p = state.prices;       // ✅ FIX
 
         const orSuisse = pf.or_suisse_g * p.gold_per_g;
         const orBelgique = pf.or_belgique_g * p.gold_per_g;
         const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
 
         document.getElementById("popup-or-suisse").innerText =
-            "🟡 Or Suisse : " + euro(orSuisse);
+            "🟡🇨🇭 : " + euro(orSuisse);
 
         document.getElementById("popup-or-belgique").innerText =
-            "🟡 Or Belgique : " + euro(orBelgique);
+            "🟡🇧🇪 : " + euro(orBelgique);
 
         document.getElementById("popup-argent").innerText =
-            "⚪ Argent : " + euro(argent);
+            "⚪🇨🇭 : " + euro(argent);
 
         document.getElementById("donut-popup").classList.add("show");
     };
