@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1744">
+    <link rel="stylesheet" href="style.css?v=1746">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1558,71 +1558,9 @@ transitions: {
 
 
 // ===== START =====
-window.addEventListener("DOMContentLoaded", () => {
-
-    const refreshBtn = document.getElementById("refresh-btn");
-
-    if (refreshBtn) {
-        refreshBtn.addEventListener("click", async () => {
-
-            if (refreshBtn.classList.contains("spin")) return;
-
-            refreshBtn.classList.add("spin");
-
-            try {
-                await init();
-            } finally {
-                refreshBtn.classList.remove("spin");
-            }
-
-        });
-    }
-
-// 🔗 ouverture boussole au clic sur le ratio
-const ratioEl = document.getElementById("ratio");
-
-if (ratioEl) {
-    ratioEl.addEventListener("click", () => {
-        if (!state.ratio) return; // sécurité
-        window.location.href = "boussole.html?ratio=" + state.ratio;
-    });
-}
-
-
-
-
-
-    // 🔥 TIMEFRAME BUTTONS (avec titre dynamique)
-document.querySelectorAll(".tf").forEach(btn => {
-    btn.addEventListener("click", () => {
-
-        // reset active
-        document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        // update timeframe
-        const days = parseInt(btn.dataset.days);
-        state.timeframe = days;
-
-        // 🔥 update titre
-        const title = document.getElementById("chart-title");
-        if (title) {
-            title.innerText = `Évolution ${days} jours`;
-        }
-
-        // redraw graph
-        renderChart();
-    });
-});
-
-    // 🔥 sécurité
-    state.timeframe = 10;
-
-
-
 window.addEventListener("DOMContentLoaded", async () => {
 
-    // ===== CONFIG INIT =====
+    // ===== CONFIG =====
     state.timeframe = 10;
 
     // ===== INIT (UNE SEULE FOIS) =====
@@ -1643,6 +1581,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             } finally {
                 refreshBtn.classList.remove("spin");
             }
+
         });
     }
 
@@ -1674,7 +1613,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
-    // ===== CLICK DONUT (FINAL) =====
+    // ===== CLICK DONUT =====
     const donut = document.getElementById("donut-metaux");
 
     console.log("donut trouvé :", donut);
@@ -1687,7 +1626,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 
 });
-
     
 
 
