@@ -1619,36 +1619,14 @@ window.addEventListener("DOMContentLoaded", async () => {
 if (donut) {
     donut.addEventListener("click", () => {
 
-        if (!state || !state.portfolio || !state.prices) {
-            console.warn("state pas prêt");
-            return;
-        }
-
-        const pf = state.portfolio;
-        const p = state.prices;
-
-        const orSuisse = pf.or_suisse_g * p.gold_per_g;
-        const orBelgique = pf.or_belgique_g * p.gold_per_g;
-        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
-
-        const el1 = document.getElementById("popup-or-suisse");
-        const el2 = document.getElementById("popup-or-belgique");
-        const el3 = document.getElementById("popup-argent");
         const popup = document.getElementById("donut-popup");
 
-        if (!el1 || !el2 || !el3 || !popup) {
-            console.warn("popup elements manquants");
-            return;
+        if (popup) {
+            popup.classList.add("show");
         }
 
-        el1.innerText = "🇨🇭 🟡 Or Suisse : " + euro(orSuisse);
-        el2.innerText = "🇧🇪 🟡 Or Belgique : " + euro(orBelgique);
-        el3.innerText = "🇨🇭 ⚪ Argent : " + euro(argent);
-
-        popup.classList.add("show");
     });
 }
-
 
 
 </script>
