@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1750">
+    <link rel="stylesheet" href="style.css?v=1752">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille</h2>
+        <h2>💼 Portefeuille new</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -859,9 +859,9 @@ if(labelE){
     const benefOrBelgique = orBelgique - pf.or_belgique_cost;
     const benefArgent = argent - pf.argent_cost;
 
-    const vMonde = etf.monde.parts * pe.monde;
-    const vSeniors = etf.seniors.parts * pe.seniors;
-    const vJuniors = etf.juniors.parts * pe.juniors;
+    const vMonde = data.vMonde;
+const vSeniors = data.vSeniors;
+const vJuniors = data.vJuniors;
 
     const benefMonde = vMonde - etf.monde.buy;
     const benefSeniors = vSeniors - etf.seniors.buy;
