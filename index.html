@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1753">
+    <link rel="stylesheet" href="style.css?v=1754">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille new2</h2>
+        <h2>💼 Portefeuille n3</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1042,13 +1042,13 @@ render(result);
 
 
 renderMarketState(state.scoreFinal, state.momentum);
-        
 
+
+// ===== ALERT UI CLEAN =====
 const alertBox = document.querySelector(".alert-box");
 
 if(alertBox){
 
-    // reset
     alertBox.classList.remove(
         "alert-glow-strong",
         "alert-glow-soft",
@@ -1059,32 +1059,29 @@ if(alertBox){
     const action = getZoneAction(state.ratio);
     const combo = getCombinedSignal(state.ratio, state.bpgdm);
 
-    // 🟢 Achat
-    if(combo.includes("🟢")){
+    // 🔴 PRIORITÉ ABSOLUE : BPGDM
+    if(state.bpgdm <= 5){
         alertBox.classList.add("alert-glow-strong");
     }
-
-    // 🔴 Vente
-    else if(combo.includes("🔴")){
+    else if(state.bpgdm >= 70){
         alertBox.classList.add("alert-glow-soft");
     }
 
-    // 🟠 Allègement
+    // 🟠 INTERMÉDIAIRE
     else if(combo.includes("🟠")){
         alertBox.classList.add("alert-glow-warm");
     }
 
-    // 🔥 Métaux chauds
+    // 🔥 MÉTAUX CHAUDS
     else if(action.includes("🔥") || action.includes("🌋")){
         alertBox.classList.add("alert-glow-warm");
     }
 
-    // 🔵 Hold
+    // 🔵 NORMAL
     else{
         alertBox.classList.add("alert-glow-neutral");
     }
 }
-
 
 if(alertBox){
     alertBox.classList.remove("alert-glow-soft", "alert-glow-strong");
