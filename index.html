@@ -1560,30 +1560,25 @@ transitions: {
 // ===== START =====
 window.addEventListener("DOMContentLoaded", async () => {
 
-    // ===== CONFIG =====
     state.timeframe = 10;
 
-    // ===== INIT (UNE SEULE FOIS) =====
     await init();
 
-    // ===== REFRESH =====
-    const refreshBtn = document.getElementById("refresh-btn");
+    // ===== CLICK DONUT SAFE =====
+    const donut = document.getElementById("donut-metaux");
 
-    if (refreshBtn) {
-        refreshBtn.addEventListener("click", async () => {
+    if (donut) {
+        donut.addEventListener("click", () => {
 
-            if (refreshBtn.classList.contains("spin")) return;
+            const popup = document.getElementById("donut-popup");
+            if (!popup) return;
 
-            refreshBtn.classList.add("spin");
-
-            try {
-                await init();
-            } finally {
-                refreshBtn.classList.remove("spin");
-            }
+            popup.classList.add("show");
 
         });
     }
+
+});
 
     // ===== CLICK RATIO =====
     const ratioEl = document.getElementById("ratio");
