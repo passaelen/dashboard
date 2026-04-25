@@ -1166,18 +1166,7 @@ td, th {
 
 
 
-.donut-popup {
-    position: fixed;
-    inset: 0;
-    background: rgba(2,6,23,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.25s;
-    z-index: 1000;
-}
+
 
 
 
@@ -1192,10 +1181,7 @@ td, th {
 }
 
 
-.donut-popup.show {
-    opacity: 1;
-    pointer-events: auto;
-}
+
 
 .popup-content {
     background: linear-gradient(145deg, #0b1220, #020617);
@@ -1227,6 +1213,26 @@ td, th {
 .donut::before,
 .donut::after {
     pointer-events: none;
+}
+
+.donut-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,6,23,0.85);
+
+    display: none; /* 🔥 IMPORTANT */
+
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    transition: 0.25s;
+    z-index: 1000;
+}
+
+.donut-popup.show {
+    display: flex; /* 🔥 IMPORTANT */
+    opacity: 1;
 }
 
 
