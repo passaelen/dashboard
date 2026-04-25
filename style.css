@@ -1198,6 +1198,7 @@ td, th {
 }
 
 #donut-metaux {
+    touch-action: manipulation;
     position: relative;
     z-index: 5;
     cursor: pointer;
