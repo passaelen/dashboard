@@ -358,7 +358,8 @@ pointer-events: auto;
 .donut {
     margin: 4px auto;
     isolation: isolate;
-    opacity: 0;
+    opacity: 1 !important;
+    background: red !important;
     width: 110px;
     height: 110px;
     border-radius: 50%;
