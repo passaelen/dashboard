@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1757">
+    <link rel="stylesheet" href="style.css?v=1758">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 70</h2>
+        <h2>💼 Portefeuille 71</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -268,17 +268,25 @@
 </table>
 
 
-
 <div class="total-line">
     <span>🧾 Total ETF</span>
     <span id="etf-total-bottom"></span>
-</div>   
-
-
-<div class="global-split">
-    <span id="p-metaux-global"></span>
-    <span id="p-etf-global"></span>
 </div>
+
+<!-- 💎 Allocation globale -->
+<div class="card allocation-box">
+    <div id="alloc-global"></div>
+</div>
+
+<!-- 🟡 Répartition métaux -->
+<div class="card allocation-box">
+    <div>
+        🟡 Or : <span id="p-or-total"></span>
+        &nbsp;|&nbsp;
+        ⚪ Argent : <span id="p-argent-total"></span>
+    </div>
+</div>
+
 
 
 </div>
@@ -467,7 +475,7 @@ function calculate(){
     const pSeniors = totalETF ? (vSeniors / totalETF) * 100 : 0;
     const pJuniors = totalETF ? (vJuniors / totalETF) * 100 : 0;
 
-    // TOTAL GLOBAL
+// TOTAL GLOBAL
     const total = goldTotal + silverTotal + totalETF;
 
     console.log("ETF prices:", pe);
@@ -476,8 +484,15 @@ function calculate(){
     seniors: etf.seniors.parts * pe.seniors
     });
 
+// ===== ALLOCATION GLOBALE =====
 const pMetaux = total ? ((goldTotal + silverTotal) / total) * 100 : 0;
 const pETF = total ? (totalETF / total) * 100 : 0;
+
+// ===== RÉPARTITION MÉTAUX =====
+const totalMetauxSafe = (goldTotal + silverTotal) || 1;
+
+const pOrTotal = (goldTotal / totalMetauxSafe) * 100;
+const pArgentTotal = (silverTotal / totalMetauxSafe) * 100;
 
 
     return {
@@ -496,7 +511,9 @@ const pETF = total ? (totalETF / total) * 100 : 0;
         pSeniors,
         pJuniors,
         pMetaux,
-        pETF
+        pETF,
+        pOrTotal,
+        pArgentTotal
      };
 
 }
