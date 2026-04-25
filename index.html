@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille</h2>
+        <h2>💼 Portefeuilles</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1639,20 +1639,18 @@ transitions: {
 
 
 // ===== START =====
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", () => {
 
     state.timeframe = 10;
 
-    await init();
+    init(); // ❗ pas besoin de await ici
 
-    
-// ===== REFRESH BUTTON =====
+    // ===== REFRESH BUTTON =====
     const refreshBtn = document.getElementById("refresh-btn");
 
     if(refreshBtn){
         refreshBtn.addEventListener("click", async () => {
 
-            // 🔄 animation
             refreshBtn.style.transform = "rotate(360deg)";
             refreshBtn.style.transition = "0.6s";
 
@@ -1660,7 +1658,6 @@ window.addEventListener("DOMContentLoaded", async () => {
                 refreshBtn.style.transform = "rotate(0deg)";
             }, 600);
 
-            // 🔥 reload data
             await init();
         });
     }
