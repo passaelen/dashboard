@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1640">
+    <link rel="stylesheet" href="style.css?v=1741">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1639,7 +1639,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 🔗 clic ratio
+    // ratio click
     const ratioEl = document.getElementById("ratio");
     if (ratioEl) {
         ratioEl.addEventListener("click", () => {
@@ -1648,19 +1648,18 @@ window.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // 🔥 boutons timeframe
+    // timeframe
     document.querySelectorAll(".tf").forEach(btn => {
         btn.addEventListener("click", () => {
 
             document.querySelectorAll(".tf").forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
 
-            const days = parseInt(btn.dataset.days);
-            state.timeframe = days;
+            state.timeframe = parseInt(btn.dataset.days);
 
             const title = document.getElementById("chart-title");
             if (title) {
-                title.innerText = `Évolution ${days} jours`;
+                title.innerText = `Évolution ${state.timeframe} jours`;
             }
 
             renderChart();
@@ -1669,46 +1668,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     state.timeframe = 10;
 
-    // 🔥 INIT (UNE SEULE FOIS)
+    // 🔥 INIT
     await init();
 
-    // 🔥 CLICK DONUT METAUX (FIX MOBILE)
+    // 🔥 CLICK TEST SIMPLE
+    const donut = document.getElementById("donut-metaux");
 
-const donutMetaux = document.getElementById("donut-metaux");
-
-if (donutMetaux) {
-
-    const handler = (e) => {
-        e.preventDefault();   // 🔥 CRITIQUE
-        e.stopPropagation();
-
-        alert("CLICK OK"); // test
-
-        const pf = state.portfolio;
-        const p = state.prices;
-
-        if (!pf || !p) return;
-
-        const orSuisse = pf.or_suisse_g * p.gold_per_g;
-        const orBelgique = pf.or_belgique_g * p.gold_per_g;
-        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
-
-        document.getElementById("popup-or-suisse").innerText =
-            "🇨🇭 🟡 Or Suisse : " + euro(orSuisse);
-
-        document.getElementById("popup-or-belgique").innerText =
-            "🇧🇪 🟡 Or Belgique : " + euro(orBelgique);
-
-        document.getElementById("popup-argent").innerText =
-            "🇨🇭 ⚪ Argent : " + euro(argent);
-
-        document.getElementById("donut-popup").classList.add("show");
-    };
-
-    // 🔥 LE COMBO QUI MARCHE TOUJOURS
-    donutMetaux.addEventListener("touchend", handler, { passive: false });
-    donutMetaux.addEventListener("click", handler);
-}
+    if (donut) {
+        donut.onclick = () => {
+            alert("CLICK OK");
+        };
+    }
 
 });
     
