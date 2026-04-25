@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1759">
+    <link rel="stylesheet" href="style.css?v=1761">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 72</h2>
+        <h2>💼 Portefeuille 73</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -953,6 +953,20 @@ const vJuniors = data.vJuniors;
 // ===== TOTAL METAUX/ETF % =====
 setText("p-metaux-global", "💎 Métaux : " + percent(data.pMetaux || 0));
 setText("p-etf-global", "📊 ETF : " + percent(data.pETF || 0));
+
+// ===== ALLOCATION GLOBALE =====
+const elAlloc = document.getElementById("alloc-global");
+
+if(elAlloc){
+    elAlloc.innerHTML = `
+        💎 Métaux : ${percent(data.pMetaux)} &nbsp;|&nbsp;
+        📊 ETF : ${percent(data.pETF)}
+    `;
+}
+
+// ===== RÉPARTITION MÉTAUX =====
+setText("p-or-total", percent(data.pOrTotal));
+setText("p-argent-total", percent(data.pArgentTotal));
 
 
 
