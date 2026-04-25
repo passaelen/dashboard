@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1748">
+    <link rel="stylesheet" href="style.css?v=1749">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1570,38 +1570,36 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     await init();
 
-// ===== CLICK DONUT SAFE =====
+    // ===== CLICK DONUT =====
     const donut = document.getElementById("donut-metaux");
 
-if (donut) {
-    donut.addEventListener("click", () => {
-
-        if (!state || !state.portfolio || !state.prices) return;
-
-        const pf = state.portfolio;
-        const p = state.prices;
-
-        const orSuisse = pf.or_suisse_g * p.gold_per_g;
-        const orBelgique = pf.or_belgique_g * p.gold_per_g;
-        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
-
-        document.getElementById("popup-or-suisse").innerText =
-            "🇨🇭 " + euro(orSuisse);
-
-        document.getElementById("popup-or-belgique").innerText =
-            "🇧🇪 " + euro(orBelgique);
-
-        document.getElementById("popup-argent").innerText =
-            "⚪ " + euro(argent);
+    if (donut) {
 
         const tooltip = document.getElementById("donut-tooltip");
 
-        if (tooltip) {
-            tooltip.classList.toggle("show");
-        }
+        donut.addEventListener("click", () => {
 
-    });
-}
+            const pf = state.portfolio;
+            const p = state.prices;
+
+            if (!pf || !p || !tooltip) return;
+
+            const orSuisse = pf.or_suisse_g * p.gold_per_g;
+            const orBelgique = pf.or_belgique_g * p.gold_per_g;
+            const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
+
+            document.getElementById("popup-or-suisse").innerText =
+                "🇨🇭 " + euro(orSuisse);
+
+            document.getElementById("popup-or-belgique").innerText =
+                "🇧🇪 " + euro(orBelgique);
+
+            document.getElementById("popup-argent").innerText =
+                "⚪ " + euro(argent);
+
+            tooltip.classList.toggle("show");
+        });
+    }
 
     // ===== CLICK RATIO =====
     const ratioEl = document.getElementById("ratio");
@@ -1631,21 +1629,7 @@ if (donut) {
         });
     });
 
-// ===== CLICK DONUT =====
-    const donut = document.getElementById("donut-metaux");
-
-if (donut) {
-    donut.addEventListener("click", () => {
-
-        const popup = document.getElementById("donut-popup");
-
-        if (popup) {
-            popup.classList.add("show");
-        }
-
-    });
-}
-
+}); // 🔥 FERMETURE MANQUANTE
 
 </script>
 
