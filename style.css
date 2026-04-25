@@ -1290,3 +1290,25 @@ td, th {
     font-size: 13px;
     opacity: 0.85;
 }
+
+.alloc-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:12px;
+}
+
+.pill{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 14px;
+    border-radius:12px;
+    background:rgba(15,23,42,0.6);
+    font-size:14px;
+}
+
+/* couleurs subtiles */
+.pill.or strong{ color:#facc15; }
+.pill.argent strong{ color:#e5e7eb; }
+.pill.metaux strong{ color:#38bdf8; }
+.pill.etf strong{ color:#4ade80; }
