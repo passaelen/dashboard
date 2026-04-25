@@ -1281,3 +1281,12 @@ td, th {
 .donut-tooltip div:nth-child(3) {
     color: #cbd5f5; /* Argent */
 }
+
+
+.global-split {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 13px;
+    opacity: 0.85;
+}
