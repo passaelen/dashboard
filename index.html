@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1747">
+    <link rel="stylesheet" href="style.css?v=1748">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -87,6 +87,12 @@
 <div class="donut" id="donut-metaux">
     <div class="donut-inner"></div>
     <div class="donut-label"></div>
+    <!-- 🔥 TOOLTIP -->
+    <div class="donut-tooltip" id="donut-tooltip">
+        <div id="popup-or-suisse"></div>
+        <div id="popup-or-belgique"></div>
+        <div id="popup-argent"></div>
+    </div>
 </div>
 
 <div class="legend">
@@ -1564,21 +1570,38 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     await init();
 
-    // ===== CLICK DONUT SAFE =====
+// ===== CLICK DONUT SAFE =====
     const donut = document.getElementById("donut-metaux");
 
-    if (donut) {
-        donut.addEventListener("click", () => {
+if (donut) {
+    donut.addEventListener("click", () => {
 
-            const popup = document.getElementById("donut-popup");
-            if (!popup) return;
+        if (!state || !state.portfolio || !state.prices) return;
 
-            popup.classList.add("show");
+        const pf = state.portfolio;
+        const p = state.prices;
 
-        });
-    }
+        const orSuisse = pf.or_suisse_g * p.gold_per_g;
+        const orBelgique = pf.or_belgique_g * p.gold_per_g;
+        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
 
-});
+        document.getElementById("popup-or-suisse").innerText =
+            "🇨🇭 " + euro(orSuisse);
+
+        document.getElementById("popup-or-belgique").innerText =
+            "🇧🇪 " + euro(orBelgique);
+
+        document.getElementById("popup-argent").innerText =
+            "⚪ " + euro(argent);
+
+        const tooltip = document.getElementById("donut-tooltip");
+
+        if (tooltip) {
+            tooltip.classList.toggle("show");
+        }
+
+    });
+}
 
     // ===== CLICK RATIO =====
     const ratioEl = document.getElementById("ratio");
