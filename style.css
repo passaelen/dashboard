@@ -600,6 +600,8 @@ td:nth-child(5) {
 }
 
 
+
+
 /* Perf */
 th:nth-child(6),
 td:nth-child(6) {
@@ -614,6 +616,15 @@ td:nth-child(5),
 td:nth-child(6) {
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.2px;
+}
+
+
+td:nth-child(5) {
+    opacity: 0.85;
+}
+
+td:nth-child(6) {
+    opacity: 1;
 }
 
 
