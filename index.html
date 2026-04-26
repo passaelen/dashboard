@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1786">
+    <link rel="stylesheet" href="style.css?v=1787">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 1</h2>
+        <h2>💼 Portefeuille 2</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1686,13 +1686,12 @@ window.addEventListener("DOMContentLoaded", () => {
             const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
 
             document.getElementById("popup-or-suisse").innerText =
-                "🇨🇭 " + euro(orSuisse) + " (spot)";
+                "🇨🇭 " + euro(orSuisse) + "";
 
             document.getElementById("popup-or-belgique").innerText =
-                "🇧🇪 " + euro(orBelgique) + " (spot)";
+                "🇧🇪 " + euro(orBelgique) + "";
 
-            document.getElementById("popup-argent").innerText =
-                "⚪ " + euro(argent) + " (revente)";
+            document.getElementById("popup-argent")."⚪ " + euro(argent) + "<br><small>(revente)</small>";
 
             tooltip.classList.toggle("show");
         });
