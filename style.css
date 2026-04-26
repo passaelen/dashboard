@@ -31,6 +31,14 @@ h3 {
     margin-bottom: 6px;
 }
 
+
+h4 span {
+    font-size: 12px;   /* 🔽 plus petit */
+    opacity: 0.6;      /* 🔽 discret */
+    margin-left: 4px;
+}
+
+
 /* ===== TEXT UTILS ===== */
 .text-muted { color: #9ca3af; }
 .text-small { font-size: 12px; }
