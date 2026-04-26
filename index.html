@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1797">
+    <link rel="stylesheet" href="style.css?v=1798">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 14</h2>
+        <h2>💼 Portefeuille 15</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1760,7 +1760,7 @@ if ('serviceWorker' in navigator) {
 
 <script>
 function goToPage(el, url) {
-    el.style.transform = "scale(0.97)";
+el.querySelector('.donut-inner').style.transform = `rotate(${angle}deg)`
     el.style.opacity = "0.6";
 
     setTimeout(() => {
