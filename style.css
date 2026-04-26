@@ -380,6 +380,7 @@ pointer-events: auto;
     flex-direction: column;
     align-items: flex-start; /* 🔥 clé */
     text-align: left;
+    gap: 4px;
 }
 
 .donut-label div {
