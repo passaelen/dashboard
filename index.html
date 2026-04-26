@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1793">
+    <link rel="stylesheet" href="style.css?v=1794">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 10</h2>
+        <h2>💼 Portefeuille 11</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -743,18 +743,17 @@ function animateDonutETF(el, e1, e2, duration = 800){
         const p1 = e1 * progress;
         const p2 = e2 * progress;
 
-        const overlap = 0.3; // 🔥 anti ligne blanche
+const overlap = 0.2;
+const p1End = Math.min(p1 + overlap, 100);
+const p2End = Math.min(p1 + p2 + overlap, 100);
 
-        const p1End = p1 + overlap;
-        const p2End = p1 + p2 + overlap;
-
-        el.style.background = `
-            conic-gradient(
-                #38bdf8 0% ${p1End}%,
-                #22c55e ${p1End}% ${p2End}%,
-                #64748b ${p2End}% 100%
-            )
-        `;
+el.style.background = `
+    conic-gradient(
+        #38bdf8 0% ${p1End}%,
+        #22c55e ${p1End}% ${p2End}%,
+        #64748b ${p2End}% 100%
+    )
+`;
 
         if(progress < 1){
             requestAnimationFrame(step);
