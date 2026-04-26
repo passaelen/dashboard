@@ -1773,14 +1773,13 @@ if (donutETF) {
         const pJuniors = (vJuniors / totalETF) * 100;
 
         if (!isOpenETF) {
-
-            labelE.innerHTML = `
-                <div class="content">
-                    <div>🔵 ${euro(vMonde)} <small>${percent(pMonde)}</small></div>
-                    <div>🟢 ${euro(vSeniors)} <small>${percent(pSeniors)}</small></div>
-                    <div>⚪ ${euro(vJuniors)} <small>${percent(pJuniors)}</small></div>
-                </div>
-            `;
+labelE.innerHTML = `
+    <div class="content">
+        <div>🔵 ${euro(vMonde)}</div>
+        <div>🟢 ${euro(vSeniors)}</div>
+        <div>⚪ ${euro(vJuniors)}</div>
+    </div>
+`;
 
         } else {
 
