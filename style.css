@@ -369,7 +369,7 @@ pointer-events: auto;
 .donut-label {
     position: absolute;
     inset: 0;
-
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -421,13 +421,13 @@ pointer-events: auto;
     font-size: 14px;
     font-weight: 600;
     color: #e2e8f0;
-
+    transform: scale(1.001);
     text-align: center;
     pointer-events: none;
     z-index: 2;
 }
 
-/* 🔥 DOIT être en dehors */
+
 .donut-inner span {
     font-size: 13px;  /* 🔽 valeur € */
     font-weight: 600;
