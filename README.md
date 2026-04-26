@@ -1,3 +1,12 @@
+## 🚀 Aperçu
+
+👉 Dashboard personnel de pilotage patrimonial (Or / Argent / ETF)
+
+📍 Vision temps réel + lecture de cycle (Ratio & BPGDM)
+
+
+
+
 📊 Dashboard Or, Argent & ETF
 
 ------------------------------------------------------------------------
