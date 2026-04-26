@@ -389,8 +389,6 @@ pointer-events: auto;
 
     text-align: center;
     font-variant-numeric: tabular-nums;
-
-    transform: translateY(-2px); /* 🔥 juste ça */
 }
 
 
@@ -1270,9 +1268,12 @@ td, th {
     pointer-events: none;
 }
 
+
 .donut-label {
     pointer-events: none;
 }
+
+
 
 
 .donut::after {
