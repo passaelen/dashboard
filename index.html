@@ -873,11 +873,17 @@ function renderTitles(data){
     const titleE = document.getElementById("title-etf");
 
     if (titleM) {
-        titleM.innerText = `Métaux (${percent(data.pMetaux)})`;
+        
+titleM.innerHTML = `Métaux <span>(${percent(data.pMetaux)})</span>`;
+
     }
 
+
+
     if (titleE) {
-        titleE.innerText = `ETF (${percent(data.pETF)})`;
+
+titleE.innerHTML = `ETF <span>(${percent(data.pETF)})</span>`;
+
     }
 }
 
