@@ -374,21 +374,29 @@ pointer-events: auto;
 .donut-label {
     position: absolute;
 
-    top: 22px;
-    left: 22px;
-    right: 22px;
-    bottom: 22px;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    pointer-events: none;
     z-index: 10;
-    font-variant-numeric: tabular-nums;
-    line-height: 1.1;
-    letter-spacing: 0.3px;
-    
+    pointer-events: none;
+
+    text-align: center;
+}
+
+
+.donut-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+
+    margin: 0 auto; /* 🔥 centre dans le bloc */
 }
 
 
