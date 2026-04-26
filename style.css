@@ -400,7 +400,7 @@ pointer-events: auto;
     justify-content: center;
     align-items: center;
     gap: 2px;
-    transform: translateY(3px);
+    transform: translateY(2px);
 }
 
 
