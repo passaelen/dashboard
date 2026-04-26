@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1818">
+    <link rel="stylesheet" href="style.css?v=1819">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 35</h2>
+        <h2>💼 Portefeuille 36</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1766,38 +1766,35 @@ if (donutETF) {
         const vSeniors = etf.seniors.parts * pe.seniors;
         const vJuniors = etf.juniors.parts * pe.juniors;
 
+        const totalETF = vMonde + vSeniors + vJuniors || 1;
+
+        const pMonde = (vMonde / totalETF) * 100;
+        const pSeniors = (vSeniors / totalETF) * 100;
+        const pJuniors = (vJuniors / totalETF) * 100;
+
         if (!isOpenETF) {
 
             labelE.innerHTML = `
-   labelE.innerHTML = `
-    <div class="content">
-        <div>🔵 ${euro(vMonde)}</div>
-        <div>🟢 ${euro(vSeniors)}</div>
-        <div>⚪ ${euro(vJuniors)}</div>
-    </div>
-`;
+                <div class="content">
+                    <div>🔵 ${euro(vMonde)} <small>${percent(pMonde)}</small></div>
+                    <div>🟢 ${euro(vSeniors)} <small>${percent(pSeniors)}</small></div>
+                    <div>⚪ ${euro(vJuniors)} <small>${percent(pJuniors)}</small></div>
+                </div>
+            `;
 
         } else {
 
-const totalETF = vMonde + vSeniors + vJuniors || 1;
-
-const pMonde = (vMonde / totalETF) * 100;
-const pSeniors = (vSeniors / totalETF) * 100;
-const pJuniors = (vJuniors / totalETF) * 100;
-
-labelE.innerHTML = `
-    <div class="content">
-        <div>🔵 ${euro(vMonde)} <small>${percent(pMonde)}</small></div>
-        <div>🟢 ${euro(vSeniors)} <small>${percent(pSeniors)}</small></div>
-        <div>⚪ ${euro(vJuniors)} <small>${percent(pJuniors)}</small></div>
-    </div>
-`;
+            labelE.innerHTML = `
+                <div>
+                    <small>ETF</small>
+                    <span>${euro(totalETF)}</span>
+                </div>
+            `;
         }
 
         isOpenETF = !isOpenETF;
     });
 }
-
 
 
 
