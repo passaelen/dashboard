@@ -536,12 +536,18 @@ th {
     letter-spacing: 0.8px;
     font-size: 11px;
     font-weight: 500;
-
     padding: 10px 8px;
     text-align: left;
+    opacity: 0.85;
 }
 
+tr {
+    height: 42px;
+}
+
+
 /* ===== CELLS ===== */
+
 td {
     padding: 10px 8px;
     border-bottom: 1px solid #1f2937;
@@ -603,7 +609,10 @@ th:nth-child(6), td:nth-child(6) {
 td:nth-child(5),
 td:nth-child(6) {
     font-variant-numeric: tabular-nums;
+    letter-spacing: 0.2px;
 }
+
+
 
 /* ===== COULEURS PERF ===== */
 .positive {
