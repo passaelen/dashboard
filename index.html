@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1801">
+    <link rel="stylesheet" href="style.css?v=1802">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 18</h2>
+        <h2>💼 Portefeuille 19</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1298,7 +1298,9 @@ function renderDonuts(data){
     setText("p-or-belgique", percent(p2));
     setText("p-argent", percent(p3));
 
+
     const dm = document.querySelector("#donut-metaux .donut-inner");
+
 
     if(dm){
         animateDonut(dm, p1, p2);
@@ -1308,7 +1310,11 @@ function renderDonuts(data){
             dm.parentElement.classList.remove("enter");
         }, 800);
 
-        const labelM = document.querySelector("#donut-metaux .donut-label");
+
+        const labelM = document.querySelector("#donut-metaux")
+    ?.parentElement
+    ?.querySelector(".donut-label");
+
 
         if(labelM){
             labelM.innerHTML = `
