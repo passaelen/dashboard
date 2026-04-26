@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1807">
+    <link rel="stylesheet" href="style.css?v=1808">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 24</h2>
+        <h2>💼 Portefeuille 25</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1717,13 +1717,17 @@ if (donut) {
 
         } else {
 
-            // retour affichage normal
-            labelM.innerHTML = `
-                <div>
-                    <small>Métaux</small><br>
-                    <span>${euro(orSuisse + orBelgique + argent)}</span>
-                </div>
-            `;
+            
+// retour affichage normal
+
+labelM.innerHTML = `
+    <div>
+        <small>Métaux</small>
+        <span>${euro(data.goldTotal + data.silverTotal)}</span>
+    </div>
+`;
+
+
         }
 
         isOpen = !isOpen;
