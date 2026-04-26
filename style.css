@@ -434,13 +434,13 @@ pointer-events: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 14px;
     font-weight: 600;
     color: #e2e8f0;
     text-align: center;
     pointer-events: none;
     z-index: 2;
+    transform-origin: center;
 }
 
 
