@@ -1347,7 +1347,7 @@ td, th {
     justify-content: center;
 
     width: 100%;
-    padding-left: 10px; /* ajuste si besoin */
+    padding-left: 5px; /* ajuste si besoin */
 }
 
 .donut-label .content div {
