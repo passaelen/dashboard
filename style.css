@@ -389,6 +389,8 @@ pointer-events: auto;
 
     text-align: center;
     font-variant-numeric: tabular-nums;
+
+    transform: translateX(1px);
 }
 
 
@@ -1345,10 +1347,11 @@ td, th {
     justify-content: center;
 
     width: 100%;
-    padding-left: 6px; /* ajuste si besoin */
+    padding-left: 10px; /* ajuste si besoin */
 }
 
 .donut-label .content div {
+    margin: 2px 0;
     display: flex;
     align-items: center;
     justify-content: flex-start;
