@@ -382,6 +382,7 @@ pointer-events: auto;
     z-index: 10;
     font-variant-numeric: tabular-nums;
     line-height: 1.1;
+    
 }
 
 
@@ -393,19 +394,16 @@ pointer-events: auto;
     justify-content: center;
     text-align: center;    /* ✅ CENTRE TEXTE */
     gap: 6px;
+    transform: translateY(-3px);
 }
-
 
 
 .donut-label .content div {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
-    justify-content: center;
     gap: 6px;
-    width: 100%;
 }
-
-
 
 
 .donut-label small {
