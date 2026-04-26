@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1788">
+    <link rel="stylesheet" href="style.css?v=1790">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 4</h2>
+        <h2>💼 Portefeuille 6</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1670,33 +1670,52 @@ window.addEventListener("DOMContentLoaded", () => {
     // ===== CLICK DONUT =====
     const donut = document.getElementById("donut-metaux");
 
-    if (donut) {
+if (donut) {
 
-        const tooltip = document.getElementById("donut-tooltip");
+    const labelM = document.querySelector("#donut-metaux .donut-label");
 
-        donut.addEventListener("click", () => {
+    let isOpen = false;
 
-            const pf = state.portfolio;
-            const p = state.prices;
+    donut.addEventListener("click", () => {
 
-            if (!pf || !p || !tooltip) return;
+        if (!labelM) return;
 
-            const orSuisse = pf.or_suisse_g * p.gold_per_g;
-            const orBelgique = pf.or_belgique_g * p.gold_per_g;
-            const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
+        const pf = state.portfolio;
+        const p = state.prices;
 
-            document.getElementById("popup-or-suisse").innerText =
-                "🇨🇭 " + euro(orSuisse) + "";
+        if (!pf || !p) return;
 
-            document.getElementById("popup-or-belgique").innerText =
-                "🇧🇪 " + euro(orBelgique) + "";
+        const orSuisse = pf.or_suisse_g * p.gold_per_g;
+        const orBelgique = pf.or_belgique_g * p.gold_per_g;
+        const argent = pf.argent_g * p.silver_per_g * silverRealFactor;
 
-            document.getElementById("popup-argent").innerHTML =
-    "⚪ " + euro(argent) + "<br><small>(revente)</small>";
+        if (!isOpen) {
 
-            tooltip.classList.toggle("show");
-        });
-    }
+            labelM.innerHTML = `
+                <div class="content">
+                    <div>🇨🇭 ${euro(orSuisse)}</div>
+                    <div>🇧🇪 ${euro(orBelgique)}</div>
+                    <div>⚪ ${euro(argent)}</div>
+                    <small>(revente)</small>
+                </div>
+            `;
+
+        } else {
+
+            // retour affichage normal
+            labelM.innerHTML = `
+                <div>
+                    <small>Métaux</small><br>
+                    <span>${euro(orSuisse + orBelgique + argent)}</span>
+                </div>
+            `;
+        }
+
+        isOpen = !isOpen;
+    });
+}
+
+            
 
     // ===== CLICK RATIO =====
     const ratioEl = document.getElementById("ratio");
