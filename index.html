@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1813">
+    <link rel="stylesheet" href="style.css?v=1814">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 30</h2>
+        <h2>💼 Portefeuille 31</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -75,6 +75,8 @@
     <small id="zone-bpgdm"></small>
 </div>
 
+
+
 <!-- REPARTITION -->
 <div class="card">
     <h3>Répartitions</h3>
@@ -84,79 +86,96 @@
 
 
 <!-- METEAUX -->
-        <div class="bloc">
-            <h4>Métaux</h4>
-
-
-
-
-<div class="donut-wrapper">
+       <div class="bloc">
+    <h4>Métaux</h4>
 
     <div class="donut" id="donut-metaux">
-     <div class="donut-inner"></div>
 
-      <div class="donut-tooltip" id="donut-tooltip">
-        <div id="popup-or-suisse"></div>
-        <div id="popup-or-belgique"></div>
-        <div id="popup-argent"></div>
-      </div>
+        <div class="donut-inner"></div>
+
+        <div class="donut-label" id="label-metaux">
+           <div>
+              <small>Métaux</small>
+              <span>-- €</span>
+           </div>
+        </div>
+
+        <div class="donut-tooltip" id="donut-tooltip">
+            <div id="popup-or-suisse"></div>
+            <div id="popup-or-belgique"></div>
+            <div id="popup-argent"></div>
+        </div>
 
     </div>
 
-    <div class="donut-label"></div>
+    <div class="legend">
+        <div class="legend-item">
+            <span class="dot dot-or-suisse"></span>
+            <span>Or Suisse :</span>
+            <span id="p-or-suisse"></span>
+        </div>
 
+        <div class="legend-item">
+            <span class="dot dot-or-belgique"></span>
+            <span>Or Belgique :</span>
+            <span id="p-or-belgique"></span>
+        </div>
+
+        <div class="legend-item">
+            <span class="dot dot-argent"></span>
+            <span>Argent :</span>
+            <span id="p-argent"></span>
+        </div>
+    </div>
+</div>
+  
+
+
+
+<!-- ETF -->
+ 
+<div class="bloc">
+    <h4>ETF</h4>
+
+    <div class="donut-wrapper">
+
+        <div class="donut etf">
+            <div class="donut-inner"></div>
+        </div>
+
+        <div class="donut-label" id="label-etf">
+            <div>
+                <small>ETF</small>
+                <span>-- €</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <span class="dot dot-monde"></span>
+            <span>Monde :</span>
+            <span id="p-monde"></span>
+        </div>
+
+        <div class="legend-item">
+            <span class="dot dot-seniors"></span>
+            <span>Séniors :</span>
+            <span id="p-seniors"></span>
+        </div>
+    </div>
 </div>
 
+ 
 
 
 
-            <div class="legend">
-                <div class="legend-item">
-                    <span class="dot dot-or-suisse"></span>
-                    <span>Or Suisse :</span>
-                    <span id="p-or-suisse"></span>
-                </div>
 
-                <div class="legend-item">
-                    <span class="dot dot-or-belgique"></span>
-                    <span>Or Belgique :</span>
-                    <span id="p-or-belgique"></span>
-                </div>
 
-                <div class="legend-item">
-                    <span class="dot dot-argent"></span>
-                    <span>Argent :</span>
-                    <span id="p-argent"></span>
-                </div>
-            </div>
-        </div>
+      
 
-  
-<!-- ETF -->
-        <div class="bloc">
-            <h4>ETF</h4>
 
-            <div class="donut etf">
-                <div class="donut-inner"></div>
-                <div class="donut-label"></div>
-            </div>
-
-            <div class="legend">
-                <div class="legend-item">
-                    <span class="dot dot-monde"></span>
-                    <span>Monde :</span>
-                    <span id="p-monde"></span>
-                </div>
-
-                <div class="legend-item">
-                    <span class="dot dot-seniors"></span>
-                    <span>Séniors :</span>
-                    <span id="p-seniors"></span>
-                </div>
-            </div>
-        </div>
-
-    </div> 
 
 <!-- repartition-grid -->
 
@@ -1138,7 +1157,7 @@ async function fetchHistory(){
     const res = await fetch(url);
     const text = await res.text();
 
-    // ===== parsing =====
+// ===== parsing =====
    const rows = text
     .trim()
     .split("\n")
@@ -1311,15 +1330,13 @@ function renderDonuts(data){
         }, 800);
 
 
-        const labelM = document.querySelector("#donut-metaux")
-    ?.parentElement
-    ?.querySelector(".donut-label");
+        const labelM = document.getElementById("label-metaux");
 
 
         if(labelM){
 labelM.innerHTML = `
     <div>
-        <small>Métaux</small><br>
+        <small>Métaux</small>
         <span>${euro(data.goldTotal + data.silverTotal)}</span>
     </div>
 `;
@@ -1344,15 +1361,17 @@ labelM.innerHTML = `
             de.parentElement.classList.remove("enter");
         }, 800);
 
-        const labelE = document.querySelector(".donut.etf .donut-label");
+const labelE = document.getElementById("label-etf");
+
+
 
         if(labelE){
-            labelE.innerHTML = `
-                <div>
-                    <small>ETF</small><br>
-                    <span>${euro(data.totalETF)}</span>
-                </div>
-            `;
+labelE.innerHTML = `
+    <div>
+        <small>ETF</small>
+        <span>${euro(data.totalETF)}</span>
+    </div>
+`;
         }
     }
 }
