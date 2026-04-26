@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1791">
+    <link rel="stylesheet" href="style.css?v=1793">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 7</h2>
+        <h2>💼 Portefeuille 10</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -742,23 +742,19 @@ function animateDonutETF(el, e1, e2, duration = 800){
 
         const p1 = e1 * progress;
         const p2 = e2 * progress;
-        const p3 = 100 - (p1 + p2);
 
-        const rawGap = Math.min(0.7, p1/2, p2/2, p3/2) / 2;
-const gap = Math.max(0.25, rawGap); // 👈 minimum visuel
+        const overlap = 0.3; // 🔥 anti ligne blanche
+
+        const p1End = p1 + overlap;
+        const p2End = p1 + p2 + overlap;
 
         el.style.background = `
             conic-gradient(
-        #38bdf8 0% ${p1 - gap}%,                      /* 🔵 MONDE */
-        rgba(2,6,23,0.75) ${p1 - gap}% ${p1 + gap}%,
-
-        #22c55e ${p1 + gap}% ${p1 + p2 - gap}%,       /* 🟢 SENIORS */
-        rgba(2,6,23,0.75) ${p1 + p2 - gap}% ${p1 + p2 + gap}%,
-
-        #64748b ${p1 + p2 + gap}% ${100 - gap}%,      /* ⚪ JUNIORS */
-        rgba(2,6,23,0.75) ${100 - gap}% 100%
-    )
-`;
+                #38bdf8 0% ${p1End}%,
+                #22c55e ${p1End}% ${p2End}%,
+                #64748b ${p2End}% 100%
+            )
+        `;
 
         if(progress < 1){
             requestAnimationFrame(step);
