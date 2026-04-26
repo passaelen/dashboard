@@ -1336,3 +1336,23 @@ td, th {
 .pill.argent strong{ color:#e5e7eb; }
 .pill.metaux strong{ color:#38bdf8; }
 .pill.etf strong{ color:#38bdf8; }
+
+
+/* ===== ALIGNEMENT DONUT CONTENT ===== */
+.donut-label .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 100%;
+    padding-left: 6px; /* ajuste si besoin */
+}
+
+.donut-label .content div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 6px;
+    width: 100%;
+}
