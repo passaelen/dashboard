@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1816">
+    <link rel="stylesheet" href="style.css?v=1817">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 33</h2>
+        <h2>💼 Portefeuille 34</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1688,7 +1688,7 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ===== CLICK DONUT =====
+// ===== CLICK DONUT METAUX =====
     const donut = document.getElementById("donut-metaux");
 
 if (donut) {
@@ -1742,7 +1742,62 @@ const totalMetaux = orSuisse + orBelgique + argent;
     });
 }
 
-            
+  
+
+// ===== CLICK DONUT ETF =====
+const donutETF = document.querySelector(".donut.etf");
+
+if (donutETF) {
+
+    const labelE = document.getElementById("label-etf");
+
+    let isOpenETF = false;
+
+    donutETF.addEventListener("click", () => {
+
+        if (!labelE) return;
+
+        const etf = state.etf;
+        const pe = state.etfPrices;
+
+        if (!etf || !pe) return;
+
+        const vMonde = etf.monde.parts * pe.monde;
+        const vSeniors = etf.seniors.parts * pe.seniors;
+        const vJuniors = etf.juniors.parts * pe.juniors;
+
+        if (!isOpenETF) {
+
+            labelE.innerHTML = `
+                <div class="content">
+                    <div>🌍 ${euro(vMonde)}</div>
+                    <div>🔵 ${euro(vSeniors)}</div>
+                    <div>🧪 ${euro(vJuniors)}</div>
+                </div>
+            `;
+
+        } else {
+
+            const totalETF = vMonde + vSeniors + vJuniors;
+
+            labelE.innerHTML = `
+                <div>
+                    <small>ETF</small>
+                    <span>${euro(totalETF)}</span>
+                </div>
+            `;
+        }
+
+        isOpenETF = !isOpenETF;
+    });
+}
+
+
+
+
+
+
+          
 
     // ===== CLICK RATIO =====
     const ratioEl = document.getElementById("ratio");
