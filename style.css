@@ -337,7 +337,7 @@ pointer-events: auto;
 }
 
 
-
+/*uniquement une animation d’entrée*/
 .donut.enter .donut-inner {
     animation: donutEnter 0.8s ease-out;
 }
@@ -398,62 +398,25 @@ pointer-events: auto;
     align-items: center;
     justify-content: center;
 
-    gap: 0;              /* 🔥 supprime le décalage */
-    line-height: 1.05;   /* 🔥 équilibre visuel */
+    gap: 2px; /* 🔥 seul réglage autorisé */
 }
 
 
-
-.donut-wrapper {
-    position: relative;
-    width: 110px;
-    height: 110px;
-
-    margin: 0 auto; /* 🔥 centre dans le bloc */
-}
-
-
-
-.donut-label .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;   /* ✅ CENTRE */
-    justify-content: center;
-    text-align: center;    /* ✅ CENTRE TEXTE */
-    gap: 6px;
-    transform: translateY(-1px);
-}
-
-
-.donut-label .content div {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 6px;
-    min-width: 90px;
-}
 
 
 .donut-label small {
-    display: block;
-    margin-bottom: 2px;
     font-size: 10.5px;
     opacity: 0.65;
-    line-height: 1.2;
     margin: 0;
-    line-height: 1;
 }
 
 
 .donut-label span {
     font-size: 15px;
     font-weight: 600;
-    line-height: 1.1;
-    display: block;
     margin: 0;
-    margin-top: 2px;
-    transform: translateY(-2px);
 }
+
 
 
 .donut-inner {
@@ -470,21 +433,13 @@ pointer-events: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-    color: #e2e8f0;
-    text-align: center;
     pointer-events: none;
     z-index: 2;
     transform-origin: center;
 }
 
 
-.donut-inner span {
-    font-size: 13px;  /* 🔽 valeur € */
-    font-weight: 600;
-    text-shadow: 0 0 6px rgba(255,255,255,0.15);
-}
+
 
 
 
@@ -547,7 +502,7 @@ pointer-events: auto;
 
 /* 🔥 hover subtil */
 .donut:hover {
-    transform: scale(1.05) rotate(2deg);
+    transform: scale(1.05);
 }
 
 
