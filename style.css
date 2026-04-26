@@ -592,25 +592,28 @@ th:nth-child(4), td:nth-child(4) {
 }
 
 /* Gain */
-th:nth-child(5), td:nth-child(5) {
+th:nth-child(5),
+td:nth-child(5) {
     text-align: right;
-    font-weight: 700;
-    padding-right: 18px; /* 🔥 espace avec perf */
+    font-weight: 600; /* ← on unifie ici */
+    padding-right: 18px;
 }
+
 
 /* Perf */
-th:nth-child(6), td:nth-child(6) {
+th:nth-child(6),
+td:nth-child(6) {
     text-align: right;
     font-weight: 600;
-    padding-left: 10px; /* 🔥 espace avec gain */
+    padding-left: 10px;
 }
 
-/* chiffres alignés proprement */
+
+/* chiffres propres */
 td:nth-child(5),
 td:nth-child(6) {
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.2px;
-    font-weight: 600;
 }
 
 
