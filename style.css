@@ -44,15 +44,6 @@ h4 span {
 .text-muted { color: #9ca3af; }
 .text-small { font-size: 12px; }
 
-.positive {
-    color: #22c55e;
-    text-shadow: 0 0 6px rgba(34,197,94,0.4);
-}
-
-.negative {
-    color: #ef4444;
-    text-shadow: 0 0 6px rgba(239,68,68,0.4);
-}
 
 
 
@@ -532,44 +523,39 @@ pointer-events: auto;
 
 /* ===== TABLE ===== */
 table {
-    margin: 0;
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
     table-layout: fixed;
 }
 
-/* lignes */
+/* ===== HEADERS ===== */
+th {
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 11px;
+    font-weight: 500;
+
+    padding: 10px 8px;
+    text-align: left;
+}
+
+/* ===== CELLS ===== */
+td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #1f2937;
+    transition: color 0.3s ease;
+}
+
+/* dernière ligne */
 table tr:last-child td {
     border-bottom: none;
 }
 
+/* hover */
 tr:hover {
     background: rgba(255,255,255,0.03);
-}
-
-/* headers */
-th {
-    color: #94a3b8;
-    text-align: left;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-weight: 500;
-    padding: 6px;
-    padding-bottom: 8px; /* 🔥 respiration */
-}
-
-/* cellules */
-td {
-    text-align: right;
-    padding: 6px;
-    border-bottom: 1px solid #1f2937;
-    transition: color 0.3s ease; /* 🔥 smooth update */
-}
-
-td:first-child {
-    text-align: left;
 }
 
 /* éviter retour ligne */
@@ -594,38 +580,42 @@ th:nth-child(3), td:nth-child(3) {
     text-align: right;
 }
 
-/* Prix / Spot */
+/* Spot */
 th:nth-child(4), td:nth-child(4) {
     text-align: right;
 }
 
-
-td:nth-child(5) {
+/* Gain */
+th:nth-child(5), td:nth-child(5) {
     text-align: right;
     font-weight: 700;
+    padding-right: 18px; /* 🔥 espace avec perf */
 }
 
-td:nth-child(5).positive {
-    text-shadow: 0 0 6px rgba(34,197,94,0.25);
+/* Perf */
+th:nth-child(6), td:nth-child(6) {
+    text-align: right;
+    font-weight: 600;
+    padding-left: 10px; /* 🔥 espace avec gain */
 }
 
-td:nth-child(5).negative {
-    text-shadow: 0 0 6px rgba(239,68,68,0.25);
-}
-
+/* chiffres alignés proprement */
 td:nth-child(5),
 td:nth-child(6) {
     font-variant-numeric: tabular-nums;
 }
 
-td:nth-child(6) {
-    font-weight: 600;
+/* ===== COULEURS PERF ===== */
+.positive {
+    color: #22c55e;
+    text-shadow: 0 0 6px rgba(34,197,94,0.25);
 }
 
-td, th {
-    padding-left: 6px;
-    padding-right: 6px;
+.negative {
+    color: #ef4444;
+    text-shadow: 0 0 6px rgba(239,68,68,0.25);
 }
+
 
 /* ===== GRAPH ===== */
 #chart-10j {
