@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1829">
+    <link rel="stylesheet" href="style.css?v=1830">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 43</h2>
+        <h2>💼 Portefeuille 44</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -86,7 +86,8 @@
 
 <!-- METEAUX -->
 <div class="bloc">
-    <h4>Métaux</h4>
+
+    <h4 id="title-metaux">Métaux</h4>
 
     <div class="donut" id="donut-metaux">
 
@@ -131,7 +132,8 @@
 
 <!-- ETF -->
 <div class="bloc">
-    <h4>ETF</h4>
+
+   <h4 id="title-etf">ETF</h4>
 
     <!-- ✅ FIX : plus de donut-wrapper -->
     <div class="donut etf">
@@ -864,6 +866,22 @@ function renderAllocation(data){
 
 
 
+// ===== RENDER TITRES =====
+function renderTitles(data){
+
+    const titleM = document.getElementById("title-metaux");
+    const titleE = document.getElementById("title-etf");
+
+    if (titleM) {
+        titleM.innerText = `Métaux (${percent(data.pMetaux)})`;
+    }
+
+    if (titleE) {
+        titleE.innerText = `ETF (${percent(data.pETF)})`;
+    }
+}
+
+
 
 
 // ===== RENDER DATA =====
@@ -880,6 +898,7 @@ function render(data){
     renderKPI(data, p);
     renderRatioAlert(data);
     renderAllocation(data);
+    renderTitles(data);
     renderTables(data, p, pf, etf, pe);
     renderDonuts(data);   
 }
