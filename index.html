@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="style.css?v=1815">
+    <link rel="stylesheet" href="style.css?v=1816">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 32</h2>
+        <h2>💼 Portefeuille 33</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -84,9 +84,8 @@
     <div class="repartition-grid">
 
 
-
 <!-- METEAUX -->
-       <div class="bloc">
+<div class="bloc">
     <h4>Métaux</h4>
 
     <div class="donut" id="donut-metaux">
@@ -94,10 +93,10 @@
         <div class="donut-inner"></div>
 
         <div class="donut-label" id="label-metaux">
-           <div>
-              <small>Métaux</small>
-              <span>-- €</span>
-           </div>
+            <div>
+                <small>Métaux</small>
+                <span>-- €</span>
+            </div>
         </div>
 
         <div class="donut-tooltip" id="donut-tooltip">
@@ -128,21 +127,18 @@
         </div>
     </div>
 </div>
-  
-
 
 
 <!-- ETF -->
- 
 <div class="bloc">
     <h4>ETF</h4>
 
-    <div class="donut-wrapper">
+    <!-- ✅ FIX : plus de donut-wrapper -->
+    <div class="donut etf">
 
-        <div class="donut etf">
-            <div class="donut-inner"></div>
-        </div>
+        <div class="donut-inner"></div>
 
+        <!-- ✅ FIX : label DANS le donut -->
         <div class="donut-label" id="label-etf">
             <div>
                 <small>ETF</small>
@@ -165,9 +161,12 @@
             <span id="p-seniors"></span>
         </div>
     </div>
-</div><!-- repartition-grid -->
-</div> <!-- card -->
 </div>
+
+<!-- fermeture correcte -->
+</div> <!-- repartition-grid -->
+</div> <!-- card -->
+
 
 
 <!-- GRAPH -->
@@ -1727,15 +1726,17 @@ if (donut) {
             
 // retour affichage normal
 
-labelM.innerHTML = `
-    <div>
-        <small>Métaux</small>
-        <span>${euro(data.goldTotal + data.silverTotal)}</span>
-    </div>
-`;
+const totalMetaux = orSuisse + orBelgique + argent;
+
+    labelM.innerHTML = `
+        <div>
+            <small>Métaux</small>
+            <span>${euro(totalMetaux)}</span>
+        </div>
+    `;
+}
 
 
-        }
 
         isOpen = !isOpen;
     });
