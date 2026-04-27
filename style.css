@@ -109,8 +109,9 @@ h4 span {
     opacity: 0.95;
     transform: translateY(-1px);
     transition: all 0.3s ease;
+}
 
-    /* ✅ couleur par défaut */
+.badge-perf:not(.positive):not(.negative) {
     color: var(--ratio-froid);
 }
 
