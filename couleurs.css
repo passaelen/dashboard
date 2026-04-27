@@ -1,3 +1,8 @@
+#alert-text {
+  font-weight: 600;
+  transition: 0.3s;
+}
+
 :root {
   --or-suisse: #facc15; /* jaune */
   --or-belgique: #f59e0b; /* orange */
