@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 10</h2>
+        <h2>💼 Portefeuille 11</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -752,9 +752,17 @@ function animateDonutETF(el, e1, e2, e3, duration = 800){
     e2 = e2 < 0.01 ? 0 : e2;
     e3 = e3 < 0.01 ? 0 : e3;
 
-// 🔒 normalisation (optionnel mais recommandé)
-    const total = e1 + e2 + e3 || 1;
+    let total = e1 + e2 + e3;
 
+
+// 💥 cas critique : tout à zéro
+    if(total === 0){
+        el.style.background = COLORS.etf_juniors; // ou une couleur neutre
+        return;
+    }
+
+
+// 🔄 normalisation
     e1 = (e1 / total) * 100;
     e2 = (e2 / total) * 100;
     e3 = (e3 / total) * 100;
