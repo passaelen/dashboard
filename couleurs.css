@@ -6,7 +6,26 @@
   --etf-monde: #38bdf8;
   --etf-seniors: #22c55e;
   --etf-juniors: #64748b;
+ 
+  --ratio-froid: #93c5fd;
+  --ratio-moyen: #facc15;
+  --ratio-chaud: #ef4444;
 }
+
+
+/* RATIO */
+.ratio-froid {
+  color: var(--ratio-froid);
+}
+
+.ratio-moyen {
+  color: var(--ratio-moyen);
+}
+
+.ratio-chaud {
+  color: var(--ratio-chaud);
+}
+
 
 /* DOTS */
 .dot-or-suisse { background: var(--or-suisse); }
