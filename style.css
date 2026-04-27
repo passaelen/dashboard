@@ -869,7 +869,7 @@ td:nth-child(6) {
 }
 
 #ratio:hover {
-    color: #38bdf8;
+    color: var(--ratio-hover);
     text-shadow: 0 0 8px rgba(56,189,248,0.6);
 }
 
