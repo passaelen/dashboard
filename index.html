@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 8</h2>
+        <h2>💼 Portefeuille 9</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -747,6 +747,18 @@ el.style.background = `
 
 function animateDonutETF(el, e1, e2, e3, duration = 800){
 
+ // 🔒 sécurité : éviter NaN
+    e1 = e1 || 0;
+    e2 = e2 || 0;
+    e3 = e3 || 0;
+
+// 🔒 normalisation (optionnel mais recommandé)
+    const total = e1 + e2 + e3 || 1;
+
+    e1 = (e1 / total) * 100;
+    e2 = (e2 / total) * 100;
+    e3 = (e3 / total) * 100;
+ 
     let start = null;
 
     function step(timestamp){
