@@ -756,13 +756,13 @@ function animateDonutETF(el, e1, e2, duration = 800){
 
         const p1 = e1 * progress;
         const p2 = e2 * progress;
-        const p3 = 100 - (p1 + p2);
+        const p3 = e3 * progress;
 
 el.style.background = `
     conic-gradient(
         ${COLORS.etf_monde} 0% ${p1}%,
         ${COLORS.etf_seniors} ${p1}% ${p1 + p2}%,
-        ${COLORS.etf_juniors} ${p1 + p2}% 100%
+        ${COLORS.etf_juniors} ${p1 + p2}% ${p1 + p2 + p3}%
     )
 `;
 
