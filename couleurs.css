@@ -18,6 +18,8 @@
   --ratio-chaud: #ef4444;   /* rouge */
   --ratio-hover: #d1d5db;   /* gris clair standard */
   --ratio-hover-glow: rgba(56,189,248,0.6);
+
+  --donut-gap: rgba(2,6,23,0.75);
 }
 
 
