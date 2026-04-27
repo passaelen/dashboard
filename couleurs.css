@@ -60,3 +60,13 @@
 /* PERF */
 .positive { color: var(--perf-positive); }
 .negative { color: var(--perf-negative); }
+
+
+
+
+
+/* BPGDM */
+.bpgdm-buy { color: var(--perf-positive); }
+.bpgdm-sell { color: var(--perf-negative); }
+.bpgdm-neutral { color: #fb923c; }
+.bpgdm-accum { color: #4ade80; }
