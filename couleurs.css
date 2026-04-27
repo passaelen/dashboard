@@ -51,3 +51,8 @@
 .dot-monde { background: var(--etf-monde); }
 .dot-seniors { background: var(--etf-seniors); }
 .dot-juniors { background: var(--etf-juniors); }
+
+
+/* PERF */
+--perf-positive: #22c55e;
+--perf-negative: #ef4444;
