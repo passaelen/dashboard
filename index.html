@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="couleurs.css?v=10">
-    <link rel="stylesheet" href="style.css?v=1842">
+    <link rel="stylesheet" href="couleurs.css?v=11">
+    <link rel="stylesheet" href="style.css?v=1843">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -652,17 +652,18 @@ function getCombinedSignal(ratio, bpgdm){
 function applyRatioColor(ratio){
 
     const el = document.getElementById("alert-text");
-
-    el.classList.remove("positive", "negative");
+    if(!el) return;
+ 
+        el.classList.remove("ratio-froid", "ratio-moyen", "ratio-chaud");
 
     if(ratio >= 50){
-        el.style.color = "#93c5fd"; // bleu froid
+         el.classList.add("ratio-froid");
     } else if(ratio >= 40){
-        el.style.color = "#facc15"; // jaune
+         el.classList.add("ratio-moyen");
     } else {
-        el.style.color = "#ef4444"; // rouge
+         el.classList.add("ratio-chaud");
     }
-    el.style.fontWeight = "600";
+        el.style.fontWeight = "600";
         el.style.transition = "0.3s";
 
 }
