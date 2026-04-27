@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="couleurs.css?v=23">
+    <link rel="stylesheet" href="couleurs.css?v=25">
     <link rel="stylesheet" href="style.css?v=1858">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 25</h2>
+        <h2>💼 Portefeuille 26</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -332,7 +332,12 @@ const COLORS = {
   perf_positive: styles.getPropertyValue('--perf-positive').trim(),
   perf_negative: styles.getPropertyValue('--perf-negative').trim(),
   bpgdm_neutral: styles.getPropertyValue('--bpgdm-neutral').trim(),
-  bpgdm_accum: styles.getPropertyValue('--bpgdm-accum').trim()
+  bpgdm_accum: styles.getPropertyValue('--bpgdm-accum').trim(),
+  market_extreme_low: styles.getPropertyValue('--market-extreme-low').trim(),
+  market_low: styles.getPropertyValue('--market-low').trim(),
+  market_neutral: styles.getPropertyValue('--market-neutral').trim(),
+  market_high: styles.getPropertyValue('--market-high').trim(),
+  market_extreme_high: styles.getPropertyValue('--market-extreme-high').trim()
  };
 
  
@@ -1268,32 +1273,32 @@ function renderMarketState(score, momentum){
 
     let state = "";
     let text = "";
-    let color = "#94a3b8";
+    let color = COLORS.market_neutral;
 
     if(score < 0.1){
         state = "🚨 EXTRÊME BAS";
         text = "Marché en stress extrême";
-        color = "#ef4444";
+        color = COLORS.market_extreme_low;
     }
     else if(score < 0.25){
         state = "🔻 BAS";
         text = "Marché faible";
-        color = "#fb923c";
+        color = COLORS.market_low;
     }
     else if(score < 0.5){
         state = "⚖️ NEUTRE";
         text = "Marché équilibré";
-        color = "#94a3b8";
+        color = COLORS.market_neutral;
     }
     else if(score < 0.75){
         state = "🔺 HAUT";
         text = "Marché solide";
-        color = "#22c55e";
+        color = COLORS.market_high;
     }
     else{
         state = "🔥 EXTRÊME HAUT";
         text = "Marché en excès";
-        color = "#facc15";
+        color = COLORS.market_extreme_high;
     }
 
     let arrow = "→";
@@ -1317,7 +1322,7 @@ function renderMarketState(score, momentum){
     }
 
     badge.innerText = `${state} ${arrow} · ${text} (clôtures veille)`;
-badge.style.color = color;
+    badge.style.color = color;
 
     
 // 🔥 ajout dynamique du contexte
@@ -1326,12 +1331,10 @@ if(strength){
     text += " : " + strength;
 }
 
-// 🔥 2. injecter dans badge
-badge.innerText = `${state} ${arrow} · ${text} (clôtures veille)`;
-badge.style.color = color;
-
-// 🔥 3. supprimer context
-context.innerText = "";
+  badge.innerText = `${state} ${arrow} · ${text} (clôtures veille)`;
+  badge.style.color = color;
+  
+  context.innerText = "";
     
 }
 
