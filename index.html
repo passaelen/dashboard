@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="couleurs.css?v=22">
-    <link rel="stylesheet" href="style.css?v=1856">
+    <link rel="stylesheet" href="couleurs.css?v=23">
+    <link rel="stylesheet" href="style.css?v=1857">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 22</h2>
+        <h2>💼 Portefeuille 23</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -975,42 +975,38 @@ state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
 const elB = document.getElementById("bpgdm");
 
 if(elB){
-
-    elB.classList.remove("flash-strong");
+    elB.classList.remove(
+        "flash-strong",
+        "bpgdm-buy",
+        "bpgdm-sell",
+        "bpgdm-neutral",
+        "bpgdm-accum"
+    );
 
     const value = state.bpgdm?.toFixed(2) || 0;
-
-    // 🔥 PRIORITÉ 1 — ACHAT
-    if(state.bpgdm <= 5){
+ 
+    if (state.bpgdm <= 5) {
 
         elB.innerText = `Bpgdm : ${value}% • Achats Séniors`;
-        elB.style.color = "#22c55e";
-        elB.classList.add("flash-strong");
+        elB.classList.add("bpgdm-buy", "flash-strong");
 
     }
-
-    // 🔥 PRIORITÉ 2 — VENTE
-    else if(state.bpgdm >= 70){
+    else if (state.bpgdm >= 70) {
 
         elB.innerText = `Bpgdm : ${value}% • Vendre Séniors`;
-        elB.style.color = "#ef4444";
-        elB.classList.add("flash-strong");
+        elB.classList.add("bpgdm-sell", "flash-strong");
 
     }
-
-    // 🟠 ZONE NEUTRE
-    else if(state.bpgdm >= 50){
+    else if (state.bpgdm >= 50) {
 
         elB.innerText = `Bpgdm : ${value}%`;
-        elB.style.color = "#fb923c";
+        elB.classList.add("bpgdm-neutral");
 
     }
-
-    // 🟢 ACCUMULATION
     else {
 
         elB.innerText = `Bpgdm : ${value}%`;
-        elB.style.color = "#4ade80";
+        elB.classList.add("bpgdm-accum");
 
     }
 }
