@@ -870,7 +870,7 @@ td:nth-child(6) {
 
 #ratio:hover {
     color: var(--ratio-hover);
-    text-shadow: 0 0 8px rgba(56,189,248,0.6);
+    text-shadow: 0 0 8px var(--ratio-hover-glow);
 }
 
 #ratio:active {
