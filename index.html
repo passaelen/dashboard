@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="couleurs.css?v=21">
+    <link rel="stylesheet" href="couleurs.css?v=22">
     <link rel="stylesheet" href="style.css?v=1854">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 20</h2>
+        <h2>💼 Portefeuille 21</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -665,6 +665,7 @@ function getCombinedSignal(ratio, bpgdm){
 }
 
 
+ 
 
 
 function applyRatioColor(ratio){
@@ -1118,31 +1119,29 @@ const lastHistory = historyList.at(-1)?.total || 0;
 const diff = result.total - lastHistory;
 const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
 
-const el = document.getElementById("variation");
+const variationEl = document.getElementById("variation");
 
-if (el) {
+if (variationEl) {
     const sign = diff > 0 ? "+" : "";
 
     const diffStr = sign + Math.round(diff).toLocaleString('fr-BE') + " €";
     const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
 
-    el.innerText = diffStr + " (" + pctStr + ")";
+    variationEl.innerText = diffStr + " (" + pctStr + ")";
 
-    // 🔥 RESET
-    el.classList.remove("positive", "negative");
+    // RESET
+    variationEl.classList.remove("positive", "negative");
 
-    // 🔥 LOGIQUE FINALE
     if (diff > 0) {
-        el.classList.add("positive");
+        variationEl.classList.add("positive");
     } else if (diff < 0) {
-        el.classList.add("negative");
+        variationEl.classList.add("negative");
     }
-    // 👉 diff === 0 → aucune classe → gris
 
     // animation
-    el.classList.add("flash");
+    variationEl.classList.add("flash");
     setTimeout(() => {
-        el.classList.remove("flash");
+        variationEl.classList.remove("flash");
     }, 400);
 }
 
