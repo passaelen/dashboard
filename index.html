@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="couleurs.css?v=19">
-    <link rel="stylesheet" href="style.css?v=1851">
+    <link rel="stylesheet" href="couleurs.css?v=20">
+    <link rel="stylesheet" href="style.css?v=1852">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 15</h2>
+        <h2>💼 Portefeuille 16</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -814,7 +814,7 @@ function renderKPI(data, p){
     if(elOr){
         elOr.innerHTML = `
             <span>${euro(data.goldTotal)}</span>
-            ${goldVar ? `<span class="kpi-var" style="color:${goldVar.color}">
+            ${goldVar ? `<span class="kpi-var ${goldVar.class}">
                 ${goldVar.arrow} ${goldVar.pct.toFixed(2).replace('.',',')}%
             </span>` : ""}
         `;
@@ -824,7 +824,7 @@ function renderKPI(data, p){
     if(elArgent){
         elArgent.innerHTML = `
             <span>${euro(data.silverTotal)}</span>
-            ${silverVar ? `<span class="kpi-var" style="color:${silverVar.color}">
+            ${silverVar ? `<span class="kpi-var ${silverVar.class}">
                 ${silverVar.arrow} ${silverVar.pct.toFixed(2).replace('.',',')}%
             </span>` : ""}
         `;
