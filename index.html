@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 12</h2>
+        <h2>💼 Portefeuille 13</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -746,11 +746,13 @@ el.style.background = `
 
 
 
-console.log("ETF %:", e1, e2, e3);
 
  
 function animateDonutETF(el, e1, e2, e3, duration = 800){
 
+console.log("ETF %:", e1, e2, e3);
+
+ 
  // 🔒 couper les micro valeurs
     e1 = e1 < 0.01 ? 0 : e1;
     e2 = e2 < 0.01 ? 0 : e2;
