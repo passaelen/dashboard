@@ -5,21 +5,25 @@
 }
 
 :root {
-  --or-suisse: #facc15; /* jaune */
-  --or-belgique: #f59e0b; /* orange */
-  --argent: #9ca3af; /* gris */
+  --or-suisse: #facc15;
+  --or-belgique: #f59e0b;
+  --argent: #9ca3af;
 
   --etf-monde: #38bdf8;
   --etf-seniors: #22c55e;
   --etf-juniors: #64748b;
- 
-  --ratio-froid: #9ca3af;   /* gris */
-  --ratio-moyen: #f59e0b;   /* orange */
-  --ratio-chaud: #ef4444;   /* rouge */
-  --ratio-hover: #d1d5db;   /* gris clair standard */
+
+  --ratio-froid: #9ca3af;
+  --ratio-moyen: #f59e0b;
+  --ratio-chaud: #ef4444;
+  --ratio-hover: #d1d5db;
   --ratio-hover-glow: rgba(56,189,248,0.6);
 
   --donut-gap: rgba(2,6,23,0.75);
+
+  /* ✅ ICI le FIX */
+  --perf-positive: #22c55e;
+  --perf-negative: #ef4444;
 }
 
 
@@ -54,7 +58,5 @@
 
 
 /* PERF */
---perf-positive: #22c55e;
---perf-negative: #ef4444;
 .positive { color: var(--perf-positive); }
 .negative { color: var(--perf-negative); }
