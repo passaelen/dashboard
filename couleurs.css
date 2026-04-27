@@ -34,6 +34,21 @@
   --market-neutral: #94a3b8;
   --market-high: #22c55e;
   --market-extreme-high: #facc15;
+
+
+
+  --chart-up: #22c55e;
+  --chart-down: #ef4444;
+  --chart-up-soft: #4ade80;
+  --chart-down-soft: #f87171;
+
+  --chart-mm: #a78bfa;
+
+  --chart-tooltip-bg: #0f172a;
+  --chart-tooltip-border: #38bdf8;
+  --chart-text: #e2e8f0;
+
+  --chart-white: #ffffff;
 }
 
 
