@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 35</h2>
+        <h2>💼 Portefeuille 36</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -829,6 +829,11 @@ el.style.background = `
 
 
 
+
+
+
+ 
+
 // ===== RENDER KPI =====
 function renderKPI(data, p){
 
@@ -1350,11 +1355,21 @@ if(strength){
 
   badge.innerText = `${state} ${arrow} · ${text} (clôtures veille)`;
   badge.style.color = color;
-  
+  updateThemeColor(color);
+ 
   context.innerText = "";
     
 }
 
+function updateThemeColor(color){
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if(metaTheme && color){
+        metaTheme.setAttribute("content", color);
+    }
+}
+
+
+ 
 
 
 // ===== Render DONUTS =====
