@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 16</h2>
+        <h2>💼 Portefeuille 17</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1128,13 +1128,20 @@ if (el) {
 
     el.innerText = diffStr + " (" + pctStr + ")";
 
-    el.classList.remove("positive", "negative");
-    el.classList.add(diff >= 0 ? "positive" : "negative");
+    const threshold = 10;
 
-el.classList.add("flash");
-setTimeout(() => {
-    el.classList.remove("flash");
-}, 400);
+    el.classList.remove("positive", "negative");
+
+    if (diff > threshold) {
+        el.classList.add("positive");
+    } else if (diff < -threshold) {
+        el.classList.add("negative");
+    }
+
+    el.classList.add("flash");
+    setTimeout(() => {
+        el.classList.remove("flash");
+    }, 400);
 }
 
 
