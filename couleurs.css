@@ -56,3 +56,5 @@
 /* PERF */
 --perf-positive: #22c55e;
 --perf-negative: #ef4444;
+.positive { color: var(--perf-positive); }
+.negative { color: var(--perf-negative); }
