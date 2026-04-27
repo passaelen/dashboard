@@ -1,0 +1,18 @@
+:root {
+  --or-suisse: #facc15;
+  --or-belgique: #f59e0b;
+  --argent: #9ca3af;
+
+  --etf-monde: #38bdf8;
+  --etf-seniors: #22c55e;
+  --etf-juniors: #64748b;
+}
+
+/* DOTS */
+.dot-or-suisse { background: var(--or-suisse); }
+.dot-or-belgique { background: var(--or-belgique); }
+.dot-argent { background: var(--argent); }
+
+.dot-monde { background: var(--etf-monde); }
+.dot-seniors { background: var(--etf-seniors); }
+.dot-juniors { background: var(--etf-juniors); }
