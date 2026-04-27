@@ -27,6 +27,13 @@
 
   --bpgdm-neutral: #fb923c;
   --bpgdm-accum: #4ade80;
+
+
+  --market-extreme-low: #ef4444;
+  --market-low: #fb923c;
+  --market-neutral: #94a3b8;
+  --market-high: #22c55e;
+  --market-extreme-high: #facc15;
 }
 
 
