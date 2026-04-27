@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 18</h2>
+        <h2>💼 Portefeuille 19</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1121,23 +1121,25 @@ const pct = lastHistory ? (diff / lastHistory) * 100 : 0;
 const el = document.getElementById("variation");
 
 if (el) {
-    const sign = diff >= 0 ? "+" : "";
+    const sign = diff > 0 ? "+" : "";
 
     const diffStr = sign + Math.round(diff).toLocaleString('fr-BE') + " €";
     const pctStr = sign + pct.toFixed(2).replace('.', ',') + "%";
 
     el.innerText = diffStr + " (" + pctStr + ")";
 
-    const threshold = 10;
-
+    // 🔥 RESET
     el.classList.remove("positive", "negative");
 
-    if (diff > threshold) {
+    // 🔥 LOGIQUE FINALE
+    if (diff > 0) {
         el.classList.add("positive");
-    } else if (diff < -threshold) {
+    } else if (diff < 0) {
         el.classList.add("negative");
     }
+    // 👉 diff === 0 → aucune classe → gris
 
+    // animation
     el.classList.add("flash");
     setTimeout(() => {
         el.classList.remove("flash");
