@@ -15,3 +15,7 @@ const DATA = {
     juniors: { parts: 0, buy: 0 }
   }
 };
+
+// ⚠️ IMPORTANT
+// Les parts ETF sont gérées ici (source de vérité)
+// Le Google Sheet doit être mis à jour pour rester cohérent avec l’historique
