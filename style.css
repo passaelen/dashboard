@@ -117,6 +117,7 @@ transition: all 0.3s ease;
 }
 
 .badge-perf.negative {
+    color: var(--perf-negative); /* 🔥 AJOUT CRUCIAL */
     opacity: 1;
     text-shadow: 0 0 6px rgba(239,68,68,0.4);
 }
