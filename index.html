@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-    <link rel="stylesheet" href="couleurs.css?v=16">
-    <link rel="stylesheet" href="style.css?v=1847">
+    <link rel="stylesheet" href="couleurs.css?v=17">
+    <link rel="stylesheet" href="style.css?v=1848">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 5</h2>
+        <h2>💼 Portefeuille 6</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -316,6 +316,19 @@
 
 <script>
 // ===== alert("JS OK");  =====
+
+
+// =====  Récupérer les couleurs dans JS
+const styles = getComputedStyle(document.documentElement);
+
+const COLORS = {
+  or_suisse: styles.getPropertyValue('--or-suisse').trim(),
+  or_belgique: styles.getPropertyValue('--or-belgique').trim(),
+  argent: styles.getPropertyValue('--argent').trim(),
+  gap: styles.getPropertyValue('--donut-gap').trim()
+};
+
+ 
 
 
 // ===== CONFIG =====
@@ -709,14 +722,14 @@ function animateDonut(el, target1, target2, duration = 800){
 
 el.style.background = `
     conic-gradient(
-        #facc15 0% ${p1 - gap}%,
-        rgba(2,6,23,0.75) ${p1 - gap}% ${p1 + gap}%,
+         ${COLORS.or_suisse} 0% ${p1 - gap}%,
+         ${COLORS.gap} ${p1 - gap}% ${p1 + gap}%,
 
-        #f59e0b ${p1 + gap}% ${p1 + p2 - gap}%,
-        rgba(2,6,23,0.75) ${p1 + p2 - gap}% ${p1 + p2 + gap}%,
+         ${COLORS.or_belgique} ${p1 + gap}% ${p1 + p2 - gap}%,
+         ${COLORS.gap} ${p1 + p2 - gap}% ${p1 + p2 + gap}%,
 
-        #9ca3af ${p1 + p2 + gap}% ${100 - gap}%,
-        rgba(2,6,23,0.75) ${100 - gap}% 100%
+         ${COLORS.argent} ${p1 + p2 + gap}% ${100 - gap}%,
+         ${COLORS.gap} ${100 - gap}% 100%
     )
 `;
 
