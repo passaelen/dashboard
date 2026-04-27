@@ -113,12 +113,12 @@ transition: all 0.3s ease;
 
 /* 🔥 effet glow */
 .badge-perf.positive {
-    color: #22c55e;
+    color: var(--perf-positive);
     text-shadow: 0 0 6px rgba(34,197,94,0.4);
 }
 
 .badge-perf.negative {
-    color: #ef4444;
+     color: var(--perf-negative);
     text-shadow: 0 0 6px rgba(239,68,68,0.4);
 }
 
@@ -629,14 +629,6 @@ td:nth-child(6) {
 
 
 
-/* ===== COULEURS PERF ===== */
-.positive {
-    color: #22c55e;
-}
-
-.negative {
-    color: #ef4444;
-}
 
 
 /* ===== GRAPH ===== */
