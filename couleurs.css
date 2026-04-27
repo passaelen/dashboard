@@ -24,6 +24,9 @@
   /* ✅ ICI le FIX */
   --perf-positive: #22c55e;
   --perf-negative: #ef4444;
+
+  --bpgdm-neutral: #fb923c;
+  --bpgdm-accum: #4ade80;
 }
 
 
@@ -68,5 +71,5 @@
 /* BPGDM */
 .bpgdm-buy { color: var(--perf-positive); }
 .bpgdm-sell { color: var(--perf-negative); }
-.bpgdm-neutral { color: #fb923c; }
-.bpgdm-accum { color: #4ade80; }
+.bpgdm-neutral { color: var(--bpgdm-neutral); }
+.bpgdm-accum { color: var(--bpgdm-accum); }
