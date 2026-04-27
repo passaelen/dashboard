@@ -33,6 +33,12 @@
 
 
 /* DOTS */
+ .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
 .dot-or-suisse { background: var(--or-suisse); }
 .dot-or-belgique { background: var(--or-belgique); }
 .dot-argent { background: var(--argent); }
