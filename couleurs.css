@@ -1,3 +1,4 @@
+/* === BASE UI === */
 #alert-text {
   font-weight: 600;
   transition: color 0.3s ease;
@@ -15,6 +16,8 @@
   --ratio-froid: #9ca3af;   /* gris */
   --ratio-moyen: #f59e0b;   /* orange */
   --ratio-chaud: #ef4444;   /* rouge */
+  --ratio-hover: #38bdf8;
+  --ratio-hover-glow: rgba(56,189,248,0.6);
 }
 
 
