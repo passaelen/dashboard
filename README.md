@@ -4,293 +4,261 @@
 
 📍 Vision temps réel + lecture de cycle (Ratio & BPGDM)
 
+---
 
-📊 Dashboard Or, Argent & ETF
+# 📊 Dashboard Or, Argent & ETF
 
-------------------------------------------------------------------------
+---
 
-🧭 Description
+## 🧭 Description
 
-Dashboard personnel de suivi patrimonial permettant de visualiser en
-temps réel :
+Dashboard personnel de suivi patrimonial permettant de visualiser en temps réel :
 
--   🟡 Portefeuille Or (Suisse & Privé)
--   ⚪ Portefeuille Argent (Suisse)
--   📈 ETF Monde & Minières
--   ⚖️ Allocation globale et ratios
--   🌡️ Lecture climatique du marché (Ratio Or/Argent + BPGDM)
+- 🟡 Portefeuille Or (Suisse & Privé)
+- ⚪ Portefeuille Argent (Suisse)
+- 📈 ETF Monde & Minières
+- ⚖️ Allocation globale et ratios
+- 🌡️ Lecture climatique du marché (Ratio Or/Argent + BPGDM)
 
 👉 Architecture hybride intelligente :
 
--   ⚡ API live → métaux (or & argent)
--   🧾 Google Sheet → ETF + historique + BPGDM
--   🧠 Calcul interne → ratio & signaux
--   🔗 URL state → transmission du ratio entre pages
+- ⚡ API live → métaux (or & argent)
+- 🧾 Google Sheet → ETF + historique + BPGDM
+- 🧠 Calcul interne → ratio & signaux
+- 🔗 URL state → transmission du ratio entre pages
 
-------------------------------------------------------------------------
+---
 
-⚙️ Fonctionnalités
+## ⚙️ Fonctionnalités
 
-📊 Visualisation
+### 📊 Visualisation
 
--   Donuts dynamiques :
-    -   Métaux (Or Suisse / Or Privé / Argent)
-    -   ETF (Monde 🔵 / Minières 🟢 / Juniors ⚪)
+- Donuts dynamiques :
+  - Métaux (Or Suisse / Or Privé / Argent)
+  - ETF (Monde 🔵 / Minières 🟢 / Juniors ⚪)
 
-👉 Couleurs harmonisées entre donuts et légendes (cohérence visuelle
-totale)
+👉 Couleurs harmonisées entre donuts et légendes (cohérence visuelle totale)
 
--   Graphique d'évolution :
-    -   10 / 30 / 90 jours
-    -   Moyenne mobile (MM7)
-    -   Couleur dynamique (hausse / baisse)
-    -   Tooltip détaillé (€ / Δ€ / %)
--   Allocation visuelle (pills UI) :
-    -   🟡 Or
-    -   ⚪ Argent
-    -   💎 Métaux
-    -   📊 ETF
+- Graphique d'évolution :
+  - 10 / 30 / 90 jours
+  - Moyenne mobile (MM7)
+  - Couleur dynamique (hausse / baisse)
+  - Tooltip détaillé (€ / Δ€ / %)
+
+- Allocation visuelle (pills UI) :
+  - 🟡 Or
+  - ⚪ Argent
+  - 💎 Métaux
+  - 📊 ETF
 
 👉 Lecture rapide et claire de la structure du portefeuille
 
-------------------------------------------------------------------------
+---
 
-⚡ Données en temps réel
+## ⚡ Données en temps réel
 
--   🟡 Or → API live (converti en €)
--   ⚪ Argent → API live (converti en €)
--   📈 ETF → clôture (Google Sheet)
--   📊 Historique → Google Sheet
--   🧠 BPGDM → Google Sheet (live + fixé)
+- 🟡 Or → API live (converti en €)
+- ⚪ Argent → API live (converti en €)
+- 📈 ETF → clôture (Google Sheet)
+- 📊 Historique → Google Sheet
+- 🧠 BPGDM → Google Sheet (live + fixé)
 
 👉 Toutes les valeurs sont exprimées en € (vision patrimoniale réelle)
 
-------------------------------------------------------------------------
+---
 
-🧠 Intelligence intégrée
+## 🧠 Intelligence intégrée
 
--   Calcul du ratio Or / Argent (basé sur prix €)
+- Calcul du ratio Or / Argent (basé sur prix €)
 
--   Signal marché combiné :
+- Signal marché combiné :
+  - Ratio → climat macro
+  - BPGDM → timing ETF
 
-    -   Ratio → climat macro
-    -   BPGDM → timing ETF
+- Messages dynamiques :
+  - Zones (Nord / Transition / Chaud / Extrême)
+  - Actions suggérées
 
--   Messages dynamiques :
+---
 
-    -   Zones (Nord / Transition / Chaud / Extrême)
-    -   Actions suggérées
+## 📈 Suivi de performance
 
-------------------------------------------------------------------------
+- Total global (live)
+- Variation vs dernière clôture
 
-📈 Suivi de performance
-
--   Total global (live)
-
--   Variation vs dernière clôture
-
--   Gains / pertes :
-
-    -   Par actif
-    -   En €
-    -   En %
+- Gains / pertes :
+  - Par actif
+  - En €
+  - En %
 
 👉 Les % KPI intègrent :
-
--   Variation du prix
--   Effet devise USD → EUR
+- Variation du prix
+- Effet devise USD → EUR
 
 ➡️ Représentation réelle de la performance portefeuille
 
-------------------------------------------------------------------------
+---
 
-🎛️ Interactions
+## 🎛️ Interactions
 
--   Timeframe : 10J / 30J / 90J
--   Hover tactile fluide
--   Animations (graph + donuts)
--   Refresh manuel (rechargement des données)
--   Navigation multi-pages
+- Timeframe : 10J / 30J / 90J
+- Hover tactile fluide
+- Animations (graph + donuts)
+- Refresh manuel
+- Navigation multi-pages
 
-------------------------------------------------------------------------
+---
 
-🧭 Module Boussole
+## 🧭 Module Boussole
 
 Nouvelle page dédiée à la lecture visuelle du cycle :
 
--   🧭 Affichage du ratio sous forme d'aiguille
--   Mapping dynamique ratio → angle
--   Zones visuelles (Nord / Sud / Transition)
--   Calibration manuelle précise (centre + angle + longueur)
+- 🧭 Affichage du ratio sous forme d'aiguille
+- Mapping dynamique ratio → angle
+- Zones visuelles (Nord / Sud / Transition)
+- Calibration manuelle précise
 
-🔗 Transmission intelligente
-
-Le ratio est transmis via l'URL :
+### 🔗 Transmission intelligente
 
 boussole.html?ratio=61.54
 
 👉 Avantages :
+- Aucun recalcul
+- Aucune dépendance externe
+- Navigation rapide
+- Partage possible
 
--   Aucun recalcul
--   Aucune dépendance externe
--   Navigation rapide et fiable
--   Partage possible (snapshot de marché)
+---
 
-------------------------------------------------------------------------
+## 🏗️ Architecture
 
-🏗️ Architecture
+### Sources de données
 
-Sources de données
+- `data.js` → portefeuille
+- Google Sheet → historique + ETF + BPGDM
+- URL → transport du ratio
 
--   `data.js` → portefeuille (quantités & coûts)
--   Google Sheet → historique + ETF + BPGDM
--   URL → transport du ratio entre pages
+### APIs utilisées
 
-------------------------------------------------------------------------
+- Gold API (XAU / XAG)
+- Exchange Rate API (USD → EUR)
 
-APIs utilisées
+---
 
--   Gold API (XAU / XAG)
--   Exchange Rate API (USD → EUR)
+## ⚙️ Logique
 
-------------------------------------------------------------------------
+- Métaux → prix live USD convertis en €/g
+- ETF → valorisation via Sheet
+- Total → Métaux + ETF
+- Ratio → calcul live
+- Boussole → affichage via URL
 
-⚙️ Logique
+---
 
--   Métaux → prix live USD convertis en €/g
--   ETF → valorisation via Sheet
--   Total → Métaux + ETF
--   Ratio → calcul live (€/€)
--   Boussole → affichage via URL (sans recalcul)
+## 📊 Graphique
 
-------------------------------------------------------------------------
+- Chart.js
+- Timeframe dynamique
+- Moyenne mobile (MM7)
+- Couleur adaptative
 
-📊 Graphique
+---
 
--   Chart.js
--   Slice dynamique (timeframe)
--   Moyenne mobile intégrée (MM7)
--   Couleur adaptative (trend)
+## 🛟 Résilience des données
 
-------------------------------------------------------------------------
+### BPGDM
 
-🛟 Résilience des données
+- Source principale → Google Sheet
+- Source secondaire → fallback cache
 
-BPGDM
+👉 Sécurisation automatique des données
 
--   Source principale → Google Sheet (live + fixée)
--   Source secondaire (backup) → possible fallback API / cache
+---
 
-👉 Usage :
+## 🧠 Intelligence & Lecture du Marché
 
--   Priorité au Sheet
--   Fallback automatique si indisponible
--   Sécurisation contre absence de données
+### 🧭 1. Climat macro (Ratio)
 
-------------------------------------------------------------------------
+- ❄️ Nord → accumulation Argent
+- ⚖️ Pivot → préparation
+- 🔥 Sud → rotation vers Or
 
-🧠 Intelligence & Lecture du Marché
+---
 
-Le dashboard ne se limite pas à afficher des données : il interprète le
-marché via une double lecture structurée.
+### 📊 2. Timing (BPGDM)
 
-------------------------------------------------------------------------
+- Zones basses → opportunités ETF
+- Zones hautes → prudence
 
-🧭 1. Climat macro (Ratio Or / Argent)
+---
 
-Le ratio agit comme une boussole de cycle :
+### ⚖️ 3. Signal combiné
 
--   ❄️ Nord → accumulation Argent
--   ⚖️ Zone pivot → préparation des arbitrages
--   🔥 Sud → rotation Argent → Or
+- 🟢 Achat ETF
+- 🔴 Vente
+- 🔥 Métaux prioritaires
+- 🔵 HOLD
 
-👉 Le ratio définit le contexte global, indépendant du bruit court
-terme.
+---
 
-------------------------------------------------------------------------
+### 🧭 4. Boussole visuelle
 
-📊 2. Timing marché (BPGDM)
+- Mapping ratio → angle
+- Lecture intuitive
 
-Le BPGDM apporte une lecture comportementale :
+---
 
--   Zones basses → opportunités ETF (accumulation)
--   Zones hautes → prudence / rotation
+### 🧠 5. Principe fondamental
 
-👉 Il agit comme un indicateur de timing, complémentaire au ratio.
-
-------------------------------------------------------------------------
-
-⚖️ 3. Signal combiné
-
-Les deux indicateurs sont fusionnés pour produire un signal opérationnel
-unique :
-
--   🟢 Achat ETF (si BPGDM bas + climat favorable)
--   🔴 Vente / rotation (si BPGDM élevé)
--   🔥 Priorité métaux (si ratio bas)
--   🔵 HOLD (zone neutre)
-
-👉 Lecture cohérente, non prédictive.
-
-------------------------------------------------------------------------
-
-🧭 4. Boussole visuelle
-
--   Aiguille dynamique (mapping ratio → angle)
--   Zones visuelles (Nord / Sud / Transition)
--   Lecture intuitive du cycle
-
-👉 Compréhension immédiate sans lecture complexe
-
-------------------------------------------------------------------------
-
-🧠 5. Principe fondamental
-
--   Ratio → structure de cycle
--   BPGDM → timing d'intervention
+- Ratio = structure
+- BPGDM = timing
 
 👉 Objectif :
+Ne pas subir le marché, mais s’y positionner avec cohérence.
 
-« Ne pas subir le marché, mais s'y positionner avec cohérence. »
+---
 
-------------------------------------------------------------------------
+## ⚙️ Optimisations techniques
 
-⚙️ Optimisations techniques
+- Cache DOM (`setText`)
+- Architecture modulaire
+- State centralisé
+- Cache localStorage (ETF)
+- Séparation logique / affichage
 
--   Cache DOM (`setText`) → performance UI
--   Architecture modulaire :
-    -   renderKPI
-    -   renderAllocation
-    -   renderTables
-    -   renderDonuts
--   Gestion d'état centralisée (`state`)
--   Fallback API + cache localStorage (ETF)
--   Séparation logique / affichage
+---
 
-------------------------------------------------------------------------
+## 🎨 Gestion des couleurs
 
-🚀 Évolutions possibles
+- Centralisation complète dans `couleurs.css`
+- Cohérence UI entre donuts, légendes et graph
+- Maintenance simplifiée
+- Prêt pour évolution (thèmes futurs)
 
--   📩 Alertes automatiques (ratio / BPGDM)
--   📸 Snapshots partageables
--   🔄 Multi-sources de validation
--   📊 Historique enrichi des signaux
--   📱 Expérience mobile encore optimisée
+---
 
-------------------------------------------------------------------------
+## 🚀 Évolutions possibles
 
-🎯 Philosophie
+- 📩 Alertes automatiques
+- 📸 Snapshots partageables
+- 🔄 Multi-sources
+- 📊 Historique enrichi
+- 📱 Optimisation mobile
 
-Ce dashboard est une boussole patrimoniale, pas un simple tracker.
+---
 
--   📍 Lire le marché
--   🧭 Comprendre les cycles
--   ⚖️ Ajuster les allocations
--   🧠 Garder une vision long terme
+## 🎯 Philosophie
 
-------------------------------------------------------------------------
+Ce dashboard est une boussole patrimoniale.
 
-📝 Notes personnelles
+- 📍 Lire
+- 🧭 Comprendre
+- ⚖️ Ajuster
+- 🧠 Anticiper
+
+---
+
+## 📝 Notes personnelles
 
 -   Total global = métaux (API live) + ETF (clôtures Sheet)
 
