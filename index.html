@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille 23</h2>
+        <h2>💼 Portefeuille 24</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -974,7 +974,9 @@ state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
 // 🔥 input Bpgdm dans ETF        
 const elB = document.getElementById("bpgdm");
 
-if(elB){
+if (elB) {
+
+    // 🔄 RESET
     elB.classList.remove(
         "flash-strong",
         "bpgdm-buy",
@@ -983,32 +985,27 @@ if(elB){
         "bpgdm-accum"
     );
 
-    const value = state.bpgdm?.toFixed(2) || 0;
- 
-    if (state.bpgdm <= 5) {
+    const bpgdm = Number(state.bpgdm) || 0;
+    const value = bpgdm.toFixed(2);
 
-        elB.innerText = `Bpgdm : ${value}% • Achats Séniors`;
+    let text = `Bpgdm : ${value}%`;
+
+    if (bpgdm <= 5) {
+        text += " • Achats Séniors";
         elB.classList.add("bpgdm-buy", "flash-strong");
-
     }
-    else if (state.bpgdm >= 70) {
-
-        elB.innerText = `Bpgdm : ${value}% • Vendre Séniors`;
+    else if (bpgdm >= 70) {
+        text += " • Vendre Séniors";
         elB.classList.add("bpgdm-sell", "flash-strong");
-
     }
-    else if (state.bpgdm >= 50) {
-
-        elB.innerText = `Bpgdm : ${value}%`;
+    else if (bpgdm >= 50) {
         elB.classList.add("bpgdm-neutral");
-
     }
     else {
-
-        elB.innerText = `Bpgdm : ${value}%`;
         elB.classList.add("bpgdm-accum");
-
     }
+
+    elB.innerText = text;
 }
 
 
