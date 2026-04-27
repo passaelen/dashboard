@@ -1,6 +1,6 @@
 #alert-text {
   font-weight: 600;
-  transition: 0.3s;
+  transition: color 0.3s ease;
 }
 
 :root {
