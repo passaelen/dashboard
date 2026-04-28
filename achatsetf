@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Achats</title>
 
-
-<link rel="stylesheet" href="couleurs.css?v=8">
-<link rel="stylesheet" href="style.css?v=8">
-
+```
+<link rel="stylesheet" href="couleurs.css">
+<link rel="stylesheet" href="style.css">
+```
 
 </head>
 
@@ -18,41 +18,43 @@
 
 <div class="container">
 
+```
 <!-- HEADER -->
-    <div class="header">
-        <div class="header-left">
-            <h2>🧾 Achats</h2>
-            <small>Journal d'exécution</small>
-        </div>
+<div class="header">
+    <div class="header-left">
+        <h2>🧾 Achats</h2>
+        <small>Journal d'exécution</small>
     </div>
+</div>
 
 <!-- TABLE -->
-    <div class="card">
-        <h3>Historique</h3>
-        
-                    <table>
-                            <thead>
-                                    <tr>
-                                        <th>Dates</th>
-                                        <th>Type</th>
-                                        <th>Poids</th>
-                                        <th>Montant</th>
-                                    </tr>
-                            </thead>
-                            <tbody id="table-achats"></tbody>
-                    </table>
-        
-                      <div class="total-line">
-                        <span>Total investi</span>
-                        <span id="total-achats"></span>
-                      </div>
-    </div> 
-</div> 
+<div class="card">
+    <h3>Historique</h3>
 
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Détail</th>
+                <th>Montant</th>
+            </tr>
+        </thead>
+        <tbody id="table-achats"></tbody>
+    </table>
+    <div class="total-line">
+        <span>Total investi</span>
+        <span id="total-achats"></span>
+    </div>
+</div>
+```
+
+</div>
 
 <script src="achats.js"></script>
 
 <script>
+
 // ===== HELPERS =====
 function euro(v){
     return Math.round(v).toLocaleString('fr-BE') + " €";
@@ -62,22 +64,59 @@ function euro(v){
 function getClassByType(type){
     switch(type){
         case "ETF_MONDE": return "dot-monde";
-        case "ETF_SENIOR": return "dot-seniors"; 
-        case "ETF_JUNIOR": return "dot-juniors";
+        case "OR": return "dot-or-suisse";
+        case "ARGENT": return "dot-argent";
         default: return "";
     }
 }
+
+
+
+function euro(v){
+    return Math.round(v).toLocaleString('fr-BE') + " €";
+}
+
+
+function getClassByType(type){
+    switch(type){
+        case "ETF_MONDE": return "dot-monde";
+        case "OR": return "dot-or-suisse";
+        case "ARGENT": return "dot-argent";
+        default: return "";
+    }
+}
+
+
+function parseDateFR(date){
+    const [d,m,y] = date.split("/");
+    return new Date(`${y}-${m}-${d}`);
+}
+
+
+
+
 
 // ===== RENDER =====
 function renderAchats(){
 
     const tbody = document.getElementById("table-achats");
 
-    // tri DESC (plus récent en haut)
+    if (!tbody) {
+        console.error("tbody introuvable");
+        return;
+    }
+
+    if (!window.achats || achats.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4">Aucun achat</td></tr>`;
+        console.warn("Aucun achat trouvé");
+        return;
+    }
+
     const sorted = [...achats].sort((a,b)=>{
-        return new Date(b.date.split("/").reverse().join("-")) 
-             - new Date(a.date.split("/").reverse().join("-"));
+        return parseDateFR(b.date) - parseDateFR(a.date);
     });
+
+    tbody.innerHTML = ""; // reset
 
     sorted.forEach(a => {
 
@@ -89,7 +128,7 @@ function renderAchats(){
                 <span class="dot ${getClassByType(a.type)}"></span>
                 ${a.type}
             </td>
-            <td>${a.parts}</td>
+            <td>${a.label}</td>
             <td>${euro(a.montant)}</td>
         `;
 
@@ -97,12 +136,13 @@ function renderAchats(){
     });
 }
 
-renderAchats();
+document.addEventListener("DOMContentLoaded", renderAchats);
 
+renderAchats();
 
 const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
 document.getElementById("total-achats").innerText = euro(total);
-    
+
 </script>
 
 </body>
