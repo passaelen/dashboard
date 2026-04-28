@@ -10,33 +10,29 @@
 <link rel="stylesheet" href="style.css?v=19">   
 <style>
        
-.table-metaux {min-width: 420px; table-layout: auto;}
+.table-metaux width: 100%; table-layout: fixed;overflow: hidden;text-overflow: ellipsis;}
 
 .table-scroll {overflow-x: auto;overflow-y: hidden;}
 
 .table-metaux td {white-space: nowrap;}
 
-/* colonnes vraiment fixes */
 .table-metaux th:nth-child(1),
-.table-metaux td:nth-child(1) {width: 80px;}  /* date */
+.table-metaux td:nth-child(1) { width: 65px; } /* DATE */
 
-.table-metaux td:nth-child(2) {white-space: nowrap;}
+.table-metaux th:nth-child(2),
+.table-metaux td:nth-child(2) { width: 55px; } /* TYPE */
 
 .table-metaux th:nth-child(3),
-.table-metaux td:nth-child(3) {width: 50px;}  /* loc */
+.table-metaux td:nth-child(3) { width: 45px; } /* LOC */
 
 .table-metaux th:nth-child(4),
-.table-metaux td:nth-child(4) {width: 60px;}  /* poids */
+.table-metaux td:nth-child(4) { width: 45px; } /* POIDS */
 
-.table-metaux td:nth-child(5) {white-space: normal;}
+.table-metaux th:nth-child(5),
+.table-metaux td:nth-child(5) { width: 55px; } /* LABEL */
 
 .table-metaux th:nth-child(6),
-.table-metaux td:nth-child(6) {
-    width: 60px;
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-    padding-right: 14px;
-}
+.table-metaux td:nth-child(6) { width: 70px; padding-right: 6px; } /* TOTAL */
 
 </style>
     
