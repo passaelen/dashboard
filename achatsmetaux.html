@@ -8,8 +8,8 @@
     <title>Achats</title>
 
 
-<link rel="stylesheet" href="couleurs.css?v=13">
-<link rel="stylesheet" href="style.css?v=13">
+<link rel="stylesheet" href="couleurs.css?v=15">
+<link rel="stylesheet" href="style.css?v=15">
 
 </head>
 
@@ -103,7 +103,7 @@ function renderAchats(){
         tbody.appendChild(row);
     });
 
-    const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
+    const total = sorted.reduce((sum, a) => sum + (a.tot || 0), 0);
     document.getElementById("total-metaux").innerText = euro(total);
 }
 
