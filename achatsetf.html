@@ -38,7 +38,7 @@
                                     <tr>
                                         <th>Date(s)</th>
                                         <th>Type</th>
-                                        <th><center>Part(s)</center></th>
+                                        <th>Part(s)</th>
                                         <th>Montant(s)</th>
                                     </tr>
                             </thead>
@@ -66,7 +66,7 @@ function getClassByType(type){
     switch(type){
         case "ETF_MONDE": return "dot-monde";
         case "ETF_SENIOR": return "dot-seniors";
-        case "ETF_JUNIOR": return "dot-junios";
+        case "ETF_JUNIOR": return "dot-juniors";
         default: return "";
     }
 }
@@ -84,6 +84,7 @@ function renderAchats(){
          - new Date(a.date.split("/").reverse().join("-"));
     });
 
+    tbody.innerHTML = "";
     sorted.forEach(a => {
 
         const row = document.createElement("tr");
@@ -94,8 +95,8 @@ function renderAchats(){
                 <span class="dot ${getClassByType(a.type)}"></span>
                 ${a.type.replace("ETF_", "")}
             </td>
-            <td style="text-align:center">${a.parts || "-"}</td>
-            <td>${euro(a.montant)}</td>
+            <td class="center">${a.parts || "-"}</td>
+            <td class="amount">${euro(a.montant)}</td>
         `;
 
         tbody.appendChild(row);
