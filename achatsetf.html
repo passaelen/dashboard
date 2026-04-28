@@ -8,8 +8,8 @@
     <title>Achats</title>
 
 
-<link rel="stylesheet" href="couleurs.css?v=9">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="couleurs.css?v=10">
+<link rel="stylesheet" href="style.css?v=10">
 
 
 </head>
@@ -91,7 +91,7 @@ function renderAchats(){
                 <span class="dot ${getClassByType(a.type)}"></span>
                 ${a.type.replace("ETF_", "")}
             </td>
-            <td>${a.parts || "-"}</td>
+            <td style="text-align:center">${a.parts || "-"}</td>
             <td>${euro(a.montant)}</td>
         `;
 
