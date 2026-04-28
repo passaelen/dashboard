@@ -33,9 +33,9 @@
                     <table>
                             <thead>
                                     <tr>
-                                        <th>Date</th>
+                                        <th>Dates</th>
                                         <th>Type</th>
-                                        <th>Détail</th>
+                                        <th>Parts</th>
                                         <th>Montant</th>
                                     </tr>
                             </thead>
@@ -67,6 +67,8 @@ function euro(v){
 function getClassByType(type){
     switch(type){
         case "ETF_MONDE": return "dot-monde";
+        case "ETF_SENIOR": return "dot-seniors"; 
+        case "ETF_JUNIOR": return "dot-juniors";
         case "OR": return "dot-or-suisse";
         case "ARGENT": return "dot-argent";
         default: return "";
