@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="couleurs.css?v=11">
 <link rel="stylesheet" href="style.css?v=11">
 
-
 </head>
 
 <body>
@@ -81,6 +80,7 @@ function renderAchats(){
              - new Date(a.date.split("/").reverse().join("-"));
     });
 
+    tbody.innerHTML = "";
     sorted.forEach(a => {
 
         const row = document.createElement("tr");
@@ -89,21 +89,22 @@ function renderAchats(){
             <td>${a.date}</td>
             <td>
                 <span class="dot ${getClassByType(a.type)}"></span>
-                ${a.type}
+                ${a.type === "OR" ? "Or" : "Argent"}
             </td>
-            <td>${a.poids}</td>
-            <td>${euro(a.montant)}</td>
+            <td class="center">${a.poids}</td>
+            <td class="amount">${euro(a.montant)}</td>
         `;
 
         tbody.appendChild(row);
     });
+
+    const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
+    document.getElementById("total-metaux").innerText = euro(total);
 }
 
 renderAchats();
 
 
-const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
-document.getElementById("total-achats").innerText = euro(total);
     
 </script>
 
