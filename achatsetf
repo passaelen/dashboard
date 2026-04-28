@@ -8,8 +8,8 @@
     <title>Achats</title>
 
 
-<link rel="stylesheet" href="couleurs.css?v=6">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="couleurs.css?v=8">
+<link rel="stylesheet" href="style.css?v=8">
 
 
 </head>
@@ -35,7 +35,7 @@
                                     <tr>
                                         <th>Dates</th>
                                         <th>Type</th>
-                                        <th>Parts</th>
+                                        <th>Poids</th>
                                         <th>Montant</th>
                                     </tr>
                             </thead>
