@@ -10,7 +10,7 @@
     <title>Portefeuille</title>
 
     <link rel="stylesheet" href="couleurs.css?v=28">
-    <link rel="stylesheet" href="style.css?v=1859">
+    <link rel="stylesheet" href="style.css?v=1860">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille</h2>
+        <h2>💼 Portefeuille1</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -310,17 +310,13 @@
 
 
 
-<!-- ✅ NOUVEAU BLOC % GLOBAL -->
-
-
-
 
 
 
 
 
 <script src="data.js"></script>
-
+<script src="achats.js"></script>
 
 <script>
 // ===== alert("JS OK");  =====
@@ -356,6 +352,21 @@ const COLORS = {
   chart_text: styles.getPropertyValue('--chart-text').trim(),
   chart_white: styles.getPropertyValue('--chart-white').trim()
  };
+
+
+// ===== venant de achat.js pour représentation graphique ===== 
+function normalizeDateFR(date) {
+  const [day, month] = date.split("/");
+  return `${day.padStart(2,'0')}/${month.padStart(2,'0')}`;
+}
+ 
+function getAchatsByLabel(label) {
+  return achats.filter(a => normalizeDateFR(a.date) === label);
+}
+
+function hasAchatLabel(label) {
+  return achats.some(a => normalizeDateFR(a.date) === label);
+}
 
  
 
@@ -484,6 +495,8 @@ async function fetchPrices(){
 }
 
 
+
+// ===== parseCSV ===== 
 function parseCSV(text) {
     return text
         .trim()
@@ -492,12 +505,7 @@ function parseCSV(text) {
 }
 
 
-
-
-
-
-
-// ===== CALCUL =====
+// ===== CALCULATE =====
 function calculate(){
 
     const p = state.prices;
@@ -1537,6 +1545,18 @@ function setPerf(id, value){
 
 
 
+// 👇 Effect clignotant graphique pour les achats
+let pulse = 0;
+
+setInterval(() => {
+  pulse += 0.1;
+  if (pulse > Math.PI * 2) pulse = 0;
+
+  if (window.chart10j) {
+    window.chart10j.update();
+  }
+}, 100);
+
 
 
 
@@ -1634,7 +1654,17 @@ window.chart10j = new Chart(ctx, {
                 backgroundColor: gradient,
                 fill: true,
 
-                pointRadius: 3,
+             
+                pointRadius: (context) => {
+                 const label = context.chart.data.labels[context.dataIndex];
+                 if (hasAchatLabel(label)) {return 4 + Math.sin(pulse) * 2;}
+                 return 3;
+                },
+
+
+
+
+             
                 pointHitRadius: 20,
 
                 pointHoverRadius: 12,
@@ -1653,8 +1683,11 @@ window.chart10j = new Chart(ctx, {
                     return diff >= 0 ? COLORS.chart_up : COLORS.chart_down;
                 },
 
-                pointBorderWidth: 0
-            },
+                pointBorderWidth: (context) => {
+                   const label = context.chart.data.labels[context.dataIndex];
+                   return hasAchatLabel(label) ? 2 : 0;
+               },
+             
             {
                 data: movingAvg,
                 tension: 0.4,
