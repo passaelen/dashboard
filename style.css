@@ -9,14 +9,7 @@ body {
     overscroll-behavior: none;
 }
 
-.table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* 🔥 smooth iOS */
-}
 
-table {
-    min-width: 600px; /* 🔥 important → empêche compression */
-}
 
 .center {
     text-align: center;
