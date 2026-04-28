@@ -5,6 +5,8 @@ const achats = [
  {date: "02/03/2026", type: "ETF_MONDE", montant: 154.20, parts: 1, label: "1 ETF Monde"},
  {date: "25/02/2026", type: "ETF_MONDE", montant: 155.11, parts: 1, label: "1 ETF Monde"}, 
  {date: "16/02/2026", type: "ETF_MONDE", montant: 152.25, parts: 1, label: "1 ETF Monde"}, 
-  
+
+ {date: "20/03/2026", type: "ETF_SENIORS", montant: 1048.57, parts: 1, label: "13 ETF SENIORS"}, 
+ 
  {date: "19/01/2026", type: "OR", montant: 2250.60, poids: 15.55, label: "5x 1/10 Philharmonique"}
 ];
