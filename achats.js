@@ -1,6 +1,6 @@
 const metaux = [
   {date: "19/01/2026", type: "OR", montant: 2250.60, poids: 15.55, label: "5x 1/10 Philh."}
-];
+]
 
 const achats = [
  {date: "27/04/2026", type: "ETF_MONDE", montant: 471.58, parts: 3, label: "3 ETF Monde"},
