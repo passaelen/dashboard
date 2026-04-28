@@ -8,8 +8,8 @@
     <title>Achats</title>
 
 
-<link rel="stylesheet" href="couleurs.css?v=3">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="couleurs.css?v=4">
+<link rel="stylesheet" href="style.css?v=4">
 
 
 </head>
@@ -33,7 +33,7 @@
                     <table>
                             <thead>
                                     <tr>
-                                        <th>Dates</th>
+                                        <th>Date</th>
                                         <th>Type</th>
                                         <th>Détail</th>
                                         <th>Montant</th>
@@ -50,15 +50,13 @@
 </div> 
 
 
-<script src="achats.js">alert("JS OK"); </script>
+<script src="achats.js">alert("JS OKkkk"); </script>
 
 <script>
 
 
     
 
-const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
-document.getElementById("total-achats").innerText = euro(total);
   
 // ===== HELPERS =====
 function euro(v){
@@ -106,6 +104,10 @@ function renderAchats(){
 
 renderAchats();
 
+
+const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
+document.getElementById("total-achats").innerText = euro(total);
+    
 </script>
 
 </body>
