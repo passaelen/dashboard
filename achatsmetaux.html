@@ -8,8 +8,8 @@
     <title>Achats</title>
 
 
-<link rel="stylesheet" href="couleurs.css?v=11">
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="couleurs.css?v=12">
+<link rel="stylesheet" href="style.css?v=12">
 
 </head>
 
@@ -37,9 +37,9 @@
                                     <tr>
                                         <th>Date</th>
                                         <th>Type</th>
-                                        <th>Location</th>
+                                        <th>Loc.</th>
                                         <th>Poids</th>
-                                        <th>Montant</th>
+                                        <th>Tot.</th>
                                         <th>Label</th>
                                     </tr>
                             </thead>
@@ -93,9 +93,9 @@ function renderAchats(){
                 <span class="dot ${getClassByType(a.type)}"></span>
                 ${a.type === "OR" ? "Or" : "Argent"}
             </td>
-            <td class="center">${a.location}</td>
+            <td class="center">${a.loc.}</td>
             <td class="center">${a.poids}</td>
-            <td class="amount">${euro(a.montant)}</td>
+            <td class="amount">${euro(a.tot.)}</td>
             <td class="center">${a.label}</td>
         `;
 
