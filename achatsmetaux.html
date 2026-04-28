@@ -8,8 +8,8 @@
     <title>Achats</title>
 
 
-<link rel="stylesheet" href="couleurs.css?v=6">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="couleurs.css?v=11">
+<link rel="stylesheet" href="style.css?v=11">
 
 
 </head>
@@ -21,8 +21,11 @@
 <!-- HEADER -->
     <div class="header">
         <div class="header-left">
-            <h2>🧾 Achats</h2>
+            <h2>🧾 Achats Métaux</h2>
             <small>Journal d'exécution</small>
+        </div>
+        <div class="header-right">
+            <a href="index.html" class="badge">← Retour</a>
         </div>
     </div>
 
@@ -35,16 +38,16 @@
                                     <tr>
                                         <th>Dates</th>
                                         <th>Type</th>
-                                        <th>Parts</th>
+                                        <th>Poids</th>
                                         <th>Montant</th>
                                     </tr>
                             </thead>
-                            <tbody id="table-achats"></tbody>
+                            <tbody id="table-metaux"></tbody>
                     </table>
         
                       <div class="total-line">
                         <span>Total investi</span>
-                        <span id="total-achats"></span>
+                        <span id="total-metaux"></span>
                       </div>
     </div> 
 </div> 
@@ -73,7 +76,7 @@ function renderAchats(){
     const tbody = document.getElementById("table-achats");
 
     // tri DESC (plus récent en haut)
-    const sorted = [...achats].sort((a,b)=>{
+    const sorted = [...metaux].sort((a,b)=>{
         return new Date(b.date.split("/").reverse().join("-")) 
              - new Date(a.date.split("/").reverse().join("-"));
     });
@@ -88,7 +91,7 @@ function renderAchats(){
                 <span class="dot ${getClassByType(a.type)}"></span>
                 ${a.type}
             </td>
-            <td>${a.parts}</td>
+            <td>${a.poids}</td>
             <td>${euro(a.montant)}</td>
         `;
 
