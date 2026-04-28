@@ -33,7 +33,7 @@
                     <table>
                             <thead>
                                     <tr>
-                                        <th>Date</th>
+                                        <th>Dates</th>
                                         <th>Type</th>
                                         <th>Détail</th>
                                         <th>Montant</th>
@@ -49,9 +49,13 @@
     </div> 
 </div> 
 
+
 <script src="achats.js"></script>
 
 <script>
+alert("JS OK");  
+
+    
 
 const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
 document.getElementById("total-achats").innerText = euro(total);
