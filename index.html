@@ -21,7 +21,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="header-left">
-        <h2>💼 Portefeuille2</h2>
+        <h2>💼 Portefeuille</h2>
         <small>Or · Argent · ETF</small>
     </div>
 
@@ -1725,25 +1725,48 @@ window.chart10j = new Chart(ctx, {
 
                 callbacks: {
                     label: (context) => {
-                        const i = context.dataIndex;
-                        const point = enriched[i];
-                        if (!point) return "";
-
-                        const value = point.total.toLocaleString('fr-BE') + " €";
-
-                        const diff = point.diff || 0;
-                        const pct = point.pct || 0;
-
-                        if (Math.abs(diff) < 1) return [value];
-
+                    const i = context.dataIndex;
+                    const point = enriched[i];
+                    if (!point) return "";
+                
+                    const value = point.total.toLocaleString('fr-BE') + " €";
+                
+                    const diff = point.diff || 0;
+                    const pct = point.pct || 0;
+                
+                    const label = context.chart.data.labels[i];
+                    const achatsJour = getAchatsByLabel(label);
+                
+                    let lines = [value];
+                
+                    // 📊 variation
+                    if (Math.abs(diff) >= 1) {
                         const sign = diff >= 0 ? "+" : "";
-
-                        return [
-                            value,
-                            `${sign}${diff.toLocaleString('fr-BE', { maximumFractionDigits: 0 })} € (${sign}${pct.toFixed(2).replace('.', ',')}%)`
-                        ];
+                        lines.push(
+                            `${sign}${diff.toLocaleString('fr-BE', { maximumFractionDigits: 0 })} € ` +
+                            `(${sign}${pct.toFixed(2).replace('.', ',')}%)`
+                        );
                     }
-                }
+                
+                    // 🔥 ACHATS
+                    if (achatsJour.length > 0) {
+                        lines.push(""); // espace
+                        lines.push("🟢 ACHAT" + (achatsJour.length > 1 ? ` (${achatsJour.length})` : ""));
+                
+                        achatsJour.forEach(a => {
+                            let line = `• ${a.label}`;
+                
+                            if (a.montant) {
+                                line += ` — ${Math.round(a.montant)} €`;
+                            }
+                
+                            lines.push(line);
+                        });
+                    }
+                
+                    return lines;
+                }// !!! Fin Label  
+                }// !!! Fincallbacks
             }
         },
 
