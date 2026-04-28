@@ -8,8 +8,8 @@
     <title>Achats</title>
 
 
-<link rel="stylesheet" href="couleurs.css?v=8">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="couleurs.css?v=9">
+<link rel="stylesheet" href="style.css?v=9">
 
 
 </head>
@@ -61,8 +61,9 @@ function euro(v){
 // ===== COULEUR TYPE =====
 function getClassByType(type){
     switch(type){
-        case "OR": return "dot-or-suisse";
-        case "ARGENT": return "dot-argent";
+        case "ETF_MONDE": return "dot-monde";
+        case "ETF_SENIOR": return "dot-seniors";
+        case "ETF_JUNIOR": return "dot-junios";
         default: return "";
     }
 }
@@ -73,9 +74,11 @@ function renderAchats(){
     const tbody = document.getElementById("table-achats");
 
     // tri DESC (plus récent en haut)
-    const sorted = [...achats].sort((a,b)=>{
-        return new Date(b.date.split("/").reverse().join("-")) 
-             - new Date(a.date.split("/").reverse().join("-"));
+    const achatsETF = achats.filter(a => a.type.includes("ETF"));
+
+    const sorted = achatsETF.sort((a,b)=>{
+    return new Date(b.date.split("/").reverse().join("-")) 
+         - new Date(a.date.split("/").reverse().join("-"));
     });
 
     sorted.forEach(a => {
@@ -86,9 +89,9 @@ function renderAchats(){
             <td>${a.date}</td>
             <td>
                 <span class="dot ${getClassByType(a.type)}"></span>
-                ${a.type}
+                ${a.type.replace("ETF_", "")}
             </td>
-            <td>${a.parts}</td>
+            <td>${a.parts || "-"}</td>
             <td>${euro(a.montant)}</td>
         `;
 
