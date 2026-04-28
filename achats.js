@@ -8,5 +8,5 @@ const achats = [
 
  {date: "20/03/2026", type: "ETF_SENIORS", montant: 1048.57, parts: 13, label: "13 ETF SENIORS"}, 
  
- {date: "19/01/2026", type: "OR", montant: 2250.60, poids: 15.55, label: "5x 1/10 Philharmonique"}
+ {date: "19/01/2026", type: "OR", montant: 2250.60, poids: 15.55, label: "5x 1/10 Philh."}
 ];
