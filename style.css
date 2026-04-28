@@ -9,8 +9,6 @@ body {
     overscroll-behavior: none;
 }
 
-
-
 .center {
     text-align: center;
 }
@@ -560,7 +558,6 @@ th {
     padding: 10px 8px;
     text-align: left;
     opacity: 0.85;
-    white-space: nowrap; /* ok pour headers */
 }
 
 tr {
@@ -575,7 +572,6 @@ td {
     padding: 10px 8px;
     border-bottom: 1px solid #1f2937;
     transition: color 0.3s ease;
-    white-space: normal; /* 🔥 laisse respirer */
 }
 
 /* dernière ligne */
@@ -588,7 +584,10 @@ tr:hover {
     background: rgba(255,255,255,0.03);
 }
 
-
+/* éviter retour ligne */
+th, td {
+    white-space: nowrap;
+}
 
 /* ===== ALIGNEMENTS PAR COLONNE ===== */
 
@@ -615,9 +614,9 @@ th:nth-child(4), td:nth-child(4) {
 /* Gain */
 th:nth-child(5),
 td:nth-child(5) {
-    text-align: left;
+    text-align: right;
     font-weight: 600; /* ← on unifie ici */
-    padding-right: 10px;
+    padding-right: 18px;
 }
 
 
@@ -1170,8 +1169,7 @@ td:nth-child(6) {
 }
 
 @media (max-width: 600px){
-     td:nth-child(5)
-     max-width: 90px;
+
     .total-wrapper {
         flex-direction: column;     /* 🔥 empile */
         align-items: flex-start;    /* aligné gauche */
