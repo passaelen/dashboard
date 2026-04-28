@@ -15,8 +15,17 @@
     table-layout: fixed;
 }
 
+/* padding plus compact */
+.table-metaux th,
+.table-metaux td {
+    padding: 8px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* colonnes fixes */
 .table-metaux th:nth-child(1),
-.table-metaux td:nth-child(1) { width: 60px; } /* DATE */
+.table-metaux td:nth-child(1) { width: 55px; } /* DATE */
 
 .table-metaux th:nth-child(2),
 .table-metaux td:nth-child(2) { width: 50px; } /* TYPE */
@@ -27,14 +36,19 @@
 .table-metaux th:nth-child(4),
 .table-metaux td:nth-child(4) { width: 40px; } /* POIDS */
 
+/* 🔥 LABEL = FLEXIBLE */
 .table-metaux th:nth-child(5),
-.table-metaux td:nth-child(5) { width: 45px; } /* LABEL */
+.table-metaux td:nth-child(5) {
+    width: auto;font-size: 12px;
+    opacity: 0.8;
+}
 
+/* 🔥 TOTAL toujours visible */
 .table-metaux th:nth-child(6),
-.table-metaux td:nth-child(6) { 
+.table-metaux td:nth-child(6) {
     width: 65px;
-    padding-right: 6px;
     text-align: right;
+    padding-right: 2px;
 }
 </style>
     
