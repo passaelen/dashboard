@@ -53,10 +53,7 @@
 <script src="achats.js"></script>
 
 <script>
-// ===== HELPERS =====
-function euro(v){
-    return Math.round(v).toLocaleString('fr-BE') + " €";
-}
+
 
 // ===== COULEUR TYPE =====
 function getClassByType(type){
@@ -96,11 +93,12 @@ function renderAchats(){
     });
 }
 
-renderAchats();
-
-
 const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
 document.getElementById("total-achats").innerText = euro(total);
+
+    
+renderAchats();
+
     
 </script>
 
