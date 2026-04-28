@@ -39,8 +39,9 @@
                                         <th>Type</th>
                                         <th>Loc.</th>
                                         <th>Poids</th>
-                                        <th>Tot.</th>
                                         <th>Label</th>
+                                        <th>Tot.</th>
+                                        
                                     </tr>
                             </thead>
                             <tbody id="table-metaux"></tbody>
@@ -95,9 +96,9 @@ function renderAchats(){
             </td>
             <td class="center">${a.loc}</td>
             <td class="center">${a.poids}</td>
-            <td class="amount">${euro(a.tot)}</td>
             <td class="center">${a.label}</td>
-        `;
+            <td class="amount">${euro(a.tot)}</td>
+            `;
 
         tbody.appendChild(row);
     });
