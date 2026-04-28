@@ -8,6 +8,18 @@ body {
     color: #e5e7eb;
     overscroll-behavior: none;
 }
+
+.center {
+    text-align: center;
+}
+
+/* montant pro finance */
+.amount {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.3px;
+}
+
  
 /* =====  
 background: radial-gradient(circle at top, #0f172a, #020617);
@@ -550,6 +562,7 @@ th {
 
 tr {
     height: 42px;
+    transition: background 0.2s ease;
 }
 
 
@@ -661,6 +674,13 @@ td:nth-child(6) {
 
     color: #facc15;
 }
+
+
+/* petit effet premium sur le total */
+.total-line span:first-child {
+    opacity: 0.8;
+}
+
 
 .total-line span:last-child {
     color: #fff;
