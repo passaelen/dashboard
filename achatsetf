@@ -64,8 +64,6 @@ function getClassByType(type){
         case "ETF_MONDE": return "dot-monde";
         case "ETF_SENIOR": return "dot-seniors"; 
         case "ETF_JUNIOR": return "dot-juniors";
-        case "OR": return "dot-or-suisse";
-        case "ARGENT": return "dot-argent";
         default: return "";
     }
 }
