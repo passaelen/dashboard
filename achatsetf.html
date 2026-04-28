@@ -94,15 +94,15 @@ function renderAchats(){
 
         tbody.appendChild(row);
     });
-}
-
-renderAchats();
-
 
 const total = sorted.reduce((sum, a) => sum + (a.montant || 0), 0);
 document.getElementById("total-achats").innerText = euro(total);
     
-</script>
+}
+renderAchats();
 
+
+    
+</script>
 </body>
 </html>
