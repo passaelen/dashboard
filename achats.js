@@ -11,8 +11,25 @@ const achats = [
 
 const metaux = [
   {date: "30/01/2026", type: "OR", loc: "Bel.", tot: 912.00, poids: 6.22, label: "⅒ M.Leaf"},
-  {date: "26/01/2026", type: "OR", loc: "Bel.", tot: 0.00, poids: 15.55, label: "Arbitrage"},
-  {date: "19/01/2026", type: "OR", loc: "Bel.", tot: 2250.60, poids: 15.55, label: "⅒ Philh."}
+  {date: "26/01/2026", type: "OR", loc: "Bel.", tot: 0.0, poids: 15.55, label: "Arb. ⅟₄ M.Leaf"},
+  {date: "19/01/2026", type: "OR", loc: "Bel.", tot: 2250.0, poids: 15.55, label: "⅒ Philh."},
+  {date: "05/03/2025", type: "OR", loc: "Bel.", tot: 598.46, poids: 6.22, label: "⅒ Koala"},
+  {date: "13/12/2024", type: "OR", loc: "Bel.", tot: 778.28, poids: 18.66, label: "⅒ M.Leaf"},
+  {date: "23/10/2024", type: "OR", loc: "Bel.", tot: 560.88, poids: 21.77, label: "⅒ M.Leaf"},
+  {date: "08/10/2024", type: "OR", loc: "Bel.", tot: 267.52, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "18/09/2024", type: "OR", loc: "Bel.", tot: 258.70, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "21/08/2024", type: "OR", loc: "Bel.", tot: 253.91, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "26/07/2024", type: "OR", loc: "Bel.", tot: 245.95, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "25/07/2024", type: "OR", loc: "Bel.", tot: 268.19, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "29/09/2023", type: "OR", loc: "Bel.", tot: 202.93, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "26/09/2023", type: "OR", loc: "Bel.", tot: 207.98, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "12/09/2023", type: "OR", loc: "Bel.", tot: 206.65, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "29/08/2023", type: "OR", loc: "Bel.", tot: 205.24, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "18/07/2023", type: "OR", loc: "Bel.", tot: 202.30, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "20/06/2023", type: "OR", loc: "Bel.", tot: 204.85, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "31/05/2023", type: "OR", loc: "Bel.", tot: 211.38, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "05/05/2023", type: "OR", loc: "Bel.", tot: 213.58, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "21/04/2023", type: "OR", loc: "Bel.", tot: 208.59, poids: 3.11, label: "⅒ M.Leaf"},
+  {date: "01/04/2023", type: "OR", loc: "Bel.", tot: 209.06, poids: 3.11, label: "⅒ M.Leaf"}
 ];
-
 
