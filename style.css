@@ -724,13 +724,7 @@ td:nth-child(6) {
     display: inline-block;   /* 🔥 IMPORTANT */
 }
 
-/* couleurs EXACTEMENT comme tes donuts */
-.dot-or-suisse { background: #facc15; }
-.dot-or-belgique { background: #f59e0b; }
-.dot-argent { background: #9ca3af; }
 
-.dot-monde { background: #38bdf8; }
-.dot-seniors { background: #22c55e; }
 
 .legend div::before {
     display: none !important;
