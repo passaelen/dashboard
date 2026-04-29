@@ -1337,19 +1337,19 @@ function renderMarketState(score, momentum){
     
     if(momentum > 0.15){
         arrow = "⬆️";
-        strength = "forte pression haussière";
+        strength = "⬆️ Pression forte ⬆️";
     }
     else if(momentum > 0.05){
         arrow = "↑";
-        strength = "pression haussière";
+        strength = "⬆️ Pression ⬆️";
     }
     else if(momentum < -0.15){
         arrow = "⬇️";
-        strength = "forte pression baissière";
+        strength = "⬇️ Pression forte ⬇️";
     }
     else if(momentum < -0.05){
         arrow = "↓";
-        strength = "pression baissière";
+        strength = "⬇️ Pression ⬇️";
     }
 
     badge.innerText = `${state} ${arrow} · ${text} (clôtures veille)`;
