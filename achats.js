@@ -11,6 +11,7 @@ const achats = [
 
 const metaux = [
   {date: "30/01/2026", type: "OR", loc: "Bel.", tot: 912.00, poids: 06.22, label: "⅒ M.Leaf"},
+  {date: "26/01/2026", type: "OR", loc: "Bel.", tot: 00.00, poids: 15.55, label: "Arbitrage"},
   {date: "19/01/2026", type: "OR", loc: "Bel.", tot: 2250.60, poids: 15.55, label: "⅒ Philh."}
 ];
 
