@@ -12,7 +12,7 @@ const achats = [
 const metaux = [
   {date: "30/01/2026", type: "OR", loc: "Bel.", tot: 912.00, poids: 6.22, label: "⅒ M.Leaf"},
   {date: "26/01/2026", type: "OR", loc: "Bel.", tot: 0.0, poids: 15.55, label: "Arb. ⅟₄ M.Leaf"},
-  {date: "19/01/2026", type: "OR", loc: "Bel.", tot: 2250.0, poids: 15.55, label: "⅒ Philh."},
+  {date: "19/01/2026", type: "OR", loc: "Bel.", tot: 2250.60, poids: 15.55, label: "⅒ Philh."},
   {date: "05/03/2025", type: "OR", loc: "Bel.", tot: 598.46, poids: 6.22, label: "⅒ Koala"},
   {date: "13/12/2024", type: "OR", loc: "Bel.", tot: 778.28, poids: 18.66, label: "Arb. ⅒ M.Leaf"},
   {date: "23/10/2024", type: "OR", loc: "Bel.", tot: 560.88, poids: 21.77, label: "Arb. ⅒ M.Leaf"},
