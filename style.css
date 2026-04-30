@@ -1467,3 +1467,34 @@ td:nth-child(6) {
         padding: 12px 10px;
     }
 }
+
+/* ===== JOURNAL NAV ===== */
+
+.journal-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.journal-nav button {
+    padding: 14px;
+    border-radius: 12px;
+
+    background: linear-gradient(145deg, #0b1220, #020617);
+    border: 1px solid rgba(255,255,255,0.08);
+
+    color: #e5e7eb;
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: all 0.2s ease;
+}
+
+.journal-nav button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(56,189,248,0.2);
+}
+
+.journal-nav button:active {
+    transform: scale(0.97);
+}
