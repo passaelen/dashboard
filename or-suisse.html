@@ -75,6 +75,7 @@
 <div class="total-line">
   <span>🟡 Total GoldAvenue</span>
   <span id="tableTotal">0 g</span>
+  <small id="prixMoyen">0 €/g</small>
 </div>
 
 </div><!-- Fin CARD -->
@@ -116,8 +117,10 @@ orSuisse.forEach(m => {
 let totalPoids = 0;
 let totalLingots = 0;
 let totalPieces = 0;
+let totalValeur = 0;
 
 orSuisse.forEach(m => {
+  totalValeur += m.tot || 0;
   if (m.label.includes("L.")) {
     totalLingots += m.poids;
   } else {
@@ -135,6 +138,7 @@ document.getElementById("totalPieces").textContent =
 	
 	
 document.querySelectorAll("tr[data-label]").forEach(row => {
+  const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;	
   const label = row.dataset.label;
   const item = map[label];
 
@@ -162,6 +166,9 @@ document.getElementById("totalSwiss").textContent =
 
 document.getElementById("tableTotal").textContent =
   totalPoids.toFixed(2) + " g";
+
+document.getElementById("prixMoyen").textContent =
+  prixMoyen.toFixed(2) + " €/g";
 
 </script>
 
