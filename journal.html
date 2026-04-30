@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Journal Vivant</title>
+
+<link rel="stylesheet" href="couleurs.css">
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h2>📓 Journal Vivant</h2>
+<small class="text-muted">Suivi mensuel — Lecture de cycle</small>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="card">
+
+<div class="journal-nav">
+
+<button onclick="go('journal-janvier2026.html')">
+📘 Janvier 2026
+</button>
+
+<button onclick="go('journal-fevrier2026.html')">
+📗 Février 2026
+</button>
+
+<button onclick="go('journal-mars2026.html')">
+📕 Mars 2026
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function go(url){
+    window.location.href = url;
+}
+</script>
+
+</body>
+</html>
