@@ -1395,3 +1395,75 @@ td:nth-child(6) {
     font-size: 10px;
     opacity: 0.6;
 }
+
+/* ===== JOURNAL ===== */
+
+.journal-container {
+    max-width: 760px;
+    margin: auto;
+    padding: 16px 12px;
+    line-height: 1.65;
+    font-size: 14px;
+    color: #e2e8f0;
+}
+
+/* titre principal */
+.journal-container h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+/* sections */
+.journal-container h3 {
+    margin-top: 22px;
+    font-size: 14px;
+    color: #38bdf8;
+    letter-spacing: 0.3px;
+}
+
+/* paragraphes */
+.journal-container p {
+    margin-top: 8px;
+    opacity: 0.95;
+}
+
+/* table journal (différente de ton dashboard) */
+.journal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.journal-table th {
+    text-align: left;
+    font-size: 11px;
+    color: #94a3b8;
+    padding: 6px;
+}
+
+.journal-table td {
+    padding: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* signature */
+.signature {
+    margin-top: 20px;
+    opacity: 0.75;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* bloc final */
+.journal-container b {
+    font-weight: 600;
+}
+
+/* mobile */
+@media (max-width: 600px){
+    .journal-container {
+        font-size: 13.5px;
+        padding: 12px 10px;
+    }
+}
