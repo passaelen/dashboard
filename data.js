@@ -5,7 +5,7 @@ const DATA = {
     argent_g: 6000,
 
     or_suisse_cost: 19722.90,
-    or_belgique_cost: 8375.39,
+    or_belgique_cost: 8467.05,
     argent_cost: 3379.88
   },
 
