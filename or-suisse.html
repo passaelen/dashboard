@@ -136,9 +136,8 @@ document.getElementById("totalPieces").textContent =
   totalPieces.toFixed(2) + " g";
 
 	
-	
+// 🔹 boucle	
 document.querySelectorAll("tr[data-label]").forEach(row => {
-  const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;	
   const label = row.dataset.label;
   const item = map[label];
 
@@ -150,17 +149,17 @@ document.querySelectorAll("tr[data-label]").forEach(row => {
     poidsCell.textContent = item.poids.toFixed(2) + " g";
   }
 
-
-
+  
   totalPoids += item.poids;
 });
 
 
-
+// 🔹 calcul prix moyen	
+const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;	
 
 
 	
-// 🔹 Totaux globaux
+// 🔹 affichage
 document.getElementById("totalSwiss").textContent =
   totalPoids.toFixed(2) + " g";
 
