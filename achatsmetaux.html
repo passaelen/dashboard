@@ -154,8 +154,13 @@ function renderAchats(){
         tbody.appendChild(row);
     });
 
-    const total = sorted.reduce((sum, a) => sum + Math.round(a.tot || 0), 0);
-    document.getElementById("total-metaux").innerText = euro(total);
+    const total = sorted.reduce((sum, a) => sum + (a.tot || 0), 0);
+
+// 🔥 FIX FLOAT
+const totalFixed = Math.round((total + Number.EPSILON) * 100) / 100;
+
+document.getElementById("total-metaux").innerText = euro(totalFixed);
+    
 }
 
 renderAchats();
