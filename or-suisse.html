@@ -3,8 +3,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-  <title>🇨🇭 Or Suisse</title>  <link rel="stylesheet" href="style.css">
- 
+  <title>🇨🇭 Or Suisse</title>  
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="couleur.css?v=2">
+  .total-sub {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    margin-top: 4px;
+    opacity: 0.85;
+	}
+	
+	.total-sub span {
+	    font-variant-numeric: tabular-nums;
+	}	
+
+	
+	
 </head>
 	
 <body>  <!-- HEADER -->  
@@ -74,10 +93,13 @@
 
 
 <div class="total-line">
-  <span>🟡 Total Suisse</span>
+  <span><span class="dot dot-or-suisse"></span>Total Suisse</span>
   <span id="tableTotal">0 g</span>
-  <span id="totalValeur">0€</span>
-  <small id="prixMoyen">0 €/g</small>
+</div>
+
+<div class="total-sub">
+  <span id="totalValeur">0 €</span>
+  <span id="prixMoyen">0 €/g</span>
 </div>
 
 </div><!-- Fin CARD -->
