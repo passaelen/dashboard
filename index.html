@@ -638,6 +638,8 @@ function setValueColor(id, value){
         el.classList.add("positive");
     } else if(value < 0){
         el.classList.add("negative");
+    } else {
+        el.style.opacity = "0.6"; // neutre visuel
     }
 }
 
