@@ -14,24 +14,17 @@
 
 <!-- HEADER -->
 <div class="header">
-  <div class="header-left">
-    <h2>🥈 Argent Suisse</h2>
-    <small>Stock sécurisé</small>
-  </div>
-
-  <div class="header-right">
-    <a href="index.html" class="badge">← Retour</a>
-  </div>
+  <div class="header-left"><h2>🥈 Argent Suisse</h2><small>Stock sécurisé</small></div>
+  <div class="header-right"><a href="index.html" class="badge">← Retour</a></div>
 </div>
 
-<div class="container">
+<div class="container"> <!-- TOTAL -->
+<div class="highlight"><small>Total Argent Suisse</small><h2 id="totalSilver">0 g</h2></div>
+<div class="card"><h3>Argent</h3>
 
-  <!-- TOTAL -->
-  <div class="highlight"><small>Total Argent Suisse</small><h2 id="totalSilver">0 g</h2></div>
-
+	
   <!-- TABLE -->
-  <div class="card">
-    <h3>Argent</h3>
+  
 
     <table>
       <thead>
@@ -49,39 +42,121 @@
           <td colspan="3"><strong>🧱 Lingots</strong></td>
         </tr>
 
-        <tr data-label="L. 1Kg.">
-          <td>Lingot Argent 1 kg</td>
-          <td>6</td>
-          <td class="poids">0 g</td>
-        </tr>
+        <tr data-label="L. 1Kg."><td>Lingot Argent 1 kg</td><td>6</td><td class="poids">0 g</td></tr>
+		</tbody>  
 </table>       
 
 <br>
 
- <table>  
-	<div class="total-line" style="color:#cbd5f5;">
-	   <span class="dot dot-argent-suisse"> Total des achats en Suisse : </span>
-	   <span id="tableTotal">0 g</span>
+   
+	<div class="total-line">
+	   <span><span class="dot dot-argent-suisse"> </span> Total des achats en Suisse : </span>
+	   <span id="totalValeur">0 g</span>
 	</div>
-</table>
+	<div class="total-sub">
+		<span id="tableTotal">0 g</span>
+	    <span id="prixMoyen">0 €/g</span>
+	</div>
 
-</tbody>
-  
-
-  </div>
-
-</div>
+</div><!-- Fin CARD -->
+</div><!-- Fin container -->  
 
 
 <!-- SCRIPT -->
-<script src="achats.js"></script>	
-<script>
-const weight = DATA?.portfolio?.argent_g || 0;
+// 🔹 Récupération des données
+const data = typeof metaux !== "undefined" ? metaux : [];
 
-const formatted = weight.toFixed(0) + " g";
 
-document.getElementById("totalSilver").textContent = formatted;
-document.getElementById("tableTotal").textContent = formatted;
+// 🔹 Filtre argent Suisse
+const argentSuisse = data.filter(m => m.type === "ARGENT" && m.loc === "Suisse");
+
+// 🔹 Index par label
+const map = {};
+
+argentSuisse.forEach(m => {
+  if (!map[m.label]) {
+    map[m.label] = {
+      poids: 0,
+      total: 0,
+      count: 0
+    };
+  }
+
+  map[m.label].poids += m.poids || 0;
+  map[m.label].total += m.tot || 0;
+  map[m.label].count += 1;
+});
+
+// 🔹 Injection dans le HTML
+let totalPoids = 0;
+let totalLingots = 0;
+let totalPieces = 0;
+let totalValeur = 0;
+let totalLingotsVal = 0;
+let totalPiecesVal = 0;	
+
+
+	argentSuisse.forEach(m => {
+  totalValeur += m.tot || 0;
+
+  if (m.label.includes("L.")) {
+    totalLingots += m.poids;
+    totalLingotsVal += m.tot || 0;
+  } else {
+    totalPieces += m.poids;
+    totalPiecesVal += m.tot || 0;
+  }
+});
+
+document.getElementById("totalLingots").textContent =
+  totalLingots.toFixed(2) + " g";
+
+document.getElementById("totalPieces").textContent =
+  totalPieces.toFixed(2) + " g";
+
+// 🔹 boucle	
+document.querySelectorAll("tr[data-label]").forEach(row => {
+  const label = row.dataset.label;
+  const item = map[label];
+  const montantCell = row.querySelector(".montant");
+
+  if (!item) return;
+
+// poids
+  const poidsCell = row.querySelector(".poids");
+	  if (poidsCell) {
+	    poidsCell.textContent = item.poids.toFixed(2) + " g";
+	  }
+
+	if (montantCell) {
+	  montantCell.textContent = item.total.toFixed(2) + " €";
+	}
+
+  
+  totalPoids += item.poids;
+});
+
+
+// 🔹 calcul prix moyen	
+const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;	
+
+
+// 🔹 affichage
+document.getElementById("totalValeur").textContent =
+  totalValeur.toFixed(2) + " €";
+	
+document.getElementById("total-line").textContent =
+  totalPoids.toFixed(2) + " g";
+
+document.getElementById("tableTotal").textContent =
+  totalPoids.toFixed(2) + " g";
+	
+document.getElementById("prixMoyen").textContent =
+  prixMoyen.toFixed(2) + " €/g";	
+
+
+	
+	
 </script>
 
 </body>
