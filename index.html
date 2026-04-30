@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="couleurs.css?v=202630041939">
-<link rel="stylesheet" href="style.css?v=202630041939">
+<link rel="stylesheet" href="couleurs.css?v=202630041940">
+<link rel="stylesheet" href="style.css?v=202630041940">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -622,28 +622,6 @@ function euro(v){
 
     return pct.toFixed(2).replace('.',',') + "%";
 }
-
-
-// ===== VALEURS GAINS VERT/ROUGE =====
-function setValueColor(id, value){
-
-    const el = document.getElementById(id);
-    if(!el) return;
-
-    el.innerText = euroSigned(value);
-
-    el.classList.remove("positive", "negative");
-
-    if(value > 0){
-        el.classList.add("positive");
-    } else if(value < 0){
-        el.classList.add("negative");
-    } else {
-        el.style.opacity = "0.6"; // neutre visuel
-    }
-}
-
-
 
 
 // ===== ALERT =====
@@ -1485,6 +1463,28 @@ labelE.innerHTML = `
 function renderTables(data, p, pf, etf, pe){
 
 
+
+// ===== VALEURS GAINS VERT/ROUGE =====
+function setValueColor(id, value){
+
+    const el = document.getElementById(id);
+    if(!el) return;
+
+    el.innerText = euroSigned(value);
+
+    el.classList.remove("positive", "negative");
+
+    if(value > 0){
+        el.classList.add("positive");
+    } else if(value < 0){
+        el.classList.add("negative");
+    } else {
+        el.style.opacity = "0.6"; // neutre visuel
+    }
+}
+
+
+// ===== VALEURS PERF VERT/ROUGE =====
 function setPerf(id, value){
 
     const el = document.getElementById(id);
