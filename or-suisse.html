@@ -76,7 +76,7 @@
 <div class="total-line">
   <span>🟡 Total Suisse</span>
   <span id="tableTotal">0 g</span>
-  <span id="totalPiecesVal">0€</span>
+  <span id="totalValeur">0€</span>
   <small id="prixMoyen">0 €/g</small>
 </div>
 
@@ -186,6 +186,11 @@ document.getElementById("totalLingotsVal").textContent =
 
 document.getElementById("totalPiecesVal").textContent =
   totalPiecesVal.toFixed(2) + " €";
+
+document.getElementById("totalValeur").textContent =
+  totalValeur.toFixed(2) + " €";
+
+
 </script>
 
 </body>
