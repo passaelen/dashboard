@@ -9,16 +9,13 @@ body {
     overscroll-behavior: none;
 }
 
-.center {
-    text-align: center;
-}
+.center {text-align: center;}
 
 /* montant pro finance */
-.amount {
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.3px;
-}
+.amount {text-align: right; font-variant-numeric: tabular-nums; letter-spacing: 0.3px; }
+.total-sub {display: flex; justify-content: flex-end; gap: 12px; font-size: 12.5px; font-weight: 500; margin-top: 4px; opacity: 0.85; }		
+.total-sub span {font-variant-numeric: tabular-nums; }
+#prixMoyen {opacity: 0.7; }
 
  
 /* =====  
@@ -55,12 +52,6 @@ h4 span {
 /* ===== TEXT UTILS ===== */
 .text-muted { color: #9ca3af; }
 .text-small { font-size: 12px; }
-
-
-
-
-
-
 .gold { color: #facc15; }
 
 /* ===== HEADER ===== */
