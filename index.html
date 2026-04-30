@@ -1352,7 +1352,7 @@ function renderMarketState(score, momentum){
         strength = "Pression ⬇️";
     }
 
-    badge.innerText = `${state} ${arrow} — ${text} (clôtures veille)`;
+    badge.innerText = `${state} ${arrow} : ${text} (clôtures veille)`;
     badge.style.color = color;
 
     
@@ -1362,7 +1362,7 @@ if(strength){
     text += " : " + strength;
 }
 
-  badge.innerText = `${state} ${arrow} — ${text} (clôtures veille)`;
+  badge.innerText = `${state} ${arrow} : ${text} (clôtures veille)`;
   badge.style.color = color;
   updateThemeColor(color);
  
