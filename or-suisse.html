@@ -52,7 +52,7 @@
 
       <tr>
         <td colspan="2"><strong>Total lingots</strong></td>
-        <td><strong>0 g</strong></td>
+        <td><strong id="totalLingots">0 g</strong></td>
       </tr>
 </table>
 
@@ -69,7 +69,7 @@
 
       <tr>
         <td colspan="2"><strong>Total pièces</strong></td>
-        <td><strong>0 g</strong></td>
+        <td><<strong id="totalLingots">0 g</strong></td>
       </tr>
 </table>
 
@@ -118,7 +118,26 @@ orSuisse.forEach(m => {
 
 // 🔹 Injection dans le HTML
 let totalPoids = 0;
+let totalLingots = 0;
+let totalPieces = 0;
 
+orSuisse.forEach(m => {
+  if (m.label.includes("L.")) {
+    totalLingots += m.poids;
+  } else {
+    totalPieces += m.poids;
+  }
+});
+
+
+document.getElementById("totalLingots").textContent =
+  totalLingots.toFixed(2) + " g";
+
+document.getElementById("totalPieces").textContent =
+  totalPieces.toFixed(2) + " g";
+
+	
+	
 document.querySelectorAll("tr[data-label]").forEach(row => {
   const label = row.dataset.label;
   const item = map[label];
@@ -131,16 +150,16 @@ document.querySelectorAll("tr[data-label]").forEach(row => {
     poidsCell.textContent = item.poids.toFixed(2) + " g";
   }
 
-  // quantité
-  const qtyCell = row.children[1];
-  if (qtyCell) {
-    qtyCell.textContent = item.count;
-  }
+
 
   totalPoids += item.poids;
 });
 
 
+
+
+
+	
 // 🔹 Totaux globaux
 document.getElementById("totalSwiss").textContent =
   totalPoids.toFixed(2) + " g";
