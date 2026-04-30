@@ -89,6 +89,21 @@ function getKey(label) {
   return "OTHER";
 }
 
+const grouped = {};
+
+orBelgique.forEach(m => {
+  const key = getKey(m.label);
+
+  if (!grouped[key]) {
+    grouped[key] = { poids: 0, total: 0, count: 0 };
+  }
+
+  grouped[key].poids += m.poids || 0;
+  grouped[key].total += m.tot || 0;
+  grouped[key].count += 1;
+});
+
+
 // 🔹 fonction poids unitaire
 function getUnitWeight(key) {
   switch (key) {
@@ -104,22 +119,8 @@ function getUnitWeight(key) {
       return 1;
   }
 }
+
  
-
-const grouped = {};
-
-orBelgique.forEach(m => {
-  const key = getKey(m.label);
-
-  if (!grouped[key]) {
-    grouped[key] = { poids: 0, total: 0, count: 0 };
-  }
-
-  grouped[key].poids += m.poids || 0;
-  grouped[key].total += m.tot || 0;
-  grouped[key].count += 1;
-});
-
 // 🔹 injection tableau
 document.querySelectorAll("tr[data-key]").forEach(row => {
   const key = row.dataset.key;
