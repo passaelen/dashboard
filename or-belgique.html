@@ -79,10 +79,13 @@ const orBelgique = data.filter(m => m.type === "OR" && m.loc === "Bel.");
 
 // 🔹 regroupement
 function getKey(label) {
-  if (label.includes("Leaf") && label.includes("⅒")) return "ML_1_10";
-  if (label.includes("⅟₄ M.Leaf") && label.includes("¼")) return "ML_1_4";
-  if (label.includes("Philh")) return "PHIL_1_10";
-  if (label.includes("Koala")) return "KOALA_1_10";
+  const l = label.toLowerCase();
+
+  if (l.includes("m.leaf") && l.includes("⅒")) return "ML_1_10";
+  if (l.includes("m.leaf") && (l.includes("¼") || l.includes("⅟₄"))) return "ML_1_4";
+  if (l.includes("philh")) return "PHIL_1_10";
+  if (l.includes("koala")) return "KOALA_1_10";
+
   return "OTHER";
 }
 
