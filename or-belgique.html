@@ -95,12 +95,11 @@ orBelgique.forEach(m => {
   const key = getKey(m.label);
 
   if (!grouped[key]) {
-    grouped[key] = { poids: 0, total: 0, count: 0 };
+    grouped[key] = { poids: 0, total: 0 };
   }
 
   grouped[key].poids += m.poids || 0;
   grouped[key].total += m.tot || 0;
-  grouped[key].count += 1;
 });
 
 
@@ -136,12 +135,11 @@ document.querySelectorAll("tr[data-key]").forEach(row => {
    // 🔥 quantité réelle
   const unit = getUnitWeight(key);
   const qty = unit > 0 ? item.poids / unit : 0;
-
-
  
-  row.children[1].textContent = item.count;
+  row.children[1].textContent = Number((qty).toFixed(0));
 });
 
+ 
 // 🔹 totaux
 let totalPoids = 0;
 let totalValeur = 0;
@@ -151,6 +149,7 @@ Object.values(grouped).forEach(item => {
   totalValeur += item.total;
 });
 
+ 
 // 🔹 prix moyen
 const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;
 
