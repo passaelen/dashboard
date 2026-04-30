@@ -50,8 +50,8 @@
 
    
 	<div class="total-line">
-	   <span><span class="dot dot-argent-suisse"> </span> Total des achats en Suisse : </span>
-	   <span id="totalValeur">0 g</span>
+	   <span><span class="dot dot-argent"></span> Total des achats en Suisse : </span>
+	   <span id="totalValeur">0 €</span>
 	</div>
 	<div class="total-sub">
 		<span id="tableTotal">0 g</span>
@@ -61,7 +61,9 @@
 </div><!-- Fin CARD -->
 </div><!-- Fin container -->  
 
+<script src="achats.js"></script>	
 
+<script>	
 <!-- SCRIPT -->
 // 🔹 Récupération des données
 const data = typeof metaux !== "undefined" ? metaux : [];
@@ -89,11 +91,7 @@ argentSuisse.forEach(m => {
 
 // 🔹 Injection dans le HTML
 let totalPoids = 0;
-let totalLingots = 0;
-let totalPieces = 0;
 let totalValeur = 0;
-let totalLingotsVal = 0;
-let totalPiecesVal = 0;	
 
 
 	argentSuisse.forEach(m => {
@@ -145,7 +143,7 @@ const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;
 document.getElementById("totalValeur").textContent =
   totalValeur.toFixed(2) + " €";
 	
-document.getElementById("total-line").textContent =
+document.getElementById("totalSilver").textContent =
   totalPoids.toFixed(2) + " g";
 
 document.getElementById("tableTotal").textContent =
