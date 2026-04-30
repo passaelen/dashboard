@@ -105,13 +105,14 @@ function euro(v){
 }
 
 // ===== COULEUR TYPE =====
-function getClassByType(type){
-    switch(type){
-        case "OR": return "dot-or-suisse";
-        case "ARGENT": return "dot-argent";
-        default: return "";
+function getClassByType(LOC){
+    switch(loc){
+case "Suisse": return "dot-or-suisse";
+case "Bel.": return "dot-or-belgique";
+default: return "dot-argent";
     }
 }
+
 
 // ===== RENDER =====
 function renderAchats(){
