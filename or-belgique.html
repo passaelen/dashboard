@@ -42,12 +42,10 @@
         <td colspan="3"><strong>🪙 Pièces</strong></td>
       </tr>
 
-      <tr><td>Maple Leaf 1/4 oz</td><td>2</td><td>15,55 g</td></tr>
-      <tr><td>Maple Leaf 1/10 oz</td><td>29</td><td>90,19 g</td></tr>
-      <tr><td>Philharmonique 1/10 oz</td><td>5</td><td>15,55 g</td></tr>
-      <tr><td>Koala 1/10 oz</td><td>2</td><td>6,22 g</td></tr>
-      <tr><td>Kookaburra 1/10 oz</td><td>1</td><td>3,11 g</td></tr>
-     
+      <tr data-key="ML_1_4"><td>Maple Leaf 1/4 oz</td><td>2</td><td class="poids">0 g</td></tr>
+      <tr data-key="ML_1_10"><td>Maple Leaf 1/10 oz</td><td>29</td><td class="poids">0 g</td></tr>
+      <tr data-key="PHIL_1_10"><td>Philharmonique 1/10 oz</td><td>5</td><td class="poids">0 g</td></tr>
+      <tr data-key="KOALA_1_10"><td>Koala 1/10 oz</td><td>2</td><td class="poids">0 g</td></tr>
 </tbody>
 </table>
       
@@ -68,7 +66,6 @@
 </div><!-- Fin container -->  
 
 
-<script src="achats.js"></script>
 
 <script src="achats.js"></script>
 
@@ -80,13 +77,51 @@ const data = typeof metaux !== "undefined" ? metaux : [];
 // 🔹 filtre OR Belgique
 const orBelgique = data.filter(m => m.type === "OR" && m.loc === "Bel.");
 
+// 🔹 regroupement
+function getKey(label) {
+  if (label.includes("M.Leaf") && label.includes("⅒")) return "ML_1_10";
+  if (label.includes("M.Leaf") && label.includes("¼")) return "ML_1_4";
+  if (label.includes("Philh")) return "PHIL_1_10";
+  if (label.includes("Koala")) return "KOALA_1_10";
+  return "OTHER";
+}
+
+const grouped = {};
+
+orBelgique.forEach(m => {
+  const key = getKey(m.label);
+
+  if (!grouped[key]) {
+    grouped[key] = { poids: 0, total: 0, count: 0 };
+  }
+
+  grouped[key].poids += m.poids || 0;
+  grouped[key].total += m.tot || 0;
+  grouped[key].count += 1;
+});
+
+// 🔹 injection tableau
+document.querySelectorAll("tr[data-key]").forEach(row => {
+  const key = row.dataset.key;
+  const item = grouped[key];
+
+  if (!item) return;
+
+  const poidsCell = row.querySelector(".poids");
+  if (poidsCell) {
+    poidsCell.textContent = item.poids.toFixed(2) + " g";
+  }
+
+  row.children[1].textContent = item.count;
+});
+
 // 🔹 totaux
 let totalPoids = 0;
 let totalValeur = 0;
 
-orBelgique.forEach(m => {
-  totalPoids += m.poids || 0;
-  totalValeur += m.tot || 0;
+Object.values(grouped).forEach(item => {
+  totalPoids += item.poids;
+  totalValeur += item.total;
 });
 
 // 🔹 prix moyen
