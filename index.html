@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="couleurs.css?v=202629042125">
-<link rel="stylesheet" href="style.css?v=2003">
+<link rel="stylesheet" href="couleurs.css?v=20263004">
+<link rel="stylesheet" href="style.css?v=20263004">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1352,7 +1352,7 @@ function renderMarketState(score, momentum){
         strength = "Pression ⬇️";
     }
 
-    badge.innerText = `${state} ${arrow} · ${text} (clôtures veille)`;
+    badge.innerText = `${state} ${arrow} = ${text} (clôtures veille)`;
     badge.style.color = color;
 
     
@@ -1362,7 +1362,7 @@ if(strength){
     text += " : " + strength;
 }
 
-  badge.innerText = `${state} ${arrow} · ${text} (clôtures veille)`;
+  badge.innerText = `${state} ${arrow} = ${text} (clôtures veille)`;
   badge.style.color = color;
   updateThemeColor(color);
  
