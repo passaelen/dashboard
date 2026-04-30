@@ -63,98 +63,66 @@
 
 <script src="achats.js"></script>	
 
-<script>	
-<!-- SCRIPT -->
-// 🔹 Récupération des données
+<script src="achats.js"></script>
+
+<script>
+
+// 🔹 données
 const data = typeof metaux !== "undefined" ? metaux : [];
 
-
-// 🔹 Filtre argent Suisse
+// 🔹 filtre ARGENT Suisse
 const argentSuisse = data.filter(m => m.type === "ARGENT" && m.loc === "Suisse");
 
-// 🔹 Index par label
+// 🔹 mapping
 const map = {};
 
 argentSuisse.forEach(m => {
   if (!map[m.label]) {
-    map[m.label] = {
-      poids: 0,
-      total: 0,
-      count: 0
-    };
+    map[m.label] = { poids: 0, total: 0 };
   }
 
   map[m.label].poids += m.poids || 0;
   map[m.label].total += m.tot || 0;
-  map[m.label].count += 1;
 });
 
-// 🔹 Injection dans le HTML
+// 🔹 totaux
 let totalPoids = 0;
 let totalValeur = 0;
 
-
-	argentSuisse.forEach(m => {
+argentSuisse.forEach(m => {
+  totalPoids += m.poids || 0;
   totalValeur += m.tot || 0;
-
-  if (m.label.includes("L.")) {
-    totalLingots += m.poids;
-    totalLingotsVal += m.tot || 0;
-  } else {
-    totalPieces += m.poids;
-    totalPiecesVal += m.tot || 0;
-  }
 });
 
-document.getElementById("totalLingots").textContent =
-  totalLingots.toFixed(2) + " g";
-
-document.getElementById("totalPieces").textContent =
-  totalPieces.toFixed(2) + " g";
-
-// 🔹 boucle	
+// 🔹 injection lignes
 document.querySelectorAll("tr[data-label]").forEach(row => {
   const label = row.dataset.label;
   const item = map[label];
-  const montantCell = row.querySelector(".montant");
 
   if (!item) return;
 
-// poids
   const poidsCell = row.querySelector(".poids");
-	  if (poidsCell) {
-	    poidsCell.textContent = item.poids.toFixed(2) + " g";
-	  }
-
-	if (montantCell) {
-	  montantCell.textContent = item.total.toFixed(2) + " €";
-	}
-
-  
-  totalPoids += item.poids;
+  if (poidsCell) {
+    poidsCell.textContent = item.poids.toFixed(2) + " g";
+  }
 });
 
-
-// 🔹 calcul prix moyen	
-const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;	
-
+// 🔹 prix moyen
+const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;
 
 // 🔹 affichage
-document.getElementById("totalValeur").textContent =
-  totalValeur.toFixed(2) + " €";
-	
 document.getElementById("totalSilver").textContent =
   totalPoids.toFixed(2) + " g";
 
 document.getElementById("tableTotal").textContent =
   totalPoids.toFixed(2) + " g";
-	
+
+document.getElementById("totalValeur").textContent =
+  totalValeur.toFixed(2) + " €";
+
 document.getElementById("prixMoyen").textContent =
-  prixMoyen.toFixed(2) + " €/g";	
+  prixMoyen.toFixed(2) + " €/g";
 
-
-	
-	
 </script>
 
 </body>
