@@ -4,29 +4,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
   <title>🇨🇭 Or Suisse</title>  <link rel="stylesheet" href="style.css">
-	
  
-</head><body>  <!-- HEADER -->  <div class="header">
-    <div class="header-left">
-      <h2>🇨🇭 Or Suisse</h2>
-      <small>Stock sécurisé</small>
-    </div><div class="header-right">
-  <a href="index.html" class="badge">← Retour</a>
-</div>
+</head>
+	
+<body>  <!-- HEADER -->  
+	<div class="header">
+	    <div class="header-left"><h2>🇨🇭 Or Suisse</h2><small>Stock sécurisé</small></div>
+		<div class="header-right"><a href="index.html" class="badge">← Retour</a></div>
+    </div>  
+	
+	<div class="container"><!-- TOTAL -->
+	<div class="highlight"><small>Total Or Suisse</small><h2 id="totalSwiss">0 g</h2></div>
+    <div class="card"><h3>Or</h3>
+		
 
-  </div>  <div class="container"><!-- TOTAL -->
-<div class="highlight">
-  <small>Total Or Suisse</small>
-  <h2 id="totalSwiss">0 g</h2>
-</div>
-
-
-<!-- TABLE -->
-
-<div class="card">
-  <h3>Or</h3>
-
-  <table>
+<table>
+	
     <thead>
       <tr>
         <th>Type</th>
@@ -34,7 +27,6 @@
         <th>Poids</th>
       </tr>
     </thead>
-
     <tbody>
 
       <!-- 🔹 LINGOTS -->
@@ -54,11 +46,13 @@
         <td colspan="2"><strong>Total lingots</strong></td>
         <td><strong id="totalLingots">0 g</strong></td>
       </tr>
+	</tbody>
 </table>
 
    <br>
 
 <table>
+	<tbody>
       <!-- 🔹 PIÈCES -->
       <tr>
         <td colspan="3"><strong>🪙 Pièces</strong></td>
@@ -71,9 +65,11 @@
         <td colspan="2"><strong>Total pièces</strong></td>
         <td><strong id="totalPieces">0 g</strong></td>
       </tr>
+
+</tbody>
 </table>
 
-   <br><br>
+<br><br>
 
 
 <div class="total-line">
@@ -81,11 +77,11 @@
   <span id="tableTotal">0 g</span>
 </div>
 
-</div>
-</div>  
+</div><!-- Fin CARD -->
+</div><!-- Fin container -->  
 
 
-</tbody>
+
 
 
 <script src="achats.js"></script>
