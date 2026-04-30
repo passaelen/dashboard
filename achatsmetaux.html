@@ -105,11 +105,12 @@ function euro(v){
 }
 
 // ===== COULEUR TYPE =====
-function getClassByType(LOC){
-    switch(loc){
-case "Suisse": return "dot-or-suisse";
+function getClassByType(type){
+    switch(type){
+        case "Suisse": return "dot-or-suisse";
 case "Bel.": return "dot-or-belgique";
-default: return "dot-argent";
+        case "ARGENT": return "dot-argent";
+        default: return "dot-argent";
     }
 }
 
