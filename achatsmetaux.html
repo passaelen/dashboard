@@ -101,7 +101,10 @@
 <script>
 // ===== HELPERS =====
 function euro(v){
-    return Math.round(v).toLocaleString('fr-BE') + " €";
+    return v.toLocaleString('fr-BE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }) + " €";
 }
 
 // ===== COULEUR TYPE =====
