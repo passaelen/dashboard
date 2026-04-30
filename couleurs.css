@@ -83,8 +83,8 @@
 
 
 /* PERF */
-.positive { color: var(--perf-positive); }
-.negative { color: var(--perf-negative); }
+.positive { color: var(--perf-positive); font-weight: 600;}
+.negative { color: var(--perf-negative); font-weight: 600;}
 
 
 
