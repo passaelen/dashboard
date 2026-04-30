@@ -89,6 +89,23 @@ function getKey(label) {
   return "OTHER";
 }
 
+// 🔹 fonction poids unitaire
+function getUnitWeight(key) {
+  switch (key) {
+    case "ML_1_10":
+    case "PHIL_1_10":
+    case "KOALA_1_10":
+      return 3.11;
+
+    case "ML_1_4":
+      return 7.78;
+
+    default:
+      return 1;
+  }
+}
+ 
+
 const grouped = {};
 
 orBelgique.forEach(m => {
@@ -115,6 +132,12 @@ document.querySelectorAll("tr[data-key]").forEach(row => {
     poidsCell.textContent = item.poids.toFixed(2) + " g";
   }
 
+   // 🔥 quantité réelle
+  const unit = getUnitWeight(key);
+  const qty = unit > 0 ? item.poids / unit : 0;
+
+
+ 
   row.children[1].textContent = item.count;
 });
 
