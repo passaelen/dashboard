@@ -105,12 +105,21 @@ function euro(v){
 }
 
 // ===== COULEUR TYPE =====
-function getClassByType(type){
-    switch(type){
-case "Suisse": return "dot-or-suisse";
-case "Bel.": return "dot-or-belgique";
-        default: return "dot-argent";
+function getClassByType(type, loc){
+
+    const t = (type || "").toLowerCase();
+    const l = (loc || "").toLowerCase();
+
+    if (t === "argent") {
+        return "dot-argent";
     }
+
+    if (t === "or") {
+        if (l.includes("suisse")) return "dot-or-suisse";
+        if (l.includes("bel")) return "dot-or-belgique";
+    }
+
+    return "dot-argent";
 }
 
 
@@ -133,7 +142,7 @@ function renderAchats(){
         row.innerHTML = `
             <td>${a.date}</td>
             <td>
-                <span class="dot ${getClassByType(a.type)}"></span>
+<span class="dot ${getClassByType(a.type, a.loc)}"></span>
                 ${a.type === "OR" ? "Or" : "Argent"}
             </td>
             <td class="center">${a.loc}</td>
