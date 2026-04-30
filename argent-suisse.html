@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🥈 Argent Suisse</title>
 
-  <link rel="stylesheet" href="style.css">
-  <script src="data.js"></script>
+  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="couleurs.css?v=7">
+  
 </head>
 
 <body>
@@ -26,10 +27,7 @@
 <div class="container">
 
   <!-- TOTAL -->
-  <div class="highlight">
-    <small>Total Argent Suisse</small>
-    <h2 id="totalSilver">0 g</h2>
-  </div>
+  <div class="highlight"><small>Total Argent Suisse</small><h2 id="totalSilver">0 g</h2></div>
 
   <!-- TABLE -->
   <div class="card">
@@ -51,10 +49,10 @@
           <td colspan="3"><strong>🧱 Lingots</strong></td>
         </tr>
 
-        <tr>
+        <tr data-label="L. 1Kg.">
           <td>Lingot Argent 1 kg</td>
           <td>6</td>
-          <td>6000 g</td>
+          <td class="poids">0 g</td>
         </tr>
 </table>       
 
@@ -62,7 +60,7 @@
 
  <table>  
 	<div class="total-line" style="color:#cbd5f5;">
-	   <span>🥈 Total Argent Suisse</span>
+	   <span class="dot dot-argent-suisse"> Total des achats en Suisse : </span>
 	   <span id="tableTotal">0 g</span>
 	</div>
 </table>
