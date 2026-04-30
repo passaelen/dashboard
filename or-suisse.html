@@ -95,12 +95,12 @@
 
 <div class="total-line">
   <span><span class="dot dot-or-suisse"></span>Total Suisse</span>
-  <span id="tableTotal">0 g</span>
+  <span id="totalValeur">0 €</span>
 </div>
 
 <div class="total-sub">
-  <span id="totalValeur">0 €</span>
-  <span id="prixMoyen">0 €/g</span>
+	<span id="tableTotal">0 g</span>
+    <span id="prixMoyen">0 €/g</span>
 </div>
 
 </div><!-- Fin CARD -->
@@ -195,14 +195,14 @@ const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;
 
 	
 // 🔹 affichage
+document.getElementById("totalValeur").textContent =
+  totalValeur.toFixed(2) + " €";
+	
 document.getElementById("totalSwiss").textContent =
   totalPoids.toFixed(2) + " g";
 
 document.getElementById("tableTotal").textContent =
   totalPoids.toFixed(2) + " g";
-
-document.getElementById("totalValeur").textContent =
-  totalValeur.toFixed(2) + " €";
 	
 document.getElementById("prixMoyen").textContent =
   prixMoyen.toFixed(2) + " €/g";
