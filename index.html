@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="couleurs.css?v=202630041328">
-<link rel="stylesheet" href="style.css?v=202630041328">
+<link rel="stylesheet" href="couleurs.css?v=202630041329">
+<link rel="stylesheet" href="style.css?v=202630041329">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -622,6 +622,26 @@ function euro(v){
 
     return pct.toFixed(2).replace('.',',') + "%";
 }
+
+
+// ===== VALEURS GAINS VERT/ROUGE =====
+function setValueColor(id, value){
+
+    const el = document.getElementById(id);
+    if(!el) return;
+
+    el.innerText = euroSigned(value);
+
+    el.classList.remove("positive", "negative");
+
+    if(value > 0){
+        el.classList.add("positive");
+    } else if(value < 0){
+        el.classList.add("negative");
+    }
+}
+
+
 
 
 // ===== ALERT =====
@@ -1530,9 +1550,9 @@ function setPerf(id, value){
     setText("etf-seniors-prix", pe.seniors.toFixed(2) + " €");
     setText("etf-juniors-prix", pe.juniors.toFixed(2) + " €");
 
-    setText("etf-monde-benef", euroSigned(benefMonde));
-    setText("etf-seniors-benef", euroSigned(benefSeniors));
-    setText("etf-juniors-benef", euroSigned(benefJuniors));
+    setValueColor("etf-monde-benef", benefMonde);
+    setValueColor("etf-seniors-benef", benefSeniors));
+    setValueColor("etf-juniors-benef", benefJuniors));
 
     setPerf("etf-monde-perf", perf(vMonde, etf.monde.buy));
     setPerf("etf-seniors-perf", perf(vSeniors, etf.seniors.buy));
