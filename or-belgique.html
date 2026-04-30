@@ -4,29 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
   <title>🇧🇪 Or Belgique</title>
-
-  <link rel="stylesheet" href="style.css">
-  <script src="data.js?v=2"></script>
+  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="couleurs.css?v=7">
 </head>
 
-<body>
-
-<!-- HEADER -->
+<body><!-- HEADER -->
 <div class="header">
-  <div class="header-left">
-    <h2>🇧🇪 Or Belgique</h2>
-    <small>Stock privé</small>
-  </div>
-
-  <div class="header-right">
-    <a href="index.html" class="badge">← Retour</a>
-  </div>
+  <div class="header-left"><h2>🇧🇪 Or Belgique</h2><small>Stock privé</small></div>
+  <div class="header-right"><a href="index.html" class="badge">← Retour</a></div>
 </div>
 
-<div class="container">
-
-<!-- TOTAL -->
+<div class="container"><!-- TOTAL -->
 <div class="highlight">
   <small>Total Or Belgique</small>
   <h2 id="totalBelgique">0 g</h2>
@@ -57,37 +47,64 @@
       <tr><td>Philharmonique 1/10 oz</td><td>5</td><td>15,55 g</td></tr>
       <tr><td>Koala 1/10 oz</td><td>2</td><td>6,22 g</td></tr>
       <tr><td>Kookaburra 1/10 oz</td><td>1</td><td>3,11 g</td></tr>
-
+     
+</tbody>
 </table>
       
 <br>
     
-<table>
+
   <div class="total-line">
-    <span>🟠 Total Or Privé</span>
-    <span id="tableTotalBelgique">0 g</span>
+    <span><span class="dot dot-or-belgique"></span> Total des achats en Belgique : </span>
+    <span id="totalValeur">0 €</span>
   </div>
 
-</div>
+  <div class="total-sub">
+  	<span id="tableTotal">0 g</span>
+      <span id="prixMoyen">0 €/g</span>
+  </div>
 
-</div>
+</div><!-- Fin CARD -->
+</div><!-- Fin container -->  
 
 
+<script src="achats.js"></script>
 
-</table>
-</tbody>
+<script src="achats.js"></script>
 
 <script>
-  // 🔥 connexion DATA propre
-  const weight = DATA?.portfolio?.or_belgique_g || 0;
 
-  const formatted = weight.toFixed(2) + " g";
+// 🔹 données
+const data = typeof metaux !== "undefined" ? metaux : [];
 
+// 🔹 filtre OR Belgique
+const orBelgique = data.filter(m => m.type === "OR" && m.loc === "Bel.");
 
-document.getElementById("totalBelgique").textContent = formatted;
-  document.getElementById("tableTotalBelgique").textContent = formatted;
+// 🔹 totaux
+let totalPoids = 0;
+let totalValeur = 0;
+
+orBelgique.forEach(m => {
+  totalPoids += m.poids || 0;
+  totalValeur += m.tot || 0;
+});
+
+// 🔹 prix moyen
+const prixMoyen = totalPoids > 0 ? totalValeur / totalPoids : 0;
+
+// 🔹 affichage
+document.getElementById("totalBelgique").textContent =
+  totalPoids.toFixed(2) + " g";
+
+document.getElementById("tableTotal").textContent =
+  totalPoids.toFixed(2) + " g";
+
+document.getElementById("totalValeur").textContent =
+  totalValeur.toFixed(2) + " €";
+
+document.getElementById("prixMoyen").textContent =
+  prixMoyen.toFixed(2) + " €/g";
 
 </script>
-
 </body>
 </html>
