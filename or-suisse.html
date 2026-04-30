@@ -25,6 +25,7 @@
         <th>Type</th>
         <th>Qté</th>
         <th>Poids</th>
+		<th>Montant</th>  
       </tr>
     </thead>
     <tbody>
@@ -33,18 +34,19 @@
       <tr>
         <td colspan="3"><strong>🧱 Lingots & lingotins</strong></td>
       </tr>
-	<tr data-label="L. Pamp"><td>Lingot 50 g PAMP</td><td>1</td><td class="poids">0 g</td></tr>
-	<tr data-label="L. Oz. Pamp"><td>Lingot 1 oz PAMP</td><td>2</td><td class="poids">0 g</td></tr>
-	<tr data-label="L. 10g. Pamp"><td>Lingotin 10 g PAMP</td><td>5</td><td class="poids">0 g</td></tr>
-    <tr data-label="L. 5g. Pamp"><td>Lingotin 5 g PAMP</td><td>8</td><td class="poids">0 g</td></tr>
-	<tr data-label="L. 2.5g. Pamp"><td>Lingotin 2,5 g PAMP</td><td>4</td><td class="poids">0 g</td></tr>
-	<tr data-label="L. 1g. Pamp"><td>Lingotin 1 g PAMP</td><td>4</td><td class="poids">0 g</td></tr>
-    <tr data-label="L. 1g. Umicore"><td>Lingotin 1 g Umicore</td><td>2</td><td class="poids">0 g</td></tr>
+	<tr data-label="L. Pamp"><td>Lingot 50 g PAMP</td><td>1</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+	<tr data-label="L. Oz. Pamp"><td>Lingot 1 oz PAMP</td><td>2</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+	<tr data-label="L. 10g. Pamp"><td>Lingotin 10 g PAMP</td><td>5</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+    <tr data-label="L. 5g. Pamp"><td>Lingotin 5 g PAMP</td><td>8</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+	<tr data-label="L. 2.5g. Pamp"><td>Lingotin 2,5 g PAMP</td><td>4</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+	<tr data-label="L. 1g. Pamp"><td>Lingotin 1 g PAMP</td><td>4</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+    <tr data-label="L. 1g. Umicore"><td>Lingotin 1 g Umicore</td><td>2</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
       
 
       <tr>
         <td colspan="2"><strong>Total lingots</strong></td>
         <td><strong id="totalLingots">0 g</strong></td>
+		<td><strong id="totalLingotsVal">0 €</strong></td>
       </tr>
 	</tbody>
 </table>
@@ -57,13 +59,14 @@
       <tr>
         <td colspan="3"><strong>🪙 Pièces</strong></td>
       </tr>
-      <tr data-label="P. oz. Kang."><td>Kangourou 1 oz</td><td>3</td><td class="poids">0 g</td></tr>
-      <tr data-label="P. ⅒ Philh."><td>Philharmonique 1/10 oz</td><td>5</td><td class="poids">0 g</td></tr>
-      <tr data-label="P. Nap. 40 Fr."><td>40 Francs Napoléon</td><td>1</td><td class="poids">0 g</td></tr>
+      <tr data-label="P. oz. Kang."><td>Kangourou 1 oz</td><td>3</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+      <tr data-label="P. ⅒ Philh."><td>Philharmonique 1/10 oz</td><td>5</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
+      <tr data-label="P. Nap. 40 Fr."><td>40 Francs Napoléon</td><td>1</td><td class="poids">0 g</td><td class="montant">0 €g</td></tr>
 
       <tr>
         <td colspan="2"><strong>Total pièces</strong></td>
         <td><strong id="totalPieces">0 g</strong></td>
+		<td><strong id="totalPiecesVal">0 €</strong></td>
       </tr>
 
 </tbody>
@@ -74,7 +77,7 @@
 
 <div class="total-line">
   <span>🟡 Total Suisse</span>
-  <span id="tableTotal">0 g</span><br><br>
+  <span id="tableTotal">0 g</span>
   <small id="prixMoyen">0 €/g</small>
 </div>
 
@@ -118,13 +121,18 @@ let totalPoids = 0;
 let totalLingots = 0;
 let totalPieces = 0;
 let totalValeur = 0;
+let totalLingotsVal = 0;
+let totalPiecesVal = 0;	
 
 orSuisse.forEach(m => {
   totalValeur += m.tot || 0;
+
   if (m.label.includes("L.")) {
     totalLingots += m.poids;
+    totalLingotsVal += m.tot || 0;
   } else {
     totalPieces += m.poids;
+    totalPiecesVal += m.tot || 0;
   }
 });
 
@@ -140,14 +148,19 @@ document.getElementById("totalPieces").textContent =
 document.querySelectorAll("tr[data-label]").forEach(row => {
   const label = row.dataset.label;
   const item = map[label];
+  const montantCell = row.querySelector(".montant");
 
   if (!item) return;
 
   // poids
   const poidsCell = row.querySelector(".poids");
-  if (poidsCell) {
-    poidsCell.textContent = item.poids.toFixed(2) + " g";
-  }
+	  if (poidsCell) {
+	    poidsCell.textContent = item.poids.toFixed(2) + " g";
+	  }
+
+	if (montantCell) {
+	  montantCell.textContent = item.total.toFixed(2) + " €";
+	}
 
   
   totalPoids += item.poids;
@@ -169,6 +182,11 @@ document.getElementById("tableTotal").textContent =
 document.getElementById("prixMoyen").textContent =
   prixMoyen.toFixed(2) + " €/g";
 
+document.getElementById("totalLingotsVal").textContent =
+  totalLingotsVal.toFixed(2) + " €";
+
+document.getElementById("totalPiecesVal").textContent =
+  totalPiecesVal.toFixed(2) + " €";
 </script>
 
 </body>
