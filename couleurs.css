@@ -82,9 +82,9 @@
 .dot-juniors { background: var(--etf-juniors); }
 
 
-/* PERF */
-.positive { color: var(--perf-positive); font-weight: 600;}
-.negative { color: var(--perf-negative); font-weight: 600;}
+/* GAINS - PERF */
+.positive { color: var(--perf-positive); font-weight: 600; transition: color 0.3s ease;}
+.negative { color: var(--perf-negative); font-weight: 600; transition: color 0.3s ease;}
 
 
 
