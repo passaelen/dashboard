@@ -32,16 +32,16 @@ const metaux = [
   {date: "21/04/2023", type: "OR", loc: "Bel.", tot: 208.59, poids: 3.11, label: "⅒ M.Leaf"},
   {date: "01/04/2023", type: "OR", loc: "Bel.", tot: 209.06, poids: 3.11, label: "⅒ M.Leaf"},
 
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 19722.90, poids: 93.31, label: "P. oz. Kang."},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 62.21, label: "L. Oz. Pamp"},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 50.00, label: "L. Pamp"},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 50.00, label: "L. 10g. Pamp"},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 40.00, label: "L. 5g. Pamp"},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 11.61, label: "P. Nap. 40 Fr."},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 10.00, label: "L. 2.5g. Pamp"},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 4.00, label: "L. 1g. Pamp"},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 2.00, label: "L. 1g. Pamp"},
-  {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 15.55, label: "P. ⅒ Philh."},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 19722.90, poids: 93.31, label: "P. oz. Kang."},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 62.21, label: "L. Oz. Pamp"},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 50.00, label: "L. Pamp"},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 50.00, label: "L. 10g. Pamp"},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 40.00, label: "L. 5g. Pamp"},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 11.61, label: "P. Nap. 40 Fr."},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 10.00, label: "L. 2.5g. Pamp"},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 4.00, label: "L. 1g. Pamp"},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 2.00, label: "L. 1g. Umicore"},
+     {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 15.55, label: "P. ⅒ Philh."},
   {date: "29/03/2020", type: "ARGENT", loc: "Suisse", tot: 3379.88, poids: 6000.0, label: "L. 1Kg."}
  ];
 
