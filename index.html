@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portefeuille</title>
 
-<link rel="stylesheet" href="couleurs.css?v=202630042011">
-<link rel="stylesheet" href="style.css?v=202630042011">
+<link rel="stylesheet" href="couleurs.css?v=20260305">
+<link rel="stylesheet" href="style.css?v=20260305">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -1535,9 +1535,9 @@ function setPerf(id, value){
     setText("p-or-belgique-g", p.gold_per_g.toFixed(2) + " €");
     setText("p-argent-g", p.silver_per_g.toFixed(2) + " €");
 
-    setText("benef-or-suisse", euroSigned(benefOrSuisse));
-    setText("benef-or-belgique", euroSigned(benefOrBelgique));
-    setText("benef-argent", euroSigned(benefArgent));
+    setValueColor("benef-or-suisse", benefOrSuisse);
+setValueColor("benef-or-belgique", benefOrBelgique);
+setValueColor("benef-argent", benefArgent);
 
     setPerf("perf-or-suisse", perf(orSuisse, pf.or_suisse_cost));
     setPerf("perf-or-belgique", perf(orBelgique, pf.or_belgique_cost));
