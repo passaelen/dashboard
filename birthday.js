@@ -49,27 +49,26 @@ ctx.globalCompositeOperation = "lighter";
 
 // léger fondu (effet traînée)
 ctx.fillStyle = "rgba(0,0,0,0.15)";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
   particles.forEach((p, i) => {
 
-    // mouvement
-    p.x += Math.cos(p.angle) * p.speed;
-    p.y += Math.sin(p.angle) * p.speed;
-    p.life--;
+  p.x += Math.cos(p.angle) * p.speed;
+  p.y += Math.sin(p.angle) * p.speed;
+  p.life--;
 
-    // 🎆 style glow
-    ctx.fillStyle = "rgba(0,0,0,0.08)";
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = ctx.fillStyle;
+  const hue = Math.random() * 360;
 
-    // 🔥 dessin (CORRECT)
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-    ctx.fill();
+  ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
+  ctx.shadowBlur = 12;
+  ctx.shadowColor = ctx.fillStyle;
 
-    if(p.life <= 0) particles.splice(i,1);
-  });
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+  ctx.fill();
+
+  if(p.life <= 0) particles.splice(i,1);
+});
 
   requestAnimationFrame(animate);
 }
