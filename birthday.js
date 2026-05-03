@@ -9,12 +9,10 @@ function isBirthday(day, month){
 function launchFireworks(){
 
   const canvas = document.createElement("canvas");
-  canvas.id = "fireworks";
   document.body.appendChild(canvas);
 
   const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+
   canvas.style.position = "fixed";
   canvas.style.top = "0";
   canvas.style.left = "0";
@@ -28,63 +26,71 @@ function launchFireworks(){
   canvas.height = window.innerHeight * dpr;
   ctx.scale(dpr, dpr);
 
-
   const particles = [];
 
   function createExplosion(x, y){
-    for(let i=0; i<80; i++){
+    for(let i=0; i<50; i++){ // 🔥 réduit pour mobile
       particles.push({
         x, y,
         angle: Math.random() * 2 * Math.PI,
-        speed: Math.random() * 5 + 2,
-        life: 100
+        speed: Math.random() * 4 + 2,
+        life: 50
       });
     }
   }
 
+  function animate(){
 
-function animate(){
+    // 🔥 reset propre (évite écran blanc)
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "rgba(0,0,0,0.15)";
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-ctx.globalCompositeOperation = "lighter";
+    // 🔥 glow ensuite
+    ctx.globalCompositeOperation = "lighter";
 
-// léger fondu (effet traînée)
-ctx.fillStyle = "rgba(0,0,0,0.15)";
-ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    for(let i = particles.length - 1; i >= 0; i--){
 
-  particles.forEach((p, i) => {
+      const p = particles[i];
 
-  p.x += Math.cos(p.angle) * p.speed;
-  p.y += Math.sin(p.angle) * p.speed;
-  p.life--;
+      p.x += Math.cos(p.angle) * p.speed;
+      p.y += Math.sin(p.angle) * p.speed;
+      p.life--;
 
-  const hue = Math.random() * 360;
+      const hue = Math.random() * 360;
 
-  ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
-  ctx.shadowBlur = 12;
-  ctx.shadowColor = ctx.fillStyle;
+      ctx.fillStyle = `hsl(${hue},100%,60%)`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = ctx.fillStyle;
 
-  ctx.beginPath();
-  ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-  ctx.fill();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.fill();
 
-  if(p.life <= 0) particles.splice(i,1);
-});
+      if(p.life <= 0){
+        particles.splice(i,1);
+      }
+    }
 
-  requestAnimationFrame(animate);
-}
+    requestAnimationFrame(animate);
+  }
 
+  // 🔥 moins fréquent = plus fluide
+  const interval = setInterval(() => {
 
+    if(particles.length < 300){ // 🔥 limite sécurité
+      createExplosion(
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerHeight * 0.5
+      );
+    }
 
-  setInterval(() => {
-  createExplosion(
-  Math.random() * window.innerWidth,
-  Math.random() * window.innerHeight / 2
-);
-  }, 400);
+  }, 500);
 
   animate();
 
   setTimeout(() => {
+    clearInterval(interval);
     canvas.remove();
   }, 5000);
 }
