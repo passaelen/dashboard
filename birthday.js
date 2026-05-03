@@ -1,8 +1,11 @@
+// 🎂 CHECK
 function isBirthday(day, month){
   const today = new Date();
   return today.getDate() === day && (today.getMonth() + 1) === month;
 }
 
+
+// 🎆 FIREWORK (ton canvas 👍)
 function launchFireworks(){
 
   const canvas = document.createElement("canvas");
@@ -59,15 +62,36 @@ function launchFireworks(){
   }, 5000);
 }
 
+
+// 🎂 MAIN
 function checkBirthday(config){
 
-  if(isBirthday(config.day, config.month)){
-    launchFireworks();
+  if (!isBirthday(config.day, config.month)) return;
 
-    if(config.name){
-      setTimeout(() => {
-        alert("🎂 Joyeux anniversaire " + config.name + " 🎂");
-      }, 500);
-    }
-  }
+  // 🎂 MESSAGE
+  const msg = document.createElement("div");
+  msg.innerText = "🎂 Joyeux anniversaire Kiki !";
+  msg.style.position = "fixed";
+  msg.style.top = "20px";
+  msg.style.left = "50%";
+  msg.style.transform = "translateX(-50%)";
+  msg.style.background = "#000";
+  msg.style.color = "#fff";
+  msg.style.padding = "10px 20px";
+  msg.style.borderRadius = "10px";
+  msg.style.zIndex = 9999;
+
+  document.body.appendChild(msg);
+
+  setTimeout(() => msg.remove(), 4000);
+
+  // 🎆 FEU D'ARTIFICE
+  launchFireworks();
 }
+
+
+// 🎂 CONFIG
+checkBirthday({
+  day: 3,
+  month: 5
+});
