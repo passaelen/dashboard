@@ -74,7 +74,7 @@ function launchFireworks(){
   setTimeout(() => {
     clearInterval(interval);
     canvas.remove();
-  }, 5000);
+  }, 13000);
 }
 
 
