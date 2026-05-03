@@ -13,55 +13,42 @@ function launchFireworks(){
 
   const ctx = canvas.getContext("2d");
 
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
   canvas.style.position = "fixed";
   canvas.style.top = "0";
   canvas.style.left = "0";
-  canvas.style.width = "100%";
-  canvas.style.height = "100%";
   canvas.style.pointerEvents = "none";
   canvas.style.zIndex = "9998";
-
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = window.innerWidth * dpr;
-  canvas.height = window.innerHeight * dpr;
-  ctx.scale(dpr, dpr);
 
   const particles = [];
 
   function createExplosion(x, y){
-    for(let i=0; i<50; i++){ // 🔥 réduit pour mobile
+    for(let i=0; i<60; i++){
       particles.push({
         x, y,
         angle: Math.random() * 2 * Math.PI,
         speed: Math.random() * 4 + 2,
-        life: 50
+        life: 50,
+        color: `hsl(${Math.random()*360},100%,60%)`
       });
     }
   }
 
   function animate(){
 
-    // 🔥 reset propre (évite écran blanc)
-    ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = "rgba(0,0,0,0.15)";
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    // 🔥 fond semi transparent (traînée)
+    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 🔥 glow ensuite
-    ctx.globalCompositeOperation = "lighter";
-
-    for(let i = particles.length - 1; i >= 0; i--){
-
-      const p = particles[i];
+    particles.forEach((p, i) => {
 
       p.x += Math.cos(p.angle) * p.speed;
       p.y += Math.sin(p.angle) * p.speed;
       p.life--;
 
-      const hue = Math.random() * 360;
-
-      ctx.fillStyle = `hsl(${hue},100%,60%)`;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = ctx.fillStyle;
+      ctx.fillStyle = p.color;
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
@@ -70,22 +57,17 @@ function launchFireworks(){
       if(p.life <= 0){
         particles.splice(i,1);
       }
-    }
+    });
 
     requestAnimationFrame(animate);
   }
 
-  // 🔥 moins fréquent = plus fluide
   const interval = setInterval(() => {
-
-    if(particles.length < 300){ // 🔥 limite sécurité
-      createExplosion(
-        Math.random() * window.innerWidth,
-        Math.random() * window.innerHeight * 0.5
-      );
-    }
-
-  }, 500);
+    createExplosion(
+      Math.random() * canvas.width,
+      Math.random() * canvas.height / 2
+    );
+  }, 400);
 
   animate();
 
