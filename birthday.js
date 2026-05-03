@@ -13,14 +13,21 @@ function launchFireworks(){
   document.body.appendChild(canvas);
 
   const ctx = canvas.getContext("2d");
-
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvas.style.position = "fixed";
-  canvas.style.top = 0;
-  canvas.style.left = 0;
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
   canvas.style.pointerEvents = "none";
-  canvas.style.zIndex = 9998;
+  canvas.style.zIndex = "9998";
+
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  ctx.scale(dpr, dpr);
+
 
   const particles = [];
 
@@ -35,29 +42,45 @@ function launchFireworks(){
     }
   }
 
-  function animate(){
-    ctx.fillStyle = "rgba(0,0,0,0.1)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    particles.forEach((p, i) => {
-      p.x += Math.cos(p.angle) * p.speed;
-      p.y += Math.sin(p.angle) * p.speed;
-      p.life--;
+function animate(){
 
-      ctx.fillStyle = `hsl(${Math.random()*360},100%,60%)`;
-      ctx.fillRect(p.x, p.y, 3, 3);
+ctx.globalCompositeOperation = "lighter";
 
-      if(p.life <= 0) particles.splice(i,1);
-    });
+// léger fondu (effet traînée)
+ctx.fillStyle = "rgba(0,0,0,0.15)";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    requestAnimationFrame(animate);
-  }
+  particles.forEach((p, i) => {
+
+    // mouvement
+    p.x += Math.cos(p.angle) * p.speed;
+    p.y += Math.sin(p.angle) * p.speed;
+    p.life--;
+
+    // 🎆 style glow
+    ctx.fillStyle = `hsl(${Math.random()*360},100%,70%)`;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = ctx.fillStyle;
+
+    // 🔥 dessin (CORRECT)
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    if(p.life <= 0) particles.splice(i,1);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+
 
   setInterval(() => {
-    createExplosion(
-      Math.random() * canvas.width,
-      Math.random() * canvas.height / 2
-    );
+  createExplosion(
+  Math.random() * window.innerWidth,
+  Math.random() * window.innerHeight / 2
+);
   }, 400);
 
   animate();
