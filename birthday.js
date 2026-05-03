@@ -5,7 +5,7 @@ function isBirthday(day, month){
 }
 
 
-// 🎆 FIREWORK (ton canvas 👍)
+// 🎆 FIREWORK (mon canvas 👍)
 function launchFireworks(){
 
   const canvas = document.createElement("canvas");
@@ -59,13 +59,13 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
     p.life--;
 
     // 🎆 style glow
-    ctx.fillStyle = `hsl(${Math.random()*360},100%,70%)`;
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
     ctx.shadowBlur = 12;
     ctx.shadowColor = ctx.fillStyle;
 
     // 🔥 dessin (CORRECT)
     ctx.beginPath();
-    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
     ctx.fill();
 
     if(p.life <= 0) particles.splice(i,1);
@@ -98,7 +98,7 @@ function checkBirthday(config){
 
   // 🎂 MESSAGE
   const msg = document.createElement("div");
-  msg.innerText = "🎂 Joyeux anniversaire Kiki !";
+  msg.innerText = "🎂 Joyeux anniversaire !";
   msg.style.position = "fixed";
   msg.style.top = "20px";
   msg.style.left = "50%";
