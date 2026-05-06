@@ -149,6 +149,6 @@ function checkBirthday(config){
 
 // 🎂 CONFIG
 checkBirthday({
-  day: 06,
-  month: 05
+  day: 28,
+  month: 10
 });
