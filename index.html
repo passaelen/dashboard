@@ -386,7 +386,9 @@ const state = {
 
     portfolio: {},
     etf: {},
-    timeframe: 10
+    timeframe: 10,
+    isLoading: false,
+    refreshQueued: false
 };
 
 
@@ -971,6 +973,13 @@ function render(data){
 // ===== INIT =====
 async function init(){
 
+    if (state.isLoading) {
+        state.refreshQueued = true;
+        return;
+    }
+
+    state.isLoading = true;
+
     try{
         setText("total", "Chargement...");
         setText("or", "...");
@@ -1185,6 +1194,13 @@ if (variationEl) {
     } catch(e){
         console.error("Erreur:", e);
         setText("total", "Erreur chargement");
+    } finally {
+        state.isLoading = false;
+
+        if (state.refreshQueued) {
+            state.refreshQueued = false;
+            init();
+        }
     }
 }
 
@@ -1572,13 +1588,13 @@ setValueColor("benef-argent", benefArgent);
 let pulse = 0;
 
 setInterval(() => {
+  if (document.hidden || !window.chart10j) return;
+
   pulse += 0.1;
   if (pulse > Math.PI * 2) pulse = 0;
 
-  if (window.chart10j) {
-    window.chart10j.update();
-  }
-}, 100);
+  window.chart10j.update("none");
+}, 120);
 
 
 
@@ -1836,6 +1852,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (refreshBtn) {
         refreshBtn.addEventListener("click", () => {
+
+            if (state.isLoading) return;
 
             refreshBtn.style.transform = "rotate(360deg)";
             refreshBtn.style.transition = "0.6s";
