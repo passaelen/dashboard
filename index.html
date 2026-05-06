@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="couleurs.css?v=20260308">
 <link rel="stylesheet" href="style.css?v=20260308">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -988,8 +988,11 @@ async function init(){
 
 
 
-// 🔥 1. récupérer ton sheet AVANT
-const { history: historyList, bpgdmLive } = await fetchHistory();
+// 🔥 1. récupérer les données en parallèle
+const [{ history: historyList, bpgdmLive }, livePrices] = await Promise.all([
+    fetchHistory(),
+    fetchPrices()
+]);
 
 
 // 🔥 ON STOCKE
@@ -1012,7 +1015,7 @@ console.log("BPGDM LIVE (G2):", bpgdmLive);
 
 
 // 🔥 2. FORCER le sheet comme source principale
-state.prices = await fetchPrices();
+state.prices = livePrices;
 state.portfolio = DATA.portfolio;
 state.etf = DATA.etf;
 state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
@@ -1236,6 +1239,24 @@ function getVariation(now, close){
 // ===== HISTORY =====
 async function fetchHistory(){
 
+    const CACHE_KEY = "historyCacheV1";
+    const CACHE_TTL_MS = 5 * 60 * 1000;
+
+    try {
+        const rawCache = localStorage.getItem(CACHE_KEY);
+        if (rawCache) {
+            const parsed = JSON.parse(rawCache);
+            if (parsed?.timestamp && (Date.now() - parsed.timestamp) < CACHE_TTL_MS) {
+                return {
+                    history: parsed.history || [],
+                    bpgdmLive: parsed.bpgdmLive || 0
+                };
+            }
+        }
+    } catch (e) {
+        console.warn("Cache history invalide", e);
+    }
+
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQqy9DRNPqKY59Ka56rNkWGwYfd7XqKiGh6YJxudczufOx7ZOW6SzlTObz4DLG4t6AK9qmBfn6Tl78/pub?gid=1311770820&single=true&output=csv";
 
     const res = await fetch(url);
@@ -1301,6 +1322,16 @@ const silverClose = cleanNumber(row[12]); // colonne M
 console.log("HISTORY:", history);
 
     
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            history,
+            bpgdmLive
+        }));
+    } catch (e) {
+        console.warn("Impossible de sauvegarder le cache history", e);
+    }
+
     return {
         history,
         bpgdmLive
