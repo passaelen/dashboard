@@ -1948,6 +1948,15 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ===== FOCUS BUTTON =====
+    const focusBtn = document.getElementById("focus-btn");
+if (focusBtn) {
+    focusBtn.addEventListener("click", () => {
+        document.body.classList.toggle("focus-mode");
+        focusBtn.innerText = document.body.classList.contains("focus-mode") ? "✕" : "⛶";
+    });
+}
+
 // ===== CLICK DONUT METAUX =====
     const donut = document.getElementById("donut-metaux");
 
