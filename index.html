@@ -191,6 +191,7 @@
         <button class="tf active" data-days="10">10J</button>
         <button class="tf" data-days="30">30J</button>
         <button class="tf" data-days="90">90J</button>
+        <button class="tf" data-days="180">180J</button>
     </div>
 </div>
 
@@ -1871,6 +1872,46 @@ window.chart10j = new Chart(ctx, {
 } // ✅ ICI → fermeture de renderChart()
  
  
+
+function toggleChartFullscreen(){
+    const chartCard = document.querySelector("#chart-10j")?.closest(".card");
+    if(!chartCard) return;
+
+    const isActive = chartCard.dataset.fullscreen === "1";
+
+    if(!isActive){
+        chartCard.dataset.fullscreen = "1";
+        chartCard.dataset.prevStyle = chartCard.getAttribute("style") || "";
+        chartCard.style.position = "fixed";
+        chartCard.style.inset = "0";
+        chartCard.style.margin = "0";
+        chartCard.style.zIndex = "10000";
+        chartCard.style.borderRadius = "0";
+        chartCard.style.padding = "14px";
+        chartCard.style.height = "100dvh";
+        chartCard.style.width = "100vw";
+        chartCard.style.maxWidth = "100vw";
+
+        const canvas = document.getElementById("chart-10j");
+        if(canvas){
+            canvas.style.height = "calc(100dvh - 140px)";
+        }
+    } else {
+        chartCard.dataset.fullscreen = "0";
+        chartCard.setAttribute("style", chartCard.dataset.prevStyle || "");
+
+        const canvas = document.getElementById("chart-10j");
+        if(canvas){
+            canvas.style.height = "";
+        }
+    }
+
+    if (window.chart10j) {
+        window.chart10j.resize();
+        window.chart10j.update("none");
+    }
+}
+
 // ===== START =====
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -2021,6 +2062,11 @@ labelE.innerHTML = `
             if (!state.ratio) return;
             window.location.href = "boussole.html?ratio=" + state.ratio;
         });
+    }
+
+    const chartCanvas = document.getElementById("chart-10j");
+    if (chartCanvas) {
+        chartCanvas.addEventListener("click", toggleChartFullscreen);
     }
 
     // ===== TIMEFRAME =====
