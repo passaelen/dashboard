@@ -1,4 +1,4 @@
-## 🚀 Aperçu 
+## 🚀 Aperçu
 
 👉 Dashboard personnel de pilotage patrimonial (Or / Argent / ETF)
 
