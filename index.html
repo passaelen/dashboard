@@ -1208,12 +1208,12 @@ if (variationEl) {
         console.error("Erreur:", e);
         setText("total", "Erreur chargement");
     } finally {
-        state.isLoading = false;
-        setLoadingState(true);
+    state.isLoading = false;
+    setLoadingState(false);
 
-        if (state.refreshQueued) {
-            state.refreshQueued = false;
-            init();
+    if (state.refreshQueued) {
+        state.refreshQueued = false;
+        init();
         }
     }
 }
