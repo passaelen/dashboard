@@ -28,7 +28,7 @@
 
     <div class="header-actions">
         <div id="refresh-btn" class="refresh" title="Rafraîchir">⟳</div>
-        <div id="focus-btn" class="refresh" title="Mode focus">⛶</div>
+        <div id="focus-btn" class="refresh" title="Mode focus">🎯</div>
         <div id="variation" class="badge-perf"></div>
     </div>
 </div>
@@ -986,7 +986,9 @@ async function init(){
     }
 
     state.isLoading = true;
-setLoadingState(true);
+
+    setLoadingState(true);
+
 
     try{
         setText("total", "Chargement...");
@@ -1208,12 +1210,13 @@ if (variationEl) {
         console.error("Erreur:", e);
         setText("total", "Erreur chargement");
     } finally {
-    state.isLoading = false;
-    setLoadingState(false);
+        state.isLoading = false;
+        setLoadingState(false);
 
-    if (state.refreshQueued) {
-        state.refreshQueued = false;
-        init();
+        if (state.refreshQueued) {
+            state.refreshQueued = false;
+            init();
+
         }
     }
 }
@@ -1948,14 +1951,33 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ===== FOCUS BUTTON =====
+
+
     const focusBtn = document.getElementById("focus-btn");
-if (focusBtn) {
-    focusBtn.addEventListener("click", () => {
-        document.body.classList.toggle("focus-mode");
-        focusBtn.innerText = document.body.classList.contains("focus-mode") ? "✕" : "⛶";
-    });
-}
+
+    function disableFocusMode(){
+        if (!document.body.classList.contains("focus-mode")) return;
+        document.body.classList.remove("focus-mode");
+        if (focusBtn) focusBtn.innerText = "🎯";
+    }
+
+    if (focusBtn) {
+        focusBtn.addEventListener("click", () => {
+            document.body.classList.toggle("focus-mode");
+            focusBtn.innerText = document.body.classList.contains("focus-mode") ? "✕" : "🎯";
+        });
+    }
+
+    let focusScrollTimeout;
+    window.addEventListener("scroll", () => {
+        if (!document.body.classList.contains("focus-mode")) return;
+
+        clearTimeout(focusScrollTimeout);
+        focusScrollTimeout = setTimeout(() => {
+            if (window.scrollY > 40) disableFocusMode();
+        }, 80);
+    }, { passive: true });
+
 
 // ===== CLICK DONUT METAUX =====
     const donut = document.getElementById("donut-metaux");
