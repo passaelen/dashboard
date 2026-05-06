@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="couleurs.css?v=20260308">
 <link rel="stylesheet" href="style.css?v=20260308">
-    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -27,8 +27,7 @@
     </div>
 
     <div class="header-actions">
-        <div id="refresh-btn" class="refresh" title="Rafraîchir">⟳</div>
-        <div id="focus-btn" class="refresh" title="Mode focus">⛶</div>
+        <div id="refresh-btn" class="refresh">⟳</div>
         <div id="variation" class="badge-perf"></div>
     </div>
 </div>
@@ -184,7 +183,7 @@
 
 <!-- GRAPH -->
 <div class="card">
-    <h3 id="chart-title" title="Touchez le graphique pour agrandir / réduire">Évolution 10 jours</h3>
+    <h3 id="chart-title">Évolution 10 jours</h3>
 
     <canvas id="chart-10j"></canvas>
 
@@ -192,7 +191,6 @@
         <button class="tf active" data-days="10">10J</button>
         <button class="tf" data-days="30">30J</button>
         <button class="tf" data-days="90">90J</button>
-        <button class="tf" data-days="180">180J</button>
     </div>
 </div>
 
@@ -262,7 +260,7 @@
 
     <div class="etf-header">
          <h3 onclick="goToPage(this, 'achatsetf.html')">ETF <small>(clôtures veille)</small></h3>
-         <div id="bpgdm" class="bpgdm-badge" title="BPGDM : indicateur de momentum mines aurifères">--%</div>
+         <div id="bpgdm" class="bpgdm-badge">--%</div>
     </div>
 
 <!-- 
@@ -388,9 +386,7 @@ const state = {
 
     portfolio: {},
     etf: {},
-    timeframe: 10,
-    isLoading: false,
-    refreshQueued: false
+    timeframe: 10
 };
 
 
@@ -406,11 +402,6 @@ function setText(id, value){
     if(DOM_CACHE[id]){
         DOM_CACHE[id].innerText = value;
     }
-}
-
-
-function setLoadingState(active){
-    document.body.classList.toggle("loading", !!active);
 }
 
 // ===== API =====
@@ -980,14 +971,6 @@ function render(data){
 // ===== INIT =====
 async function init(){
 
-    if (state.isLoading) {
-        state.refreshQueued = true;
-        return;
-    }
-
-    state.isLoading = true;
-setLoadingState(true);
-
     try{
         setText("total", "Chargement...");
         setText("or", "...");
@@ -996,11 +979,8 @@ setLoadingState(true);
 
 
 
-// 🔥 1. récupérer les données en parallèle
-const [{ history: historyList, bpgdmLive }, livePrices] = await Promise.all([
-    fetchHistory(),
-    fetchPrices()
-]);
+// 🔥 1. récupérer ton sheet AVANT
+const { history: historyList, bpgdmLive } = await fetchHistory();
 
 
 // 🔥 ON STOCKE
@@ -1023,7 +1003,7 @@ console.log("BPGDM LIVE (G2):", bpgdmLive);
 
 
 // 🔥 2. FORCER le sheet comme source principale
-state.prices = livePrices;
+state.prices = await fetchPrices();
 state.portfolio = DATA.portfolio;
 state.etf = DATA.etf;
 state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
@@ -1181,14 +1161,12 @@ if (variationEl) {
     variationEl.innerText = diffStr + " (" + pctStr + ")";
 
     // RESET
-    variationEl.classList.remove("positive", "negative", "neutral");
+    variationEl.classList.remove("positive", "negative");
 
     if (diff > 0) {
         variationEl.classList.add("positive");
     } else if (diff < 0) {
         variationEl.classList.add("negative");
-    } else {
-        variationEl.classList.add("neutral");
     }
 
     // animation
@@ -1207,14 +1185,6 @@ if (variationEl) {
     } catch(e){
         console.error("Erreur:", e);
         setText("total", "Erreur chargement");
-    } finally {
-        state.isLoading = false;
-        setLoadingState(true);
-
-        if (state.refreshQueued) {
-            state.refreshQueued = false;
-            init();
-        }
     }
 }
 
@@ -1249,24 +1219,6 @@ function getVariation(now, close){
 
 // ===== HISTORY =====
 async function fetchHistory(){
-
-    const CACHE_KEY = "historyCacheV1";
-    const CACHE_TTL_MS = 5 * 60 * 1000;
-
-    try {
-        const rawCache = localStorage.getItem(CACHE_KEY);
-        if (rawCache) {
-            const parsed = JSON.parse(rawCache);
-            if (parsed?.timestamp && (Date.now() - parsed.timestamp) < CACHE_TTL_MS) {
-                return {
-                    history: parsed.history || [],
-                    bpgdmLive: parsed.bpgdmLive || 0
-                };
-            }
-        }
-    } catch (e) {
-        console.warn("Cache history invalide", e);
-    }
 
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQqy9DRNPqKY59Ka56rNkWGwYfd7XqKiGh6YJxudczufOx7ZOW6SzlTObz4DLG4t6AK9qmBfn6Tl78/pub?gid=1311770820&single=true&output=csv";
 
@@ -1333,16 +1285,6 @@ const silverClose = cleanNumber(row[12]); // colonne M
 console.log("HISTORY:", history);
 
     
-    try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-            timestamp: Date.now(),
-            history,
-            bpgdmLive
-        }));
-    } catch (e) {
-        console.warn("Impossible de sauvegarder le cache history", e);
-    }
-
     return {
         history,
         bpgdmLive
@@ -1630,13 +1572,13 @@ setValueColor("benef-argent", benefArgent);
 let pulse = 0;
 
 setInterval(() => {
-  if (document.hidden || !window.chart10j) return;
-
   pulse += 0.1;
   if (pulse > Math.PI * 2) pulse = 0;
 
-  window.chart10j.update("none");
-}, 120);
+  if (window.chart10j) {
+    window.chart10j.update();
+  }
+}, 100);
 
 
 
@@ -1882,46 +1824,6 @@ window.chart10j = new Chart(ctx, {
 } // ✅ ICI → fermeture de renderChart()
  
  
-
-function toggleChartFullscreen(){
-    const chartCard = document.querySelector("#chart-10j")?.closest(".card");
-    if(!chartCard) return;
-
-    const isActive = chartCard.dataset.fullscreen === "1";
-
-    if(!isActive){
-        chartCard.dataset.fullscreen = "1";
-        chartCard.dataset.prevStyle = chartCard.getAttribute("style") || "";
-        chartCard.style.position = "fixed";
-        chartCard.style.inset = "0";
-        chartCard.style.margin = "0";
-        chartCard.style.zIndex = "10000";
-        chartCard.style.borderRadius = "0";
-        chartCard.style.padding = "14px";
-        chartCard.style.height = "100dvh";
-        chartCard.style.width = "100vw";
-        chartCard.style.maxWidth = "100vw";
-
-        const canvas = document.getElementById("chart-10j");
-        if(canvas){
-            canvas.style.height = "calc(100dvh - 140px)";
-        }
-    } else {
-        chartCard.dataset.fullscreen = "0";
-        chartCard.setAttribute("style", chartCard.dataset.prevStyle || "");
-
-        const canvas = document.getElementById("chart-10j");
-        if(canvas){
-            canvas.style.height = "";
-        }
-    }
-
-    if (window.chart10j) {
-        window.chart10j.resize();
-        window.chart10j.update("none");
-    }
-}
-
 // ===== START =====
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -1934,8 +1836,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (refreshBtn) {
         refreshBtn.addEventListener("click", () => {
-
-            if (state.isLoading) return;
 
             refreshBtn.style.transform = "rotate(360deg)";
             refreshBtn.style.transition = "0.6s";
@@ -2072,11 +1972,6 @@ labelE.innerHTML = `
             if (!state.ratio) return;
             window.location.href = "boussole.html?ratio=" + state.ratio;
         });
-    }
-
-    const chartCanvas = document.getElementById("chart-10j");
-    if (chartCanvas) {
-        chartCanvas.addEventListener("click", toggleChartFullscreen);
     }
 
     // ===== TIMEFRAME =====

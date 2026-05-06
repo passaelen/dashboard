@@ -27,8 +27,7 @@
     </div>
 
     <div class="header-actions">
-        <div id="refresh-btn" class="refresh" title="Rafraîchir">⟳</div>
-        <div id="focus-btn" class="refresh" title="Mode focus">⛶</div>
+        <div id="refresh-btn" class="refresh">⟳</div>
         <div id="variation" class="badge-perf"></div>
     </div>
 </div>
@@ -184,7 +183,7 @@
 
 <!-- GRAPH -->
 <div class="card">
-    <h3 id="chart-title" title="Touchez le graphique pour agrandir / réduire">Évolution 10 jours</h3>
+    <h3 id="chart-title">Évolution 10 jours</h3>
 
     <canvas id="chart-10j"></canvas>
 
@@ -192,7 +191,6 @@
         <button class="tf active" data-days="10">10J</button>
         <button class="tf" data-days="30">30J</button>
         <button class="tf" data-days="90">90J</button>
-        <button class="tf" data-days="180">180J</button>
     </div>
 </div>
 
@@ -262,7 +260,7 @@
 
     <div class="etf-header">
          <h3 onclick="goToPage(this, 'achatsetf.html')">ETF <small>(clôtures veille)</small></h3>
-         <div id="bpgdm" class="bpgdm-badge" title="BPGDM : indicateur de momentum mines aurifères">--%</div>
+         <div id="bpgdm" class="bpgdm-badge">--%</div>
     </div>
 
 <!-- 
@@ -406,11 +404,6 @@ function setText(id, value){
     if(DOM_CACHE[id]){
         DOM_CACHE[id].innerText = value;
     }
-}
-
-
-function setLoadingState(active){
-    document.body.classList.toggle("loading", !!active);
 }
 
 // ===== API =====
@@ -986,7 +979,6 @@ async function init(){
     }
 
     state.isLoading = true;
-setLoadingState(true);
 
     try{
         setText("total", "Chargement...");
@@ -1181,14 +1173,12 @@ if (variationEl) {
     variationEl.innerText = diffStr + " (" + pctStr + ")";
 
     // RESET
-    variationEl.classList.remove("positive", "negative", "neutral");
+    variationEl.classList.remove("positive", "negative");
 
     if (diff > 0) {
         variationEl.classList.add("positive");
     } else if (diff < 0) {
         variationEl.classList.add("negative");
-    } else {
-        variationEl.classList.add("neutral");
     }
 
     // animation
@@ -1209,7 +1199,6 @@ if (variationEl) {
         setText("total", "Erreur chargement");
     } finally {
         state.isLoading = false;
-        setLoadingState(true);
 
         if (state.refreshQueued) {
             state.refreshQueued = false;
@@ -1882,46 +1871,6 @@ window.chart10j = new Chart(ctx, {
 } // ✅ ICI → fermeture de renderChart()
  
  
-
-function toggleChartFullscreen(){
-    const chartCard = document.querySelector("#chart-10j")?.closest(".card");
-    if(!chartCard) return;
-
-    const isActive = chartCard.dataset.fullscreen === "1";
-
-    if(!isActive){
-        chartCard.dataset.fullscreen = "1";
-        chartCard.dataset.prevStyle = chartCard.getAttribute("style") || "";
-        chartCard.style.position = "fixed";
-        chartCard.style.inset = "0";
-        chartCard.style.margin = "0";
-        chartCard.style.zIndex = "10000";
-        chartCard.style.borderRadius = "0";
-        chartCard.style.padding = "14px";
-        chartCard.style.height = "100dvh";
-        chartCard.style.width = "100vw";
-        chartCard.style.maxWidth = "100vw";
-
-        const canvas = document.getElementById("chart-10j");
-        if(canvas){
-            canvas.style.height = "calc(100dvh - 140px)";
-        }
-    } else {
-        chartCard.dataset.fullscreen = "0";
-        chartCard.setAttribute("style", chartCard.dataset.prevStyle || "");
-
-        const canvas = document.getElementById("chart-10j");
-        if(canvas){
-            canvas.style.height = "";
-        }
-    }
-
-    if (window.chart10j) {
-        window.chart10j.resize();
-        window.chart10j.update("none");
-    }
-}
-
 // ===== START =====
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -2072,11 +2021,6 @@ labelE.innerHTML = `
             if (!state.ratio) return;
             window.location.href = "boussole.html?ratio=" + state.ratio;
         });
-    }
-
-    const chartCanvas = document.getElementById("chart-10j");
-    if (chartCanvas) {
-        chartCanvas.addEventListener("click", toggleChartFullscreen);
     }
 
     // ===== TIMEFRAME =====
