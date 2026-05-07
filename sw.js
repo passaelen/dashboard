@@ -1,10 +1,15 @@
 const CACHE_NAME = "portfolio-v2";
 
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/style.css",
-  // "https://cdn.jsdelivr.net/npm/chart.js"
+  "./",
+  "./index.html",
+  "./style.css",
+  "./couleurs.css",
+  "./data.js",
+  "./achats.js",
+  "./birthday.js",
+  "./icon-192-v2.png",
+  "./bous.png"
 ];
 
 // INSTALL
