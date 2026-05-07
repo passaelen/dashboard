@@ -524,23 +524,38 @@ function calculate(){
     const etf = state.etf;
     const pe = state.etfPrices;
 
-    console.log("Argent g:", pf.argent_g); // ✅ ici
+    // ===== sécurisation =====
+    const goldPrice = Number(p?.gold_per_g) || 0;
+    const silverPrice = Number(p?.silver_per_g) || 0;
 
+    const orSuisseG = Number(pf?.or_suisse_g) || 0;
+    const orBelgiqueG = Number(pf?.or_belgique_g) || 0;
+    const argentG = Number(pf?.argent_g) || 0;
+
+    console.log("PF:", pf);
+    console.log("argent_g:", argentG);
+    console.log("silver price:", silverPrice);
+
+    // ===== TOTALS =====
     const goldTotal =
-        (pf.or_suisse_g + pf.or_belgique_g) * p.gold_per_g;
+        (orSuisseG + orBelgiqueG) * goldPrice;
 
     const silverTotal =
-        pf.argent_g * p.silver_per_g * silverRealFactor;
+        argentG * silverPrice * silverRealFactor;
 
-    const ratio = p.gold_per_g / p.silver_per_g;
+    // ===== RATIO =====
+    const ratio =
+        silverPrice ? goldPrice / silverPrice : 0;
 
-    const totalMetaux = (goldTotal + silverTotal) || 1;
+    // ===== METAUX =====
+    const totalMetaux =
+        (goldTotal + silverTotal) || 1;
 
     const pOrSuisse =
-        (pf.or_suisse_g * p.gold_per_g) / totalMetaux * 100;
+        (orSuisseG * goldPrice) / totalMetaux * 100;
 
     const pOrBelgique =
-        (pf.or_belgique_g * p.gold_per_g) / totalMetaux * 100;
+        (orBelgiqueG * goldPrice) / totalMetaux * 100;
 
     const pArgent =
         (silverTotal / totalMetaux) * 100;
