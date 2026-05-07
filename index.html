@@ -530,7 +530,7 @@ function calculate(){
         (pf.or_suisse_g + pf.or_belgique_g) * p.gold_per_g;
 
     const silverTotal =
-        pf.argent_g * p.silver_per_g;
+        pf.argent_g * p.silver_per_g * silverRealFactor;
 
     const ratio = p.gold_per_g / p.silver_per_g;
 
