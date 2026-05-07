@@ -438,8 +438,6 @@ async function fetchPrices(){
 
     async function fetchETFPrices(){
 
-    const API_KEY = "e10aefe097fe40fba25f4e129bdf0c4f";
-
     // ===== CACHE =====
     const cache = JSON.parse(localStorage.getItem("etfPrices"));
     const last = localStorage.getItem("etfPricesTime");
@@ -451,31 +449,13 @@ async function fetchPrices(){
     }
 
     try {
+        const res = await fetch("/api/etf-prices");
+        if(!res.ok) throw new Error("proxy etf-prices indisponible");
+        const fromProxy = await res.json();
 
-        const [vwce, gdx, gdxj, fx] = await Promise.all([
-            fetch(`https://api.twelvedata.com/price?symbol=IWDA&apikey=${API_KEY}`).then(r=>r.json()),
-            fetch(`https://api.twelvedata.com/price?symbol=GDX&apikey=${API_KEY}`).then(r=>r.json()),
-            fetch(`https://api.twelvedata.com/price?symbol=GDXJ&apikey=${API_KEY}`).then(r=>r.json()),
-            fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
-        ]);
+        debugLog("ETF proxy:", fromProxy);
 
-        debugLog("ETF RAW:", vwce, gdx, gdxj);
-        debugLog("VWCE:", vwce);
-        debugLog("GDX:", gdx);
-
-        const rate = fx.rates.EUR;
-
-        function safePrice(obj){
-            if(obj && obj.price){
-                return parseFloat(obj.price);
-            } else {
-                console.warn("API error:", obj);
-                return 0;
-            }
-        }
-
-
-        let seniors = safePrice(gdx) * rate;
+        let seniors = Number(fromProxy?.seniors) || 0;
 
         if(!seniors || seniors < 85 || seniors > 110){
             console.warn("fallback Seniors utilisé");
@@ -483,9 +463,9 @@ async function fetchPrices(){
         }
 
         const result = {
-            monde: safePrice(vwce) || 150,
+            monde: Number(fromProxy?.monde) || 150,
             seniors: seniors,
-            juniors: safePrice(gdxj) * rate
+            juniors: Number(fromProxy?.juniors) || 0
         };
 
 

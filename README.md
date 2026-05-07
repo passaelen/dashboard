@@ -155,6 +155,22 @@ boussole.html?ratio=61.54
 
 ---
 
+## 🔐 Clé API TwelveData (cachée)
+
+Les prix ETF live passent désormais par un endpoint serveur `/api/etf-prices` pour éviter d’exposer la clé côté navigateur.
+
+- Fichier proxy: `api/etf-prices.js`
+- Variable d’environnement requise: `TWELVEDATA_API_KEY`
+
+Exemple (Vercel):
+
+1. Ajouter `TWELVEDATA_API_KEY` dans les variables d’environnement du projet.
+2. Déployer.
+
+⚠️ Ne pas mettre la clé dans `index.html` ou `data.js` (sinon elle est publique).
+
+---
+
 ## 📊 Graphique
 
 - Chart.js
