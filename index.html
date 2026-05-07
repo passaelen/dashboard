@@ -537,9 +537,11 @@ function calculate(){
     const orBelgiqueG = Number(pf?.or_belgique_g) || 0;
     const argentG = Number(pf?.argent_g) || 0;
 
-    console.log("PF:", pf);
-    console.log("argent_g:", argentG);
-    console.log("silver price:", silverPrice);
+    // 🔍 DEBUG
+    console.log("PF COMPLET:", pf);
+    console.log("TYPE argent_g:", typeof pf.argent_g);
+    console.log("RAW argent_g:", pf.argent_g);
+    console.log("Number argent_g:", Number(pf.argent_g));
 
     // ===== TOTALS =====
     const goldTotal =
