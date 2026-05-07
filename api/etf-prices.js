@@ -1,12 +1,26 @@
 const TWELVEDATA_BASE = "https://api.twelvedata.com/price";
 const FX_URL = "https://open.er-api.com/v6/latest/USD";
 
-async function getJson(url){
-  const res = await fetch(url);
-  if(!res.ok){
-    throw new Error(`HTTP ${res.status} on ${url}`);
+async function getJson(url) {
+  const controller = new AbortController();
+
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, 8000);
+
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} on ${url}`);
+    }
+
+    return res.json();
+  } finally {
+    clearTimeout(timeout);
   }
-  return res.json();
 }
 
 function parsePrice(value){
@@ -26,7 +40,7 @@ export default async function handler(req, res) {
 
   try {
     const [vwce, gdx, gdxj, fx] = await Promise.all([
-      getJson(`${TWELVEDATA_BASE}?symbol=IWDA&apikey=${apiKey}`),
+      getJson(`${TWELVEDATA_BASE}?symbol=SPY&apikey=${apiKey}`),
       getJson(`${TWELVEDATA_BASE}?symbol=GDX&apikey=${apiKey}`),
       getJson(`${TWELVEDATA_BASE}?symbol=GDXJ&apikey=${apiKey}`),
       getJson(FX_URL)
@@ -40,6 +54,8 @@ export default async function handler(req, res) {
       juniors: parsePrice(gdxj?.price) * rate
     });
   } catch (err) {
-    return res.status(502).json({ error: "ETF proxy failed" });
+    return res.status(502).json({
+  error: err.message
+});
   }
 }
