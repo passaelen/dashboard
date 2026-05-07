@@ -319,11 +319,6 @@
 
 
 <script src="data.js"></script>
-<script>
-console.log("DATA RAW:", DATA);
-</script>
-
-    
 <script src="achats.js"></script>
 
 <script>
@@ -394,10 +389,15 @@ const state = {
     portfolio: {},
     etf: {},
     timeframe: 10,
+    hasAchatMarkers: false,
     isLoading: false,
     refreshQueued: false
 };
 
+const DEBUG = false;
+function debugLog(...args){
+    if(DEBUG) console.log(...args);
+}
 
 // ===== HELPER =====
 const DOM_CACHE = {};
@@ -438,44 +438,24 @@ async function fetchPrices(){
 
     async function fetchETFPrices(){
 
-    const API_KEY = "e10aefe097fe40fba25f4e129bdf0c4f";
-
     // ===== CACHE =====
     const cache = JSON.parse(localStorage.getItem("etfPrices"));
     const last = localStorage.getItem("etfPricesTime");
 
     // 🔥 si cache < 10 min → on l’utilise
     if(cache && last && (Date.now() - last < 1800000)){
-        console.log("⚡ cache récent utilisé");
+        debugLog("⚡ cache récent utilisé");
         return cache;
     }
 
     try {
+        const res = await fetch("/api/etf-prices");
+        if(!res.ok) throw new Error("proxy etf-prices indisponible");
+        const fromProxy = await res.json();
 
-        const [vwce, gdx, gdxj, fx] = await Promise.all([
-            fetch(`https://api.twelvedata.com/price?symbol=IWDA&apikey=${API_KEY}`).then(r=>r.json()),
-            fetch(`https://api.twelvedata.com/price?symbol=GDX&apikey=${API_KEY}`).then(r=>r.json()),
-            fetch(`https://api.twelvedata.com/price?symbol=GDXJ&apikey=${API_KEY}`).then(r=>r.json()),
-            fetch("https://open.er-api.com/v6/latest/USD").then(r=>r.json())
-        ]);
+        debugLog("ETF proxy:", fromProxy);
 
-        console.log("ETF RAW:", vwce, gdx, gdxj);
-        console.log("VWCE:", vwce);
-        console.log("GDX:", gdx);
-
-        const rate = fx.rates.EUR;
-
-        function safePrice(obj){
-            if(obj && obj.price){
-                return parseFloat(obj.price);
-            } else {
-                console.warn("API error:", obj);
-                return 0;
-            }
-        }
-
-
-        let seniors = safePrice(gdx) * rate;
+        let seniors = Number(fromProxy?.seniors) || 0;
 
         if(!seniors || seniors < 85 || seniors > 110){
             console.warn("fallback Seniors utilisé");
@@ -483,9 +463,9 @@ async function fetchPrices(){
         }
 
         const result = {
-            monde: safePrice(vwce) || 150,
+            monde: Number(fromProxy?.monde) || 150,
             seniors: seniors,
-            juniors: safePrice(gdxj) * rate
+            juniors: Number(fromProxy?.juniors) || 0
         };
 
 
@@ -538,10 +518,10 @@ function calculate(){
     const argentG = Number(pf?.argent_g) || 0;
 
     // 🔍 DEBUG
-    console.log("PF COMPLET:", pf);
-    console.log("TYPE argent_g:", typeof pf.argent_g);
-    console.log("RAW argent_g:", pf.argent_g);
-    console.log("Number argent_g:", Number(pf.argent_g));
+    debugLog("PF COMPLET:", pf);
+    debugLog("TYPE argent_g:", typeof pf.argent_g);
+    debugLog("RAW argent_g:", pf.argent_g);
+    debugLog("Number argent_g:", Number(pf.argent_g));
 
     // ===== TOTALS =====
     const goldTotal =
@@ -585,8 +565,8 @@ function calculate(){
 // TOTAL GLOBAL
     const total = goldTotal + silverTotal + totalETF;
 
-    console.log("ETF prices:", pe);
-    console.log("ETF values:", {
+    debugLog("ETF prices:", pe);
+    debugLog("ETF values:", {
     monde: etf.monde.parts * pe.monde,
     seniors: etf.seniors.parts * pe.seniors
     });
@@ -817,7 +797,7 @@ el.style.background = `
  
 function animateDonutETF(el, e1, e2, e3, duration = 800){
 
-console.log("ETF %:", e1, e2, e3);
+debugLog("ETF %:", e1, e2, e3);
 
  
  // 🔒 couper les micro valeurs
@@ -1039,8 +1019,8 @@ state.goldClose = last?.goldClose || 0;
 state.silverClose = last?.silverClose || 0;
 
         
-console.log("LAST:", last); // 👈 ICI
-console.log("BPGDM LIVE (G2):", bpgdmLive);
+debugLog("LAST:", last); // 👈 ICI
+debugLog("BPGDM LIVE (G2):", bpgdmLive);
 
 
 
@@ -1049,8 +1029,8 @@ console.log("BPGDM LIVE (G2):", bpgdmLive);
 // 🔥 2. FORCER le sheet comme source principale
 state.prices = livePrices;
         
-console.log("DATA GLOBAL:", window.DATA);
-console.log("DATA DIRECT:", DATA);
+debugLog("DATA GLOBAL:", window.DATA);
+debugLog("DATA DIRECT:", DATA);
         
 state.portfolio = DATA.portfolio;
 state.etf = DATA.etf;
@@ -1103,7 +1083,7 @@ if (elB) {
 
 if (last && last.monde && last.seniors && last.juniors) {
 
-    console.log("✅ ETF depuis SHEET");
+    debugLog("✅ ETF depuis SHEET");
 
     state.etfPrices = {
         monde: last.monde,
@@ -1122,7 +1102,7 @@ if (last && last.monde && last.seniors && last.juniors) {
 
 
 // 🔥 log pour vérifier
-console.log("ETF SHEET:", state.etfPrices);
+debugLog("ETF SHEET:", state.etfPrices);
 
 
 // 🔥 4. calcul après tout
@@ -1313,8 +1293,8 @@ async function fetchHistory(){
         return matches ? matches.map(v => v.replace(/"/g, "")) : [];
     });
 
-console.log("HEADER:", rows[0]);
-console.log("ROW 1:", rows[1]);
+debugLog("HEADER:", rows[0]);
+debugLog("ROW 1:", rows[1]);
     
 
 
@@ -1338,7 +1318,7 @@ console.log("ROW 1:", rows[1]);
 const goldClose = cleanNumber(row[11]);   // colonne L
 const silverClose = cleanNumber(row[12]); // colonne M
         
-        console.log("ROW:", row);
+        debugLog("ROW:", row);
       
 
         if (date && total > 0) {
@@ -1359,7 +1339,7 @@ const silverClose = cleanNumber(row[12]); // colonne M
 
     const bpgdmLive = cleanNumber(rows[1]?.[2]);
 
-console.log("HISTORY:", history);
+debugLog("HISTORY:", history);
 
     
     try {
@@ -1659,13 +1639,13 @@ setValueColor("benef-argent", benefArgent);
 let pulse = 0;
 
 setInterval(() => {
-  if (document.hidden || !window.chart10j) return;
+  if (document.hidden || !window.chart10j || !state.hasAchatMarkers) return;
 
   pulse += 0.1;
   if (pulse > Math.PI * 2) pulse = 0;
 
   window.chart10j.update("none");
-}, 120);
+}, 220);
 
 
 
@@ -1680,12 +1660,14 @@ if (!history || history.length === 0) {
 }
 
 const last = history.slice(-(state.timeframe || 10));
+state.hasAchatMarkers = false;
 
 
     const labels = last.map(h => {
         const [day, month] = h.date.split("/");
         return day + "/" + month;
     });
+state.hasAchatMarkers = labels.some(label => hasAchatLabel(label));
 
 
     // ===== ENRICHISSEMENT =====
