@@ -1767,10 +1767,11 @@ window.chart10j = new Chart(ctx, {
                     return diff >= 0 ? COLORS.chart_up : COLORS.chart_down;
                 },
 
-                pointBorderWidth: (context) => {
-                   const label = context.chart.data.labels[context.dataIndex];
-                   return hasAchatLabel(label) ? 2 : 0;}
-               },
+               pointBorderWidth: (context) => {
+               const label = context.chart.data.labels[context.dataIndex];
+               return hasAchatLabel(label) ? 2 : 0;
+            }
+            },
              
             {
                 data: movingAvg,
