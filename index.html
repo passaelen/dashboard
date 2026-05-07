@@ -319,6 +319,11 @@
 
 
 <script src="data.js"></script>
+<script>
+console.log("DATA RAW:", DATA);
+</script>
+
+    
 <script src="achats.js"></script>
 
 <script>
@@ -1041,6 +1046,10 @@ console.log("BPGDM LIVE (G2):", bpgdmLive);
 
 // 🔥 2. FORCER le sheet comme source principale
 state.prices = livePrices;
+        
+console.log("DATA GLOBAL:", window.DATA);
+console.log("DATA DIRECT:", DATA);
+        
 state.portfolio = DATA.portfolio;
 state.etf = DATA.etf;
 state.bpgdm = (bpgdmLive !== 0 ? bpgdmLive : last?.bpgdm);
