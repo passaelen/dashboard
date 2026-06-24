@@ -1,5 +1,5 @@
 const achats = [
- {date: "24/06/2026", type: "ETF_ARGENT", montant: 165.77, parts: 3, label: "3 ETF ARGENT"},
+ {date: "24/06/2026", type: "ETF_ARGENT", montant: 165.67, parts: 3, label: "3 ETF ARGENT"},
  {date: "10/06/2026", type: "ETF_SENIOR", montant: 453.38, parts: 6, label: "6 ETF SENIORS"},
  {date: "9/06/2026", type: "ETF_SENIOR", montant: 313.37, parts: 4, label: "4 ETF SENIORS"},
  {date: "28/05/2026", type: "ETF_MONDE", montant: 333.72, parts: 2, label: "2 ETF Monde"},
