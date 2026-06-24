@@ -1132,8 +1132,8 @@ if (last && last.monde && last.seniors && last.juniors) {
         monde: last.monde,
         seniors: last.seniors,
         juniors: last.juniors,
-        or: 0,
-        argent: 0
+        or: last.etfOr,
+        argent: last.etfArgent
     };
 
 } else {
@@ -1360,8 +1360,11 @@ debugLog("ROW 1:", rows[1]);
         const score = cleanNumber(row[6]);
         const momentum = cleanNumber(row[7]);
 
-const goldClose = cleanNumber(row[11]);   // colonne L
-const silverClose = cleanNumber(row[12]); // colonne M
+        const goldClose = cleanNumber(row[11]);   // colonne L
+        const silverClose = cleanNumber(row[12]); // colonne M
+        
+        const etfOr = cleanNumber(row[13]);
+        const etfArgent = cleanNumber(row[14]);
         
         debugLog("ROW:", row);
       
@@ -1377,7 +1380,9 @@ const silverClose = cleanNumber(row[12]); // colonne M
                 score,
                 momentum,
                 goldClose,
-                silverClose
+                silverClose,
+                etfOr,
+                etfArgent
             });
         }
     }
