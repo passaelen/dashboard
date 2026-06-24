@@ -314,6 +314,23 @@
 <td id="etf-juniors-perf"></td>
 </tr>
 
+<tr onclick="goToPage(this, 'etf-or.html')">
+<td>ETF Or</td>
+<td id="etf-or-parts"></td>
+<td id="etf-or-prix"></td>
+<td id="etf-or-benef"></td>
+<td id="etf-or-perf"></td>
+</tr>
+
+<tr onclick="goToPage(this, 'etf-argent.html')">
+<td>ETF Argent</td>
+<td id="etf-argent-parts"></td>
+<td id="etf-argent-prix"></td>
+<td id="etf-argent-benef"></td>
+<td id="etf-argent-perf"></td>
+</tr>
+        
+
 </table>
 
 <div class="total-line">
@@ -1647,10 +1664,14 @@ setValueColor("benef-argent", benefArgent);
     setText("etf-monde-parts", etf.monde.parts);
     setText("etf-seniors-parts", etf.seniors.parts);
     setText("etf-juniors-parts", etf.juniors.parts);
+    setText("etf-or-parts", etf.or.parts);
+    setText("etf-argent-parts", etf.argent.parts);
 
     setText("etf-monde-prix", pe.monde.toFixed(2) + " €");
     setText("etf-seniors-prix", pe.seniors.toFixed(2) + " €");
     setText("etf-juniors-prix", pe.juniors.toFixed(2) + " €");
+    setText("etf-or-prix", pe.or.toFixed(2) + " €");
+    setText("etf-argent-prix", pe.argent.toFixed(2) + " €");
 
     setValueColor("etf-monde-benef", benefMonde);
     setValueColor("etf-seniors-benef", benefSeniors);
