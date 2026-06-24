@@ -1638,6 +1638,8 @@ function setPerf(id, value){
     const vMonde = data.vMonde;
     const vSeniors = data.vSeniors;
     const vJuniors = data.vJuniors;
+    const vOrETF = data.vOrETF;
+    const vArgentETF = data.vArgentETF;
 
     const benefMonde = vMonde - etf.monde.buy;
     const benefSeniors = vSeniors - etf.seniors.buy;
@@ -1684,6 +1686,8 @@ function setPerf(id, value){
     setPerf("etf-monde-perf", perf(vMonde, etf.monde.buy));
     setPerf("etf-seniors-perf", perf(vSeniors, etf.seniors.buy));
     setPerf("etf-juniors-perf", perf(vJuniors, etf.juniors.buy));
+    setPerf("etf-or-perf", perf(vOrETF, etf.or.buy));
+    setPerf("etf-argent-perf", perf(vArgentETF, etf.argent.buy));
 
     // ===== TOTAL METAUX =====
     setText("metaux-total-bottom", euro(orSuisse + orBelgique + argent));
