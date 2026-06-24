@@ -1642,6 +1642,8 @@ function setPerf(id, value){
     const benefMonde = vMonde - etf.monde.buy;
     const benefSeniors = vSeniors - etf.seniors.buy;
     const benefJuniors = vJuniors - etf.juniors.buy;
+    const benefOrETF = vOrETF - etf.or.buy;
+    const benefArgentETF = vArgentETF - etf.argent.buy;
 
     // ===== TABLE METAUX =====
     setText("q-or-suisse", pf.or_suisse_g.toFixed(2));
@@ -1653,8 +1655,10 @@ function setPerf(id, value){
     setText("p-argent-g", p.silver_per_g.toFixed(2) + " €");
 
     setValueColor("benef-or-suisse", benefOrSuisse);
-setValueColor("benef-or-belgique", benefOrBelgique);
-setValueColor("benef-argent", benefArgent);
+    setValueColor("benef-or-belgique", benefOrBelgique);
+    setValueColor("benef-argent", benefArgent);
+    setValueColor("etf-or-benef", benefOrETF);
+    setValueColor("etf-argent-benef", benefArgentETF);
 
     setPerf("perf-or-suisse", perf(orSuisse, pf.or_suisse_cost));
     setPerf("perf-or-belgique", perf(orBelgique, pf.or_belgique_cost));
