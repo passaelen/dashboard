@@ -838,7 +838,7 @@ el.style.background = `
 
 
  
-function animateDonutETF(el, e1, e2, e3, duration = 800){
+function animateDonutETF(el,e1,e2,e3,e4,e5,duration = 800){
 
 debugLog("ETF %:", e1, e2, e3);
 
@@ -847,8 +847,10 @@ debugLog("ETF %:", e1, e2, e3);
     e1 = e1 < 0.01 ? 0 : e1;
     e2 = e2 < 0.01 ? 0 : e2;
     e3 = e3 < 0.01 ? 0 : e3;
+    e4 = e4 < 0.01 ? 0 : e4;
+    e5 = e5 < 0.01 ? 0 : e5;
 
-    let total = e1 + e2 + e3;
+    let total = e1 + e2 + e3 + e4 + e5;
 
 
 // 💥 cas critique : tout à zéro
@@ -862,6 +864,8 @@ debugLog("ETF %:", e1, e2, e3);
     e1 = (e1 / total) * 100;
     e2 = (e2 / total) * 100;
     e3 = (e3 / total) * 100;
+    e4 = (e4 / total) * 100;
+    e5 = (e5 / total) * 100;
  
     let start = null;
 
@@ -873,13 +877,25 @@ debugLog("ETF %:", e1, e2, e3);
         const p1 = e1 * progress;
         const p2 = e2 * progress;
         const p3 = e3 * progress;
+        const p4 = e4 * progress;
+        const p5 = e5 * progress;
 
 el.style.background = `
     conic-gradient(
-        ${COLORS.etf_monde} 0% ${p1}%,
-        ${COLORS.etf_seniors} ${p1}% ${p1 + p2}%,
-        ${COLORS.etf_juniors} ${p1 + p2}% 100%
-    )
+    ${COLORS.etf_monde} 0% ${p1}%,
+
+    ${COLORS.etf_seniors}
+    ${p1}% ${p1 + p2}%,
+
+    ${COLORS.etf_juniors}
+    ${p1 + p2}% ${p1 + p2 + p3}%,
+
+    ${COLORS.etf_or}
+    ${p1 + p2 + p3}% ${p1 + p2 + p3 + p4}%,
+
+    ${COLORS.etf_argent}
+    ${p1 + p2 + p3 + p4}% 100%
+)
 `;
 
         if(progress < 1){
@@ -1554,7 +1570,7 @@ labelM.innerHTML = `
     const de = document.querySelector(".donut.etf .donut-inner");
 
     if(de){
-        animateDonutETF(de, e1, e2, e3);
+        animateDonutETF(de, e1, e2, e3, e4, e5);
 
         de.parentElement.classList.add("show", "enter");
         setTimeout(() => {
@@ -2135,8 +2151,10 @@ if (donutETF) {
         const vMonde = etf.monde.parts * pe.monde;
         const vSeniors = etf.seniors.parts * pe.seniors;
         const vJuniors = etf.juniors.parts * pe.juniors;
+        const vOrETF = etf.or.parts * pe.or;
+        const vArgentETF = etf.argent.parts * pe.argent;
 
-        const totalETF = vMonde + vSeniors + vJuniors || 1;
+        const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF || 1;
 
         const pMonde = (vMonde / totalETF) * 100;
         const pSeniors = (vSeniors / totalETF) * 100;
@@ -2148,6 +2166,8 @@ labelE.innerHTML = `
         <div><span class="dot dot-monde"></span> ${euro(vMonde)}</div>
         <div><span class="dot dot-seniors"></span> ${euro(vSeniors)}</div>
         <div><span class="dot dot-juniors"></span> ${euro(vJuniors)}</div>
+        <div><span class="dot dot-etf-or"></span> ${euro(vOrETF)}</div>
+        <div><span class="dot dot-etf-argent"></span> ${euro(vArgentETF)}</div>
     </div>
 `;
 
