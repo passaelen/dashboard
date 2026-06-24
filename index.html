@@ -508,6 +508,8 @@ function calculate(){
     const pf = state.portfolio;
     const etf = state.etf;
     const pe = state.etfPrices;
+    const vOrETF = etf.or.parts * pe.or;
+    const vArgentETF = etf.argent.parts * pe.argent;
 
     // ===== sécurisation =====
     const goldPrice = Number(p?.gold_per_g) || 0;
@@ -555,7 +557,7 @@ function calculate(){
     const vSeniors = etf.seniors.parts * pe.seniors;
     const vJuniors = etf.juniors.parts * pe.juniors;
 
-    const totalETF = vMonde + vSeniors + vJuniors || 0;
+    const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF || 0;
 
     // % ETF
     const pMonde = totalETF ? (vMonde / totalETF) * 100 : 0;
@@ -966,7 +968,7 @@ function render(data){
     const p = state.prices;
     const pf = state.portfolio;
     const etf = state.etf;
-    const pe = state.etfPrices || { monde:0, seniors:0, juniors:0 };
+    const pe = state.etfPrices || { monde:0, seniors:0, juniors:0, or: 0, argent: 0 };
 
     // 🔥 NOUVEAU (modulaire)
     renderKPI(data, p);
