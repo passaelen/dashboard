@@ -3,6 +3,8 @@
 
 
 <head>
+
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <link rel="icon" type="image/png" href="icon-192-v2.png">
@@ -329,6 +331,14 @@
 <td id="etf-argent-benef"></td>
 <td id="etf-argent-perf"></td>
 </tr>
+
+<tr onclick="goToPage(this, 'etf-petrole.html')">
+    <td>Pétrole</td>
+    <td id="etf-petrole-parts"></td>
+    <td id="etf-petrole-prix"></td>
+    <td id="etf-petrole-benef"></td>
+    <td id="etf-petrole-perf"></td>
+</tr>
         
 
 </table>
@@ -643,7 +653,9 @@ const pArgentTotal = (silverTotal / totalMetauxSafe) * 100;
         vOrETF,
         vArgentETF,
         pOrETF,
-        pArgentETF
+        pArgentETF,
+        vPetroleETF, 
+        pPetroleETF
      };
 
 }
@@ -1149,7 +1161,8 @@ if (last && last.monde && last.seniors && last.juniors) {
         seniors: last.seniors,
         juniors: last.juniors,
         or: last.etfOr,
-        argent: last.etfArgent
+        argent: last.etfArgent,
+        petrole: last.etfPetrole
     };
 
 } else {
@@ -1381,6 +1394,8 @@ debugLog("ROW 1:", rows[1]);
         
         const etfOr = cleanNumber(row[13]);
         const etfArgent = cleanNumber(row[14]);
+
+        const etfPetrole = cleanNumber(row[15]);
         
         debugLog("ROW:", row);
       
@@ -1398,7 +1413,8 @@ debugLog("ROW 1:", rows[1]);
                 goldClose,
                 silverClose,
                 etfOr,
-                etfArgent
+                etfArgent,
+                etfPetrole
             });
         }
     }
@@ -1667,6 +1683,8 @@ function setPerf(id, value){
     const benefJuniors = vJuniors - etf.juniors.buy;
     const benefOrETF = vOrETF - etf.or.buy;
     const benefArgentETF = vArgentETF - etf.argent.buy;
+    const benefPetroleETF = vPetroleETF - etf.petrole.buy;
+
 
     // ===== TABLE METAUX =====
     setText("q-or-suisse", pf.or_suisse_g.toFixed(2));
@@ -1682,10 +1700,13 @@ function setPerf(id, value){
     setValueColor("benef-argent", benefArgent);
     setValueColor("etf-or-benef", benefOrETF);
     setValueColor("etf-argent-benef", benefArgentETF);
+    setValueColor("etf-petrole-benef", benefPetroleETF);
+
 
     setPerf("perf-or-suisse", perf(orSuisse, pf.or_suisse_cost));
     setPerf("perf-or-belgique", perf(orBelgique, pf.or_belgique_cost));
     setPerf("perf-argent", perf(argent, pf.argent_cost));
+    setPerf("etf-petrole-perf", perf(vPetroleETF, etf.petrole.buy));
 
     // ===== TABLE ETF =====
     setText("etf-monde-parts", etf.monde.parts);
@@ -1693,12 +1714,14 @@ function setPerf(id, value){
     setText("etf-juniors-parts", etf.juniors.parts);
     setText("etf-or-parts", etf.or.parts);
     setText("etf-argent-parts", etf.argent.parts);
-
+    setText("etf-petrole-parts", etf.petrole.parts);
+    
     setText("etf-monde-prix", pe.monde.toFixed(2) + " €");
     setText("etf-seniors-prix", pe.seniors.toFixed(2) + " €");
     setText("etf-juniors-prix", pe.juniors.toFixed(2) + " €");
     setText("etf-or-prix", pe.or.toFixed(2) + " €");
     setText("etf-argent-prix", pe.argent.toFixed(2) + " €");
+    setText("etf-petrole-prix", pe.petrole.toFixed(2) + " €");
 
     setValueColor("etf-monde-benef", benefMonde);
     setValueColor("etf-seniors-benef", benefSeniors);
