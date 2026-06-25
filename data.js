@@ -14,7 +14,7 @@ const DATA = {
     seniors: { parts: 23, buy: 1815.32 },
     juniors: { parts: 0, buy: 0 },
     or: { parts: 1, buy: 354.22},
-    argent: { parts: 3, buy: 165.67} 
+    argent: { parts: 7, buy: 369.09} 
   }
 };
 
