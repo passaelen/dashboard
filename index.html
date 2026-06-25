@@ -394,7 +394,8 @@ const COLORS = {
   chart_tooltip_bg: styles.getPropertyValue('--chart-tooltip-bg').trim(),
   chart_tooltip_border: styles.getPropertyValue('--chart-tooltip-border').trim(),
   chart_text: styles.getPropertyValue('--chart-text').trim(),
-  chart_white: styles.getPropertyValue('--chart-white').trim()
+  chart_white: styles.getPropertyValue('--chart-white').trim(),
+  etf_petrole: styles.getPropertyValue('--etf-petrole').trim()
  };
 
 
@@ -601,8 +602,9 @@ function calculate(){
     const vMonde = etf.monde.parts * pe.monde;
     const vSeniors = etf.seniors.parts * pe.seniors;
     const vJuniors = etf.juniors.parts * pe.juniors;
+    const vPetroleETF = etf.petrole.parts * pe.petrole;
 
-    const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF || 0;
+    const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF + vPetroleETF || 0;
 
     // % ETF
     const pMonde = totalETF ? (vMonde / totalETF) * 100 : 0;
@@ -610,6 +612,7 @@ function calculate(){
     const pJuniors = totalETF ? (vJuniors / totalETF) * 100 : 0;
     const pOrETF = totalETF ? (vOrETF / totalETF) * 100 : 0;
     const pArgentETF = totalETF ? (vArgentETF / totalETF) * 100 : 0;
+    const pPetroleETF = totalETF ? (vPetroleETF / totalETF) * 100 : 0;
 
 // TOTAL GLOBAL
     const total = goldTotal + silverTotal + totalETF;
@@ -654,7 +657,6 @@ const pArgentTotal = (silverTotal / totalMetauxSafe) * 100;
         vArgentETF,
         pOrETF,
         pArgentETF,
-        vPetroleETF, 
         pPetroleETF
      };
 
@@ -850,7 +852,7 @@ el.style.background = `
 
 
  
-function animateDonutETF(el,e1,e2,e3,e4,e5,duration = 800){
+function animateDonutETF(el,e1,e2,e3,e4,e5,e6,duration = 800){
 
 debugLog("ETF %:", e1, e2, e3);
 
@@ -861,8 +863,9 @@ debugLog("ETF %:", e1, e2, e3);
     e3 = e3 < 0.01 ? 0 : e3;
     e4 = e4 < 0.01 ? 0 : e4;
     e5 = e5 < 0.01 ? 0 : e5;
+    e6 = e6 < 0.01 ? 0 : e6;
 
-    let total = e1 + e2 + e3 + e4 + e5;
+    let total = e1 + e2 + e3 + e4 + e5 + e6;
 
 
 // 💥 cas critique : tout à zéro
@@ -878,6 +881,7 @@ debugLog("ETF %:", e1, e2, e3);
     e3 = (e3 / total) * 100;
     e4 = (e4 / total) * 100;
     e5 = (e5 / total) * 100;
+    e6 = (e6 / total) * 100;
  
     let start = null;
 
@@ -891,22 +895,26 @@ debugLog("ETF %:", e1, e2, e3);
         const p3 = e3 * progress;
         const p4 = e4 * progress;
         const p5 = e5 * progress;
+        const p6 = e6 * progress;
 
 el.style.background = `
     conic-gradient(
     ${COLORS.etf_monde} 0% ${p1}%,
 
     ${COLORS.etf_seniors}
-    ${p1}% ${p1 + p2}%,
-
+    ${p1}% ${p1+p2}%,
+    
     ${COLORS.etf_juniors}
-    ${p1 + p2}% ${p1 + p2 + p3}%,
-
+    ${p1+p2}% ${p1+p2+p3}%,
+    
     ${COLORS.etf_or}
-    ${p1 + p2 + p3}% ${p1 + p2 + p3 + p4}%,
-
+    ${p1+p2+p3}% ${p1+p2+p3+p4}%,
+    
     ${COLORS.etf_argent}
-    ${p1 + p2 + p3 + p4}% 100%
+    ${p1+p2+p3+p4}% ${p1+p2+p3+p4+p5}%,
+    
+    ${COLORS.etf_petrole}
+    ${p1+p2+p3+p4+p5}% 100%
 )
 `;
 
@@ -1575,18 +1583,19 @@ labelM.innerHTML = `
     const e3 = Math.max(0, data.pJuniors || 0);
     const e4 = Math.max(0, data.pOrETF || 0);
     const e5 = Math.max(0, data.pArgentETF || 0);
-    
+    const e6 = Math.max(0, data.pPetroleETF || 0);
 
     setText("p-monde", percent(e1));
     setText("p-seniors", percent(e2));
     setText("p-juniors", percent(e3));
     setText("p-etf-or", percent(e4));
     setText("p-etf-argent", percent(e5));
+    setText("p-etf-petrole", percent(e6));
  
     const de = document.querySelector(".donut.etf .donut-inner");
 
     if(de){
-        animateDonutETF(de, e1, e2, e3, e4, e5);
+        animateDonutETF(de, e1, e2, e3, e4, e5, e6);
 
         de.parentElement.classList.add("show", "enter");
         setTimeout(() => {
@@ -1677,6 +1686,7 @@ function setPerf(id, value){
     const vJuniors = data.vJuniors;
     const vOrETF = data.vOrETF;
     const vArgentETF = data.vArgentETF;
+    const vPetroleETF = data.vPetroleETF;
 
     const benefMonde = vMonde - etf.monde.buy;
     const benefSeniors = vSeniors - etf.seniors.buy;
