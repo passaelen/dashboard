@@ -515,7 +515,8 @@ async function fetchPrices(){
              seniors: seniors,
              juniors: Number(fromProxy?.juniors) || 0,
              or: Number(fromProxy?.or) || 0,
-             argent: Number(fromProxy?.argent) || 0
+             argent: Number(fromProxy?.argent) || 0,
+             petrole: Number(fromProxy?.petrole) || 0
         };
 
 
@@ -536,7 +537,8 @@ async function fetchPrices(){
             seniors: 0,
             juniors: 0,
             or: 0,
-            argent: 0
+            argent: 0,
+            petrole: 0
         };
     }
 }
@@ -661,6 +663,7 @@ const pArgentTotal = (silverTotal / totalMetauxSafe) * 100;
         pArgentTotal,
         vOrETF,
         vArgentETF,
+        vPetroleETF,
         pOrETF,
         pArgentETF,
         pPetroleETF
@@ -2192,8 +2195,9 @@ if (donutETF) {
         const vJuniors = etf.juniors.parts * pe.juniors;
         const vOrETF = etf.or.parts * pe.or;
         const vArgentETF = etf.argent.parts * pe.argent;
+        const vPetroleETF = etf.petrole.parts * pe.petrole;
 
-        const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF || 1;
+        const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF + vPetroleETF || 1;
 
         const pMonde = (vMonde / totalETF) * 100;
         const pSeniors = (vSeniors / totalETF) * 100;
@@ -2207,6 +2211,7 @@ labelE.innerHTML = `
         <div><span class="dot dot-juniors"></span> ${euro(vJuniors)}</div>
         <div><span class="dot dot-etf-or"></span> ${euro(vOrETF)}</div>
         <div><span class="dot dot-etf-argent"></span> ${euro(vArgentETF)}</div>
+        <div><span class="dot dot-etf-petrole"></span> ${euro(vPetroleETF)}</div>
     </div>
 `;
 
