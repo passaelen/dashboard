@@ -57,3 +57,4 @@ const metaux = [
   {date: "29/03/2020", type: "ARGENT", loc: "Suisse", tot: 3379.88, poids: 6000.0, label: "L. 1Kg."}
  ];
 
+
