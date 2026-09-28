@@ -1,9 +1,8 @@
 const achats = [
 
-{date: "27/08/2026", type: "ETF_MONDE", montant: 343.41, parts: 2, label: "2 ETF Monde"},
-
-{date: "27/07/2026", type: "ETF_MONDE", montant: 336.64, parts: 2, label: "2 ETF Monde"},
-
+ {date: "28/09/2026", type: "ETF_ARGENT", montant: 109.95, parts: 2, label: "2 ETF ARGENT"},
+ {date: "27/08/2026", type: "ETF_MONDE", montant: 343.41, parts: 2, label: "2 ETF Monde"},
+ {date: "27/07/2026", type: "ETF_MONDE", montant: 336.64, parts: 2, label: "2 ETF Monde"},
  {date: "20/07/2026", type: "ETF_SENIOR", montant: 383.47, parts: 6, label: "6 ETF SENIORS"},
  {date: "16/07/2026", type: "ETF_SENIOR", montant: 215.46, parts: 3, label: "3 ETF SENIORS"},
  {date: "16/07/2026", type: "ETF_SENIOR", montant: 219.66, parts: 3, label: "3 ETF SENIORS"},
@@ -67,7 +66,7 @@ const metaux = [
      {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 4.00, label: "L. 1g. Pamp"},
      {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 2.00, label: "L. 1g. Umicore"},
      {date: "29/03/2020", type: "OR", loc: "Suisse", tot: 0.0, poids: 15.55, label: "P. ⅒ Philh."},
-  {date: "29/03/2020", type: "ARGENT", loc: "Suisse", tot: 3379.88, poids: 6000.0, label: "L. 1Kg."}
+     {date: "29/03/2020", type: "ARGENT", loc: "Suisse", tot: 3379.88, poids: 6000.0, label: "L. 1Kg."}
  ];
 
 
