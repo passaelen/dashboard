@@ -2,8 +2,7 @@ const achats = [
 
 {date: "14/10/2026", type: "ETF_ARGENT", montant: 155.61, parts: 3, label: "3 ETF ARGENT"},
 
-
- {date: "01/10/2026", type: "ETF_MONDE", montant: 348.47, parts: 2, label: "2 ETF Monde"},
+{date: "01/10/2026", type: "ETF_MONDE", montant: 348.47, parts: 2, label: "2 ETF Monde"},
 
 {date: "28/09/2026", type: "ETF_ARGENT", montant: 109.95, parts: 2, label: "2 ETF ARGENT"},
 
