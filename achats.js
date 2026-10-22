@@ -33,6 +33,8 @@ const achats = [
 
 const metaux = [
 
+{date: "22/10/2026", type: "ARGENT", loc: "Suisse", tot: 56.74, poids: 31.10, label: "P. Oz. BTC"},
+
   {date: "13/07/2026", type: "ARGENT", loc: "Suisse", tot: 57.82, poids: 31.10, label: "P. Oz. GAV"},
 
   {date: "08/07/2026", type: "ARGENT", loc: "Suisse", tot: 288.52, poids: 155.50, label: "P. Oz. GAV"},
