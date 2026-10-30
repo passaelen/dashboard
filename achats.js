@@ -32,16 +32,12 @@ const achats = [
 
 const metaux = [
 
-
+{date: "30/10/2026", type: "ARGENT", loc: "Suisse", tot: 52.77, poids: 31.10, label: "P. Oz. PHI"},
 {date: "29/10/2026", type: "ARGENT", loc: "Suisse", tot: 54.78, poids: 31.10, label: "P. Oz. PHI"},
-
 {date: "22/10/2026", type: "ARGENT", loc: "Suisse", tot: 56.74, poids: 31.10, label: "P. Oz. BTC"},
-
-  {date: "13/07/2026", type: "ARGENT", loc: "Suisse", tot: 57.82, poids: 31.10, label: "P. Oz. GAV"},
-
-  {date: "08/07/2026", type: "ARGENT", loc: "Suisse", tot: 288.52, poids: 155.50, label: "P. Oz. GAV"},
-
-  {date: "01/07/2026", type: "ARGENT", loc: "Suisse", tot: 284.16, poids: 155.50, label: "P. Oz. BTC"},
+{date: "13/07/2026", type: "ARGENT", loc: "Suisse", tot: 57.82, poids: 31.10, label: "P. Oz. GAV"},
+{date: "08/07/2026", type: "ARGENT", loc: "Suisse", tot: 288.52, poids: 155.50, label: "P. Oz. GAV"},
+{date: "01/07/2026", type: "ARGENT", loc: "Suisse", tot: 284.16, poids: 155.50, label: "P. Oz. BTC"},
  
   {date: "30/01/2026", type: "OR", loc: "Bel.", tot: 912.00, poids: 6.22, label: "⅒ M.Leaf"},
   {date: "26/01/2026", type: "OR", loc: "Bel.", tot: 0.0, poids: 15.55, label: "Arb. ⅟₄ M.Leaf"},
