@@ -13,7 +13,7 @@ const DATA = {
     monde: { parts: 19, buy: 3111.59 },
     seniors: { parts: 35, buy: 2633.91 },
     juniors: { parts: 0, buy: 0 },
-    or: { parts: 1, buy: 354.22},
+    or: { parts: 2, buy: 683.35},
     argent: { parts: 30, buy: 1474.43},
     petrole: { parts: 0, buy: 0.0}
   }
