@@ -1,305 +1,534 @@
-## 🚀 Aperçu
+💼 Dashboard Or, Argent & ETF
 
-👉 Dashboard personnel de pilotage patrimonial (Or / Argent / ETF)
+🚀 Aperçu
 
-📍 Vision temps réel + lecture de cycle (Ratio & BPGDM)
+👉 Dashboard personnel de pilotage patrimonial (Or / Argent / ETF).
+
+📍 Vision patrimoniale actualisée, suivi des performances et lecture des cycles de marché.
+
+🧭 Un outil centralisé pour suivre son patrimoine, comprendre les mouvements du marché et piloter ses stratégies d'investissement.
 
 ---
 
-# 📊 Dashboard Or, Argent & ETF
+📊 Dashboard Or, Argent & ETF
 
----
+🧭 Description
 
-## 🧭 Description
+Dashboard personnel de suivi patrimonial permettant de visualiser :
 
-Dashboard personnel de suivi patrimonial permettant de visualiser en temps réel :
-
-- 🟡 Portefeuille Or (Suisse & Privé)
+- 🟡 Portefeuille Or (Suisse & Belgique)
 - ⚪ Portefeuille Argent (Suisse)
-- 📈 ETF Monde & Minières
-- ⚖️ Allocation globale et ratios
-- 🌡️ Lecture climatique du marché (Ratio Or/Argent + BPGDM)
+- 📈 ETF Monde
+- ⛏️ ETF Minières Seniors & Juniors
+- 🟡 ETF Or
+- ⚪ ETF Argent
+- 🛢️ ETF Pétrole
+- ⚖️ Allocation globale et répartition des actifs
+- 🌡️ Lecture climatique du marché (Ratio Or/Argent)
+- 📊 Indicateurs de marché (Score & Momentum)
+- 📉 BPGDM et signaux combinés
 
-👉 Architecture hybride intelligente :
+👉 Architecture hybride :
 
-- ⚡ API live → métaux (or & argent)
-- 🧾 Google Sheet → ETF + historique + BPGDM
-- 🧠 Calcul interne → ratio & signaux
-- 🔗 URL state → transmission du ratio entre pages
-
----
-
-## ⚙️ Fonctionnalités
-
-### 📊 Visualisation
-
-- Donuts dynamiques :
-  - Métaux (Or Suisse / Or Privé / Argent)
-  - ETF (Monde 🔵 / Minières 🟢 / Juniors ⚪)
-
-👉 Couleurs harmonisées entre donuts et légendes (cohérence visuelle totale)
-
-- Graphique d'évolution :
-  - 10 / 30 / 90 jours
-  - Moyenne mobile (MM7)
-  - Couleur dynamique (hausse / baisse)
-  - Tooltip détaillé (€ / Δ€ / %)
-
-- Allocation visuelle (pills UI) :
-  - 🟡 Or
-  - ⚪ Argent
-  - 💎 Métaux
-  - 📊 ETF
-
-👉 Lecture rapide et claire de la structure du portefeuille
+- ⚡ API live → métaux précieux
+- 🧾 Google Sheets → ETF, historique et indicateurs
+- 🔗 API TwelveData via proxy serveur → secours pour les prix ETF
+- 🧠 Calculs internes → valorisation, performances, ratios et signaux
+- 💾 localStorage → cache et résilience
+- 🧭 URL state → transmission du ratio entre pages
 
 ---
 
-## ⚡ Données en temps réel
+⚙️ Fonctionnalités
 
-- 🟡 Or → API live (converti en €)
-- ⚪ Argent → API live (converti en €)
-- 📈 ETF → clôture (Google Sheet)
-- 📊 Historique → Google Sheet
-- 🧠 BPGDM → Google Sheet (live + fixé)
+📊 1. Tableau de bord patrimonial
 
-👉 Toutes les valeurs sont exprimées en € (vision patrimoniale réelle)
+Total global
 
----
+- Valorisation totale du portefeuille
+- Métaux + ETF
+- Variation en euros par rapport à la dernière clôture
+- Variation en pourcentage
+- Indicateur visuel positif / négatif
 
-## 🧠 Intelligence intégrée
+Indicateurs KPI
 
-- Calcul du ratio Or / Argent (basé sur prix €)
+- 🟡 Valorisation totale Or
+- ⚪ Valorisation totale Argent
+- ⚖️ Ratio Or / Argent
+- Variation des cours des métaux par rapport à leur dernière clôture historique disponible
 
-- Signal marché combiné :
-  - Ratio → climat macro
-  - BPGDM → timing ETF
+Répartition patrimoniale
 
-- Messages dynamiques :
-  - Zones (Nord / Transition / Chaud / Extrême)
-  - Actions suggérées
+Deux donuts dynamiques :
 
----
+Métaux
 
-## 📈 Suivi de performance
+- Or Suisse
+- Or Belgique
+- Argent Suisse
 
-- Total global (live)
-- Variation vs dernière clôture
+ETF
 
-- Gains / pertes :
-  - Par actif
-  - En €
-  - En %
+- Monde
+- Seniors
+- Juniors
+- Or
+- Argent
+- Pétrole
 
-👉 Les % KPI intègrent :
-- Variation du prix
-- Effet devise USD → EUR
+👉 Affichage des pourcentages et des montants.
 
-➡️ Représentation réelle de la performance portefeuille
+👉 Donuts interactifs : toucher le centre permet d'afficher le détail des valorisations.
 
----
-
-## 🎛️ Interactions
-
-- Timeframe : 10J / 30J / 90J
-- Hover tactile fluide
-- Animations (graph + donuts)
-- Refresh manuel
-- Navigation multi-pages
+👉 Allocation globale calculée dynamiquement.
 
 ---
 
-## 🧭 Module Boussole
+⚡ 2. Données en temps réel
 
-Nouvelle page dédiée à la lecture visuelle du cycle :
+Métaux précieux
 
-- 🧭 Affichage du ratio sous forme d'aiguille
-- Mapping dynamique ratio → angle
-- Zones visuelles (Nord / Sud / Transition)
-- Calibration manuelle précise
+Sources :
 
-### 🔗 Transmission intelligente
+- Gold API → XAU / XAG
+- ExchangeRate API → conversion USD vers EUR
 
-boussole.html?ratio=61.54
+Calculs :
 
-👉 Avantages :
-- Aucun recalcul
-- Aucune dépendance externe
-- Navigation rapide
-- Partage possible
+- Prix de l'or en €/g
+- Prix de l'argent en €/g
+- Valorisation des stocks physiques
+- Ratio Or / Argent calculé en temps réel
 
----
+Particularité :
 
-## 🏗️ Architecture
+La valorisation de l'argent physique intègre un coefficient de revente de 0,965 afin de tenir compte de la décote retenue dans le modèle patrimonial.
 
-### Sources de données
+ETF
 
-- `data.js` → portefeuille
-- Google Sheet → historique + ETF + BPGDM
-- URL → transport du ratio
+Source principale :
 
-### APIs utilisées
+- Google Sheets → dernières clôtures enregistrées.
 
-- Gold API (XAU / XAG)
-- Exchange Rate API (USD → EUR)
+Source secondaire :
 
----
+- Proxy serveur Vercel "/api/etf-prices"
+- TwelveData → récupération des prix ETF en secours.
 
-## ⚙️ Logique
+ETF suivis :
 
-- Métaux → prix live USD convertis en €/g
-- ETF → valorisation via Sheet
-- Total → Métaux + ETF
-- Ratio → calcul live
-- Boussole → affichage via URL
+Catégorie| Actif
+🌍 Monde| ETF Monde
+⛏️ Seniors| Minières aurifères
+🚀 Juniors| Minières juniors
+🟡 Or| ETF Or
+⚪ Argent| ETF Argent
+🛢️ Pétrole| ETF Pétrole
 
----
+👉 Les ETF sont valorisés en euros.
 
-## 🔐 Clé API TwelveData (cachée)
-
-Les prix ETF live passent désormais par un endpoint serveur `/api/etf-prices` pour éviter d’exposer la clé côté navigateur.
-
-- Fichier proxy: `api/etf-prices.js`
-- Variable d’environnement requise: `TWELVEDATA_API_KEY`
-
-Exemple (Vercel):
-
-1. Ajouter `TWELVEDATA_API_KEY` dans les variables d’environnement du projet.
-2. Déployer.
-
-⚠️ Ne pas mettre la clé dans `index.html` ou `data.js` (sinon elle est publique).
+👉 Les prix de clôture issus de Google Sheets restent prioritaires lorsque les données sont disponibles.
 
 ---
 
-## 📊 Graphique
+📈 3. Graphique d'évolution patrimoniale
 
-- Chart.js
-- Timeframe dynamique
-- Moyenne mobile (MM7)
-- Couleur adaptative
+Graphique dynamique basé sur l'historique Google Sheets.
 
----
+Timeframes
 
-## 🛟 Résilience des données
+- 10 jours
+- 30 jours
+- 90 jours
+- 180 jours
 
-### BPGDM
+Fonctionnalités
 
-- Source principale → Google Sheet
-- Source secondaire → fallback cache
+- 📈 Évolution de la valorisation globale
+- Moyenne mobile MM7
+- Couleur dynamique selon la tendance
+- Animation graphique
+- Tooltip détaillé
+- Variation en euros
+- Variation en pourcentage
+- Identification des journées d'achat
+- Marqueurs visuels animés pour les achats
+- Détail des achats dans les tooltips
+- Agrandissement plein écran par interaction tactile
 
-👉 Sécurisation automatique des données
-
----
-
-## 🧠 Intelligence & Lecture du Marché
-
-### 🧭 1. Climat macro (Ratio)
-
-- ❄️ Nord → accumulation Argent
-- ⚖️ Pivot → préparation
-- 🔥 Sud → rotation vers Or
-
----
-
-### 📊 2. Timing (BPGDM)
-
-- Zones basses → opportunités ETF
-- Zones hautes → prudence
+👉 Le graphique permet de suivre l'évolution du patrimoine et de replacer les achats dans leur contexte historique.
 
 ---
 
-### ⚖️ 3. Signal combiné
+🧠 4. Intelligence intégrée
 
-- 🟢 Achat ETF
-- 🔴 Vente
-- 🔥 Métaux prioritaires
-- 🔵 HOLD
+Le dashboard combine plusieurs indicateurs pour proposer une lecture structurée du marché.
+
+⚖️ Ratio Or / Argent
+
+Le ratio est calculé à partir des prix des métaux convertis en euros.
+
+Il constitue l'indicateur structurel de la stratégie Or / Argent.
+
+Zones climatiques
+
+- ❄️ Hibernation
+- 🧊 Zone Nord
+- 🌤️ Transition
+- ☀️ Zone chaude
+- 🔥 Très chaud
+- 🚨 Extrême
+
+Lecture stratégique
+
+- Ratio élevé → accumulation progressive d'argent.
+- Zone de transition → préparation à l'arbitrage.
+- Ratio faible → rotation progressive de l'argent vers l'or.
+
+👉 Le ratio permet de suivre le cycle relatif entre les deux métaux.
+
+📊 BPGDM
+
+Indicateur de momentum des sociétés minières aurifères.
+
+Sources :
+
+- Google Sheets → valeur live et historique.
+- Historique de secours en cas d'indisponibilité de la valeur live.
+
+Lecture stratégique
+
+- Zones basses → opportunités potentielles sur les minières.
+- Zones intermédiaires → conservation et observation.
+- Zones hautes → prudence et allègement éventuel.
+
+Seuils utilisés dans les signaux :
+
+- ≤ 5 : achat massif potentiel.
+- ≤ 3 : achat ultra-agressif potentiel.
+- ≥ 60 : allègement éventuel des Juniors.
+- ≥ 70 : signal de vente potentiel des Seniors.
+
+🌡️ Score marché
+
+Indicateur synthétique permettant de situer le contexte général du marché.
+
+Cinq niveaux :
+
+Score| Lecture
+< 0,10| 🚨 Stress extrême
+< 0,25| 🔻 Marché faible
+< 0,50| ⚖️ Marché équilibré
+< 0,75| 🔺 Marché solide
+≥ 0,75| 🔥 Marché en excès
+
+📉 Momentum
+
+Mesure la pression directionnelle du marché.
+
+- Pression haussière forte
+- Pression haussière
+- Neutre
+- Pression baissière
+- Pression baissière forte
+
+Le score et le momentum sont issus de Google Sheets.
+
+🧠 Signal combiné
+
+Le dashboard combine :
+
+- Ratio Or / Argent → climat macro et arbitrage des métaux.
+- BPGDM → timing potentiel sur les ETF miniers.
+
+Signaux affichés :
+
+- 🟢 Achat Seniors / Juniors
+- 🟡 Achat Seniors
+- 🔴 Vente Seniors vers ETF Monde
+- 🟠 Allègement Juniors
+- 🔥 Rotation Argent vers Or
+- ⚖️ Transition métaux
+- 🔵 HOLD global
+- 📊 Marché neutre
+
+👉 Le système applique une hiérarchie de règles pour déterminer le signal affiché.
+
+Les signaux constituent une aide à la lecture du marché et non des ordres d'investissement automatiques.
 
 ---
 
-### 🧭 4. Boussole visuelle
+🧭 5. Module Boussole
 
-- Mapping ratio → angle
-- Lecture intuitive
+Page indépendante dédiée à la lecture visuelle du ratio Or / Argent.
 
----
+Fonctionnalités :
 
-### 🧠 5. Principe fondamental
+- Affichage du ratio sous forme d'aiguille.
+- Mapping dynamique ratio → angle.
+- Zones climatiques.
+- Calibration manuelle.
+- Transmission du ratio depuis le dashboard.
 
-- Ratio = structure
-- BPGDM = timing
+Transmission URL
 
-👉 Objectif :
-Ne pas subir le marché, mais s’y positionner avec cohérence.
+"boussole.html?ratio=61.54"
 
----
+Avantages :
 
-## ⚙️ Optimisations techniques
-
-- Cache DOM (`setText`)
-- Architecture modulaire
-- State centralisé
-- Cache localStorage (ETF)
-- Séparation logique / affichage
+- Aucun recalcul du ratio dans la transmission.
+- Aucune dépendance externe pour transmettre la valeur.
+- Navigation rapide.
+- Possibilité de partage du lien.
 
 ---
 
-## 🎨 Gestion des couleurs
+📊 6. Suivi des performances
 
-- Centralisation complète dans `couleurs.css`
-- Cohérence UI entre donuts, légendes et graph
-- Maintenance simplifiée
-- Prêt pour évolution (thèmes futurs)
+Métaux physiques
+
+Pour chaque position :
+
+- Quantité détenue.
+- Prix spot en €/g.
+- Valorisation.
+- Gain ou perte en euros.
+- Performance en pourcentage.
+
+ETF
+
+Pour chaque position :
+
+- Nombre de parts.
+- Prix de référence.
+- Valorisation.
+- Gain ou perte en euros.
+- Performance en pourcentage.
+
+Performance globale
+
+- Valorisation totale.
+- Variation par rapport à la dernière clôture historique.
+- Écart en euros.
+- Écart en pourcentage.
+
+👉 Les performances individuelles sont calculées à partir des capitaux d'achat enregistrés dans "data.js".
 
 ---
 
-## 🚀 Évolutions possibles
+🎛️ 7. Interactions et ergonomie
 
-- 📩 Alertes automatiques
-- 📸 Snapshots partageables
-- 🔄 Multi-sources
-- 📊 Historique enrichi
-- 📱 Optimisation mobile
-
----
-
-## 🎯 Philosophie
-
-Ce dashboard est une boussole patrimoniale.
-
-- 📍 Lire
-- 🧭 Comprendre
-- ⚖️ Ajuster
-- 🧠 Anticiper
+- 🔄 Actualisation manuelle.
+- 🎯 Mode Focus.
+- 📱 Interface responsive.
+- Donuts interactifs.
+- Animations des répartitions.
+- Graphique tactile.
+- Agrandissement plein écran.
+- Navigation multi-pages.
+- Tooltips détaillés.
+- Mise en évidence des performances positives et négatives.
+- Marqueurs des achats sur le graphique.
 
 ---
 
-## 📝 Notes personnelles
+🏗️ 8. Architecture technique
 
--   Total global = métaux (API live) + ETF (clôtures Sheet)
+Sources de données
 
--   KPI (%) :
+Source| Utilisation
+"data.js"| Quantités, capitaux investis et portefeuille
+"achats.js"| Historique des achats et marqueurs
+Google Sheets| Historique, ETF, BPGDM, score et momentum
+Gold API| Prix XAU / XAG
+ExchangeRate API| Conversion USD → EUR
+TwelveData| Prix ETF via proxy serveur
+localStorage| Cache des données
 
-    -   comparaison prix live vs clôture Sheet
-    -   inclut effet devise
+Fichiers principaux
 
--   Donuts :
+- "index.html" → dashboard principal et logique de calcul.
+- "data.js" → données patrimoniales.
+- "achats.js" → historique des achats.
+- "couleurs.css" → centralisation des couleurs.
+- "style.css" → interface et présentation.
+- "boussole.html" → module Boussole.
+- "api/etf-prices.js" → proxy ETF.
+- "sw.js" → service worker.
+- "manifest.json" → configuration PWA.
+- "birthday.js" → script complémentaire.
 
-    -   Métaux → temps réel (API)
-    -   ETF → clôture Sheet
+Bibliothèques
 
--   Graphique :
+- Chart.js → graphiques.
+- JavaScript natif → calculs et interactions.
+- CSS → interface, animations et donuts.
 
-    -   basé sur historique Sheet
+---
 
--   Bloc Métaux :
+🔐 9. Sécurité API
 
-    -   100% temps réel
+Les prix ETF de secours passent par un endpoint serveur :
 
--   Bloc ETF :
+"/api/etf-prices"
 
-    -   basé sur clôtures veille
+La clé TwelveData est stockée dans une variable d'environnement :
 
--   Allocation :
+"TWELVEDATA_API_KEY"
 
-    -   calculée dynamiquement en temps réel
+Configuration Vercel :
+
+1. Ajouter la variable d'environnement.
+2. Déployer le projet.
+3. Vérifier le fonctionnement du proxy.
+
+⚠️ Ne jamais placer la clé API dans "index.html" ou "data.js".
+
+---
+
+🛟 10. Résilience et gestion du cache
+
+Le dashboard utilise plusieurs mécanismes de cache.
+
+Historique Google Sheets
+
+- Cache localStorage.
+- Durée de validité : 5 minutes.
+- Fallback sur les données en cache si nécessaire.
+
+Prix ETF
+
+- Cache localStorage.
+- Durée de validité : 30 minutes.
+- Priorité Google Sheets.
+- Secours via le proxy TwelveData.
+- Valeurs de secours pour certains prix si les données API sont invalides.
+
+Chargement
+
+- Récupération parallèle des données historiques et des cours des métaux.
+- Gestion des erreurs.
+- Indicateur visuel de chargement.
+- Actualisation manuelle.
+- Protection contre les appels simultanés à "init()".
+
+👉 Objectif : maintenir une continuité d'affichage et limiter les dépendances aux services externes.
+
+---
+
+📱 11. Progressive Web App (PWA)
+
+Le dashboard intègre les éléments suivants :
+
+- "manifest.json"
+- "sw.js"
+- Icône dédiée.
+- Couleur de thème dynamique.
+- Enregistrement du service worker.
+
+👉 Architecture prévue pour une utilisation proche d'une application mobile.
+
+---
+
+⚙️ 12. Optimisations techniques
+
+- Cache DOM avec "setText()".
+- State centralisé.
+- Séparation des fonctions de calcul et de rendu.
+- Cache localStorage.
+- Chargement parallèle des données.
+- Gestion des erreurs API.
+- Animations avec requestAnimationFrame.
+- Réduction des mises à jour DOM inutiles.
+- Centralisation des couleurs CSS.
+- Proxy serveur pour la clé API TwelveData.
+
+---
+
+🎨 13. Gestion des couleurs
+
+Centralisation dans "couleurs.css".
+
+Variables dédiées :
+
+- Or Suisse.
+- Or Belgique.
+- Argent.
+- ETF Monde.
+- ETF Seniors.
+- ETF Juniors.
+- ETF Or.
+- ETF Argent.
+- ETF Pétrole.
+- Performances positives et négatives.
+- Zones du marché.
+- Graphique et tooltip.
+- BPGDM.
+
+👉 Cohérence visuelle entre les donuts, les légendes, les indicateurs et les graphiques.
+
+---
+
+🚀 14. Évolutions possibles
+
+- 📩 Alertes automatiques.
+- 📸 Snapshots partageables.
+- 🔄 Sources de données complémentaires.
+- 📊 Historique enrichi.
+- 📱 Optimisation mobile supplémentaire.
+- 📈 Analyse avancée des performances.
+- 📊 Suivi comparatif des différentes stratégies.
+
+---
+
+🎯 Philosophie
+
+Ce dashboard est une boussole patrimoniale personnelle.
+
+Il ne s'agit pas simplement de consulter des cours, mais de comprendre la structure du patrimoine et les cycles de marché.
+
+Ses quatre principes :
+
+- 📍 Lire.
+- 🧭 Comprendre.
+- ⚖️ Ajuster.
+- 🧠 Anticiper.
+
+Principe fondamental
+
+Ratio = Structure
+
+BPGDM = Timing
+
+Score = Contexte de marché
+
+Momentum = Direction et pression
+
+👉 Objectif : ne pas subir le marché, mais s'y positionner avec cohérence.
+
+---
+
+📝 Notes personnelles
+
+- Total global = métaux (API live) + ETF (Google Sheets en priorité).
+- Métaux = valorisation en temps réel.
+- Argent physique = coefficient de revente de 0,965.
+- ETF = valorisation selon les dernières clôtures disponibles.
+- Proxy TwelveData = solution de secours.
+- BPGDM = valeur live avec historique de secours.
+- Score et momentum = données Google Sheets.
+- Donuts métaux = valorisation live.
+- Donuts ETF = valorisation selon les prix de référence disponibles.
+- Graphique = historique Google Sheets.
+- Performance = valorisation actuelle comparée au capital d'achat enregistré.
+- Ratio = calcul dynamique en euros.
+- Boussole = transmission du ratio par URL.
+
+---
+
+Projet : Dashboard personnel Or / Argent / ETF
+
+Architecture : JavaScript / HTML / CSS / Google Sheets / Vercel / Chart.js
+
+Finalité : Pilotage patrimonial et lecture stratégique des cycles de marché.
