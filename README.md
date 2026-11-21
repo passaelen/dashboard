@@ -532,3 +532,17 @@ Projet : Dashboard personnel Or / Argent / ETF
 Architecture : JavaScript / HTML / CSS / Google Sheets / Vercel / Chart.js
 
 Finalité : Pilotage patrimonial et lecture stratégique des cycles de marché.
+
+---
+
+© Propriété intellectuelle
+
+Ce projet, incluant son code source, son architecture, ses fonctionnalités, ses indicateurs et ses méthodes d'analyse, est une création personnelle de son auteur.
+
+© 2026 – Tous droits réservés.
+
+La consultation publique de ce dépôt ne constitue pas une autorisation de copier, reproduire, modifier, redistribuer ou commercialiser tout ou partie de ce projet.
+
+Toute utilisation, exploitation commerciale ou redistribution nécessite l'autorisation écrite préalable de son auteur.
+
+La méthode personnelle d'interprétation du ratio Or/Argent, notamment la « Boussole climatique Or / Argent », fait également partie de ce travail.
