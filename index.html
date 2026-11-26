@@ -659,6 +659,7 @@ const pArgentTotal = (silverTotal / totalMetauxSafe) * 100;
         pOrBelgique,
         pArgent,
         vMonde,
+        vMondeSPYY,
         vSeniors,
         vJuniors,
         totalETF,
@@ -1183,6 +1184,7 @@ if (last && last.monde && last.seniors && last.juniors) {
 
     state.etfPrices = {
         monde: last.monde,
+        monde_spyy: last.monde_spyy,
         seniors: last.seniors,
         juniors: last.juniors,
         or: last.etfOr,
@@ -1421,6 +1423,8 @@ debugLog("ROW 1:", rows[1]);
         const etfArgent = cleanNumber(row[14]);
 
         const etfPetrole = cleanNumber(row[15]);
+
+        const monde_spyy = cleanNumber(row[16]);
         
         debugLog("ROW:", row);
       
@@ -1439,7 +1443,8 @@ debugLog("ROW 1:", rows[1]);
                 silverClose,
                 etfOr,
                 etfArgent,
-                etfPetrole
+                etfPetrole,
+                monde_spyy
             });
         }
     }
@@ -1699,6 +1704,7 @@ function setPerf(id, value){
     const benefArgent = argent - pf.argent_cost;
 
     const vMonde = data.vMonde;
+    const vMondeSPYY = data.vMondeSPYY;
     const vSeniors = data.vSeniors;
     const vJuniors = data.vJuniors;
     const vOrETF = data.vOrETF;
@@ -1706,6 +1712,7 @@ function setPerf(id, value){
     const vPetroleETF = data.vPetroleETF;
 
     const benefMonde = vMonde - etf.monde.buy;
+    const benefMondeSPYY = vMondeSPYY - etf.monde_spyy.buy;
     const benefSeniors = vSeniors - etf.seniors.buy;
     const benefJuniors = vJuniors - etf.juniors.buy;
     const benefOrETF = vOrETF - etf.or.buy;
@@ -1737,6 +1744,7 @@ function setPerf(id, value){
 
     // ===== TABLE ETF =====
     setText("etf-monde-parts", etf.monde.parts);
+    setText("etf-monde_spyy-parts", etf.monde_spyy.parts);
     setText("etf-seniors-parts", etf.seniors.parts);
     setText("etf-juniors-parts", etf.juniors.parts);
     setText("etf-or-parts", etf.or.parts);
@@ -1744,6 +1752,7 @@ function setPerf(id, value){
     setText("etf-petrole-parts", etf.petrole.parts);
     
     setText("etf-monde-prix", pe.monde.toFixed(2) + " €");
+    setText("etf-monde_spyy-prix", pe.monde_spyy.toFixed(2) + " €");
     setText("etf-seniors-prix", pe.seniors.toFixed(2) + " €");
     setText("etf-juniors-prix", pe.juniors.toFixed(2) + " €");
     setText("etf-or-prix", pe.or.toFixed(2) + " €");
@@ -1751,10 +1760,12 @@ function setPerf(id, value){
     setText("etf-petrole-prix", pe.petrole.toFixed(2) + " €");
 
     setValueColor("etf-monde-benef", benefMonde);
+    setValueColor("etf-monde_spyy-benef", benefMondeSPYY);
     setValueColor("etf-seniors-benef", benefSeniors);
     setValueColor("etf-juniors-benef", benefJuniors);
 
     setPerf("etf-monde-perf", perf(vMonde, etf.monde.buy));
+    setPerf("etf-monde_spyy-perf", perf(vMondeSPYY, etf.monde_spyy.buy));
     setPerf("etf-seniors-perf", perf(vSeniors, etf.seniors.buy));
     setPerf("etf-juniors-perf", perf(vJuniors, etf.juniors.buy));
     setPerf("etf-or-perf", perf(vOrETF, etf.or.buy));
@@ -2199,13 +2210,14 @@ if (donutETF) {
         if (!etf || !pe) return;
 
         const vMonde = etf.monde.parts * pe.monde;
+        const vMondeSPYY = etf.monde_spyy.parts * pe.monde_spyy;
         const vSeniors = etf.seniors.parts * pe.seniors;
         const vJuniors = etf.juniors.parts * pe.juniors;
         const vOrETF = etf.or.parts * pe.or;
         const vArgentETF = etf.argent.parts * pe.argent;
         const vPetroleETF = etf.petrole.parts * pe.petrole;
 
-        const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF + vPetroleETF || 1;
+        const totalETF = vMonde + vMondeSPYY + vSeniors + vJuniors + vOrETF + vArgentETF + vPetroleETF || 1;
 
         const pMonde = (vMonde / totalETF) * 100;
         const pSeniors = (vSeniors / totalETF) * 100;
