@@ -392,6 +392,7 @@ const COLORS = {
   or_belgique: styles.getPropertyValue('--or-belgique').trim(),
   argent: styles.getPropertyValue('--argent').trim(),
   etf_monde: styles.getPropertyValue('--etf-monde').trim(),
+  etf_monde_spyy: styles.getPropertyValue('--etf-monde-spyy').trim(),  
   etf_seniors: styles.getPropertyValue('--etf-seniors').trim(),
   etf_juniors: styles.getPropertyValue('--etf-juniors').trim(),
   etf_or: styles.getPropertyValue('--etf-or').trim(),
@@ -931,7 +932,7 @@ el.style.background = `
     conic-gradient(
     ${COLORS.etf_monde} 0% ${p1}%,
 
-    #8b5cf6
+    ${COLORS.etf_monde_spyy}
     ${p1}% ${p1+p2}%,
 
     ${COLORS.etf_seniors}
