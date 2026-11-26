@@ -164,6 +164,12 @@
         </div>
 
         <div class="legend-item">
+            <span class="dot dot-monde-spyy"></span>
+            <span>Monde SPYY :</span>
+            <span id="p-monde-spyy"></span>
+        </div>
+
+        <div class="legend-item">
             <span class="dot dot-seniors"></span>
             <span>Séniors :</span>
             <span id="p-seniors"></span>
@@ -621,10 +627,11 @@ function calculate(){
     const vJuniors = etf.juniors.parts * pe.juniors;
     const vPetroleETF = etf.petrole.parts * pe.petrole;
 
-    const totalETF = vMonde + vSeniors + vJuniors + vOrETF + vArgentETF + vPetroleETF || 0;
+    const totalETF = vMonde + vMondeSPYY + vSeniors + vJuniors + vOrETF + vArgentETF + vPetroleETF || 0;
 
     // % ETF
     const pMonde = totalETF ? (vMonde / totalETF) * 100 : 0;
+    const pMondeSPYY = totalETF ? (vMondeSPYY / totalETF) * 100 : 0;
     const pSeniors = totalETF ? (vSeniors / totalETF) * 100 : 0;
     const pJuniors = totalETF ? (vJuniors / totalETF) * 100 : 0;
     const pOrETF = totalETF ? (vOrETF / totalETF) * 100 : 0;
@@ -665,6 +672,7 @@ const pArgentTotal = (silverTotal / totalMetauxSafe) * 100;
         vJuniors,
         totalETF,
         pMonde,
+        pMondeSPYY,
         pSeniors,
         pJuniors,
         pMetaux,
@@ -871,7 +879,7 @@ el.style.background = `
 
 
  
-function animateDonutETF(el,e1,e2,e3,e4,e5,e6,duration = 800){
+function animateDonutETF(el,e1,e2,e3,e4,e5,e6,e7,duration = 800){
 
 debugLog("ETF %:", e1, e2, e3);
 
@@ -883,8 +891,9 @@ debugLog("ETF %:", e1, e2, e3);
     e4 = e4 < 0.01 ? 0 : e4;
     e5 = e5 < 0.01 ? 0 : e5;
     e6 = e6 < 0.01 ? 0 : e6;
+    e7 = e7 < 0.01 ? 0 : e7;
 
-    let total = e1 + e2 + e3 + e4 + e5 + e6;
+    let total = e1 + e2 + e3 + e4 + e5 + e6 + e7;
 
 
 // 💥 cas critique : tout à zéro
@@ -901,6 +910,7 @@ debugLog("ETF %:", e1, e2, e3);
     e4 = (e4 / total) * 100;
     e5 = (e5 / total) * 100;
     e6 = (e6 / total) * 100;
+    e7 = (e7 / total) * 100;
  
     let start = null;
 
@@ -915,25 +925,29 @@ debugLog("ETF %:", e1, e2, e3);
         const p4 = e4 * progress;
         const p5 = e5 * progress;
         const p6 = e6 * progress;
+        const p7 = e7 * progress;
 
 el.style.background = `
     conic-gradient(
     ${COLORS.etf_monde} 0% ${p1}%,
 
-    ${COLORS.etf_seniors}
+    #8b5cf6
     ${p1}% ${p1+p2}%,
-    
-    ${COLORS.etf_juniors}
+
+    ${COLORS.etf_seniors}
     ${p1+p2}% ${p1+p2+p3}%,
-    
-    ${COLORS.etf_or}
+
+    ${COLORS.etf_juniors}
     ${p1+p2+p3}% ${p1+p2+p3+p4}%,
-    
-    ${COLORS.etf_argent}
+
+    ${COLORS.etf_or}
     ${p1+p2+p3+p4}% ${p1+p2+p3+p4+p5}%,
-    
+
+    ${COLORS.etf_argent}
+    ${p1+p2+p3+p4+p5}% ${p1+p2+p3+p4+p5+p6}%,
+
     ${COLORS.etf_petrole}
-    ${p1+p2+p3+p4+p5}% 100%
+    ${p1+p2+p3+p4+p5+p6}% 100%
 )
 `;
 
@@ -1602,23 +1616,25 @@ labelM.innerHTML = `
 
     // ===== RENDER DONUT ETF =====
     const e1 = Math.max(0, data.pMonde || 0);
-    const e2 = Math.max(0, data.pSeniors || 0);
-    const e3 = Math.max(0, data.pJuniors || 0);
-    const e4 = Math.max(0, data.pOrETF || 0);
-    const e5 = Math.max(0, data.pArgentETF || 0);
-    const e6 = Math.max(0, data.pPetroleETF || 0);
+    const e2 = Math.max(0, data.pMondeSPYY || 0);
+    const e3 = Math.max(0, data.pSeniors || 0);
+    const e4 = Math.max(0, data.pJuniors || 0);
+    const e5 = Math.max(0, data.pOrETF || 0);
+    const e6 = Math.max(0, data.pArgentETF || 0);
+    const e7 = Math.max(0, data.pPetroleETF || 0);
 
     setText("p-monde", percent(e1));
-    setText("p-seniors", percent(e2));
-    setText("p-juniors", percent(e3));
-    setText("p-etf-or", percent(e4));
-    setText("p-etf-argent", percent(e5));
-    setText("p-etf-petrole", percent(e6));
+    setText("p-monde-spyy", percent(e2));
+    setText("p-seniors", percent(e3));
+    setText("p-juniors", percent(e4));
+    setText("p-etf-or", percent(e5));
+    setText("p-etf-argent", percent(e6));
+    setText("p-etf-petrole", percent(e7));
  
     const de = document.querySelector(".donut.etf .donut-inner");
 
     if(de){
-        animateDonutETF(de, e1, e2, e3, e4, e5, e6);
+        animateDonutETF(de, e1, e2, e3, e4, e5, e6, e7);
 
         de.parentElement.classList.add("show", "enter");
         setTimeout(() => {
@@ -2228,6 +2244,7 @@ if (donutETF) {
 labelE.innerHTML = `
     <div class="content">
         <div><span class="dot dot-monde"></span> ${euro(vMonde)}</div>
+        <div><span class="dot dot-monde-spyy"></span> ${euro(vMondeSPYY)}</div>
         <div><span class="dot dot-seniors"></span> ${euro(vSeniors)}</div>
         <div><span class="dot dot-juniors"></span> ${euro(vJuniors)}</div>
         <div><span class="dot dot-etf-or"></span> ${euro(vOrETF)}</div>
