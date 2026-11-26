@@ -42,9 +42,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const [vwce, acwe, gdx, gdxj, fx] = await Promise.all([
+   const [vwce, gdx, gdxj, fx] = await Promise.all([
     getJson(`${TWELVEDATA_BASE}?symbol=SPY&apikey=${apiKey}`),
-    getJson(`${TWELVEDATA_BASE}?symbol=ACWE&mic_code=XPAR&apikey=${apiKey}`),
     getJson(`${TWELVEDATA_BASE}?symbol=GDX&apikey=${apiKey}`),
     getJson(`${TWELVEDATA_BASE}?symbol=GDXJ&apikey=${apiKey}`),
     getJson(FX_URL)
@@ -54,7 +53,6 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       monde: parsePrice(vwce?.price),
-      monde_spyy: parsePrice(acwe?.price),
       seniors: parsePrice(gdx?.price) * rate,
       juniors: parsePrice(gdxj?.price) * rate
     });
