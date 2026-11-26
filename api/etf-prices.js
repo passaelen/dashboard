@@ -14,10 +14,13 @@ async function getJson(url) {
     });
 
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status} on ${url}`);
+      const details = await res.text();
+      throw new Error(`HTTP ${res.status}: ${details}`);
     }
-
+    
     return res.json();
+
+    
   } finally {
     clearTimeout(timeout);
   }
