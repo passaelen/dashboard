@@ -51,6 +51,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       monde: parsePrice(vwce?.price),
+      monde_spyy: parsePrice(acwe?.price),
       seniors: parsePrice(gdx?.price) * rate,
       juniors: parsePrice(gdxj?.price) * rate
     });
