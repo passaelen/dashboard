@@ -41,7 +41,7 @@ export default async function handler(req, res) {
   try {
     const [vwce, acwe, gdx, gdxj, fx] = await Promise.all([
     getJson(`${TWELVEDATA_BASE}?symbol=SPY&apikey=${apiKey}`),
-    getJson(`${TWELVEDATA_BASE}?symbol=ACWE&exchange=Euronext&apikey=${apiKey}`),
+    getJson(`${TWELVEDATA_BASE}?symbol=ACWE&mic_code=XPAR&apikey=${apiKey}`),
     getJson(`${TWELVEDATA_BASE}?symbol=GDX&apikey=${apiKey}`),
     getJson(`${TWELVEDATA_BASE}?symbol=GDXJ&apikey=${apiKey}`),
     getJson(FX_URL)
