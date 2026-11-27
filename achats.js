@@ -3,7 +3,7 @@ const achats = [
 {date: "20/11/2026", type: "ETF_ARGENT", montant: 195.17, parts: 5, label: "5 ETF ARGENT"}, 
 {date: "20/11/2026", type: "ETF_OR", montant: 329.13, parts: 1, label: "1 ETF OR"}, 
 {date: "16/11/2026", type: "ETF_ARGENT", montant: 216.25, parts: 5, label: "5 ETF ARGENT"}, 
-{date: "30/10/2026", type: "ETF_MONDE", montant: 348.43, parts: 2, label: "2 ETF Monde"}, 
+{date: "30/10/2026", type: "ETF_MONDE-VWRA", montant: 348.43, parts: 2, label: "2 ETF Monde"}, 
 {date: "30/10/2026", type: "ETF_ARGENT", montant: 228.79, parts: 5, label: "5 ETF ARGENT"}, 
 {date: "23/10/2026", type: "ETF_ARGENT", montant: 195.15, parts: 4, label: "4 ETF ARGENT"}, 
 {date: "14/10/2026", type: "ETF_ARGENT", montant: 155.61, parts: 3, label: "3 ETF ARGENT"},
