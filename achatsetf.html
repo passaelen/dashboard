@@ -37,11 +37,26 @@
                             <thead>
                                     <tr>
                                         <th>Date(s)</th>
-                                        <th>Type</th>
+                                        <th>
+                                            <span id="filtre-type" style="cursor:pointer;">
+                                                Type ▾
+                                            </span>
+                                        </th>
                                         <th>Part(s)</th>
                                         <th>Montant(s)</th>
                                     </tr>
                             </thead>
+                            <div id="panneau-filtre" style="display:none; padding:12px; margin-bottom:12px; border:1px solid #334155; border-radius:10px;">
+                                <div id="options-filtre">
+                                    <label><input type="checkbox" value="MONDE (VWRA)" checked> Monde (VWRA)</label><br>
+                                    <label><input type="checkbox" value="MONDE (SPYY)" checked> Monde (SPYY)</label><br>
+                                    <label><input type="checkbox" value="SENIOR" checked> Seniors</label><br>
+                                    <label><input type="checkbox" value="JUNIOR" checked> Juniors</label><br>
+                                    <label><input type="checkbox" value="OR" checked> Or</label><br>
+                                    <label><input type="checkbox" value="ARGENT" checked> Argent</label><br>
+                                    <label><input type="checkbox" value="PETROLE" checked> Pétrole</label>
+                                </div>
+                            </div>
                             <tbody id="table-achats"></tbody>
                     </table>
         
@@ -81,8 +96,18 @@ function renderAchats(){
     const tbody = document.getElementById("table-achats");
 
     // tri DESC (plus récent en haut)
-    const achatsETF = achats.filter(a => a.type.includes("ETF"));
+    const selections = [...document.querySelectorAll("#options-filtre input:checked")]
+    .map(input => input.value);
 
+ 
+    const achatsETF = achats.filter(a => {
+        if (!a.type.includes("ETF")) return false;
+    
+        const type = a.type.replace("ETF_", "");
+        return selections.includes(type);
+    });
+
+ 
     const sorted = achatsETF.sort((a,b)=>{
     return new Date(b.date.split("/").reverse().join("-")) 
          - new Date(a.date.split("/").reverse().join("-"));
@@ -112,6 +137,21 @@ document.getElementById("total-achats").innerText = euro(total);
 }
 renderAchats();
 
+// ===== OUVERTURE DU FILTRE =====
+document.getElementById("filtre-type").addEventListener("click", () => {
+    const panneau = document.getElementById("panneau-filtre");
+
+    panneau.style.display =
+        panneau.style.display === "none" ? "block" : "none";
+});
+
+ 
+// ===== APPLICATION DU FILTRE =====
+document.querySelectorAll("#options-filtre input").forEach(input => {
+    input.addEventListener("change", () => {
+        renderAchats();
+    });
+});
 
     
 </script>
